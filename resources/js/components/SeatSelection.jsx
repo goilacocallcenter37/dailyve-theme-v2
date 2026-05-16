@@ -43,7 +43,7 @@ const SeatIcon = ({ type, color, status, onClick }) => {
   );
 };
 
-const SeatSelection = ({ trip, onCancel, onComplete }) => {
+const SeatSelection = ({ trip, onCancel, onComplete, legIndex }) => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(true);
   const [isFinalizing, setIsFinalizing] = useState(false);
@@ -156,6 +156,7 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
       const formData = new FormData();
       formData.append('action', 'save_ticket');
       formData.append('nonce', window.generic_data.nonce);
+      formData.append('legIndex', legIndex);
       
       formData.append('ticket[tripId]', ticket.tripId);
       formData.append('ticket[partnerId]', ticket.partnerId);

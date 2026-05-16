@@ -763,6 +763,7 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, syncUrl }) => {
           <div className="p-8 lg:p-10">
             <SeatSelection 
               trip={trip} 
+              legIndex={stepTicket}
               onCancel={() => setIsBooking(false)} 
               onComplete={(ticket) => {
                 const searchParams = new URLSearchParams(window.location.search);

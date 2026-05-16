@@ -81,7 +81,11 @@ const SearchForm = () => {
       params.set('nameTo', locationMap[to]);
     }
 
-    window.location.href = `/dat-ve-truc-tuyen/?${params.toString()}`;
+    // Clear tickets in session before new search
+    fetch('/wp-admin/admin-ajax.php?action=clear_tickets')
+      .finally(() => {
+        window.location.href = `/dat-ve-truc-tuyen/?${params.toString()}`;
+      });
   };
 
   return (

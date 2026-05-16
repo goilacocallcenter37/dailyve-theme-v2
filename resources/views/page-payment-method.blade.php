@@ -265,7 +265,18 @@
                 if (rem <= 0) {
                     clearInterval(timer);
                     document.getElementById('time-expired').innerText = '00:00';
-                    location.reload();
+                    
+                    const delData = new FormData();
+                    delData.append('action', 'delete_ticket');
+                    delData.append('nonce', '{{ wp_create_nonce('ams_vexe_delete_ticket') }}');
+                    delData.append('code', '{{ $payment_key }}');
+                    delData.append('journey_group_id', '{{ $journey_group_id }}');
+                    
+                    fetch('{{ admin_url('admin-ajax.php') }}', {
+                        method: 'POST',
+                        body: new URLSearchParams(delData)
+                    }).then(() => location.reload());
+                    
                     return;
                 }
                 const m = Math.floor(rem / 60);

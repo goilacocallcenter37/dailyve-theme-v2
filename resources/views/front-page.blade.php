@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="relative bg-blue-900 py-24 overflow-hidden">
+    <article class="relative bg-blue-900 py-24 overflow-hidden">
         <div class="absolute inset-0 opacity-20">
-            <img src="https://object.dailyve.com/dailyve/wp-content/uploads/2024/10/banner-bus.jpg" class="w-full h-full object-cover" alt="Dailyve Banner">
+            <img src="https://object.dailyve.com/dailyve/wp-content/uploads/2024/10/banner-bus.jpg" class="w-full h-full object-cover" alt="Dailyve Banner - Đặt vé xe khách chất lượng cao">
         </div>
         <div class="container mx-auto px-4 relative z-10 text-center">
             <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 drop-shadow-lg">
                 Hành Trình Vạn Dặm, Bắt Đầu Từ Một Click
             </h1>
             <p class="text-xl text-blue-100 max-w-2xl mx-auto mb-10">
-                Đặt vé xe khách chất lượng cao, giá rẻ nhất thị trường. Cam kết giữ chỗ 100%.
+                Đặt vé xe khách chất lượng cao, giá rẻ nhất thị trường. Cam kết giữ chỗ 100% tại Dailyve.
             </p>
         </div>
-    </div>
+    </article>
 
     <div class="container mx-auto px-4">
         {!! do_shortcode('[react_search_form]') !!}
