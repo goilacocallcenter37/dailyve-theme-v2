@@ -231,3 +231,21 @@ add_action('wp_enqueue_scripts', function () {
         'user_id' => get_current_user_id(),
     ]);
 });
+
+/**
+ * Clear session tickets via AJAX.
+ */
+add_action('wp_ajax_clear_tickets', function () {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    unset($_SESSION['tickets']);
+    wp_send_json_success(['message' => 'Tickets cleared']);
+});
+add_action('wp_ajax_nopriv_clear_tickets', function () {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    unset($_SESSION['tickets']);
+    wp_send_json_success(['message' => 'Tickets cleared']);
+});

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import SeatSelection from './SeatSelection';
 
 const SORT_OPTIONS = [
   { value: 'time:asc', label: 'Giờ đi sớm nhất' },
@@ -71,11 +72,17 @@ const getInitialFilters = () => {
   return {
     from: params.get('from') || '',
     to: params.get('to') || '',
+    nameFrom: params.get('nameFrom') || '',
+    nameTo: params.get('nameTo') || '',
     date: formatDateInput(params.get('date') || getTomorrow()),
+    returnDate: formatDateInput(params.get('returnDate') || ''),
     sort: params.get('sort') || 'time:asc',
     time: params.get('time') || '00:00-23:59',
     companies: params.get('companies') || '',
     islimousine: params.get('islimousine') || '',
+    fa: params.get('fa') || '',
+    ta: params.get('ta') || '',
+    rating: params.get('rating') || '',
   };
 };
 
@@ -103,11 +110,15 @@ const SearchPanel = ({ filters, onSubmit }) => {
   const [from, setFrom] = useState(filters.from);
   const [to, setTo] = useState(filters.to);
   const [date, setDate] = useState(filters.date);
+  const [returnDate, setReturnDate] = useState(filters.returnDate || '');
+  const [isRoundTrip, setIsRoundTrip] = useState(!!filters.returnDate);
 
   useEffect(() => {
     setFrom(filters.from);
     setTo(filters.to);
     setDate(filters.date);
+    setReturnDate(filters.returnDate || '');
+    setIsRoundTrip(!!filters.returnDate);
   }, [filters]);
 
   useEffect(() => {
@@ -131,86 +142,163 @@ const SearchPanel = ({ filters, onSubmit }) => {
   const getLocationName = (id) => locations.find((item) => item.id === String(id))?.name || '';
 
   return (
-    <form
-      className="grid grid-cols-1 gap-3 rounded-lg border border-slate-200 bg-white p-4 shadow-sm lg:grid-cols-[1fr_auto_1fr_180px_150px]"
-      onSubmit={(event) => {
-        event.preventDefault();
-        onSubmit({
-          from,
-          to,
-          date,
-          nameFrom: getLocationName(from),
-          nameTo: getLocationName(to),
-        });
-      }}
-    >
-      <label className="grid gap-1 text-sm font-semibold text-slate-700">
-        Điểm đi
-        <select
-          className="h-12 rounded-md border border-slate-200 bg-slate-50 px-3 text-base font-medium text-slate-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
-          value={from}
-          onChange={(event) => setFrom(event.target.value)}
-          required
+    <div className="flex flex-col gap-4">
+      <div className="flex gap-2 px-2">
+        <button
+          type="button"
+          onClick={() => setIsRoundTrip(false)}
+          className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+            !isRoundTrip ? 'bg-primary text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+          }`}
         >
-          <option value="">Chọn điểm đi</option>
-          {locations.map((location) => (
-            <option key={location.id} value={location.id}>
-              {location.name}
-            </option>
-          ))}
-        </select>
-      </label>
+          Một chiều
+        </button>
+        <button
+          type="button"
+          onClick={() => setIsRoundTrip(true)}
+          className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+            isRoundTrip ? 'bg-primary text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+          }`}
+        >
+          Khứ hồi
+        </button>
+      </div>
 
-      <button
-        type="button"
-        className="hidden h-12 w-12 self-end rounded-md border border-slate-200 bg-white text-lg font-bold text-slate-600 transition hover:border-blue-400 hover:text-blue-600 lg:block"
-        onClick={() => {
-          setFrom(to);
-          setTo(from);
+      <form
+        className={`grid grid-cols-1 gap-4 p-2 ${
+          isRoundTrip 
+            ? 'lg:grid-cols-[1fr_auto_1fr_1fr_1fr_auto]' 
+            : 'lg:grid-cols-[1fr_auto_1fr_1fr_auto]'
+        }`}
+        onSubmit={(event) => {
+          event.preventDefault();
+          if (isRoundTrip && !returnDate) {
+            alert('Vui lòng chọn ngày về cho chuyến khứ hồi');
+            return;
+          }
+          onSubmit({
+            from,
+            to,
+            date,
+            returnDate: isRoundTrip ? returnDate : '',
+            nameFrom: getLocationName(from),
+            nameTo: getLocationName(to),
+          });
         }}
-        aria-label="Đổi chiều"
       >
-        ↔
-      </button>
+        <div className="relative group">
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-primary transition-transform group-focus-within:scale-110">
+            <i className="fas fa-map-marker-alt"></i>
+          </div>
+          <select
+            className="h-16 w-full rounded-3xl border-2 border-transparent bg-slate-50/50 pl-11 pr-4 text-sm font-bold text-slate-700 outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary-light/30"
+            value={from}
+            onChange={(event) => setFrom(event.target.value)}
+            required
+          >
+            <option value="">Điểm đi</option>
+            {locations.map((location) => (
+              <option key={location.id} value={location.id}>
+                {location.name}
+              </option>
+            ))}
+          </select>
+        </div>
 
-      <label className="grid gap-1 text-sm font-semibold text-slate-700">
-        Điểm đến
-        <select
-          className="h-12 rounded-md border border-slate-200 bg-slate-50 px-3 text-base font-medium text-slate-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
-          value={to}
-          onChange={(event) => setTo(event.target.value)}
-          required
+        <div className="flex items-center justify-center">
+          <button
+            type="button"
+            className="h-12 w-12 rounded-full bg-white text-primary shadow-lg border border-slate-100 transition-all hover:rotate-180 hover:bg-primary hover:text-white active:scale-90"
+            onClick={() => {
+              const temp = from;
+              setFrom(to);
+              setTo(temp);
+            }}
+            aria-label="Đổi chiều"
+          >
+            <i className="fas fa-exchange-alt"></i>
+          </button>
+        </div>
+
+        <div className="relative group">
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-primary transition-transform group-focus-within:scale-110">
+            <i className="fas fa-map-pin"></i>
+          </div>
+          <select
+            className="h-16 w-full rounded-3xl border-2 border-transparent bg-slate-50/50 pl-11 pr-4 text-sm font-bold text-slate-700 outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary-light/30"
+            value={to}
+            onChange={(event) => setTo(event.target.value)}
+            required
+          >
+            <option value="">Điểm đến</option>
+            {locations.map((location) => (
+              <option key={location.id} value={location.id}>
+                {location.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="relative group">
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-primary transition-transform group-focus-within:scale-110">
+            <i className="fas fa-calendar-day"></i>
+          </div>
+          <div className="absolute left-11 top-2 text-[10px] font-bold text-primary uppercase">Ngày đi</div>
+          <input
+            className="h-16 w-full rounded-3xl border-2 border-transparent bg-slate-50/50 pl-11 pr-4 pt-4 text-sm font-bold text-slate-700 outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary-light/30"
+            type="date"
+            value={date}
+            min={new Date().toISOString().slice(0, 10)}
+            onChange={(event) => setDate(event.target.value)}
+            required
+          />
+        </div>
+
+        {isRoundTrip && (
+          <div className="relative group animate-in fade-in slide-in-from-left-4 duration-300">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-primary transition-transform group-focus-within:scale-110">
+              <i className="fas fa-calendar-check"></i>
+            </div>
+            <div className="absolute left-11 top-2 text-[10px] font-bold text-primary uppercase">Ngày về</div>
+            <input
+              className="h-16 w-full rounded-3xl border-2 border-transparent bg-slate-50/50 pl-11 pr-4 pt-4 text-sm font-bold text-slate-700 outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary-light/30"
+              type="date"
+              value={returnDate}
+              min={date}
+              onChange={(event) => setReturnDate(event.target.value)}
+              required={isRoundTrip}
+            />
+          </div>
+        )}
+
+        <button
+          type="submit"
+          className="h-16 rounded-3xl bg-primary px-10 text-base font-black text-white shadow-xl shadow-primary/20 transition-all hover:bg-primary-dark hover:shadow-primary/30 active:scale-95"
         >
-          <option value="">Chọn điểm đến</option>
-          {locations.map((location) => (
-            <option key={location.id} value={location.id}>
-              {location.name}
-            </option>
-          ))}
-        </select>
-      </label>
-
-      <label className="grid gap-1 text-sm font-semibold text-slate-700">
-        Ngày đi
-        <input
-          className="h-12 rounded-md border border-slate-200 bg-slate-50 px-3 text-base font-medium text-slate-900 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
-          type="date"
-          value={date}
-          min={new Date().toISOString().slice(0, 10)}
-          onChange={(event) => setDate(event.target.value)}
-          required
-        />
-      </label>
-
-      <button
-        type="submit"
-        className="h-12 self-end rounded-md bg-blue-600 px-5 text-base font-bold text-white shadow-sm transition hover:bg-blue-700"
-      >
-        Tìm chuyến
-      </button>
-    </form>
+          TÌM CHUYẾN
+        </button>
+      </form>
+    </div>
   );
 };
+
+const TripSkeleton = () => (
+  <div className="flex animate-pulse flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white p-5 md:flex-row md:items-center md:gap-6">
+    <div className="h-32 w-32 rounded-2xl bg-slate-100"></div>
+    <div className="flex-1 space-y-4 py-2">
+      <div className="h-6 w-1/3 rounded-md bg-slate-100"></div>
+      <div className="flex gap-2">
+        <div className="h-4 w-20 rounded bg-slate-100"></div>
+        <div className="h-4 w-20 rounded bg-slate-100"></div>
+      </div>
+      <div className="h-10 w-full rounded-md bg-slate-50"></div>
+    </div>
+    <div className="mt-6 w-full space-y-3 md:mt-0 md:w-56 md:border-l md:border-slate-100 md:pl-6">
+      <div className="ml-auto h-8 w-24 rounded bg-slate-100"></div>
+      <div className="h-12 w-full rounded-xl bg-slate-100"></div>
+    </div>
+  </div>
+);
 
 const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }) => {
   const companies = statistics?.companies?.data || [];
@@ -229,325 +317,475 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
   };
 
   return (
-    <aside className="grid gap-4 lg:sticky lg:top-24 lg:self-start">
-      <div className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-base font-bold text-slate-950">Bộ lọc</h2>
+    <aside className="grid gap-6 lg:sticky lg:top-24 lg:self-start">
+      <div className="overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+        <div className="mb-6 flex items-center justify-between border-b border-slate-50 pb-4">
+          <h2 className="text-lg font-black text-slate-900">Bộ lọc</h2>
           <button
             type="button"
-            className="text-sm font-semibold text-blue-600 hover:text-blue-700"
-            onClick={() => onChange({ companies: '', time: '00:00-23:59', sort: 'time:asc', islimousine: '' })}
+            className="text-sm font-bold text-blue-600 transition-colors hover:text-blue-700"
+            onClick={() => onChange({ companies: '', time: '00:00-23:59', sort: 'time:asc', islimousine: '', fa: '', ta: '', rating: '' })}
           >
-            Xóa lọc
+            Xóa hết
           </button>
         </div>
 
-        <label className="mb-4 grid gap-2 text-sm font-semibold text-slate-700">
-          Sắp xếp
-          <select
-            className="h-11 rounded-md border border-slate-200 bg-slate-50 px-3 text-sm font-medium outline-none focus:border-blue-500 focus:bg-white"
-            value={filters.sort}
-            onChange={(event) => onChange({ sort: event.target.value })}
-          >
-            {SORT_OPTIONS.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label className="mb-4 grid gap-2 text-sm font-semibold text-slate-700">
-          Giờ đi
-          <select
-            className="h-11 rounded-md border border-slate-200 bg-slate-50 px-3 text-sm font-medium outline-none focus:border-blue-500 focus:bg-white"
-            value={filters.time}
-            onChange={(event) => onChange({ time: event.target.value })}
-          >
-            {TIME_OPTIONS.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label className="mb-4 grid gap-2 text-sm font-semibold text-slate-700">
-          Giá vé
-          <select
-            className="h-11 rounded-md border border-slate-200 bg-slate-50 px-3 text-sm font-medium outline-none focus:border-blue-500 focus:bg-white"
-            value={priceRange}
-            onChange={(event) => onPriceRange(event.target.value)}
-          >
-            {PRICE_OPTIONS.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        {vehicleTypes.length > 0 && (
-          <label className="mb-4 grid gap-2 text-sm font-semibold text-slate-700">
-            Loại xe
+        <div className="space-y-6">
+          <section className="space-y-3">
+            <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Sắp xếp</h3>
             <select
-              className="h-11 rounded-md border border-slate-200 bg-slate-50 px-3 text-sm font-medium outline-none focus:border-blue-500 focus:bg-white"
-              value={filters.islimousine}
-              onChange={(event) => onChange({ islimousine: event.target.value })}
+              className="w-full rounded-xl border-2 border-slate-50 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700 outline-none transition-all focus:border-blue-500 focus:bg-white"
+              value={filters.sort}
+              onChange={(event) => onChange({ sort: event.target.value })}
             >
-              <option value="">Tất cả xe</option>
-              {vehicleTypes.map((type) => (
-                <option key={type.value} value={type.value === 'LIMOUSINE' ? '1' : '2'}>
-                  {type.value === 'LIMOUSINE' ? 'Xe limousine' : 'Xe thường'} ({type.count})
+              {SORT_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
                 </option>
               ))}
             </select>
-          </label>
-        )}
+          </section>
 
-        {companies.length > 0 && (
-          <div className="grid gap-2">
-            <div className="text-sm font-bold text-slate-800">Nhà xe</div>
-            <div className="max-h-72 overflow-auto pr-1">
-              {companies
-                .filter((company) => Number(company.id) !== 11071)
-                .map((company) => (
-                  <label
-                    key={company.id}
-                    className="flex cursor-pointer items-center justify-between gap-3 rounded-md px-2 py-2 text-sm text-slate-700 hover:bg-slate-50"
-                  >
-                    <span className="flex min-w-0 items-center gap-2">
-                      <input
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-slate-300 text-blue-600"
-                        checked={selectedCompanies.includes(String(company.id))}
-                        onChange={() => toggleCompany(company.id)}
-                      />
-                      <span className="truncate">{company.name}</span>
-                    </span>
-                    <span className="text-xs font-semibold text-slate-400">{company.trip_count}</span>
-                  </label>
-                ))}
+          <section className="space-y-3">
+            <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Khung giờ đi</h3>
+            <div className="grid grid-cols-2 gap-2">
+              {TIME_OPTIONS.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  onClick={() => onChange({ time: option.value })}
+                  className={`rounded-xl border-2 py-2.5 text-[11px] font-bold transition-all ${
+                    filters.time === option.value
+                      ? 'border-blue-600 bg-blue-600 text-white shadow-lg shadow-blue-200'
+                      : 'border-slate-50 bg-slate-50 text-slate-600 hover:border-slate-200'
+                  }`}
+                >
+                  {option.label}
+                </button>
+              ))}
             </div>
-          </div>
-        )}
+          </section>
+
+          <section className="space-y-3">
+            <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Mức giá</h3>
+            <select
+              className="w-full rounded-xl border-2 border-slate-50 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700 outline-none transition-all focus:border-blue-500 focus:bg-white"
+              value={priceRange}
+              onChange={(event) => onPriceRange(event.target.value)}
+            >
+              {PRICE_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </section>
+
+          <section className="space-y-3">
+            <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Đánh giá</h3>
+            <div className="grid grid-cols-1 gap-2">
+              {[4, 3, 2].map((r) => (
+                <button
+                  key={r}
+                  type="button"
+                  onClick={() => onChange({ rating: filters.rating === `${r}-5` ? '' : `${r}-5` })}
+                  className={`flex items-center justify-between rounded-xl border-2 px-4 py-2.5 text-sm font-bold transition-all ${
+                    filters.rating === `${r}-5`
+                      ? 'border-blue-600 bg-blue-600 text-white shadow-lg shadow-blue-200'
+                      : 'border-slate-50 bg-slate-50 text-slate-600 hover:border-slate-200'
+                  }`}
+                >
+                  <span className="flex items-center gap-1">
+                    {Array.from({ length: r }).map((_, i) => (
+                      <i key={i} className="fas fa-star text-yellow-400 text-[10px]"></i>
+                    ))}
+                    <span className="ml-1">từ {r} sao</span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </section>
+
+          {companies.length > 0 && (
+            <section className="space-y-3">
+              <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Nhà xe</h3>
+              <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200">
+                {companies
+                  .filter((company) => Number(company.id) !== 11071)
+                  .map((company) => (
+                    <label
+                      key={company.id}
+                      className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${
+                        selectedCompanies.includes(String(company.id))
+                          ? 'bg-blue-50 text-blue-700'
+                          : 'hover:bg-slate-50 text-slate-600'
+                      }`}
+                    >
+                      <span className="flex min-w-0 items-center gap-3">
+                        <input
+                          type="checkbox"
+                          className="h-4 w-4 rounded-md border-slate-300 text-blue-600 transition-all focus:ring-blue-500"
+                          checked={selectedCompanies.includes(String(company.id))}
+                          onChange={() => toggleCompany(company.id)}
+                        />
+                        <span className="truncate text-sm font-bold">{company.name}</span>
+                      </span>
+                      <span className="text-[10px] font-black opacity-40">{company.trip_count}</span>
+                    </label>
+                  ))}
+              </div>
+            </section>
+          )}
+
+          {statistics?.pickup_points?.length > 0 && (
+            <section className="space-y-3">
+              <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Điểm đón</h3>
+              <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200">
+                {statistics.pickup_points.map((point, idx) => {
+                  const selected = filters.fa.split(',').includes(point.district);
+                  return (
+                    <label
+                      key={idx}
+                      className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${
+                        selected ? 'bg-blue-50 text-blue-700' : 'hover:bg-slate-50 text-slate-600'
+                      }`}
+                    >
+                      <span className="flex min-w-0 items-center gap-3">
+                        <input
+                          type="checkbox"
+                          className="h-4 w-4 rounded-md border-slate-300 text-blue-600"
+                          checked={selected}
+                          onChange={() => {
+                            const current = filters.fa ? filters.fa.split(',') : [];
+                            const next = selected ? current.filter(x => x !== point.district) : [...current, point.district];
+                            onChange({ fa: next.join(',') });
+                          }}
+                        />
+                        <span className="truncate text-sm font-bold">{point.district}</span>
+                      </span>
+                      <span className="text-[10px] font-black opacity-40">{point.trip_count}</span>
+                    </label>
+                  );
+                })}
+              </div>
+            </section>
+          )}
+
+          {statistics?.dropoff_points?.length > 0 && (
+            <section className="space-y-3">
+              <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Điểm trả</h3>
+              <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200">
+                {statistics.dropoff_points.map((point, idx) => {
+                  const selected = filters.ta.split(',').includes(point.district);
+                  return (
+                    <label
+                      key={idx}
+                      className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${
+                        selected ? 'bg-blue-50 text-blue-700' : 'hover:bg-slate-50 text-slate-600'
+                      }`}
+                    >
+                      <span className="flex min-w-0 items-center gap-3">
+                        <input
+                          type="checkbox"
+                          className="h-4 w-4 rounded-md border-slate-300 text-blue-600"
+                          checked={selected}
+                          onChange={() => {
+                            const current = filters.ta ? filters.ta.split(',') : [];
+                            const next = selected ? current.filter(x => x !== point.district) : [...current, point.district];
+                            onChange({ ta: next.join(',') });
+                          }}
+                        />
+                        <span className="truncate text-sm font-bold">{point.district}</span>
+                      </span>
+                      <span className="text-[10px] font-black opacity-40">{point.trip_count}</span>
+                    </label>
+                  );
+                })}
+              </div>
+            </section>
+          )}
+        </div>
       </div>
     </aside>
   );
 };
 
-const DetailTabs = ({ trip, gallery }) => (
-  <div className="online-booking-page__provider-list__details-tab" id={`detail-tab-${trip.trip_id}`}>
-    <div className="provider-details">
-      <ul className="provider-details__nav">
-        <li data-tab={`images-tab-${trip.trip_id}`} className="active">
-          Hình ảnh
-        </li>
-        <li data-tab={`convenience-tab-${trip.trip_id}`}>Tiện ích</li>
-        <li data-tab={`ratings-tab-${trip.trip_id}`}>Đánh giá</li>
-        <li data-tab={`pickup-dropoff-points-tab-${trip.trip_id}`}>Điểm đón, trả</li>
-        <li data-tab={`policy-tab-${trip.trip_id}`}>Chính sách</li>
-      </ul>
-      <div className="provider-details__tabs width-tab">
-        <div id={`images-tab-${trip.trip_id}`} className="provider-details__tab images-tab">
-          <div className="provider-details__gallery">
-            <div className="provider-details__gallery-main">
-              {gallery.map((image, index) => (
-                <div className="provider-details__gallery-main__item" key={`${image.url}-${index}`}>
-                  <img src={image.url} width={image.width || 900} height={image.height || 600} alt={image.title || trip.company_name} />
+const DetailTabs = ({ trip, gallery }) => {
+  const [activeTab, setActiveTab] = useState('images');
+
+  const tabs = [
+    { id: 'images', label: 'Hình ảnh', icon: 'fa-images' },
+    { id: 'utilities', label: 'Tiện ích', icon: 'fa-wifi' },
+    { id: 'policy', label: 'Chính sách', icon: 'fa-file-contract' },
+    { id: 'reviews', label: 'Đánh giá', icon: 'fa-star' },
+  ];
+
+  return (
+    <div className="overflow-hidden rounded-[2rem] border border-slate-100 bg-white shadow-sm">
+      <div className="flex flex-wrap border-b border-slate-50 bg-slate-50/50 p-2">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`flex items-center gap-2 rounded-2xl px-6 py-3 text-xs font-black uppercase tracking-wider transition-all ${
+              activeTab === tab.id
+                ? 'bg-white text-primary shadow-sm'
+                : 'text-slate-400 hover:text-slate-600'
+            }`}
+          >
+            <i className={`fas ${tab.icon}`}></i> {tab.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="p-8">
+        {activeTab === 'images' && (
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            {gallery.map((img, i) => (
+              <div key={i} className="group relative aspect-video overflow-hidden rounded-2xl bg-slate-100">
+                <img src={img.medium || img.url} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" alt={img.title} />
+              </div>
+            ))}
+          </div>
+        )}
+
+        {activeTab === 'utilities' && (
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+            {trip.amenities?.map((item, i) => (
+              <div key={i} className="flex items-center gap-4 rounded-2xl border border-slate-50 p-4 transition-all hover:border-primary-light/30 hover:bg-blue-50/30">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-primary">
+                   <i className="fas fa-check-circle"></i>
                 </div>
-              ))}
+                <span className="text-sm font-bold text-slate-600">{item.label}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {activeTab === 'policy' && (
+          <div className="max-w-3xl space-y-4">
+            <h4 className="font-display text-lg font-black text-slate-900">Chính sách nhà xe</h4>
+            <div className="rounded-2xl bg-slate-50 p-6 text-sm font-medium leading-relaxed text-slate-600">
+               {trip.policy || "Đang cập nhật chính sách từ nhà xe..."}
             </div>
-            <div className="provider-details__gallery-thumbnails">
-              {gallery.map((image, index) => (
-                <div className="provider-details__gallery-thumbnails__item" key={`${image.medium}-${index}`}>
-                  <img src={image.medium || image.url} width="240" height="160" alt={image.title || trip.company_name} />
+          </div>
+        )}
+
+        {activeTab === 'reviews' && (
+          <div className="space-y-6">
+             <div className="flex items-center gap-6 rounded-3xl bg-blue-50 p-8">
+                <div className="text-center">
+                   <div className="font-display text-5xl font-black text-primary">{trip.ratings?.overall || 0}</div>
+                   <div className="mt-1 text-[10px] font-black uppercase tracking-widest text-primary/60">Điểm đánh giá</div>
                 </div>
-              ))}
-            </div>
+                <div className="h-12 w-px bg-primary/10"></div>
+                <div className="text-sm font-bold text-slate-600">
+                   Dựa trên {trip.ratings?.comments || 0} nhận xét từ khách hàng đã đi chuyến này.
+                </div>
+             </div>
           </div>
-        </div>
-        <div id={`convenience-tab-${trip.trip_id}`} className="provider-details__tab">
-          <ul className="provider_details_convenience__list"></ul>
-          <div className="provider_details_convenience__list_2"></div>
-        </div>
-        <div id={`pickup-dropoff-points-tab-${trip.trip_id}`} className="provider-details__tab">
-          <div className="bus-type-title">Lưu ý</div>
-          <div className="header-content">Các mốc thời gian đón, trả bên dưới là thời gian dự kiến.</div>
-          <div className="flex flex-wrap accordion-sub-item__wrapper">
-            <div className="accordion-sub-item">
-              <div className="accordion-sub-item__title">Điểm đón</div>
-              <ul className="accordion-sub-item__list pickup-point-list"></ul>
-            </div>
-            <div className="accordion-sub-item">
-              <div className="accordion-sub-item__title">Điểm trả</div>
-              <ul className="accordion-sub-item__list dropoff-point-list"></ul>
-            </div>
-          </div>
-        </div>
-        <div id={`policy-tab-${trip.trip_id}`} className="provider-details__tab">
-          <p className="policy-title">
-            <strong>Chính sách nhà xe</strong>
-          </p>
-          <div className="content-policy-container"></div>
-        </div>
-        <div id={`ratings-tab-${trip.trip_id}`} className="provider-details__tab">
-          <div className="ratings-tab__average">
-            <span className="ratings-tab__average__point">
-              <i className="fas fa-star"></i> {trip.ratings?.overall || 0}
-            </span>
-            <span className="ratings-tab__average__total-ratings">{trip.ratings?.comments || 0} đánh giá</span>
-          </div>
-          <div className="rating-tab__cats" id={`list-rating-cats-${trip.trip_id}`}></div>
-          <div className="rating-tab__comments-list" id={`comment-list-${trip.trip_id}`}></div>
-          <div className="rating-tab__comments-list-pagination" id={`comment-pagination-${trip.trip_id}`}></div>
-        </div>
+        )}
       </div>
     </div>
-  </div>
-);
+  );
+};
 
-const TripCard = ({ trip }) => {
+const TripCard = ({ trip, stepTicket, setStepTicket, filters, syncUrl }) => {
+  const [showDetails, setShowDetails] = useState(false);
+  const [isBooking, setIsBooking] = useState(false);
+  const [showNoteModal, setShowNoteModal] = useState(false);
+
+  useEffect(() => {
+    if (isBooking && trip.important_notification?.content) {
+      setShowNoteModal(true);
+    }
+  }, [isBooking]);
+
   const gallery =
     Array.isArray(trip.company_gallery) && trip.company_gallery.length > 0
       ? trip.company_gallery
       : [{ url: trip.company_logo, medium: trip.company_logo, title: trip.company_name }];
+  
   const partnerId = trip.partner?.partner_id || trip.partner_id || '';
   const partnerName = trip.partner?.partner_name || trip.partner_name || '';
 
   return (
-    <li className="online-booking-page__provider-list__item" id={`route-trip-${trip.trip_id}`}>
-      {trip.notification?.label && (
-        <div className="online-booking-page__provider-list__item_header_notify">
-          <div className="header_notify-note">
-            <div className="notify-tag">
-              <span>Thông báo</span>
+    <li className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm transition-all duration-500 hover:border-primary-light hover:shadow-premium">
+      {/* Important Notification Modal */}
+      {showNoteModal && trip.important_notification?.content && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setShowNoteModal(false)}></div>
+          <div className="relative w-full max-w-2xl transform overflow-hidden rounded-[2.5rem] bg-white shadow-2xl animate-in zoom-in-95 duration-300">
+            <div className="bg-blue-600 px-8 py-6 text-white">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/20">
+                    <i className="fas fa-exclamation-triangle"></i>
+                  </div>
+                  <h3 className="font-display text-xl font-black uppercase tracking-tight">Thông báo quan trọng</h3>
+                </div>
+                <button 
+                  onClick={() => setShowNoteModal(false)}
+                  className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 transition-colors hover:bg-white/20"
+                >
+                  <i className="fas fa-times"></i>
+                </button>
+              </div>
             </div>
-            <div className="tooltip notify-link">
-              {trip.notification.label}
-              <span className="tooltiptext tooltip-top">{trip.notification.content}</span>
+            
+            <div className="p-10">
+              <div 
+                className="prose prose-slate max-w-none text-base font-medium leading-relaxed text-slate-600"
+                dangerouslySetInnerHTML={{ __html: trip.important_notification.content }}
+              />
+              
+              <div className="mt-10">
+                <button
+                  onClick={() => setShowNoteModal(false)}
+                  className="w-full rounded-2xl bg-slate-900 py-4 text-sm font-black uppercase tracking-widest text-white transition-all hover:bg-slate-800 active:scale-95"
+                >
+                  ĐÃ HIỂU & TIẾP TỤC
+                </button>
+              </div>
             </div>
           </div>
         </div>
       )}
-
-      <div className="online-booking-page__provider-list__item__img">
-        <img src={trip.company_logo} width="162" height="162" alt={trip.company_name} loading="lazy" decoding="async" />
-        <div className="instant-confirm">
-          <div>
-            <i className="fas fa-check-square"></i> Xác nhận tức thì
+      <div className="flex flex-col p-6 md:flex-row md:items-center md:gap-8">
+        {/* Logo & Confirm */}
+        <div className="relative mb-6 shrink-0 md:mb-0">
+          <div className="h-24 w-24 overflow-hidden rounded-3xl border border-slate-50 bg-slate-50 p-2 md:h-32 md:w-32">
+            <img 
+              src={trip.company_logo} 
+              className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-110" 
+              alt={trip.company_name} 
+            />
           </div>
-          <div className="point"></div>
+          <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-success px-4 py-1.5 text-[10px] font-black uppercase tracking-wider text-white shadow-md">
+            <i className="fas fa-shield-alt mr-1"></i> Tin cậy
+          </div>
         </div>
-      </div>
 
-      <div className="online-booking-page__provider-list__item__info">
-        <div className="online-booking-page__provider-list__item__bus-name-info">
-          <p className="online-booking-page__provider-list__item__title">{trip.company_name}</p>
-          <button type="button" className="ant-btn bus-rating-button">
-            <div className="bus-rating">
-              <i className="fas fa-star"></i>
-              <span>
-                {trip.ratings?.overall || 0} ({trip.ratings?.comments || 0})
-              </span>
+        {/* Info Content */}
+        <div className="flex-1 space-y-6">
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+            <div>
+              <h3 className="font-display text-2xl font-black tracking-tight text-slate-900 md:text-3xl">{trip.company_name}</h3>
+              <div className="mt-2 flex flex-wrap items-center gap-4">
+                <span className="flex items-center rounded-xl bg-slate-100 px-3 py-1.5 text-[11px] font-black uppercase tracking-wider text-slate-600">
+                  <i className="fas fa-bus-alt mr-2 text-primary"></i> {trip.vehicle_type}
+                </span>
+                <span className="flex items-center text-sm font-bold text-warning">
+                  <i className="fas fa-star mr-1.5"></i> {trip.ratings?.overall || 0}
+                  <span className="ml-2 font-medium text-slate-400">({trip.ratings?.comments || 0} đánh giá)</span>
+                </span>
+              </div>
             </div>
-          </button>
-        </div>
-        <div className="online-booking-page__provider-list__item__bus-type-info">
-          <p>{trip.vehicle_type}</p>
-        </div>
-        <div className="online-booking-page__provider-list__item__route-info">
-          <div className="online-booking-page__provider-list__item__route-info__item">
-            <span className="online-booking-page__provider-list__item__route-info__item-time">{formatTime(trip.pickup_date)} • </span>
-            <span className="online-booking-page__provider-list__item__route-info__item-place">{trip.from_name}</span>
-          </div>
-          <div className="online-booking-page__provider-list__item__route-info__travel-time">
-            {routeDuration(trip.pickup_date, trip.arrival_date)}
-          </div>
-          <div className="online-booking-page__provider-list__item__route-info__item online-booking-page__provider-list__item__route-info__item--ct">
-            <span className="online-booking-page__provider-list__item__route-info__item-time">{formatTime(trip.arrival_date)} • </span>
-            <span className="online-booking-page__provider-list__item__route-info__item-place">{trip.to_name}</span>
-          </div>
-        </div>
-      </div>
 
-      <div className="online-booking-page__provider-list__item__handle">
-        <div className="online-booking-page__provider-list__item__price">
-          <div className="fare">
-            {trip.fare_max > trip.fare_original ? 'Từ ' : ''}
-            {formatCurrency(trip.fare)}
+            {/* Regular Notification as Tooltip */}
+            {trip.notification?.label && (
+              <div className="relative group/notify">
+                <div className="flex items-center gap-2 cursor-pointer rounded-full bg-amber-50 px-4 py-2 border border-amber-100 transition-all hover:bg-amber-100">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                  </span>
+                  <span className="text-[11px] font-black uppercase tracking-wider text-amber-700">{trip.notification.label}</span>
+                </div>
+                
+                {/* Tooltip content */}
+                <div className="invisible group-hover/notify:visible absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-72 z-50 transition-all duration-300 opacity-0 group-hover/notify:opacity-100">
+                  <div className="relative bg-slate-900 text-white p-4 rounded-2xl shadow-2xl text-xs font-medium leading-relaxed">
+                    <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-900 rotate-45"></div>
+                    <div className="flex items-start gap-3">
+                      <i className="fas fa-info-circle text-amber-400 mt-0.5"></i>
+                      <div>{trip.notification.content || trip.notification.label}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
-          {trip.fare_discount > 0 && trip.fare_original > 0 && (
-            <div className="fareSmall">
-              <div className="small">{formatCurrency(trip.fare_original)}</div>
+
+          <div className="relative flex items-center justify-between gap-6 py-4">
+             <div className="absolute left-16 right-16 top-1/2 h-0.5 -translate-y-1/2 border-t-2 border-dashed border-slate-100"></div>
+             
+             <div className="relative z-10 bg-white pr-4 text-center">
+                <div className="font-display text-2xl font-black text-slate-950">{formatTime(trip.pickup_date)}</div>
+                <div className="mt-1 text-xs font-bold text-slate-400 uppercase tracking-widest">{trip.from_name}</div>
+             </div>
+
+             <div className="relative z-10 rounded-full bg-primary-light/20 px-4 py-1.5 text-[10px] font-black text-primary border border-primary-light/30">
+                {routeDuration(trip.pickup_date, trip.arrival_date)}
+             </div>
+
+             <div className="relative z-10 bg-white pl-4 text-center">
+                <div className="font-display text-2xl font-black text-slate-950">{formatTime(trip.arrival_date)}</div>
+                <div className="mt-1 text-xs font-bold text-slate-400 uppercase tracking-widest">{trip.to_name}</div>
+             </div>
+          </div>
+        </div>
+
+        {/* Price & Action */}
+        <div className="mt-8 shrink-0 space-y-4 border-t border-slate-50 pt-6 md:mt-0 md:w-64 md:border-l md:border-t-0 md:pl-8 md:pt-0">
+          <div className="text-right">
+            <div className="text-sm font-bold text-slate-300 line-through">
+               {trip.fare_discount > 0 && formatCurrency(trip.fare_original)}
             </div>
-          )}
-        </div>
-        <div className="online-booking-page__provider-list__item__available-seat">
-          <div className={`seat-available ${Number(trip.available_seat) <= 5 ? 'text-red' : ''}`}>
-            Còn {trip.available_seat || 0} chỗ trống
-          </div>
-        </div>
-        <div className="online-booking-page__provider-list__item__btns">
-          <div
-            data-companyid={trip.company_id}
-            data-load="0"
-            data-tripid={trip.trip_id}
-            data-seat-template-id={trip.seat_template_id}
-            data-partner-id={partnerId}
-            data-partner-name={partnerName}
-            data-departure-time={trip.departure_time || ''}
-            data-departure-date={trip.departure_date || ''}
-            data-pickup-date={trip.pickup_date || ''}
-            data-way-id={trip.way_id || ''}
-            data-booking-id={trip.booking_id || ''}
-            data-fare={trip.fare || 0}
-            data-to={trip.toId || trip.to_name || ''}
-            data-from={trip.fromId || trip.from_name || ''}
-            className="online-booking-page__provider-list__item__details-btn"
-          >
-            Thông tin chi tiết
-          </div>
-
-          <button
-            className="online-booking-page__provider-list__item__price-btn"
-            data-trip={trip.trip_id}
-            data-to={trip.toId || trip.to_name || ''}
-            data-from={trip.fromId || trip.from_name || ''}
-            data-partner-id={partnerId}
-            data-departure-time={trip.departure_time || ''}
-            data-departure-date={trip.departure_date || ''}
-            data-pickup-date={trip.pickup_date || ''}
-            data-way-id={trip.way_id || ''}
-            data-booking-id={trip.booking_id || ''}
-            data-fare={trip.fare || 0}
-            data-unchoosable={trip.unchoosable || 0}
-            data-route-name={trip.route_name || ''}
-            type="button"
-          >
-            Chọn chuyến
-          </button>
-        </div>
-      </div>
-
-      <div className="online-booking-page__provider-list__item__full-route">
-        {trip.route_name && trip.departure_date && (
-          <div className="notify-trip">
-            <div className="full-trip">
-              <span>*</span>Vé chặng thuộc chuyến {trip.route_name}
+            <div className="font-display text-4xl font-black tracking-tighter text-primary-dark">
+              {formatCurrency(trip.fare)}
+            </div>
+            <div className={`mt-1 text-xs font-black uppercase tracking-widest ${Number(trip.available_seat) <= 5 ? 'text-danger' : 'text-success'}`}>
+              {Number(trip.available_seat) <= 5 ? `Chỉ còn ${trip.available_seat} ghế` : `Còn ${trip.available_seat} chỗ trống`}
             </div>
           </div>
-        )}
-        <div style={{ width: '100%' }} id={`ticket-loading-${trip.trip_id}`}></div>
+
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-1">
+            <button 
+              onClick={() => setShowDetails(!showDetails)}
+              className="flex items-center justify-center rounded-2xl border-2 border-slate-100 py-4 text-sm font-black text-slate-600 transition-all hover:bg-slate-50 active:scale-95"
+            >
+              CHI TIẾT
+            </button>
+            <button 
+              style={{ background: 'var(--grad-primary)' }}
+              onClick={() => setIsBooking(true)}
+              className="flex items-center justify-center rounded-2xl py-4 text-sm font-black text-white shadow-xl shadow-primary/20 transition-all hover:opacity-90 active:scale-95"
+            >
+              CHỌN CHUYẾN
+            </button>
+          </div>
+        </div>
       </div>
 
-      <div className="online-booking-page__provider-list__seats-info" id={`seats-info-conetnt-${trip.trip_id}`}></div>
-      <DetailTabs trip={trip} gallery={gallery} />
+      {isBooking && (
+        <div className="border-t-2 border-primary/10 bg-white">
+          <div className="p-8 lg:p-10">
+            <SeatSelection 
+              trip={trip} 
+              onCancel={() => setIsBooking(false)} 
+              onComplete={(ticket) => {
+                const searchParams = new URLSearchParams(window.location.search);
+                if (searchParams.get('returnDate') && stepTicket === 0) {
+                  const nextStep = 1;
+                  setStepTicket(nextStep);
+                  const nextFilters = { ...filters, fa: '', ta: '', rating: '' };
+                  setFilters(nextFilters);
+                  syncUrl(nextFilters, nextStep);
+                  setIsBooking(false);
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                  window.location.href = window.location.origin + '/bookingconfirmation';
+                }
+              }}
+            />
+          </div>
+        </div>
+      )}
 
-      {trip.important_notification?.content && (
-        <div className="notice-box">
-          <h3 className="notice-box__title">{trip.important_notification.label}</h3>
-          <div className="notice-box__desc">{trip.important_notification.content}</div>
+      {showDetails && !isBooking && (
+        <div className="border-t border-slate-50 bg-slate-50/30 p-8">
+          <DetailTabs trip={trip} gallery={gallery} />
         </div>
       )}
     </li>
@@ -555,22 +793,34 @@ const TripCard = ({ trip }) => {
 };
 
 const TripList = () => {
-  const [filters, setFilters] = useState(getInitialFilters);
+  const [queryString, setQueryString] = useState(window.location.search);
+  const [filters, setFilters] = useState(getInitialFilters());
+  
+  // Initialize stepTicket from URL or default to 0
+  const [stepTicket, setStepTicket] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return parseInt(params.get('step') || '0', 10);
+  });
+
+  const hasClearedRef = React.useRef(false);
+
   const [trips, setTrips] = useState([]);
   const [statistics, setStatistics] = useState({});
   const [paging, setPaging] = useState({});
   const [nextCursor, setNextCursor] = useState('');
-  const [priceRange, setPriceRange] = useState('all');
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState('');
+  const [priceRange, setPriceRange] = useState('all');
 
-  const queryString = useMemo(() => buildQuery(filters).toString(), [filters]);
-
-  const syncUrl = (nextFilters) => {
-    const params = buildQuery(nextFilters);
+  const syncUrl = (next, step = stepTicket) => {
+    const params = buildQuery(next);
+    if (step > 0) params.set('step', step);
     window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
+    setQueryString(window.location.search);
   };
+
+
 
   const updateFilters = (patch) => {
     const next = { ...filters, ...patch };
@@ -581,7 +831,19 @@ const TripList = () => {
   const fetchTrips = (append = false, cursor = '') => {
     if (!filters.from || !filters.to) return;
 
-    const params = buildQuery(filters, cursor ? { cursor } : {});
+    const searchParams = new URLSearchParams(window.location.search);
+    const returnDate = searchParams.get('returnDate');
+
+    const fetchFilters = { ...filters };
+    if (stepTicket === 1 && returnDate) {
+      // Swap from and to for return leg
+      const from = fetchFilters.from;
+      fetchFilters.from = fetchFilters.to;
+      fetchFilters.to = from;
+      fetchFilters.date = formatDateInput(returnDate);
+    }
+
+    const params = buildQuery(fetchFilters, cursor ? { cursor } : {});
     const endpoint = `/wp-json/api/v1/trips?${params.toString()}`;
 
     setError('');
@@ -612,8 +874,48 @@ const TripList = () => {
   };
 
   useEffect(() => {
+    if (stepTicket === 0 && !hasClearedRef.current) {
+      hasClearedRef.current = true;
+      const formData = new FormData();
+      formData.append('action', 'clear_tickets');
+      formData.append('nonce', window.generic_data?.nonce);
+      fetch(window.generic_data?.ajax_url || '/wp-admin/admin-ajax.php', {
+        method: 'POST',
+        body: formData
+      });
+    }
     fetchTrips(false);
-  }, [queryString]);
+  }, [queryString, stepTicket]);
+
+  const handleNewSearch = (payload) => {
+    const next = {
+      ...filters,
+      from: payload.from,
+      to: payload.to,
+      nameFrom: payload.nameFrom || '',
+      nameTo: payload.nameTo || '',
+      date: payload.date,
+      returnDate: payload.returnDate || '',
+      companies: '',
+      fa: '',
+      ta: '',
+      rating: '',
+    };
+    setFilters(next);
+    
+    // Reset cleared flag for new search
+    hasClearedRef.current = false;
+    
+    const params = buildQuery(next);
+    if (payload.nameFrom) params.set('nameFrom', payload.nameFrom);
+    if (payload.nameTo) params.set('nameTo', payload.nameTo);
+    // Ensure step is reset to 0 for new search
+    params.delete('step');
+    setStepTicket(0);
+    
+    window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
+    setQueryString(window.location.search);
+  };
 
   const visibleTrips = useMemo(() => trips.filter((trip) => priceMatches(trip, priceRange)), [trips, priceRange]);
   const total = paging.totalItems ?? trips.length;
@@ -621,31 +923,28 @@ const TripList = () => {
     trips.length > 0 ? `${trips[0].from_name || 'Điểm đi'} đi ${trips[0].to_name || 'Điểm đến'}` : 'Tìm chuyến xe';
 
   return (
-    <div className="bg-slate-50">
-      <section className="border-b border-slate-200 bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-6 md:py-8">
-          <div className="mb-5">
-            <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">Dailyve</p>
-            <h1 className="mt-1 text-2xl font-extrabold text-slate-950 md:text-4xl">Kết quả tìm chuyến</h1>
-          </div>
-          <SearchPanel
-            filters={filters}
-            onSubmit={(payload) => {
-              const next = {
-                ...filters,
-                from: payload.from,
-                to: payload.to,
-                date: payload.date,
-                companies: '',
-              };
-              setFilters(next);
+    <div className="min-h-screen bg-slate-50/50">
+      <section className="relative overflow-hidden bg-white pb-16 pt-10 md:pt-14">
+        {/* Decorative background elements */}
+        <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-blue-50/50 blur-3xl"></div>
+        <div className="absolute -left-24 top-1/2 h-64 w-64 rounded-full bg-blue-100/30 blur-3xl"></div>
 
-              const params = buildQuery(next);
-              if (payload.nameFrom) params.set('nameFrom', payload.nameFrom);
-              if (payload.nameTo) params.set('nameTo', payload.nameTo);
-              window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
-            }}
-          />
+        <div className="relative mx-auto max-w-7xl px-4">
+          <div className="mb-10 text-center md:text-left">
+            <p className="inline-block rounded-full bg-blue-50 px-4 py-1.5 text-xs font-black uppercase tracking-widest text-blue-600">
+               <i className="fas fa-route mr-2"></i> Hệ thống đặt vé Dailyve
+            </p>
+            <h1 className="mt-4 font-display text-4xl font-black tracking-tight text-slate-900 md:text-6xl">
+              Khám phá <span className="text-blue-600">Hành trình</span> của bạn
+            </h1>
+          </div>
+          
+          <div className="glass-effect rounded-[2.5rem] p-2 shadow-premium">
+            <SearchPanel
+              filters={filters}
+              onSubmit={handleNewSearch}
+            />
+          </div>
         </div>
       </section>
 
@@ -659,52 +958,92 @@ const TripList = () => {
         />
 
         <main className="min-w-0">
-          <div className="mb-4 flex flex-col justify-between gap-2 rounded-lg border border-slate-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center">
+          <div className="mb-6 flex flex-col justify-between gap-4 rounded-3xl border border-slate-100 bg-white p-6 shadow-sm md:flex-row md:items-center">
             <div>
-              <h2 className="text-lg font-bold text-slate-950">{routeTitle}</h2>
-              <p className="text-sm text-slate-500">
-                {filters.date ? `Ngày ${filters.date}` : 'Chọn ngày đi'} · {loading ? 'Đang tải...' : `${total} chuyến phù hợp`}
+              <div className="flex items-center gap-2">
+                <h2 className="text-xl font-black text-slate-900">
+                  {stepTicket === 0 ? 'Chiều đi: ' : 'Chiều về: '}
+                  {filters.nameFrom && filters.nameTo ? (
+                    stepTicket === 0 ? `${filters.nameFrom} → ${filters.nameTo}` : `${filters.nameTo} → ${filters.nameFrom}`
+                  ) : (filters.from && filters.to ? (
+                    stepTicket === 0 ? `${filters.from} → ${filters.to}` : `${filters.to} → ${filters.from}`
+                  ) : 'Tìm chuyến xe')}
+                </h2>
+                {loading && <div className="h-2 w-2 animate-ping rounded-full bg-blue-500"></div>}
+              </div>
+              <p className="mt-1 text-sm font-bold text-slate-400">
+                {(() => {
+                  const searchParams = new URLSearchParams(window.location.search);
+                  const displayDate = (stepTicket === 1 && searchParams.get('returnDate')) 
+                    ? searchParams.get('returnDate') 
+                    : filters.date;
+                  return displayDate ? `Ngày ${displayDate}` : 'Chọn ngày đi';
+                })()} • {loading ? 'Đang tìm kiếm...' : `${total} chuyến phù hợp`}
               </p>
             </div>
-            <div className="text-sm font-semibold text-slate-600">Giữ nguyên luồng chọn ghế hiện tại</div>
+            <div className="flex items-center gap-2 rounded-2xl bg-blue-50 px-4 py-2 text-xs font-black text-blue-600">
+              <i className="fas fa-shield-alt"></i> Giá vé chính thức & Cam kết có chỗ
+            </div>
           </div>
 
           {!filters.from || !filters.to ? (
-            <div className="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600">
-              Chọn điểm đi, điểm đến và ngày khởi hành để xem chuyến xe.
+            <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-200 bg-white py-20 px-10 text-center">
+              <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-slate-50 text-3xl text-slate-300">
+                 <i className="fas fa-search"></i>
+              </div>
+              <h3 className="text-lg font-black text-slate-900">Sẵn sàng tìm chuyến?</h3>
+              <p className="mt-2 max-w-xs text-sm font-bold text-slate-400">Chọn điểm đi, điểm đến và ngày khởi hành để xem các chuyến xe tốt nhất dành cho bạn.</p>
             </div>
           ) : error ? (
-            <div className="rounded-lg border border-red-200 bg-red-50 p-5 text-red-700">{error}</div>
+            <div className="rounded-3xl border border-red-100 bg-red-50 p-6 text-center">
+               <div className="text-red-500 text-3xl mb-3"><i className="fas fa-exclamation-triangle"></i></div>
+               <p className="text-sm font-bold text-red-700">{error}</p>
+            </div>
           ) : loading ? (
-            <div className="grid gap-4">
-              {Array.from({ length: 4 }).map((_, index) => (
-                <div key={index} className="h-44 animate-pulse rounded-lg border border-slate-200 bg-white"></div>
+            <div className="grid gap-5">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <TripSkeleton key={index} />
               ))}
             </div>
           ) : visibleTrips.length > 0 ? (
             <>
-              <ul className="online-booking-page__provider-list" total={total}>
+              <div className="grid gap-5">
                 {visibleTrips.map((trip) => (
-                  <TripCard key={`${trip.trip_id}-${trip.pickup_date}`} trip={trip} />
+                  <TripCard 
+                    key={`${trip.trip_id}-${trip.pickup_date}`} 
+                    trip={trip} 
+                    stepTicket={stepTicket}
+                    setStepTicket={setStepTicket}
+                    filters={filters}
+                    syncUrl={syncUrl}
+                  />
                 ))}
-              </ul>
+              </div>
 
               {nextCursor && paging.hasMore && (
-                <div className="mt-5 flex justify-center">
+                <div className="mt-8 flex justify-center">
                   <button
                     type="button"
-                    className="rounded-md border border-blue-200 bg-white px-5 py-3 font-bold text-blue-700 shadow-sm transition hover:border-blue-500 hover:bg-blue-50 disabled:cursor-wait disabled:opacity-60"
+                    className="group flex items-center gap-3 rounded-2xl border-2 border-blue-100 bg-white px-8 py-4 text-sm font-black text-blue-600 shadow-sm transition-all hover:border-blue-500 hover:bg-blue-50 active:scale-95 disabled:cursor-wait disabled:opacity-60"
                     disabled={loadingMore}
                     onClick={() => fetchTrips(true, nextCursor)}
                   >
-                    {loadingMore ? 'Đang tải...' : 'Xem thêm chuyến'}
+                    {loadingMore ? (
+                      <><i className="fas fa-circle-notch animate-spin"></i> Đang tải...</>
+                    ) : (
+                      <>Xem thêm {total - trips.length} chuyến xe <i className="fas fa-chevron-down transition-transform group-hover:translate-y-1"></i></>
+                    )}
                   </button>
                 </div>
               )}
             </>
           ) : (
-            <div className="rounded-lg border border-slate-200 bg-white p-8 text-center text-slate-600">
-              Chưa tìm thấy chuyến phù hợp. Hãy thử đổi ngày đi hoặc bỏ bớt bộ lọc.
+            <div className="flex flex-col items-center justify-center rounded-3xl border border-slate-100 bg-white py-20 px-10 text-center shadow-sm">
+              <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-slate-50 text-3xl text-slate-300">
+                 <i className="fas fa-bus"></i>
+              </div>
+              <h3 className="text-lg font-black text-slate-900">Không tìm thấy chuyến xe</h3>
+              <p className="mt-2 max-w-xs text-sm font-bold text-slate-400">Rất tiếc, chúng tôi không tìm thấy chuyến xe nào phù hợp với yêu cầu của bạn. Vui lòng thử lại với ngày khác hoặc nhà xe khác.</p>
             </div>
           )}
         </main>

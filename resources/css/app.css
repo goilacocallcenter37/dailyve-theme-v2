@@ -1,4 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss" theme(static);
+
 @source "../../app/**/*.php";
 @source "../**/*.blade.php";
 @source "../**/*.js";
+
+@theme {
+  --font-sans: "Montserrat", sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  
+  --color-primary: #2196F3;
+  --color-primary-dark: #1565C0;
+  --color-primary-light: #BBDEFB;
+  --color-success: #16A34A;
+  --color-warning: #F59E0B;
+  --color-danger: #DC2626;
+  
+  --shadow-premium: 0 20px 40px -15px rgba(21, 101, 192, 0.12);
+}
+
+:root {
+  --grad-primary: linear-gradient(135deg, #2196F3 0%, #1565C0 100%);
+  --grad-success: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #F8FAFC;
+  color: #1E293B;
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}

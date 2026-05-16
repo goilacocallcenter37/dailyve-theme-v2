@@ -6,6 +6,12 @@
     @php(do_action('get_header'))
     @php(wp_head())
 
+    <script>
+      window.generic_data = {
+        ajax_url: '{{ admin_url('admin-ajax.php') }}',
+        nonce: '{{ wp_create_nonce('ams_vexe') }}'
+      };
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.jsx'])
   </head>
 
