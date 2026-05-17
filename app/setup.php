@@ -168,6 +168,8 @@ function dailyve_is_trip_results_page(): bool
 }
 
 add_action('wp_enqueue_scripts', function () {
+    wp_enqueue_style('dailyve-font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css', [], '5.15.4');
+
     if (! dailyve_is_trip_results_page()) {
         return;
     }
@@ -179,7 +181,6 @@ add_action('wp_enqueue_scripts', function () {
         return file_exists($path) ? (string) filemtime($path) : null;
     };
 
-    wp_enqueue_style('dailyve-legacy-font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css', [], '5.15.4');
     wp_enqueue_style('dailyve-legacy-jquery-ui', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css', [], '1.13.2');
     wp_enqueue_style('dailyve-legacy-slick', $legacy_uri . '/assets/slick/slick.css', [], $version('assets/slick/slick.css'));
     wp_enqueue_style('dailyve-legacy-static', $legacy_uri . '/assets/css/static.css', [], $version('assets/css/static.css'));

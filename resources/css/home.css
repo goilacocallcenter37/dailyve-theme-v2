@@ -1,0 +1,1391 @@
+:root {
+  --dailyve-blue: #0f7be8;
+  --dailyve-blue-dark: #0b3f8a;
+  --dailyve-navy: #0b2f68;
+  --dailyve-orange: #f59e0b;
+  --dailyve-line: #d7e6f7;
+  --dailyve-soft: #eef8ff;
+}
+
+body {
+  margin: 0;
+}
+
+.dailyve-container {
+  width: min(1220px, calc(100% - 32px));
+  margin-inline: auto;
+}
+
+.dailyve-site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid rgba(15, 123, 232, 0.12);
+  box-shadow: 0 8px 30px rgba(15, 63, 138, 0.06);
+  backdrop-filter: blur(16px);
+}
+
+.admin-bar .dailyve-site-header {
+  top: 32px;
+}
+
+.dailyve-site-header__inner {
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.dailyve-site-header__logo {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+.dailyve-site-header__logo img {
+  width: 124px;
+  height: auto;
+  display: block;
+}
+
+.dailyve-site-header__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+  flex: 1 1 auto;
+}
+
+.dailyve-site-header__nav a {
+  color: var(--dailyve-navy);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 160ms ease;
+}
+
+.dailyve-site-header__nav a:hover,
+.dailyve-site-header__nav a:focus-visible {
+  color: var(--dailyve-blue);
+}
+
+.dailyve-site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+}
+
+.dailyve-site-header__account,
+.dailyve-site-header__menu {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: var(--dailyve-navy);
+  border: 1px solid #c9dff6;
+  background: #fff;
+  text-decoration: none;
+}
+
+.dailyve-site-header__login {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 22px;
+  border-radius: 8px;
+  color: #fff;
+  background: linear-gradient(135deg, #ffb020 0%, #fb8c00 100%);
+  box-shadow: 0 10px 20px rgba(245, 158, 11, 0.22);
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.dailyve-site-header__menu {
+  display: none;
+}
+
+.dailyve-home {
+  background:
+    radial-gradient(circle at 12% 8%, rgba(33, 150, 243, 0.08), transparent 24rem),
+    linear-gradient(180deg, #ffffff 0%, #f7fbff 44%, #ffffff 100%);
+  color: var(--dailyve-navy);
+}
+
+.dailyve-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 58px 0 24px;
+  background:
+    linear-gradient(180deg, #dff4ff 0%, #eef9ff 52%, #ffffff 100%);
+}
+
+.dailyve-hero::after {
+  content: "";
+  position: absolute;
+  left: -6%;
+  right: -6%;
+  bottom: -30px;
+  height: 108px;
+  background:
+    radial-gradient(120% 100% at 18% 15%, rgba(42, 156, 246, 0.32), transparent 56%),
+    linear-gradient(92deg, rgba(19, 121, 231, 0.14), rgba(255, 255, 255, 0.82), rgba(19, 121, 231, 0.16));
+  border-radius: 50% 50% 0 0;
+}
+
+.dailyve-hero__skyline {
+  position: absolute;
+  inset: 42px 0 auto;
+  height: 180px;
+  opacity: 0.26;
+  background:
+    linear-gradient(180deg, transparent 0 44%, rgba(20, 126, 232, 0.2) 44% 100%),
+    repeating-linear-gradient(90deg, transparent 0 34px, rgba(13, 116, 232, 0.35) 34px 58px, transparent 58px 82px);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 25%, #000 78%, transparent 100%);
+  pointer-events: none;
+}
+
+.dailyve-hero__balloon {
+  position: absolute;
+  width: 48px;
+  height: 62px;
+  border-radius: 50% 50% 48% 48%;
+  background: repeating-linear-gradient(90deg, #fff 0 8px, #ff9f2d 8px 16px, #2da8ff 16px 24px);
+  box-shadow: inset 0 -8px 16px rgba(13, 63, 138, 0.12), 0 14px 24px rgba(13, 63, 138, 0.12);
+}
+
+.dailyve-hero__balloon::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -14px;
+  width: 18px;
+  height: 14px;
+  transform: translateX(-50%);
+  border-radius: 4px;
+  background: #e8a238;
+}
+
+.dailyve-hero__balloon--left {
+  top: 92px;
+  left: 54%;
+}
+
+.dailyve-hero__balloon--right {
+  top: 42px;
+  right: 10%;
+  transform: scale(0.75);
+}
+
+.dailyve-hero__inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 0.88fr) minmax(420px, 1.12fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.dailyve-hero__copy {
+  padding-top: 26px;
+}
+
+.dailyve-hero__copy h1 {
+  margin: 0;
+  color: var(--dailyve-navy);
+  font-size: 64px;
+  line-height: 1.05;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.dailyve-hero__copy h1 span {
+  display: block;
+  margin-top: 8px;
+  font-size: 44px;
+  font-weight: 800;
+}
+
+.dailyve-hero__copy h1 strong {
+  color: #0877ea;
+  font-style: italic;
+}
+
+.dailyve-hero__copy h1 em {
+  color: var(--dailyve-orange);
+  font-style: italic;
+}
+
+.dailyve-hero__proofs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 0;
+  margin: 24px 0 0;
+  list-style: none;
+}
+
+.dailyve-hero__proofs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #1b5ea8;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.dailyve-hero__proofs i {
+  color: #0877ea;
+}
+
+.dailyve-hero__visual {
+  position: relative;
+  min-height: 292px;
+}
+
+.dailyve-hero__route {
+  position: absolute;
+  left: 12px;
+  right: 20px;
+  bottom: 34px;
+  height: 132px;
+  border-radius: 999px 999px 30px 30px;
+  background:
+    linear-gradient(115deg, transparent 0 42%, rgba(255, 255, 255, 0.88) 42% 47%, transparent 47% 100%),
+    linear-gradient(180deg, #54b8ff 0%, #147ee9 100%);
+  transform: perspective(380px) rotateX(58deg) rotateZ(-3deg);
+  box-shadow: 0 28px 48px rgba(13, 86, 180, 0.22);
+}
+
+.dailyve-vehicle {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 20px 40px rgba(13, 86, 180, 0.18);
+}
+
+.dailyve-vehicle img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.dailyve-vehicle--bus {
+  width: 156px;
+  height: 120px;
+  left: 122px;
+  top: 72px;
+  transform: rotate(-5deg);
+}
+
+.dailyve-vehicle--bus img {
+  width: 92px;
+  filter: drop-shadow(0 8px 10px rgba(12, 63, 138, 0.18));
+}
+
+.dailyve-vehicle--train {
+  width: 182px;
+  height: 104px;
+  right: 150px;
+  top: 134px;
+  transform: rotate(4deg);
+}
+
+.dailyve-vehicle--train img {
+  width: 132px;
+}
+
+.dailyve-mascot-card {
+  position: absolute;
+  right: -8px;
+  bottom: 10px;
+  width: 212px;
+  height: 236px;
+  overflow: hidden;
+  border-radius: 28px;
+  box-shadow: 0 24px 50px rgba(13, 86, 180, 0.18);
+  background: #dff5ff;
+}
+
+.dailyve-mascot-card img {
+  width: 450px;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: left bottom;
+}
+
+.dailyve-hero__search {
+  grid-column: 1 / -1;
+  position: relative;
+  z-index: 5;
+  max-width: 1048px;
+  margin-top: -28px;
+}
+
+.dailyve-search {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(15, 63, 138, 0.08);
+  padding: 0 24px 16px;
+}
+
+.dailyve-search__tabs {
+  display: flex;
+  gap: 8px;
+  min-height: 60px;
+  align-items: center;
+  padding: 16px 0 12px;
+  overflow-x: auto;
+}
+
+.dailyve-search__tabs button {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #4b5563;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dailyve-search__tabs button i {
+  font-size: 14px;
+}
+
+.dailyve-search__tabs button:hover {
+  color: #1e293b;
+}
+
+.dailyve-search__tabs button.is-active {
+  color: #ffffff;
+  background: #0064d2;
+  box-shadow: 0 4px 12px rgba(0, 100, 210, 0.2);
+}
+
+.dailyve-search__form {
+  display: grid;
+  grid-template-columns: 2.1fr 1fr 0.8fr 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.dailyve-search__locations-wrapper {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(15, 63, 138, 0.04);
+}
+
+.dailyve-search__locations-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  background: #cbd5e1;
+  z-index: 5;
+}
+
+.dailyve-search__field {
+  position: relative;
+  min-width: 0;
+  min-height: 66px;
+  display: block;
+  padding: 12px 34px 8px 44px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(15, 63, 138, 0.04);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dailyve-search__locations-wrapper .dailyve-search__field {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.dailyve-search__field span {
+  display: block;
+  margin-bottom: 2px;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dailyve-search__field i:not(.dailyve-search__chevron) {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #0064d2;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.dailyve-search__field select,
+.dailyve-search__field input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  outline: 0;
+  background: transparent;
+  color: #0f172a;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  appearance: none;
+  cursor: pointer;
+}
+
+.dailyve-search__field select:focus,
+.dailyve-search__field input:focus {
+  outline: 0;
+}
+
+.dailyve-search__field:focus-within {
+  border-color: #0064d2;
+  box-shadow: 0 0 0 3px rgba(0, 100, 210, 0.1);
+}
+
+.dailyve-search__chevron {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.dailyve-search__field--date input::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer;
+}
+
+.dailyve-search__swap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #cbd5e1;
+  border-radius: 50%;
+  color: #64748b;
+  background: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+}
+
+.dailyve-search__swap:hover {
+  border-color: #0064d2;
+  color: #0064d2;
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.dailyve-search__submit {
+  min-height: 66px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 8px;
+  color: #ffffff;
+  background: #0064d2;
+  box-shadow: 0 4px 14px rgba(0, 100, 210, 0.3);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dailyve-search__submit:hover {
+  background: #0052b0;
+  box-shadow: 0 6px 18px rgba(0, 100, 210, 0.4);
+}
+
+.dailyve-search__benefits {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 12px 28px;
+  padding: 16px 8px 2px;
+  margin: 16px 0 0;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 700;
+  list-style: none;
+  border-top: 1px solid #f1f5f9;
+}
+
+.dailyve-search__benefits li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dailyve-search__benefits i {
+  color: #0064d2;
+  font-size: 13px;
+}
+
+.dailyve-section {
+  padding: 32px 0;
+}
+
+.dailyve-section__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.dailyve-section h2,
+.dailyve-section__heading h2,
+.dailyve-app-band h2 {
+  margin: 0;
+  color: #111f43;
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.dailyve-services h2 span,
+.dailyve-press h2 span,
+.dailyve-reasons h2 em,
+.dailyve-testimonials h2 em {
+  color: var(--dailyve-blue);
+  font-style: italic;
+  text-transform: none;
+}
+
+.dailyve-offers h2 span,
+.dailyve-reasons h2 span,
+.dailyve-testimonials h2 span {
+  color: var(--dailyve-orange);
+  font-style: normal;
+  text-transform: uppercase;
+}
+
+.dailyve-app-band h2 span {
+  color: #ffd24a;
+  font-style: italic;
+  text-transform: none;
+}
+
+.dailyve-section__heading a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 16px;
+  border: 1px solid #bcd9f4;
+  border-radius: 999px;
+  color: var(--dailyve-blue);
+  background: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.dailyve-offer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.dailyve-offer-card {
+  position: relative;
+  min-height: 196px;
+  padding: 24px 20px 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(12, 70, 150, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 12px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dailyve-offer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 35px rgba(12, 70, 150, 0.15);
+}
+
+.dailyve-offer-card::before {
+  content: "";
+  position: absolute;
+  bottom: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #f7fbff;
+  border: 1px solid #e2e8f0;
+  z-index: 2;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.dailyve-offer-card__left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  text-align: left;
+}
+
+.dailyve-offer-card__eyebrow {
+  margin: 0 0 4px;
+  color: #0064d2;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.dailyve-offer-card__value {
+  display: block;
+  color: #0064d2;
+  font-size: 48px;
+  line-height: 1;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+
+.dailyve-offer-card__note {
+  display: block;
+  margin-top: 6px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.dailyve-offer-card__code {
+  margin-top: 24px;
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.dailyve-offer-card__code span {
+  color: #0064d2;
+  font-weight: 800;
+}
+
+.dailyve-offer-card__right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 90px;
+  flex-shrink: 0;
+}
+
+.dailyve-offer-card__badge-wrapper {
+  position: relative;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.dailyve-offer-card__blue-coupon {
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  width: 52px;
+  height: 33px;
+  transform: rotate(-22deg);
+  z-index: 1;
+  opacity: 0.95;
+}
+
+.dailyve-offer-card__icon {
+  position: relative;
+  z-index: 2;
+  width: 96px;
+  height: 74px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.dailyve-offer-card:hover .dailyve-offer-card__icon {
+  transform: scale(1.06) translateY(-2px);
+}
+
+.dailyve-offer-card__btn-copy {
+  width: 100%;
+  min-height: 28px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 999px;
+  color: #ffffff;
+  background: #0064d2;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(0, 100, 210, 0.15);
+  transition: all 0.2s ease;
+}
+
+.dailyve-offer-card__btn-copy:hover {
+  background: #0052b0;
+  box-shadow: 0 4px 10px rgba(0, 100, 210, 0.25);
+}
+
+.dailyve-services__panel {
+  padding: 22px;
+  border: 1px solid #cfe0f2;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 18px 34px rgba(12, 70, 150, 0.08);
+}
+
+.dailyve-services__panel h2,
+.dailyve-reasons h2 {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.dailyve-services__grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.dailyve-services__grid article {
+  min-height: 156px;
+  padding: 20px 14px;
+  border: 1px solid #dce9f6;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #ffffff, #f6fbff);
+  text-align: center;
+}
+
+.dailyve-services__icon {
+  width: 96px;
+  height: 64px;
+  display: inline-block;
+  margin-bottom: 12px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.dailyve-services__grid article:hover .dailyve-services__icon {
+  transform: scale(1.08) translateY(-2px);
+}
+
+.dailyve-services__grid h3,
+.dailyve-reasons__grid h3,
+.dailyve-press__grid h3,
+.dailyve-testimonials__grid h3 {
+  margin: 0;
+  color: #102a58;
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 900;
+}
+
+.dailyve-services__grid p,
+.dailyve-reasons__grid p,
+.dailyve-testimonials__grid p {
+  margin: 6px 0 0;
+  color: #5a6c86;
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.dailyve-reasons__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.dailyve-reasons__grid article {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 108px;
+  padding: 18px;
+  border: 1px solid #d6e4f2;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 12px 24px rgba(12, 70, 150, 0.08);
+}
+
+.dailyve-reasons__grid i {
+  width: 54px;
+  height: 54px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  color: #0877ea;
+  background: #e9f5ff;
+  font-size: 26px;
+}
+
+.dailyve-press__grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.dailyve-press__grid article {
+  min-width: 0;
+  overflow: hidden;
+  padding: 16px;
+  border: 1px solid #d6e4f2;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 14px 28px rgba(12, 70, 150, 0.08);
+}
+
+.dailyve-press__brand {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0b3f8a;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.dailyve-press__grid article:nth-child(2) .dailyve-press__brand {
+  color: #168143;
+}
+
+.dailyve-press__grid article:nth-child(3) .dailyve-press__brand,
+.dailyve-press__grid article:nth-child(5) .dailyve-press__brand {
+  color: #d82222;
+}
+
+.dailyve-press__grid article:nth-child(4) .dailyve-press__brand {
+  color: #f59e0b;
+}
+
+.dailyve-press__grid img {
+  width: 100%;
+  aspect-ratio: 1.55;
+  display: block;
+  margin: 10px 0 14px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.dailyve-press__grid h3 {
+  min-height: 58px;
+  font-size: 14px;
+}
+
+.dailyve-press__grid time {
+  display: block;
+  margin-top: 12px;
+  color: #7890ac;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.dailyve-testimonials__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 72px;
+}
+
+.dailyve-testimonials__grid article {
+  position: relative;
+  min-height: 156px;
+  padding: 24px;
+  border: 1px solid #d6e4f2;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 14px 28px rgba(12, 70, 150, 0.08);
+}
+
+.dailyve-testimonials__grid article::after {
+  content: "”";
+  position: absolute;
+  right: 22px;
+  bottom: -16px;
+  color: rgba(33, 150, 243, 0.16);
+  font-family: Georgia, serif;
+  font-size: 86px;
+  line-height: 1;
+}
+
+.dailyve-testimonial__profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dailyve-testimonial__avatar {
+  width: 52px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: #fff;
+  background: linear-gradient(135deg, #0b72e7, #f5a524);
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.dailyve-testimonial__profile span {
+  color: #7890ac;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.dailyve-stars {
+  margin-top: 12px;
+  color: #f5a524;
+  font-size: 16px;
+  letter-spacing: 0;
+}
+
+.dailyve-app-band {
+  padding: 28px 0 44px;
+}
+
+.dailyve-app-band__inner {
+  position: relative;
+  min-height: 292px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(420px, 1.05fr);
+  gap: 24px;
+  overflow: hidden;
+  padding: 42px 48px;
+  border-radius: 20px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 82% 28%, rgba(255, 255, 255, 0.28), transparent 18rem),
+    linear-gradient(135deg, #0a87f5 0%, #075bd1 100%);
+  box-shadow: 0 24px 50px rgba(12, 102, 220, 0.22);
+}
+
+.dailyve-app-band__inner::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 120px;
+  background:
+    linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.12)),
+    repeating-linear-gradient(90deg, transparent 0 42px, rgba(255, 255, 255, 0.22) 42px 74px, transparent 74px 104px);
+  opacity: 0.35;
+}
+
+.dailyve-app-band__copy {
+  position: relative;
+  z-index: 2;
+}
+
+.dailyve-app-band h2 {
+  max-width: 560px;
+  color: #fff;
+  font-size: 36px;
+}
+
+.dailyve-app-band p {
+  max-width: 500px;
+  margin: 14px 0 22px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 15px;
+  line-height: 1.6;
+  font-weight: 700;
+}
+
+.dailyve-app-band__stores {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dailyve-app-band__stores > img {
+  width: 104px;
+  height: 104px;
+  padding: 8px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.dailyve-app-band__stores div {
+  display: grid;
+  gap: 10px;
+}
+
+.dailyve-app-band__stores div img,
+.dailyve-footer__apps img {
+  width: 148px;
+  height: auto;
+  display: block;
+}
+
+.dailyve-app-band__visual {
+  position: relative;
+  z-index: 1;
+  min-height: 220px;
+  overflow: hidden;
+  border-radius: 18px;
+  align-self: stretch;
+  box-shadow: 0 18px 34px rgba(8, 45, 120, 0.28);
+}
+
+.dailyve-app-band__visual img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.dailyve-footer {
+  color: rgba(255, 255, 255, 0.86);
+  background: linear-gradient(135deg, #003d76 0%, #0057a3 100%);
+}
+
+.dailyve-footer__grid {
+  display: grid;
+  grid-template-columns: 1.45fr 0.8fr 0.9fr 0.9fr 0.8fr;
+  gap: 44px;
+  padding: 38px 0 30px;
+}
+
+.dailyve-footer h2 {
+  margin: 0 0 16px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.dailyve-footer a {
+  color: rgba(255, 255, 255, 0.86);
+  text-decoration: none;
+}
+
+.dailyve-footer nav a {
+  display: block;
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.dailyve-footer__brand img {
+  width: 132px;
+  height: auto;
+}
+
+.dailyve-footer__brand p {
+  margin: 8px 0 16px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.dailyve-footer__brand ul {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.dailyve-footer__brand li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.dailyve-footer__brand i {
+  width: 16px;
+  margin-top: 2px;
+}
+
+.dailyve-footer__social div {
+  display: flex;
+  gap: 12px;
+}
+
+.dailyve-footer__social a {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #fff;
+  color: #075bd1;
+}
+
+.dailyve-footer__apps {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.dailyve-footer__bottom {
+  padding: 14px 0 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  text-align: center;
+}
+
+.dailyve-footer__bottom p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@media (max-width: 1180px) {
+  .dailyve-site-header__nav {
+    gap: 20px;
+  }
+
+  .dailyve-hero__copy h1 {
+    font-size: 54px;
+  }
+
+  .dailyve-hero__copy h1 span {
+    font-size: 38px;
+  }
+
+  .dailyve-search__form {
+    grid-template-columns: 1fr 44px 1fr 0.8fr;
+  }
+
+  .dailyve-search__field--tickets,
+  .dailyve-search__submit {
+    grid-column: span 2;
+  }
+
+  .dailyve-offer-grid,
+  .dailyve-reasons__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dailyve-services__grid,
+  .dailyve-press__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .dailyve-testimonials__grid {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 960px) {
+  .dailyve-site-header__inner {
+    min-height: 64px;
+  }
+
+  .dailyve-site-header__nav {
+    display: none;
+  }
+
+  .dailyve-site-header__menu {
+    display: inline-flex;
+  }
+
+  .dailyve-hero__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .dailyve-hero__copy {
+    max-width: 680px;
+    padding-top: 10px;
+  }
+
+  .dailyve-hero__visual {
+    min-height: 236px;
+  }
+
+  .dailyve-hero__search {
+    margin-top: 0;
+  }
+
+  .dailyve-app-band__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .dailyve-footer__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .admin-bar .dailyve-site-header {
+    top: 46px;
+  }
+
+  .dailyve-container {
+    width: min(100% - 24px, 1220px);
+  }
+
+  .dailyve-site-header__login,
+  .dailyve-site-header__account {
+    display: none;
+  }
+
+  .dailyve-site-header__logo img {
+    width: 112px;
+  }
+
+  .dailyve-hero {
+    padding: 36px 0 22px;
+  }
+
+  .dailyve-hero__copy h1 {
+    font-size: 40px;
+  }
+
+  .dailyve-hero__copy h1 span {
+    font-size: 28px;
+  }
+
+  .dailyve-hero__proofs {
+    gap: 10px;
+  }
+
+  .dailyve-hero__proofs li {
+    font-size: 12px;
+  }
+
+  .dailyve-hero__visual {
+    min-height: 180px;
+  }
+
+  .dailyve-vehicle--bus {
+    left: 20px;
+    top: 42px;
+    width: 116px;
+    height: 92px;
+  }
+
+  .dailyve-vehicle--train {
+    right: 18px;
+    top: 72px;
+    width: 130px;
+    height: 82px;
+  }
+
+  .dailyve-mascot-card {
+    display: none;
+  }
+
+  .dailyve-search {
+    padding: 0 10px 10px;
+  }
+
+  .dailyve-search__form {
+    grid-template-columns: 1fr;
+  }
+
+  .dailyve-search__field--tickets,
+  .dailyve-search__submit {
+    grid-column: auto;
+  }
+
+  .dailyve-search__swap {
+    justify-self: center;
+  }
+
+  .dailyve-section {
+    padding: 24px 0;
+  }
+
+  .dailyve-section__heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dailyve-section h2,
+  .dailyve-section__heading h2,
+  .dailyve-app-band h2 {
+    font-size: 26px;
+  }
+
+  .dailyve-offer-grid,
+  .dailyve-services__grid,
+  .dailyve-reasons__grid,
+  .dailyve-press__grid,
+  .dailyve-testimonials__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dailyve-app-band__inner {
+    min-height: 0;
+    padding: 28px 20px;
+    border-radius: 16px;
+  }
+
+  .dailyve-app-band__visual {
+    min-height: 160px;
+  }
+
+  .dailyve-app-band__stores {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dailyve-footer__grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}

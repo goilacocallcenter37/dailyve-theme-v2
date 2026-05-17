@@ -6,9 +6,18 @@ const getTomorrow = () => {
   return date.toISOString().slice(0, 10);
 };
 
+const products = [
+  { id: 'bus', label: 'Xe khách', icon: 'fas fa-bus' },
+  { id: 'train', label: 'Tàu hỏa', icon: 'fas fa-train' },
+  { id: 'flight', label: 'Máy bay', icon: 'fas fa-plane' },
+  { id: 'hotel', label: 'Khách sạn', icon: 'fas fa-hotel' },
+];
+
 const SearchForm = () => {
   const [locations, setLocations] = useState([]);
-  
+  const [activeProduct, setActiveProduct] = useState('bus');
+  const [ticketCount, setTicketCount] = useState('1');
+
   const [from, setFrom] = useState(() => {
     const params = new URLSearchParams(window.location.search);
     return params.get('from') || '';
@@ -20,14 +29,6 @@ const SearchForm = () => {
   const [date, setDate] = useState(() => {
     const params = new URLSearchParams(window.location.search);
     return params.get('date') || getTomorrow();
-  });
-  const [returnDate, setReturnDate] = useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('returnDate') || '';
-  });
-  const [isRoundTrip, setIsRoundTrip] = useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    return !!params.get('returnDate');
   });
 
   useEffect(() => {
@@ -58,20 +59,13 @@ const SearchForm = () => {
   const handleSearch = (event) => {
     event.preventDefault();
 
-    if (isRoundTrip && !returnDate) {
-      alert('Vui lòng chọn ngày về cho chuyến khứ hồi');
-      return;
-    }
-
     const params = new URLSearchParams({
       from,
       to,
       date,
+      passengers: ticketCount,
+      service: activeProduct,
     });
-
-    if (isRoundTrip && returnDate) {
-      params.set('returnDate', returnDate);
-    }
 
     if (locationMap[from]) {
       params.set('nameFrom', locationMap[from]);
@@ -85,136 +79,103 @@ const SearchForm = () => {
   };
 
   return (
-    <div className="mx-auto max-w-6xl">
-      {/* Search Type Toggle */}
-      <div className="mb-4 flex gap-2">
-        <button
-          type="button"
-          onClick={() => setIsRoundTrip(false)}
-          className={`flex items-center gap-2 rounded-full px-6 py-2 text-sm font-bold transition-all ${
-            !isRoundTrip
-              ? 'bg-primary text-white shadow-lg shadow-primary/20'
-              : 'bg-white/50 text-slate-600 hover:bg-white'
-          }`}
-        >
-          <i className="fas fa-arrow-right"></i>
-          Một chiều
-        </button>
-        <button
-          type="button"
-          onClick={() => setIsRoundTrip(true)}
-          className={`flex items-center gap-2 rounded-full px-6 py-2 text-sm font-bold transition-all ${
-            isRoundTrip
-              ? 'bg-primary text-white shadow-lg shadow-primary/20'
-              : 'bg-white/50 text-slate-600 hover:bg-white'
-          }`}
-        >
-          <i className="fas fa-exchange-alt"></i>
-          Khứ hồi
-        </button>
+    <div className="dailyve-search">
+      <div className="dailyve-search__tabs" role="tablist" aria-label="Chọn dịch vụ">
+        {products.map((product) => (
+          <button
+            key={product.id}
+            type="button"
+            role="tab"
+            aria-selected={activeProduct === product.id}
+            className={activeProduct === product.id ? 'is-active' : ''}
+            onClick={() => setActiveProduct(product.id)}
+          >
+            <i className={product.icon} aria-hidden="true"></i>
+            {product.label}
+          </button>
+        ))}
       </div>
 
-      <div className="glass-effect relative z-10 rounded-[2.5rem] p-2 shadow-premium border border-white/50">
-        <form 
-          onSubmit={handleSearch} 
-          className={`grid grid-cols-1 gap-4 p-4 ${
-            isRoundTrip 
-              ? 'lg:grid-cols-[1fr_auto_1fr_1fr_1fr_auto]' 
-              : 'lg:grid-cols-[1fr_auto_1fr_1fr_auto]'
-          }`}
-        >
-          <div className="relative group">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-primary transition-transform group-focus-within:scale-110">
-              <i className="fas fa-map-marker-alt"></i>
-            </div>
-            <select
-              value={from}
-              onChange={(event) => setFrom(event.target.value)}
-              className="h-16 w-full rounded-3xl border-2 border-transparent bg-slate-50/80 pl-11 pr-4 text-sm font-bold text-slate-700 outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary-light/30"
-              required
-            >
-              <option value="">Điểm đi</option>
+      <form onSubmit={handleSearch} className="dailyve-search__form">
+        <div className="dailyve-search__locations-wrapper">
+          <label className="dailyve-search__field">
+            <span>Nơi đi</span>
+            <i className="fas fa-map-marker-alt" aria-hidden="true"></i>
+            <select value={from} onChange={(event) => setFrom(event.target.value)} required>
+              <option value="">Nhập nơi đi</option>
               {locations.map((location) => (
                 <option key={location.id} value={location.id}>
                   {location.name}
                 </option>
               ))}
             </select>
-          </div>
-
-          <div className="flex items-center justify-center">
-            <button
-              type="button"
-              className="h-12 w-12 rounded-full bg-white text-primary shadow-lg border border-slate-100 transition-all hover:rotate-180 hover:bg-primary hover:text-white active:scale-90"
-              onClick={() => {
-                const temp = from;
-                setFrom(to);
-                setTo(temp);
-              }}
-            >
-              <i className="fas fa-exchange-alt"></i>
-            </button>
-          </div>
-
-          <div className="relative group">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-primary transition-transform group-focus-within:scale-110">
-              <i className="fas fa-map-pin"></i>
-            </div>
-            <select
-              value={to}
-              onChange={(event) => setTo(event.target.value)}
-              className="h-16 w-full rounded-3xl border-2 border-transparent bg-slate-50/80 pl-11 pr-4 text-sm font-bold text-slate-700 outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary-light/30"
-              required
-            >
-              <option value="">Điểm đến</option>
-              {locations.map((location) => (
-                <option key={location.id} value={location.id}>
-                  {location.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="relative group">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-primary transition-transform group-focus-within:scale-110">
-              <i className="fas fa-calendar-day"></i>
-            </div>
-            <div className="absolute left-11 top-2 text-[10px] font-bold text-primary uppercase">Ngày đi</div>
-            <input
-              type="date"
-              value={date}
-              min={new Date().toISOString().slice(0, 10)}
-              onChange={(event) => setDate(event.target.value)}
-              className="h-16 w-full rounded-3xl border-2 border-transparent bg-slate-50/80 pl-11 pr-4 pt-4 text-sm font-bold text-slate-700 outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary-light/30"
-              required
-            />
-          </div>
-
-          {isRoundTrip && (
-            <div className="relative group animate-in fade-in slide-in-from-left-4 duration-300">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-primary transition-transform group-focus-within:scale-110">
-                <i className="fas fa-calendar-check"></i>
-              </div>
-              <div className="absolute left-11 top-2 text-[10px] font-bold text-primary uppercase">Ngày về</div>
-              <input
-                type="date"
-                value={returnDate}
-                min={date}
-                onChange={(event) => setReturnDate(event.target.value)}
-                className="h-16 w-full rounded-3xl border-2 border-transparent bg-slate-50/80 pl-11 pr-4 pt-4 text-sm font-bold text-slate-700 outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary-light/30"
-                required={isRoundTrip}
-              />
-            </div>
-          )}
+            <i className="fas fa-chevron-down dailyve-search__chevron" aria-hidden="true"></i>
+          </label>
 
           <button
-            type="submit"
-            className="h-16 rounded-3xl bg-primary px-10 text-base font-black text-white shadow-xl shadow-primary/20 transition-all hover:bg-primary-dark hover:shadow-primary/30 active:scale-95 lg:w-full"
+            type="button"
+            className="dailyve-search__swap"
+            aria-label="Đổi điểm đi và điểm đến"
+            onClick={() => {
+              const temp = from;
+              setFrom(to);
+              setTo(temp);
+            }}
           >
-            TÌM CHUYẾN
+            <i className="fas fa-exchange-alt" aria-hidden="true"></i>
           </button>
-        </form>
-      </div>
+
+          <label className="dailyve-search__field">
+            <span>Nơi đến</span>
+            <i className="fas fa-map-pin" aria-hidden="true"></i>
+            <select value={to} onChange={(event) => setTo(event.target.value)} required>
+              <option value="">Nhập nơi đến</option>
+              {locations.map((location) => (
+                <option key={location.id} value={location.id}>
+                  {location.name}
+                </option>
+              ))}
+            </select>
+            <i className="fas fa-chevron-down dailyve-search__chevron" aria-hidden="true"></i>
+          </label>
+        </div>
+
+        <label className="dailyve-search__field dailyve-search__field--date">
+          <span>Ngày đi</span>
+          <i className="fas fa-calendar-alt" aria-hidden="true"></i>
+          <input
+            type="date"
+            value={date}
+            min={new Date().toISOString().slice(0, 10)}
+            onChange={(event) => setDate(event.target.value)}
+            required
+          />
+        </label>
+
+        <label className="dailyve-search__field dailyve-search__field--tickets">
+          <span>Số vé</span>
+          <i className="fas fa-user" aria-hidden="true"></i>
+          <select value={ticketCount} onChange={(event) => setTicketCount(event.target.value)}>
+            <option value="1">1 vé</option>
+            <option value="2">2 vé</option>
+            <option value="3">3 vé</option>
+            <option value="4">4 vé</option>
+          </select>
+          <i className="fas fa-chevron-down dailyve-search__chevron" aria-hidden="true"></i>
+        </label>
+
+        <button type="submit" className="dailyve-search__submit">
+          <i className="fas fa-search" aria-hidden="true"></i>
+          Tìm vé
+        </button>
+      </form>
+
+      <ul className="dailyve-search__benefits" aria-label="Lợi ích khi đặt vé">
+        <li><i className="fas fa-ticket-alt" aria-hidden="true"></i>Đặt vé siêu nhanh</li>
+        <li><i className="fas fa-headset" aria-hidden="true"></i>Hỗ trợ 24/7</li>
+        <li><i className="fas fa-gift" aria-hidden="true"></i>Nhiều ưu đãi hấp dẫn</li>
+        <li><i className="fas fa-shield-alt" aria-hidden="true"></i>Xuất vé điện tử tiện lợi</li>
+      </ul>
     </div>
   );
 };
