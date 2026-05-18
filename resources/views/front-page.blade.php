@@ -164,10 +164,36 @@
         <section class="dailyve-section dailyve-offers" aria-labelledby="dailyve-offers-title">
             <div class="dailyve-container dailyve-offers__layout">
                 <div class="dailyve-offers__intro">
-                    <h2 id="dailyve-offers-title">Ưu đãi <span>HOT</span> cho người đẹp</h2>
+                    <h2 id="dailyve-offers-title">
+                        <span class="title-main">Ưu đãi</span>
+                        <span class="title-badge-row">
+                            <span class="hot-badge">HOT</span>
+                        </span>
+                        <span class="title-sub">cho người đẹp</span>
+                    </h2>
+                    
                     <div class="dailyve-offers__ticket-art" aria-hidden="true">
-                        <i class="fas fa-ticket-alt"></i>
-                        <i class="fas fa-fire"></i>
+                        <div class="ticket-art-container">
+                            <div class="ticket-art-main">
+                                <div class="ticket-art-bus">
+                                    <i class="fas fa-bus"></i>
+                                </div>
+                                <div class="ticket-art-divider"></div>
+                                <div class="ticket-art-lines">
+                                    <span class="line-1"></span>
+                                    <span class="line-2"></span>
+                                    <span class="line-3"></span>
+                                </div>
+                            </div>
+                            <div class="ticket-art-tag">
+                                <div class="tag-body">
+                                    <i class="fas fa-fire-alt"></i>
+                                </div>
+                            </div>
+                            <div class="ticket-art-sparkle sparkle-1">✦</div>
+                            <div class="ticket-art-sparkle sparkle-2">✦</div>
+                            <div class="ticket-art-sparkle sparkle-3">✦</div>
+                        </div>
                     </div>
                 </div>
 

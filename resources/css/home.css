@@ -1055,7 +1055,6 @@ body {
   text-align: center;
 }
 
-.dailyve-offers h2 span,
 .dailyve-services h2 span,
 .dailyve-reasons h2 span,
 .dailyve-press h2 span,
@@ -1070,36 +1069,287 @@ body {
 }
 
 .dailyve-offers {
-  background: linear-gradient(180deg, #05264a 0%, #031830 100%);
+  background: linear-gradient(135deg, #0d5bb5 0%, #003680 100%);
   color: #ffffff;
-  padding: 56px 0;
+  padding: 64px 0;
+  position: relative;
+  overflow: hidden;
 }
 
 .dailyve-offers h2 {
   color: #ffffff;
-  font-size: 32px;
-  font-weight: 900;
-  text-align: center;
-  margin-bottom: 36px;
+  font-size: clamp(32px, 3.8vw, 42px);
+  font-weight: 800;
+  line-height: 1.25;
+  margin: 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.dailyve-offers h2 span {
-  color: #ff9f1c; /* HOT highlighted orange */
+@media (max-width: 1023px) {
+  .dailyve-offers h2 {
+    text-align: center;
+    align-items: center;
+  }
+}
+
+.dailyve-offers h2 .title-main {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+}
+
+.dailyve-offers h2 .title-badge-row {
+  display: inline-block;
+  margin: 4px 0;
+}
+
+.dailyve-offers h2 .hot-badge {
+  background: #ffea00;
+  color: #003680;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 0.72em;
+  font-weight: 900;
+  padding: 4px 14px;
+  border-radius: 6px;
+  display: inline-block;
+  transform: rotate(-6deg);
+  box-shadow: 0 6px 16px rgba(255, 234, 0, 0.4);
+  animation: dailyve-badge-pulse 2s infinite ease-in-out;
+}
+
+@keyframes dailyve-badge-pulse {
+  0%, 100% { transform: rotate(-6deg) scale(1); }
+  50% { transform: rotate(-6deg) scale(1.06); }
+}
+
+.dailyve-offers h2 .title-sub {
+  font-size: 0.9em;
+  font-weight: 700;
+  opacity: 0.95;
 }
 
 .dailyve-offers__layout {
   max-width: 1220px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+@media (max-width: 1023px) {
+  .dailyve-offers__layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    justify-items: center;
+  }
 }
 
 .dailyve-offers__intro {
-  display: none; /* Hide visual assets */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+  width: 100%;
+}
+
+@media (max-width: 1023px) {
+  .dailyve-offers__intro {
+    align-items: center;
+    max-width: 480px;
+  }
+}
+
+/* Floating Ticket CSS Art */
+.dailyve-offers__ticket-art {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 170px;
+  margin-top: 12px;
+}
+
+.ticket-art-container {
+  position: relative;
+  width: 240px;
+  height: 140px;
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+  .ticket-art-container {
+    margin: 0;
+  }
+}
+
+.ticket-art-main {
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 200px;
+  height: 110px;
+  background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 100%);
+  border: 2px solid #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+  transform: rotate(-12deg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  z-index: 2;
+  animation: dailyve-ticket-float 4.2s infinite ease-in-out;
+}
+
+@keyframes dailyve-ticket-float {
+  0%, 100% { transform: rotate(-12deg) translateY(0); }
+  50% { transform: rotate(-10deg) translateY(-8px); }
+}
+
+/* Ticket Notches for CSS Art */
+.ticket-art-main::before,
+.ticket-art-main::after {
+  content: "";
+  position: absolute;
+  left: 45%;
+  width: 16px;
+  height: 16px;
+  background: #0958b4; /* Solid color approximating average gradient color under notches */
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  z-index: 3;
+}
+
+.ticket-art-main::before {
+  top: -10px;
+  transform: translateX(-50%);
+}
+
+.ticket-art-main::after {
+  bottom: -10px;
+  transform: translateX(-50%);
+}
+
+.ticket-art-bus {
+  font-size: 34px;
+  color: #0d5bb5;
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ticket-art-divider {
+  position: absolute;
+  left: 45%;
+  top: 12px;
+  bottom: 12px;
+  width: 0;
+  border-left: 2px dashed rgba(13, 91, 181, 0.22);
+  transform: translateX(-50%);
+}
+
+.ticket-art-lines {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ticket-art-lines span {
+  display: block;
+  height: 4px;
+  background: rgba(13, 91, 181, 0.18);
+  border-radius: 2px;
+}
+
+.ticket-art-lines .line-1 { width: 80%; }
+.ticket-art-lines .line-2 { width: 100%; }
+.ticket-art-lines .line-3 { width: 60%; }
+
+/* Floating Flame Tag */
+.ticket-art-tag {
+  position: absolute;
+  right: 12px;
+  bottom: -4px;
+  width: 78px;
+  height: 78px;
+  z-index: 5;
+  animation: dailyve-tag-float 4.2s infinite ease-in-out;
+  animation-delay: 0.6s;
+}
+
+@keyframes dailyve-tag-float {
+  0%, 100% { transform: rotate(15deg) translateY(0); }
+  50% { transform: rotate(18deg) translateY(-6px); }
+}
+
+.tag-body {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+  border: 2px solid #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(15deg);
+}
+
+.tag-body i {
+  font-size: 28px;
+  color: #ffea00;
+  animation: dailyve-flame-burn 1.5s infinite ease-in-out alternate;
+  filter: drop-shadow(0 2px 6px rgba(255, 234, 0, 0.6));
+}
+
+@keyframes dailyve-flame-burn {
+  0% { transform: scale(0.92) rotate(-2deg); }
+  100% { transform: scale(1.08) rotate(2deg); filter: drop-shadow(0 4px 10px rgba(255, 234, 0, 0.9)); }
+}
+
+/* Sparkles */
+.ticket-art-sparkle {
+  position: absolute;
+  color: #ffea00;
+  font-size: 20px;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(255, 234, 0, 0.4));
+  animation: dailyve-sparkle-glow 2.2s infinite ease-in-out;
+}
+
+.sparkle-1 { top: 0; left: -10px; animation-delay: 0.2s; }
+.sparkle-2 { bottom: 20px; left: 40px; animation-delay: 0.8s; }
+.sparkle-3 { top: 20px; right: 20px; animation-delay: 1.4s; }
+
+@keyframes dailyve-sparkle-glow {
+  0%, 100% { transform: scale(0.8); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 1; }
 }
 
 .dailyve-offer-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 20px;
+  width: 100%;
+}
+
+@media (max-width: 1199px) {
+  .dailyve-offer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 575px) {
+  .dailyve-offer-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 }
 
 .dailyve-offer-card {
@@ -1107,68 +1357,123 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 24px;
-  border-radius: 14px;
-  background: #ffffff;
-  border: 1px dashed rgba(15, 123, 232, 0.25);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease;
+  padding: 22px 24px;
+  border-radius: 16px;
+  /* Radially notches that are fully transparent */
+  background: 
+    radial-gradient(circle at 78% 0, transparent 9px, #ffffff 10px) top left / 100% 51% no-repeat,
+    radial-gradient(circle at 78% 100%, transparent 9px, #ffffff 10px) bottom left / 100% 51% no-repeat;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  border: none;
+  overflow: visible;
 }
 
 .dailyve-offer-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
+}
+
+/* Vertical dashed line separating notch boundary */
+.dailyve-offer-card::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  left: 78%;
+  width: 0;
+  border-left: 2px dashed rgba(13, 91, 181, 0.16);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.dailyve-offer-card__body {
+  width: 74%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .dailyve-offer-card__discount {
   margin: 0;
-  color: #0b3f8a;
-  font-size: 20px;
-  font-weight: 900;
-  line-height: 1.2;
+  color: #003680;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 1.25;
 }
 
 .dailyve-offer-card__label {
   margin: 4px 0 16px;
-  color: #475569;
-  font-size: 13px;
-  font-weight: 700;
+  color: #64748b;
+  font-size: 13.5px;
+  font-weight: 600;
 }
 
 .dailyve-offer-card__save {
-  min-height: 34px;
-  padding: 0 20px;
+  min-height: 36px;
+  padding: 0 22px;
   border: 0;
-  border-radius: 99px;
+  border-radius: 8px;
   color: #ffffff;
-  background: #0b2f68; /* Dark navy save button */
-  font-size: 12px;
+  background: #004299;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 13px;
   font-weight: 800;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.22s ease;
 }
 
 .dailyve-offer-card__save:hover {
   background: #ff9f1c;
+  transform: scale(1.04);
 }
 
+/* Rosette star badge inside voucher ticket */
 .dailyve-offer-card__badge {
-  width: 48px;
-  height: 48px;
+  position: absolute;
+  right: 0;
+  width: 22%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.dailyve-offer-card__badge span {
+  width: 32px;
+  height: 32px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
   color: #ffffff;
-  background: #0f7be8; /* Circular blue badge */
-  font-size: 18px;
+  background: #0d5bb5;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 14px;
   font-weight: 900;
-  box-shadow: 0 4px 10px rgba(15, 123, 232, 0.25);
+  /* Gorgeous 36-point rosette polygon clip-path */
+  clip-path: polygon(
+    50% 0%, 55% 10%, 65% 5%, 68% 15%, 78% 13%, 78% 23%, 87% 25%, 84% 35%, 92% 40%, 87% 50%,
+    92% 60%, 84% 65%, 87% 75%, 78% 77%, 78% 87%, 68% 85%, 65% 95%, 55% 90%, 50% 100%, 45% 90%,
+    35% 95%, 32% 85%, 22% 87%, 22% 77%, 13% 75%, 16% 65%, 8% 60%, 13% 50%, 8% 40%, 16% 35%,
+    13% 25%, 22% 23%, 22% 13%, 32% 15%, 35% 5%, 45% 10%
+  );
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: rotate(15deg);
+  transition: transform 0.3s ease;
+}
+
+.dailyve-offer-card:hover .dailyve-offer-card__badge span {
+  transform: rotate(45deg) scale(1.1);
+  background: #ff9f1c;
 }
 
 .dailyve-offers__footer {
   display: flex;
   justify-content: center;
-  margin-top: 36px;
+  margin-top: 40px;
 }
 
 .dailyve-services {
