@@ -1,34 +1,96 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
 const SeatIcon = ({ type, color, status, onClick }) => {
-  // SVG templates from api-functions.php
-  const fillColor = status === 'selected' ? color : status === 'sold' ? '#CBD5E1' : '#FFFFFF';
-  const strokeColor = status === 'sold' ? '#CBD5E1' : color;
+  const isSelected = status === 'selected';
+  const isSold = status === 'sold';
+  const fillColor = isSelected ? color : isSold ? '#CBD5E1' : '#FFFFFF';
+  const strokeColor = isSold ? '#CBD5E1' : color;
+  const detailFill = isSelected ? '#FFFFFF' : isSold ? '#CBD5E1' : '#F8FAFC';
+  const detailStroke = isSelected ? '#FFFFFF' : isSold ? '#CBD5E1' : '#CBD5E1';
   const opacity = status === 'sold' ? '0.8' : '1';
 
   const renderPath = () => {
     switch (type) {
       case 7: // Double seat
         return (
-          <svg width="40" height="40" viewBox="0 0 50 40" fill="none" className="transition-all duration-300">
-            <rect x="2.75" y="2.75" width="44.5" height="34.5" rx="4" fill={fillColor} stroke={strokeColor} strokeWidth="2" />
-            <rect x="5.75" y="27.75" width="16.5" height="6.5" rx="2" fill={fillColor} stroke="#CBD5E1" strokeWidth="1.5" />
-            <rect x="27.75" y="27.75" width="16.5" height="6.5" rx="2" fill={fillColor} stroke={strokeColor} strokeWidth="1.5" />
+          <svg width="44" height="36" viewBox="0 0 56 44" fill="none" className="block w-full h-auto max-w-[44px] mx-auto transition-all duration-300">
+            <rect
+              x="3"
+              y="3"
+              width="50"
+              height="38"
+              rx="7"
+              fill={fillColor}
+              stroke={strokeColor}
+              strokeWidth="2.5"
+            />
+            <path
+              d="M10 29H46"
+              stroke={isSold ? '#CBD5E1' : strokeColor}
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              opacity={isSelected ? '0.32' : '0.18'}
+            />
+            <rect
+              x="9"
+              y="31"
+              width="17"
+              height="7"
+              rx="2.4"
+              fill={detailFill}
+              stroke={isSelected || isSold ? detailStroke : strokeColor}
+              strokeWidth="1.6"
+            />
+            <rect
+              x="30"
+              y="31"
+              width="17"
+              height="7"
+              rx="2.4"
+              fill={detailFill}
+              stroke={isSelected || isSold ? detailStroke : strokeColor}
+              strokeWidth="1.6"
+            />
           </svg>
         );
       case 2: // Simple seat
       default:
         return (
-          <svg width="32" height="40" viewBox="0 0 28 40" fill="none" className="transition-all duration-300">
-            <rect x="2.75" y="2.75" width="22.5" height="34.5" rx="4" fill={fillColor} stroke={strokeColor} strokeWidth="2" />
-            <rect x="5.75" y="27.75" width="16.5" height="6.5" rx="2" fill={fillColor} stroke={strokeColor} strokeWidth="1.5" />
+          <svg width="34" height="42" viewBox="0 0 40 48" fill="none" className="block w-full h-auto max-w-[34px] mx-auto transition-all duration-300">
+            <rect
+              x="4"
+              y="3"
+              width="32"
+              height="42"
+              rx="7"
+              fill={fillColor}
+              stroke={strokeColor}
+              strokeWidth="2.5"
+            />
+            <path
+              d="M10 32H30"
+              stroke={isSold ? '#CBD5E1' : strokeColor}
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              opacity={isSelected ? '0.32' : '0.18'}
+            />
+            <rect
+              x="9"
+              y="35"
+              width="22"
+              height="7"
+              rx="2.4"
+              fill={detailFill}
+              stroke={isSelected || isSold ? detailStroke : strokeColor}
+              strokeWidth="1.6"
+            />
           </svg>
         );
     }
   };
 
   return (
-    <div 
+    <div
       className={`relative cursor-pointer transition-transform hover:scale-110 ${status === 'sold' ? 'cursor-not-allowed opacity-50' : ''}`}
       onClick={status !== 'sold' ? onClick : undefined}
       style={{ opacity }}
@@ -297,8 +359,8 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
       )}
 
       {/* Steps Header */}
-      <div className="mb-8 flex items-center justify-between border-b border-slate-100 pb-6">
-        <div className="flex items-center gap-8">
+      <div className="mb-6 flex items-center justify-between gap-3 border-b border-slate-100 pb-5 sm:mb-8 sm:pb-6">
+        <div className="flex min-w-0 flex-wrap items-center gap-3 sm:gap-8">
           {[1, 2].map((s) => (
             <div 
               key={s} 
@@ -309,7 +371,7 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
               }`}>
                 {s}
               </div>
-              <span className="hidden text-sm font-black uppercase tracking-widest md:block">
+              <span className="hidden text-sm font-black uppercase tracking-widest sm:block">
                 {s === 1 ? 'Chọn ghế' : 'Điểm đón trả'}
               </span>
             </div>
@@ -320,12 +382,12 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
         </button>
       </div>
 
-      <div className="grid gap-10 lg:grid-cols-[1fr_350px]">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_350px] lg:gap-10">
         {/* Main Content Area */}
         <div className="min-w-0 space-y-8">
           {step === 1 && (
             <div className="space-y-8">
-              <div className="flex flex-wrap gap-8 rounded-3xl bg-slate-50 p-8 shadow-inner">
+              <div className="flex flex-wrap gap-4 rounded-2xl bg-slate-50 p-4 shadow-inner sm:gap-6 sm:p-6 lg:gap-8 lg:p-8">
                 {/* Sold Seats */}
                 <div className="flex items-center gap-4">
                   <SeatIcon type={data.coach_seat_template[0]?.seats[0]?.seat_type || 2} color="#CBD5E1" status="sold" />
@@ -368,7 +430,7 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                     <div key={idx} className="flex items-center gap-4">
                       <SeatIcon type={group.type} color={group.color} status="available" />
                       <div className="flex flex-col">
-                        <span className="text-xs font-black text-slate-800 uppercase tracking-wider">{group.name}</span>
+                        <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">{group.name}</span>
                         <span className="font-display text-[11px] font-black text-primary">{(group.fare || 0).toLocaleString()}đ</span>
                       </div>
                     </div>
@@ -376,49 +438,54 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                 })()}
               </div>
 
-              <div className="flex flex-col items-center gap-10 py-10 md:flex-row md:items-start md:justify-center">
-                {data.coach_seat_template.map((coach, idx) => (
-                  <div key={idx} className="space-y-4">
-                    <h4 className="text-center font-display text-sm font-black uppercase tracking-widest text-slate-400">{coach.coach_name}</h4>
-                    <div 
-                      className="grid gap-4 rounded-[2.5rem] border-4 border-slate-100 bg-slate-50/30 p-8 shadow-inner"
-                      style={{ 
-                        gridTemplateColumns: `repeat(${coach.num_cols}, 1fr)`,
-                        gridTemplateRows: `repeat(${coach.num_rows}, 1fr)`
-                      }}
-                    >
-                      {coach.seats.map((seat, sIdx) => (
-                        <div 
-                          key={sIdx}
+              <div className="flex flex-col items-center gap-8 py-4 sm:py-8 md:flex-row md:items-start md:justify-center">
+                {data.coach_seat_template.map((coach, idx) => {
+                  const maxGridWidth = coach.num_cols > 4 ? 'w-full max-w-[320px] sm:max-w-[360px]' : 'w-full max-w-[260px] sm:max-w-[280px]';
+                  return (
+                    <div key={idx} className={`${maxGridWidth} space-y-4`}>
+                      <h4 className="text-center font-display text-sm font-black uppercase tracking-widest text-slate-400">{coach.coach_name}</h4>
+                      <div className="w-full overflow-hidden">
+                        <div
+                          className="grid w-full gap-2 rounded-2xl border-4 border-slate-100 bg-slate-50/30 p-3 shadow-inner sm:gap-3 sm:p-5 lg:rounded-[2rem] lg:p-6"
                           style={{
-                            gridArea: `${seat.row_num} / ${seat.col_num} / ${seat.row_num + 1} / ${seat.col_num + 1}`
+                            gridTemplateColumns: `repeat(${coach.num_cols}, minmax(0, 1fr))`,
+                            gridTemplateRows: `repeat(${coach.num_rows}, minmax(0, 1fr))`
                           }}
                         >
-                          <SeatIcon 
-                            type={seat.seat_type}
-                            color={seat.seat_color || '#2196F3'}
-                            status={!seat.is_available ? 'sold' : selectedSeats.find(s => s.seat_code === seat.seat_code) ? 'selected' : 'available'}
-                            onClick={() => handleSeatClick(seat)}
-                          />
+                          {coach.seats.map((seat, sIdx) => (
+                            <div
+                              key={sIdx}
+                              style={{
+                                gridArea: `${seat.row_num} / ${seat.col_num} / ${seat.row_num + 1} / ${seat.col_num + 1}`
+                              }}
+                            >
+                              <SeatIcon
+                                type={seat.seat_type}
+                                color={seat.seat_color || '#2196F3'}
+                                status={!seat.is_available ? 'sold' : selectedSeats.find(s => s.seat_code === seat.seat_code) ? 'selected' : 'available'}
+                                onClick={() => handleSeatClick(seat)}
+                              />
+                            </div>
+                          ))}
                         </div>
-                      ))}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}
 
           {step === 2 && (
-            <div className="space-y-10 animate-in slide-in-from-bottom-4 duration-500">
-              <section className="space-y-6">
-                <h3 className="flex items-center gap-3 font-display text-xl font-black text-slate-900">
+            <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500 sm:space-y-10">
+              <section className="space-y-5 sm:space-y-6">
+                <h3 className="flex items-center gap-3 font-display text-lg font-black text-slate-900 sm:text-xl">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
                     <i className="fas fa-map-marker-alt"></i>
                   </div>
                   Chọn điểm đón
                 </h3>
-                <div className="grid gap-4 max-h-[500px] overflow-auto pr-2 scrollbar-thin">
+                <div className="grid max-h-[500px] gap-3 overflow-auto pr-1 scrollbar-thin sm:gap-4 sm:pr-2">
                   {/* Combine regular and transfer points */}
                   {[...(data.pickup_points || []), ...(data.transfer_points || [])].map((point, idx) => {
                     const disabled = isPointDisabled(point);
@@ -427,7 +494,7 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                     return (
                       <div key={idx} className="space-y-3">
                         <label 
-                          className={`group flex cursor-pointer items-start gap-4 rounded-3xl border-2 p-5 transition-all ${
+                          className={`group flex cursor-pointer items-start gap-3 rounded-2xl border-2 p-4 transition-all sm:gap-4 sm:p-5 ${
                             disabled ? 'opacity-40 cursor-not-allowed bg-slate-50' :
                             selectedPickup?.id === point.id ? 'border-primary bg-primary/5' : 'border-slate-50 bg-white hover:border-primary-light'
                           }`}
@@ -436,14 +503,14 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                             type="radio" 
                             name="pickup" 
                             disabled={disabled}
-                            className="mt-1 h-5 w-5 text-primary focus:ring-primary disabled:opacity-0"
+                            className="mt-1 h-5 w-5 shrink-0 text-primary focus:ring-primary disabled:opacity-0"
                             checked={selectedPickup?.id === point.id}
                             onChange={() => setSelectedPickup(point)}
                           />
-                          <div className="flex-1">
-                            <div className="flex items-center justify-between">
+                          <div className="min-w-0 flex-1">
+                            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                               <span className="font-display text-lg font-black text-slate-900">{point.real_time}</span>
-                              <div className="flex flex-col items-end gap-1">
+                              <div className="flex flex-wrap gap-1 sm:flex-col sm:items-end">
                                 {pointSurcharge > 0 && (
                                   <span className="rounded-lg bg-warning/10 px-2 py-1 text-[10px] font-black text-warning">
                                     +{pointSurcharge.toLocaleString()}đ {point.surcharge_type == 1 ? '(Thanh toán sau)' : '(Cùng tiền vé)'}
@@ -466,7 +533,7 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                           </div>
                         </label>
                         {selectedPickup?.id === point.id && point.unfixed_point == 1 && (
-                          <div className="ml-9 animate-in slide-in-from-top-2 duration-300">
+                          <div className="animate-in slide-in-from-top-2 duration-300 sm:ml-9">
                             <input 
                               type="text"
                               value={pickupAddress}
@@ -483,14 +550,14 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                 </div>
               </section>
 
-              <section className="space-y-6">
-                <h3 className="flex items-center gap-3 font-display text-xl font-black text-slate-900">
+              <section className="space-y-5 sm:space-y-6">
+                <h3 className="flex items-center gap-3 font-display text-lg font-black text-slate-900 sm:text-xl">
                   <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-danger/10 text-danger">
                     <i className="fas fa-map-pin"></i>
                   </div>
                   Chọn điểm trả
                 </h3>
-                <div className="grid gap-4 max-h-[500px] overflow-auto pr-2 scrollbar-thin">
+                <div className="grid max-h-[500px] gap-3 overflow-auto pr-1 scrollbar-thin sm:gap-4 sm:pr-2">
                   {[...(data.drop_off_points_at_arrive || []), ...(data.transfer_points_at_arrive || [])].map((point, idx) => {
                     const disabled = isPointDisabled(point);
                     const pointSurcharge = calculatePointSurcharge(point, selectedSeats.length);
@@ -498,7 +565,7 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                     return (
                       <div key={idx} className="space-y-3">
                         <label 
-                          className={`group flex cursor-pointer items-start gap-4 rounded-3xl border-2 p-5 transition-all ${
+                          className={`group flex cursor-pointer items-start gap-3 rounded-2xl border-2 p-4 transition-all sm:gap-4 sm:p-5 ${
                             disabled ? 'opacity-40 cursor-not-allowed bg-slate-50' :
                             selectedDropoff?.id === point.id ? 'border-primary bg-primary/5' : 'border-slate-50 bg-white hover:border-primary-light'
                           }`}
@@ -507,14 +574,14 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                             type="radio" 
                             name="dropoff" 
                             disabled={disabled}
-                            className="mt-1 h-5 w-5 text-primary focus:ring-primary disabled:opacity-0"
+                            className="mt-1 h-5 w-5 shrink-0 text-primary focus:ring-primary disabled:opacity-0"
                             checked={selectedDropoff?.id === point.id}
                             onChange={() => setSelectedDropoff(point)}
                           />
-                          <div className="flex-1">
-                            <div className="flex items-center justify-between">
+                          <div className="min-w-0 flex-1">
+                            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                               <span className="font-display text-lg font-black text-slate-900">{point.real_time}</span>
-                              <div className="flex flex-col items-end gap-1">
+                              <div className="flex flex-wrap gap-1 sm:flex-col sm:items-end">
                                 {pointSurcharge > 0 && (
                                   <span className="rounded-lg bg-warning/10 px-2 py-1 text-[10px] font-black text-warning">
                                     +{pointSurcharge.toLocaleString()}đ {point.surcharge_type == 1 ? '(Thanh toán sau)' : '(Cùng tiền vé)'}
@@ -537,7 +604,7 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                           </div>
                         </label>
                         {selectedDropoff?.id === point.id && point.unfixed_point == 1 && (
-                          <div className="ml-9 animate-in slide-in-from-top-2 duration-300">
+                          <div className="animate-in slide-in-from-top-2 duration-300 sm:ml-9">
                             <input 
                               type="text"
                               value={dropoffAddress}
@@ -559,15 +626,15 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
 
         {/* Sidebar Summary */}
         <aside className="space-y-6">
-          <div className="sticky top-24 overflow-hidden rounded-[2.5rem] border border-slate-100 bg-white shadow-premium">
-            <div className="bg-slate-50/80 p-6 text-center">
-              <h4 className="font-display text-sm font-black uppercase tracking-widest text-slate-400">Tổng tiền thanh toán</h4>
+          <div className="overflow-hidden rounded-[20px] border border-slate-100 bg-white shadow-premium lg:sticky lg:top-24 lg:rounded-[2rem]">
+            <div className="bg-slate-50/80 p-5 text-center sm:p-6">
+              <h4 className="font-display text-xs font-black uppercase tracking-widest text-slate-400 sm:text-sm">Tổng tiền thanh toán</h4>
               <div className="mt-1 font-display text-3xl font-black text-primary-dark">
                 {totalPrice.toLocaleString()}đ
               </div>
             </div>
             
-            <div className="p-8 space-y-6">
+            <div className="space-y-6 p-5 sm:p-8">
               <div className="space-y-4">
                 <div className="flex items-start gap-3 border-b border-slate-50 pb-4">
                   <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-primary"></div>
@@ -640,7 +707,7 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
             </div>
           </div>
           
-          <div className="rounded-3xl bg-warning/5 p-6 border border-warning/10">
+          <div className="rounded-2xl border border-warning/10 bg-warning/5 p-4 sm:p-6">
             <h5 className="flex items-center gap-2 text-xs font-black text-warning uppercase">
               <i className="fas fa-info-circle"></i> Lưu ý:
             </h5>

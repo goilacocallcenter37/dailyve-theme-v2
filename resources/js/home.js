@@ -117,6 +117,31 @@ const initTestimonialsSlider = () => {
   next?.addEventListener('click', () => scrollByCard(1));
 };
 
+const initPressSlider = () => {
+  const root = document.querySelector('.dailyve-press');
+  if (!root) {
+    return;
+  }
+
+  const track = root.querySelector('[data-press-track]');
+  const prev = root.querySelector('[data-press-nav-prev]');
+  const next = root.querySelector('[data-press-nav-next]');
+
+  if (!track) {
+    return;
+  }
+
+  const scrollByCard = (direction) => {
+    const card = track.querySelector('.dailyve-press-card');
+    const gap = 24;
+    const amount = (card?.offsetWidth || 340) + gap;
+    track.scrollBy({ left: direction * amount, behavior: 'smooth' });
+  };
+
+  prev?.addEventListener('click', () => scrollByCard(-1));
+  next?.addEventListener('click', () => scrollByCard(1));
+};
+
 export const initHomePage = () => {
   if (!document.querySelector('.dailyve-home')) {
     return;
@@ -125,4 +150,5 @@ export const initHomePage = () => {
   initOfferCodes();
   initServiceTabs();
   initTestimonialsSlider();
+  initPressSlider();
 };

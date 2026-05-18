@@ -390,3 +390,209 @@ h1, h2, h3, .font-display {
   flex: 0 0 300px;
   margin: 0;
 }
+
+/* Unified Global Typography - Be Vietnam Pro */
+html, body, p, a, h1, h2, h3, h4, h5, h6, input, select, textarea, button, label, td, th, li, span, strong, em {
+  font-family: "Be Vietnam Pro", "Plus Jakarta Sans", sans-serif !important;
+}
+
+/* Maintain Font Awesome Icons */
+.fa, .fas, .far, .fal, .fab, .fad, [class^="fa-"], [class*=" fa-"] {
+  font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", sans-serif !important;
+}
+
+/* --- OVERRIDES FOR REVIEW STARS ENCODING BUG --- */
+.rating-tab__comments-list__item-personal__info-star .ratings {
+  position: relative;
+  vertical-align: middle;
+  display: inline-block;
+  color: #e2e8f0 !important; /* Tailwind slate-200 */
+  overflow: hidden;
+  line-height: 1;
+}
+
+.rating-tab__comments-list__item-personal__info-star .full-stars {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #fbbf24 !important; /* Tailwind amber-400 */
+  line-height: 1;
+}
+
+.rating-tab__comments-list__item-personal__info-star .empty-stars:before,
+.rating-tab__comments-list__item-personal__info-star .full-stars:before {
+  transition: none;
+  content: "\2605\2605\2605\2605\2605" !important;
+  font-family: Arial, sans-serif !important;
+  letter-spacing: 2px !important;
+}
+
+/* --- PREMIUM PICKUP & DROPOFF TIMELINE LAYOUT --- */
+.points-timeline-list {
+  position: relative;
+  padding-left: 1.75rem !important;
+  margin: 0 !important;
+  list-style: none !important;
+}
+
+/* Timeline Vertical Line */
+.points-timeline-list::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 6px !important;
+  top: 8px !important;
+  bottom: 8px !important;
+  width: 2px !important;
+  background: #f1f5f9 !important; /* slate-100 */
+}
+
+.points-timeline-list li {
+  position: relative !important;
+  margin-bottom: 1.25rem !important;
+  padding: 0 !important;
+  list-style-type: none !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+.points-timeline-list li:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* Timeline Custom Nodes instead of bullets */
+.points-timeline-list li::before {
+  content: "" !important;
+  position: absolute !important;
+  left: -26px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50% !important;
+  background: #ffffff !important;
+  border: 3px solid #cbd5e1 !important; /* slate-300 */
+  z-index: 2 !important;
+}
+
+/* Timeline nodes colors */
+.pickup-list li::before {
+  border-color: #10b981 !important; /* emerald-500 */
+}
+
+.dropoff-list li::before {
+  border-color: #ef4444 !important; /* red-500 */
+}
+
+/* Premium Time Pill Tag */
+.points-timeline-list .accordion-sub-item__list__time {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 0.8rem !important;
+  font-weight: 800 !important;
+  color: #0f172a !important; /* slate-900 */
+  background: #f1f5f9 !important; /* slate-100 */
+  padding: 0.25rem 0.5rem !important;
+  border-radius: 0.5rem !important;
+  min-width: 52px !important;
+  text-align: center !important;
+  line-height: 1.2 !important;
+  font-family: "Be Vietnam Pro", sans-serif !important;
+}
+
+/* Premium Place Label */
+.points-timeline-list .accordion-sub-item__list__place {
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  color: #334155 !important; /* slate-700 */
+  line-height: 1.4 !important;
+  font-family: "Be Vietnam Pro", sans-serif !important;
+}
+
+/* Premium Scrollable Container for pickup & dropoff timelines */
+.points-timeline-container {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.points-timeline-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.points-timeline-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.points-timeline-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1; /* slate-300 */
+  border-radius: 3px;
+}
+
+.points-timeline-container::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8; /* slate-400 */
+}
+
+/* Premium Review Criteria Progress Bars Grid */
+.reviews-criteria-container {
+  display: grid !important;
+  grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+  gap: 1.25rem !important;
+  width: 100% !important;
+}
+
+@media (min-width: 640px) {
+  .reviews-criteria-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+.rating-tab__cat {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.35rem !important;
+  width: 100% !important;
+}
+
+.rating-tab__cat-name {
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  color: #475569 !important; /* slate-600 */
+  font-family: "Be Vietnam Pro", sans-serif !important;
+}
+
+.rating-tab__progress__wrap {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  width: 100% !important;
+}
+
+.rating-tab__progress__bar {
+  flex: 1 !important;
+  height: 6px !important;
+  background: #f1f5f9 !important; /* slate-100 */
+  border-radius: 9999px !important;
+  overflow: hidden !important;
+}
+
+.rating-tab__progress__bar-fill {
+  height: 100% !important;
+  background: var(--primary, #2196F3) !important;
+  border-radius: 9999px !important;
+  transition: width 1s ease-in-out !important;
+}
+
+.rating-tab__progress__txt {
+  font-size: 0.8rem !important;
+  font-weight: 800 !important;
+  color: #0f172a !important; /* slate-900 */
+  min-width: 24px !important;
+  text-align: right !important;
+  font-family: "Be Vietnam Pro", sans-serif !important;
+}

@@ -20,7 +20,7 @@
             'tabs' => [
                 'intro' => [
                     'label' => 'Giới thiệu',
-                    'text' => 'Dailyve hỗ trợ đặt vé xe khách trực tuyến với hàng trăm tuyến đường trên khắp Việt Nam. So sánh giá, chọn chỗ ngồi và thanh toán nhanh chóng trên mọi thiết bị.',
+                    'text' => 'Dailyve hỗ trợ đặt vé xe khách trực tuyến với hàng trăm tuyến đường trên khắp Việt Nam. Hệ thống kết nối hơn 100 nhà xe uy tín, đa dạng dòng xe và khung giờ di chuyển, giúp bạn dễ dàng chọn tuyến, chọn ghế, so sánh giá và đặt vé nhanh chóng.',
                 ],
                 'routes' => [
                     'label' => 'Tuyến nổi bật',
@@ -230,7 +230,7 @@
         <section class="dailyve-section dailyve-services" aria-labelledby="dailyve-services-title" data-home-services>
             <div class="dailyve-container">
                 <div class="dailyve-services__head">
-                    <h2 id="dailyve-services-title"><span>Dailyve</span> cung cấp những dịch vụ gì?</h2>
+                    <h2 id="dailyve-services-title"><span>Dailyve</span> cung cấp<br>những dịch vụ gì?</h2>
                     <div class="dailyve-services__types" role="tablist" aria-label="Loại dịch vụ">
                         @foreach ($serviceTypes as $index => $type)
                             <button
@@ -240,8 +240,8 @@
                                 aria-selected="{{ $index === 0 ? 'true' : 'false' }}"
                                 data-service-type="{{ esc_attr($type['id']) }}"
                             >
+                                <span class="dailyve-services__type-label">{{ $type['label'] }}</span>
                                 <img src="{{ esc_url($type['icon']) }}" alt="" loading="lazy">
-                                <span>{{ $type['label'] }}</span>
                             </button>
                         @endforeach
                     </div>
@@ -269,10 +269,23 @@
 
                         <div class="dailyve-services__content">
                             <div class="dailyve-services__map" aria-hidden="true">
-                                <span class="dailyve-services__pin dailyve-services__pin--a"></span>
-                                <span class="dailyve-services__pin dailyve-services__pin--b"></span>
-                                <span class="dailyve-services__pin dailyve-services__pin--c"></span>
-                                <span class="dailyve-services__route-line"></span>
+                                <svg class="map-curve-svg" viewBox="0 0 1000 200" fill="none" preserveAspectRatio="none">
+                                    <path d="M 80 120 Q 250 20, 500 120 T 920 120" stroke="#cbd5e1" stroke-width="2.5" stroke-dasharray="6,8" stroke-linecap="round"/>
+                                </svg>
+                                <div class="map-pin map-pin--left">
+                                    <div class="map-pin-badge">
+                                        <div class="map-pin-marker">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="map-pin map-pin--right">
+                                    <div class="map-pin-badge">
+                                        <div class="map-pin-marker">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             @foreach ($type['tabs'] as $tabKey => $tab)
@@ -313,17 +326,25 @@
             <div class="dailyve-container">
                 <h2 id="dailyve-press-title"><span>BÁO CHÍ</span> nói gì về Dailyve?</h2>
 
-                <div class="dailyve-press__grid">
-                    @foreach ($press as $item)
-                        <article>
-                            <img src="{{ esc_url($item['image']) }}" alt="{{ esc_attr($item['title']) }}" loading="lazy">
-                            <div class="dailyve-press__meta">
-                                <span class="dailyve-press__brand">{{ $item['brand'] }}</span>
-                                <h3>{{ $item['title'] }}</h3>
-                                <a class="dailyve-btn dailyve-btn--primary-sm" href="{{ esc_url($item['url']) }}">Xem ngay</a>
-                            </div>
-                        </article>
-                    @endforeach
+                <div class="dailyve-press__carousel-wrapper">
+                    <button type="button" class="dailyve-press__nav dailyve-press__nav--prev" aria-label="Trước" data-press-nav-prev>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="dailyve-press__track scrollbar-none" data-press-track>
+                        @foreach ($press as $item)
+                            <article class="dailyve-press-card">
+                                <img src="{{ esc_url($item['image']) }}" alt="{{ esc_attr($item['title']) }}" loading="lazy">
+                                <div class="dailyve-press__meta">
+                                    <span class="dailyve-press__brand">{{ $item['brand'] }}</span>
+                                    <h3>{{ $item['title'] }}</h3>
+                                    <a class="dailyve-btn dailyve-btn--primary-sm" href="{{ esc_url($item['url']) }}">Xem ngay</a>
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+                    <button type="button" class="dailyve-press__nav dailyve-press__nav--next" aria-label="Tiếp" data-press-nav-next>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
 
                 <div class="dailyve-press__footer">
