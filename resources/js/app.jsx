@@ -2,6 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import SearchForm from './components/SearchForm';
 import TripList from './components/TripList';
+import { initHomePage } from './home';
 
 const roots = new WeakMap();
 
@@ -29,4 +30,5 @@ const initReactApps = () => {
 // DOM Content Loaded
 document.addEventListener('DOMContentLoaded', () => {
     initReactApps();
+    initHomePage();
 });

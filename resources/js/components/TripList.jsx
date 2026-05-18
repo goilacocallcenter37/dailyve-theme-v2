@@ -1,5 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import SeatSelection from './SeatSelection';
+import {
+  buildLocationMap,
+  getToday,
+  getTomorrow,
+  LocationCombobox,
+  mapLocationPayload,
+  resolveLocationInput,
+  VietnameseDatePicker,
+  fetchLocationsWithCache,
+} from './SearchFields';
 
 const SORT_OPTIONS = [
   { value: 'time:asc', label: 'Giờ đi sớm nhất' },
@@ -32,12 +42,6 @@ const formatDateInput = (value) => {
   if (match) return `${match[3]}-${match[2]}-${match[1]}`;
 
   return value;
-};
-
-const getTomorrow = () => {
-  const date = new Date();
-  date.setDate(date.getDate() + 1);
-  return date.toISOString().slice(0, 10);
 };
 
 const formatCurrency = (value) => {
@@ -109,6 +113,8 @@ const SearchPanel = ({ filters, onSubmit }) => {
   const [locations, setLocations] = useState([]);
   const [from, setFrom] = useState(filters.from);
   const [to, setTo] = useState(filters.to);
+  const [fromQuery, setFromQuery] = useState(filters.nameFrom || '');
+  const [toQuery, setToQuery] = useState(filters.nameTo || '');
   const [date, setDate] = useState(filters.date);
   const [returnDate, setReturnDate] = useState(filters.returnDate || '');
   const [isRoundTrip, setIsRoundTrip] = useState(!!filters.returnDate);
@@ -116,166 +122,166 @@ const SearchPanel = ({ filters, onSubmit }) => {
   useEffect(() => {
     setFrom(filters.from);
     setTo(filters.to);
+    setFromQuery(filters.nameFrom || '');
+    setToQuery(filters.nameTo || '');
     setDate(filters.date);
     setReturnDate(filters.returnDate || '');
     setIsRoundTrip(!!filters.returnDate);
   }, [filters]);
 
   useEffect(() => {
-    fetch('/wp-json/api/v1/state-city-new')
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.success && Array.isArray(response.data)) {
-          setLocations(
-            response.data
-              .filter((item) => item.name)
-              .map((item) => ({
-                id: String(item._id),
-                name: item.nameWithType || item.name,
-              })),
-          );
-        }
-      })
-      .catch(() => setLocations([]));
+    fetchLocationsWithCache(setLocations);
   }, []);
 
-  const getLocationName = (id) => locations.find((item) => item.id === String(id))?.name || '';
+  const locationMap = useMemo(() => buildLocationMap(locations), [locations]);
+
+  useEffect(() => {
+    if (from && locationMap[from]) {
+      setFromQuery(locationMap[from].name);
+    }
+  }, [from, locationMap]);
+
+  useEffect(() => {
+    if (to && locationMap[to]) {
+      setToQuery(locationMap[to].name);
+    }
+  }, [to, locationMap]);
+
+  const handleDepartureDateChange = (nextDate) => {
+    setDate(nextDate);
+
+    if (returnDate && nextDate && returnDate < nextDate) {
+      setReturnDate('');
+    }
+  };
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex gap-2 px-2">
+    <div className="dailyve-search dailyve-search--results">
+      <div className="dailyve-search__tabs dailyve-search__tabs--route" role="tablist" aria-label="Chọn loại hành trình">
         <button
           type="button"
-          onClick={() => setIsRoundTrip(false)}
-          className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
-            !isRoundTrip ? 'bg-primary text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-          }`}
+          role="tab"
+          aria-selected={!isRoundTrip}
+          onClick={() => {
+            setIsRoundTrip(false);
+            setReturnDate('');
+          }}
+          className={!isRoundTrip ? 'is-active' : ''}
         >
           Một chiều
         </button>
         <button
           type="button"
+          role="tab"
+          aria-selected={isRoundTrip}
           onClick={() => setIsRoundTrip(true)}
-          className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
-            isRoundTrip ? 'bg-primary text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-          }`}
+          className={isRoundTrip ? 'is-active' : ''}
         >
           Khứ hồi
         </button>
       </div>
 
       <form
-        className={`grid grid-cols-1 gap-4 p-2 ${
-          isRoundTrip 
-            ? 'lg:grid-cols-[1fr_auto_1fr_1fr_1fr_auto]' 
-            : 'lg:grid-cols-[1fr_auto_1fr_1fr_auto]'
-        }`}
+        className="dailyve-search__form"
         onSubmit={(event) => {
           event.preventDefault();
+          const fromLocation = resolveLocationInput(locations, locationMap, from, fromQuery);
+          const toLocation = resolveLocationInput(locations, locationMap, to, toQuery);
+
+          if (!fromLocation || !toLocation) {
+            alert('Vui lòng chọn điểm đi và điểm đến trong danh sách.');
+            return;
+          }
+
           if (isRoundTrip && !returnDate) {
             alert('Vui lòng chọn ngày về cho chuyến khứ hồi');
             return;
           }
+
           onSubmit({
-            from,
-            to,
+            from: fromLocation.id,
+            to: toLocation.id,
             date,
             returnDate: isRoundTrip ? returnDate : '',
-            nameFrom: getLocationName(from),
-            nameTo: getLocationName(to),
+            nameFrom: fromLocation.name,
+            nameTo: toLocation.name,
           });
         }}
       >
-        <div className="relative group">
-          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-primary transition-transform group-focus-within:scale-110">
-            <i className="fas fa-map-marker-alt"></i>
-          </div>
-          <select
-            className="h-16 w-full rounded-3xl border-2 border-transparent bg-slate-50/50 pl-11 pr-4 text-sm font-bold text-slate-700 outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary-light/30"
+        <div className="dailyve-search__locations-wrapper">
+          <LocationCombobox
+            fieldId="dailyve-result-from"
+            label="Nơi đi"
+            icon="fas fa-map-marker-alt"
+            placeholder="Nhập nơi đi"
+            locations={locations}
             value={from}
-            onChange={(event) => setFrom(event.target.value)}
-            required
-          >
-            <option value="">Điểm đi</option>
-            {locations.map((location) => (
-              <option key={location.id} value={location.id}>
-                {location.name}
-              </option>
-            ))}
-          </select>
-        </div>
+            inputValue={fromQuery}
+            onValueChange={setFrom}
+            onInputValueChange={setFromQuery}
+          />
 
-        <div className="flex items-center justify-center">
           <button
             type="button"
-            className="h-12 w-12 rounded-full bg-white text-primary shadow-lg border border-slate-100 transition-all hover:rotate-180 hover:bg-primary hover:text-white active:scale-90"
+            className="dailyve-search__swap"
             onClick={() => {
               const temp = from;
+              const tempQuery = fromQuery;
               setFrom(to);
+              setFromQuery(toQuery);
               setTo(temp);
+              setToQuery(tempQuery);
             }}
             aria-label="Đổi chiều"
           >
             <i className="fas fa-exchange-alt"></i>
           </button>
-        </div>
 
-        <div className="relative group">
-          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-primary transition-transform group-focus-within:scale-110">
-            <i className="fas fa-map-pin"></i>
-          </div>
-          <select
-            className="h-16 w-full rounded-3xl border-2 border-transparent bg-slate-50/50 pl-11 pr-4 text-sm font-bold text-slate-700 outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary-light/30"
+          <LocationCombobox
+            fieldId="dailyve-result-to"
+            label="Nơi đến"
+            icon="fas fa-map-pin"
+            placeholder="Nhập nơi đến"
+            locations={locations}
             value={to}
-            onChange={(event) => setTo(event.target.value)}
-            required
-          >
-            <option value="">Điểm đến</option>
-            {locations.map((location) => (
-              <option key={location.id} value={location.id}>
-                {location.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="relative group">
-          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-primary transition-transform group-focus-within:scale-110">
-            <i className="fas fa-calendar-day"></i>
-          </div>
-          <div className="absolute left-11 top-2 text-[10px] font-bold text-primary uppercase">Ngày đi</div>
-          <input
-            className="h-16 w-full rounded-3xl border-2 border-transparent bg-slate-50/50 pl-11 pr-4 pt-4 text-sm font-bold text-slate-700 outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary-light/30"
-            type="date"
-            value={date}
-            min={new Date().toISOString().slice(0, 10)}
-            onChange={(event) => setDate(event.target.value)}
-            required
+            inputValue={toQuery}
+            onValueChange={setTo}
+            onInputValueChange={setToQuery}
           />
         </div>
 
-        {isRoundTrip && (
-          <div className="relative group animate-in fade-in slide-in-from-left-4 duration-300">
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-primary transition-transform group-focus-within:scale-110">
-              <i className="fas fa-calendar-check"></i>
-            </div>
-            <div className="absolute left-11 top-2 text-[10px] font-bold text-primary uppercase">Ngày về</div>
-            <input
-              className="h-16 w-full rounded-3xl border-2 border-transparent bg-slate-50/50 pl-11 pr-4 pt-4 text-sm font-bold text-slate-700 outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary-light/30"
-              type="date"
-              value={returnDate}
-              min={date}
-              onChange={(event) => setReturnDate(event.target.value)}
-              required={isRoundTrip}
-            />
-          </div>
-        )}
+        <VietnameseDatePicker
+          label="Ngày đi"
+          icon="fas fa-calendar-day"
+          value={date}
+          min={getToday()}
+          onChange={handleDepartureDateChange}
+          className="dailyve-search__field dailyve-search__field--date"
+          required
+        />
+
+        <VietnameseDatePicker
+          label="Ngày về"
+          icon="fas fa-calendar-check"
+          value={returnDate}
+          min={date || getToday()}
+          onChange={(nextDate) => {
+            setReturnDate(nextDate);
+            if (nextDate) {
+              setIsRoundTrip(true);
+            }
+          }}
+          emptyText={isRoundTrip ? 'Chọn ngày về' : 'Một chiều'}
+          clearable
+          className="dailyve-search__field dailyve-search__field--return"
+        />
 
         <button
           type="submit"
-          className="h-16 rounded-3xl bg-primary px-10 text-base font-black text-white shadow-xl shadow-primary/20 transition-all hover:bg-primary-dark hover:shadow-primary/30 active:scale-95"
+          className="dailyve-search__submit"
         >
-          TÌM CHUYẾN
+          <i className="fas fa-search" aria-hidden="true"></i>
+          Tìm chuyến
         </button>
       </form>
     </div>
@@ -924,7 +930,7 @@ const TripList = () => {
 
   return (
     <div className="min-h-screen bg-slate-50/50">
-      <section className="relative overflow-hidden bg-white pb-16 pt-10 md:pt-14">
+      <section className="relative overflow-visible bg-white pb-16 pt-10 md:pt-14">
         {/* Decorative background elements */}
         <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-blue-50/50 blur-3xl"></div>
         <div className="absolute -left-24 top-1/2 h-64 w-64 rounded-full bg-blue-100/30 blur-3xl"></div>

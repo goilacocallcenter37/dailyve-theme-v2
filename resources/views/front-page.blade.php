@@ -4,81 +4,108 @@
     $upload = fn ($path) => home_url('/wp-content/uploads/' . ltrim($path, '/'));
 
     $offers = [
-        [
-            'eyebrow' => 'Giảm giá vé xe',
-            'value' => '50K',
-            'note' => 'Đơn từ 300K',
-            'code' => 'DAILY50',
-            'icon' => $upload('images/front-of-bus.png?v=2'),
-        ],
-        [
-            'eyebrow' => 'Giảm giá vé tàu',
-            'value' => '30K',
-            'note' => 'Đơn từ 250K',
-            'code' => 'TAU30',
-            'icon' => $upload('images/train.png?v=2'),
-        ],
-        [
-            'eyebrow' => 'Giảm giá vé máy bay',
-            'value' => '100K',
-            'note' => 'Đơn từ 1.000K',
-            'code' => 'MAYBAY100',
-            'icon' => $upload('images/plane.png?v=2'),
-        ],
-        [
-            'eyebrow' => 'Giảm giá khách sạn',
-            'value' => '15%',
-            'note' => 'Tối đa 300K',
-            'code' => 'KS15',
-            'icon' => $upload('images/deal.png?v=2'),
-        ],
+        ['discount' => '10%', 'label' => 'Cho Người Mới', 'code' => 'DLVNEW10'],
+        ['discount' => '50K', 'label' => 'Vé xe khách', 'code' => 'DAILY50'],
+        ['discount' => '30K', 'label' => 'Vé tàu hỏa', 'code' => 'TAU30'],
+        ['discount' => '100K', 'label' => 'Vé máy bay', 'code' => 'MAYBAY100'],
+        ['discount' => '15%', 'label' => 'Khách sạn', 'code' => 'KS15'],
+        ['discount' => '20K', 'label' => 'Đơn từ 200K', 'code' => 'DLV20'],
     ];
 
-    $services = [
-        ['title' => 'Vé xe khách', 'desc' => 'Đa dạng tuyến đường khắp cả nước', 'image' => $upload('images/front-of-bus.png?v=2')],
-        ['title' => 'Vé tàu hỏa', 'desc' => 'Đặt vé nhanh chóng, chọn chỗ dễ dàng', 'image' => $upload('images/train.png?v=2')],
-        ['title' => 'Vé máy bay', 'desc' => 'Giá tốt mỗi ngày, ưu đãi liên tục', 'image' => $upload('images/plane.png?v=2')],
-        ['title' => 'Khách sạn', 'desc' => 'Đa dạng lựa chọn, giá tốt nhất', 'image' => $upload('images/deal.png?v=2')],
-        ['title' => 'Bảo hiểm', 'desc' => 'An tâm trên mọi chuyến đi', 'image' => $upload('images/insurance.png?v=2')],
+    $serviceTypes = [
+        [
+            'id' => 'bus',
+            'label' => 'Xe khách',
+            'icon' => $upload('images/front-of-bus.png'),
+            'tabs' => [
+                'intro' => [
+                    'label' => 'Giới thiệu',
+                    'text' => 'Dailyve hỗ trợ đặt vé xe khách trực tuyến với hàng trăm tuyến đường trên khắp Việt Nam. So sánh giá, chọn chỗ ngồi và thanh toán nhanh chóng trên mọi thiết bị.',
+                ],
+                'routes' => [
+                    'label' => 'Tuyến nổi bật',
+                    'text' => 'Hà Nội – Sapa, TP.HCM – Đà Lạt, Đà Nẵng – Huế, Hà Nội – Hải Phòng và nhiều tuyến phổ biến khác được cập nhật giá theo thời gian thực.',
+                ],
+                'operators' => [
+                    'label' => 'Nhà xe',
+                    'text' => 'Hợp tác với hàng trăm nhà xe uy tín: Phương Trang, Hoàng Long, Kumho Samco, Futa Bus Lines và nhiều đối tác chất lượng trên toàn quốc.',
+                ],
+            ],
+            'link' => home_url('/ve-xe-khach/'),
+        ],
+        [
+            'id' => 'plane',
+            'label' => 'Máy bay',
+            'icon' => $upload('images/plane.png'),
+            'tabs' => [
+                'intro' => [
+                    'label' => 'Giới thiệu',
+                    'text' => 'Đặt vé máy bay nội địa và quốc tế với giá minh bạch, hỗ trợ chọn hành trình, hành lý và dịch vụ bổ sung ngay trên Dailyve.',
+                ],
+                'routes' => [
+                    'label' => 'Tuyến nổi bật',
+                    'text' => 'Hà Nội – TP.HCM, Đà Nẵng – Nha Trang, Cần Thơ – Phú Quốc và các chặng bay thường xuyên được ưu đãi mỗi tuần.',
+                ],
+                'operators' => [
+                    'label' => 'Hãng bay',
+                    'text' => 'Kết nối Vietnam Airlines, Vietjet Air, Bamboo Airways, Pacific Airlines và các hãng bay quốc tế đối tác.',
+                ],
+            ],
+            'link' => home_url('/ve-may-bay/'),
+        ],
+        [
+            'id' => 'train',
+            'label' => 'Tàu hỏa',
+            'icon' => $upload('images/train.png'),
+            'tabs' => [
+                'intro' => [
+                    'label' => 'Giới thiệu',
+                    'text' => 'Đặt vé tàu hỏa trực tuyến, chọn toa và chỗ ngồi dễ dàng. Dailyve đồng bộ lịch tàu và hỗ trợ thanh toán an toàn 24/7.',
+                ],
+                'routes' => [
+                    'label' => 'Tuyến nổi bật',
+                    'text' => 'Hà Nội – TP.HCM, Hà Nội – Đà Nẵng, Hà Nội – Lào Cai, Sài Gòn – Nha Trang là những tuyến được đặt nhiều nhất.',
+                ],
+                'operators' => [
+                    'label' => 'Đối tác',
+                    'text' => 'Phục vụ đầy đủ các loại toa: ghế ngồi, giường nằm, khoang VIP trên mạng đường sắt quốc gia.',
+                ],
+            ],
+            'link' => home_url('/ve-tau-hoa/'),
+        ],
     ];
 
     $reasons = [
-        ['title' => 'An toàn - Tin cậy', 'desc' => 'Hệ thống bảo mật cao, thông tin minh bạch, đối tác uy tín.', 'icon' => 'fas fa-shield-alt'],
-        ['title' => 'Giá tốt - Ưu đãi', 'desc' => 'Giá cạnh tranh, nhiều chương trình ưu đãi độc quyền.', 'icon' => 'fas fa-wallet'],
-        ['title' => 'Hỗ trợ 24/7', 'desc' => 'Đội ngũ chăm sóc khách hàng luôn sẵn sàng hỗ trợ.', 'icon' => 'fas fa-headset'],
-        ['title' => 'Tiện lợi - Nhanh chóng', 'desc' => 'Đặt vé mọi lúc mọi nơi, nhận vé điện tử ngay lập tức.', 'icon' => 'fas fa-ticket-alt'],
+        ['title' => 'An Toàn - Tiện Lợi', 'desc' => 'Hệ thống bảo mật cao, thông tin minh bạch và quy trình đặt vé rõ ràng.', 'icon' => 'fas fa-shield-alt'],
+        ['title' => 'Giá Vé Ưu Đãi', 'desc' => 'Giá cạnh tranh, nhiều mã giảm giá và chương trình ưu đãi độc quyền.', 'icon' => 'fas fa-wallet'],
+        ['title' => '1500+ Đối Tác Vận Tải', 'desc' => 'Mạng lưới nhà xe, hãng bay và tàu hỏa phủ khắp cả nước.', 'icon' => 'fas fa-bus'],
+        ['title' => 'Luôn Hỗ Trợ 24/7', 'desc' => 'Đội ngũ chăm sóc khách hàng sẵn sàng hỗ trợ mọi lúc, mọi nơi.', 'icon' => 'fas fa-headset'],
     ];
 
     $press = [
         [
             'brand' => 'VNEXPRESS',
-            'title' => 'Dailyve - Nền tảng đặt vé xe khách được tin dùng hàng đầu Việt Nam',
-            'date' => '10/05/2024',
+            'title' => 'Dailyve – Nền tảng đặt vé xe khách tiện lợi và hiện đại',
             'image' => $upload('2025/06/nha-xe-hong-thinh-ha-noi-di-ha-tinh-gia-tot-nhat.jpg'),
+            'url' => home_url('/tin-tuc/'),
         ],
         [
             'brand' => 'DANTRI',
             'title' => 'Dailyve hợp tác cùng nhiều hãng xe lớn, mang đến trải nghiệm thuận tiện',
-            'date' => '08/05/2024',
             'image' => $upload('2025/08/chuyen-tau-hoa-da-nang-di-hue.jpg'),
+            'url' => home_url('/tin-tuc/'),
         ],
         [
-            'brand' => 'tuổi trẻ',
+            'brand' => 'TUỔI TRẺ',
             'title' => 'Đặt vé tàu, vé máy bay siêu nhanh với Dailyve',
-            'date' => '05/05/2024',
             'image' => $upload('2025/08/chang-bay-tu-san-bay-lien-khuong-di-ha-noi.jpg'),
+            'url' => home_url('/tin-tuc/'),
         ],
         [
-            'brand' => 'Zing news',
-            'title' => 'Dailyve - Ứng dụng đặt vé toàn diện cho mọi hành trình',
-            'date' => '02/05/2024',
+            'brand' => 'ZING NEWS',
+            'title' => 'Dailyve – Ứng dụng đặt vé toàn diện cho mọi hành trình',
             'image' => $upload('2025/03/cach-dat-ve-xe-tai-dailyve-1.png'),
-        ],
-        [
-            'brand' => 'CAFEF',
-            'title' => 'Dailyve không ngừng đổi mới để phục vụ khách hàng tốt hơn',
-            'date' => '28/04/2024',
-            'image' => $upload('2025/08/phuong-tien-di-chuyen-taxi-tu-san-bay-noi-bai-ve-trung-tam-ha-noi.png'),
+            'url' => home_url('/tin-tuc/'),
         ],
     ];
 
@@ -86,28 +113,30 @@
         ['name' => 'Nguyễn Minh Anh', 'city' => 'Hà Nội', 'quote' => 'Đặt vé trên Dailyve rất nhanh chóng, giao diện dễ dùng, nhiều ưu đãi hấp dẫn. Mình sẽ tiếp tục ủng hộ!'],
         ['name' => 'Trần Quốc Bảo', 'city' => 'Đà Nẵng', 'quote' => 'Tôi thường xuyên đặt vé xe và vé máy bay qua Dailyve. Giá tốt, hỗ trợ nhiệt tình, rất hài lòng!'],
         ['name' => 'Lê Thị Thu Hương', 'city' => 'TP. Hồ Chí Minh', 'quote' => 'Ứng dụng ổn định, thanh toán tiện lợi, ưu đãi tới ngay. Khuyến khích mọi người sử dụng!'],
+        ['name' => 'Phạm Văn Đức', 'city' => 'Cần Thơ', 'quote' => 'Tìm vé và so sánh giá rất tiện. Đội hỗ trợ phản hồi nhanh khi cần đổi lịch chuyến đi.'],
     ];
 @endphp
 
 @section('content')
     <article class="dailyve-home">
+        <!-- Hero Section -->
         <section class="dailyve-hero" aria-labelledby="dailyve-home-title">
-            <div class="dailyve-hero__skyline" aria-hidden="true"></div>
-            <div class="dailyve-hero__balloon dailyve-hero__balloon--left" aria-hidden="true"></div>
-            <div class="dailyve-hero__balloon dailyve-hero__balloon--right" aria-hidden="true"></div>
+            <div class="dailyve-hero__clouds" aria-hidden="true"></div>
+            
+            <div class="dailyve-hero__balloon dailyve-hero__balloon--left" aria-hidden="true">
+                <span class="dailyve-balloon-text">Xin chào!</span>
+            </div>
+            <div class="dailyve-hero__balloon dailyve-hero__balloon--right" aria-hidden="true">
+                <span class="dailyve-balloon-text">Tìm ngay!</span>
+            </div>
 
-            <div class="dailyve-container dailyve-hero__inner">
+            <div class="dailyve-container dailyve-hero__top">
                 <div class="dailyve-hero__copy">
                     <h1 id="dailyve-home-title">
                         Đặt vé tại đây
                         <span>vừa <strong>NHANH</strong> vừa <em>RẺ</em></span>
                     </h1>
-
-                    <ul class="dailyve-hero__proofs" aria-label="Cam kết Dailyve">
-                        <li><i class="fas fa-check-circle" aria-hidden="true"></i>Đa dạng tuyến đường</li>
-                        <li><i class="fas fa-check-circle" aria-hidden="true"></i>Giá tốt mỗi ngày</li>
-                        <li><i class="fas fa-check-circle" aria-hidden="true"></i>Thanh toán an toàn</li>
-                    </ul>
+                    <p class="dailyve-hero__subtitle">Hệ thống đặt vé xe khách trực tuyến hàng đầu Việt Nam</p>
                 </div>
 
                 <div class="dailyve-hero__visual" aria-hidden="true">
@@ -115,149 +144,221 @@
                     <div class="dailyve-vehicle dailyve-vehicle--bus">
                         <img src="{{ esc_url($upload('images/front-of-bus.png')) }}" alt="">
                     </div>
-                    <div class="dailyve-vehicle dailyve-vehicle--train">
-                        <img src="{{ esc_url($upload('images/train.svg')) }}" alt="">
-                    </div>
                     <div class="dailyve-mascot-card">
                         <img src="{{ esc_url($upload('2025/06/banner-sale.png')) }}" alt="">
                     </div>
                 </div>
+            </div>
 
-                <div class="dailyve-hero__search">
-                    {!! do_shortcode('[react_search_form]') !!}
-                </div>
+            <div class="dailyve-container dailyve-hero__search">
+                {!! do_shortcode('[react_search_form]') !!}
+            </div>
+
+            <div class="dailyve-hero__scroll" aria-hidden="true">
+                <span>Lướt xuống để nhận ngay ưu đãi!</span>
+                <i class="fas fa-chevron-down"></i>
             </div>
         </section>
 
+        <!-- Offers Section -->
         <section class="dailyve-section dailyve-offers" aria-labelledby="dailyve-offers-title">
-            <div class="dailyve-container">
-                <div class="dailyve-section__heading">
-                    <h2 id="dailyve-offers-title">Ưu đãi <span>HOT</span> cho người đi đẹp</h2>
-                    <a href="{{ esc_url(home_url('/khuyen-mai/')) }}">Xem tất cả ưu đãi</a>
+            <div class="dailyve-container dailyve-offers__layout">
+                <div class="dailyve-offers__intro">
+                    <h2 id="dailyve-offers-title">Ưu đãi <span>HOT</span> cho người đẹp</h2>
+                    <div class="dailyve-offers__ticket-art" aria-hidden="true">
+                        <i class="fas fa-ticket-alt"></i>
+                        <i class="fas fa-fire"></i>
+                    </div>
                 </div>
 
                 <div class="dailyve-offer-grid">
                     @foreach ($offers as $offer)
                         <article class="dailyve-offer-card">
-                            <div class="dailyve-offer-card__left">
-                                <p class="dailyve-offer-card__eyebrow">{{ $offer['eyebrow'] }}</p>
-                                <strong class="dailyve-offer-card__value">{{ $offer['value'] }}</strong>
-                                <span class="dailyve-offer-card__note">{{ $offer['note'] }}</span>
-                                <div class="dailyve-offer-card__code">
-                                    NHẬP MÃ: <span>{{ $offer['code'] }}</span>
-                                </div>
+                            <div class="dailyve-offer-card__body">
+                                <p class="dailyve-offer-card__discount">Giảm Giá {{ $offer['discount'] }}</p>
+                                <p class="dailyve-offer-card__label">{{ $offer['label'] }}</p>
+                                <button
+                                    type="button"
+                                    class="dailyve-offer-card__save"
+                                    data-code="{{ esc_attr($offer['code']) }}"
+                                >
+                                    Lưu Mã
+                                </button>
                             </div>
-                            <div class="dailyve-offer-card__right">
-                                <div class="dailyve-offer-card__badge-wrapper">
-                                    <svg class="dailyve-offer-card__blue-coupon" viewBox="0 0 80 50" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M5,10 C5,7.2 7.2,5 10,5 L70,5 C72.8,5 75,7.2 75,10 C75,12 73.5,13.5 73.5,15 C73.5,16.5 75,18 75,20 C75,22 73.5,23.5 73.5,25 C73.5,26.5 75,28 75,30 C75,32.8 72.8,35 70,35 L10,35 C7.2,35 5,32.8 5,30 C5,28 6.5,26.5 6.5,25 C6.5,23.5 5,22 5,20 C5,18 6.5,16.5 6.5,15 C6.5,13.5 5,12 5,10 Z" fill="#0064d2" />
-                                        <line x1="20" y1="5" x2="20" y2="35" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.8" />
-                                        <text x="45" y="24" fill="#ffffff" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="900" text-anchor="middle" alignment-baseline="middle">%</text>
-                                    </svg>
-                                    <img class="dailyve-offer-card__icon" src="{{ esc_url($offer['icon']) }}" alt="{{ esc_attr($offer['eyebrow']) }}" loading="lazy">
-                                </div>
-                                <button type="button" class="dailyve-offer-card__btn-copy">Sao chép</button>
+                            <div class="dailyve-offer-card__badge" aria-hidden="true">
+                                <span>%</span>
                             </div>
                         </article>
                     @endforeach
                 </div>
             </div>
-        </section>
 
-        <section class="dailyve-section dailyve-services" aria-labelledby="dailyve-services-title">
-            <div class="dailyve-container">
-                <div class="dailyve-services__panel">
-                    <h2 id="dailyve-services-title"><span>Dailyve</span> cung cấp những dịch vụ gì?</h2>
-                    <div class="dailyve-services__grid">
-                        @foreach ($services as $service)
-                            <article>
-                                <img class="dailyve-services__icon" src="{{ esc_url($service['image']) }}" alt="{{ esc_attr($service['title']) }}" loading="lazy">
-                                <h3>{{ $service['title'] }}</h3>
-                                <p>{{ $service['desc'] }}</p>
-                            </article>
-                        @endforeach
-                    </div>
-                </div>
+            <div class="dailyve-container dailyve-offers__footer">
+                <a class="dailyve-btn dailyve-btn--outline-light" href="{{ esc_url(home_url('/khuyen-mai/')) }}">
+                    Xem tất cả ưu đãi
+                </a>
             </div>
         </section>
 
+        <!-- Services Section -->
+        <section class="dailyve-section dailyve-services" aria-labelledby="dailyve-services-title" data-home-services>
+            <div class="dailyve-container">
+                <div class="dailyve-services__head">
+                    <h2 id="dailyve-services-title"><span>Dailyve</span> cung cấp những dịch vụ gì?</h2>
+                    <div class="dailyve-services__types" role="tablist" aria-label="Loại dịch vụ">
+                        @foreach ($serviceTypes as $index => $type)
+                            <button
+                                type="button"
+                                class="dailyve-services__type{{ $index === 0 ? ' is-active' : '' }}"
+                                role="tab"
+                                aria-selected="{{ $index === 0 ? 'true' : 'false' }}"
+                                data-service-type="{{ esc_attr($type['id']) }}"
+                            >
+                                <img src="{{ esc_url($type['icon']) }}" alt="" loading="lazy">
+                                <span>{{ $type['label'] }}</span>
+                            </button>
+                        @endforeach
+                    </div>
+                </div>
+
+                @foreach ($serviceTypes as $index => $type)
+                    <div
+                        class="dailyve-services__panel{{ $index === 0 ? ' is-active' : '' }}"
+                        data-service-panel="{{ esc_attr($type['id']) }}"
+                        @if ($index !== 0) hidden @endif
+                    >
+                        <div class="dailyve-services__tabs" role="tablist" aria-label="Nội dung dịch vụ">
+                            @foreach ($type['tabs'] as $tabKey => $tab)
+                                <button
+                                    type="button"
+                                    class="dailyve-services__tab{{ $loop->first ? ' is-active' : '' }}"
+                                    role="tab"
+                                    aria-selected="{{ $loop->first ? 'true' : 'false' }}"
+                                    data-service-tab="{{ esc_attr($tabKey) }}"
+                                >
+                                    {{ $tab['label'] }}
+                                </button>
+                            @endforeach
+                        </div>
+
+                        <div class="dailyve-services__content">
+                            <div class="dailyve-services__map" aria-hidden="true">
+                                <span class="dailyve-services__pin dailyve-services__pin--a"></span>
+                                <span class="dailyve-services__pin dailyve-services__pin--b"></span>
+                                <span class="dailyve-services__pin dailyve-services__pin--c"></span>
+                                <span class="dailyve-services__route-line"></span>
+                            </div>
+
+                            @foreach ($type['tabs'] as $tabKey => $tab)
+                                <div
+                                    class="dailyve-services__text{{ $loop->first ? ' is-active' : '' }}"
+                                    data-service-content="{{ esc_attr($tabKey) }}"
+                                    @if (! $loop->first) hidden @endif
+                                >
+                                    <p>{{ $tab['text'] }}</p>
+                                </div>
+                            @endforeach
+
+                            <a class="dailyve-btn dailyve-btn--accent" href="{{ esc_url($type['link']) }}">Xem thêm</a>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </section>
+
+        <!-- Reasons Section -->
         <section class="dailyve-section dailyve-reasons" aria-labelledby="dailyve-reasons-title">
             <div class="dailyve-container">
-                <h2 id="dailyve-reasons-title"><span>Tại sao</span> nên sử dụng dịch vụ của <em>Dailyve?</em></h2>
+                <h2 id="dailyve-reasons-title"><span>TẠI SAO</span> nên sử dụng dịch vụ của Dailyve?</h2>
                 <div class="dailyve-reasons__grid">
                     @foreach ($reasons as $reason)
                         <article>
                             <i class="{{ esc_attr($reason['icon']) }}" aria-hidden="true"></i>
-                            <div>
-                                <h3>{{ $reason['title'] }}</h3>
-                                <p>{{ $reason['desc'] }}</p>
-                            </div>
+                            <h3>{{ $reason['title'] }}</h3>
+                            <p>{{ $reason['desc'] }}</p>
                         </article>
                     @endforeach
                 </div>
             </div>
         </section>
 
+        <!-- Press Section -->
         <section class="dailyve-section dailyve-press" aria-labelledby="dailyve-press-title">
             <div class="dailyve-container">
-                <div class="dailyve-section__heading">
-                    <h2 id="dailyve-press-title">Báo chí nói gì về <span>Dailyve?</span></h2>
-                    <a href="{{ esc_url(home_url('/tin-tuc/')) }}">Xem tất cả</a>
-                </div>
+                <h2 id="dailyve-press-title"><span>BÁO CHÍ</span> nói gì về Dailyve?</h2>
 
                 <div class="dailyve-press__grid">
                     @foreach ($press as $item)
                         <article>
-                            <div class="dailyve-press__brand">{{ $item['brand'] }}</div>
                             <img src="{{ esc_url($item['image']) }}" alt="{{ esc_attr($item['title']) }}" loading="lazy">
-                            <h3>{{ $item['title'] }}</h3>
-                            <time datetime="{{ esc_attr(date('Y-m-d', strtotime(str_replace('/', '-', $item['date'])))) }}">{{ $item['date'] }}</time>
-                        </article>
-                    @endforeach
-                </div>
-            </div>
-        </section>
-
-        <section class="dailyve-section dailyve-testimonials" aria-labelledby="dailyve-testimonials-title">
-            <div class="dailyve-container">
-                <div class="dailyve-section__heading">
-                    <h2 id="dailyve-testimonials-title"><span>Khách hàng</span> nói gì về <em>Dailyve?</em></h2>
-                    <a href="{{ esc_url(home_url('/danh-gia/')) }}">Xem tất cả</a>
-                </div>
-
-                <div class="dailyve-testimonials__grid">
-                    @foreach ($testimonials as $testimonial)
-                        <article>
-                            <div class="dailyve-testimonial__profile">
-                                <div class="dailyve-testimonial__avatar" aria-hidden="true">{{ substr($testimonial['name'], 0, 1) }}</div>
-                                <div>
-                                    <h3>{{ $testimonial['name'] }}</h3>
-                                    <span>{{ $testimonial['city'] }}</span>
-                                </div>
+                            <div class="dailyve-press__meta">
+                                <span class="dailyve-press__brand">{{ $item['brand'] }}</span>
+                                <h3>{{ $item['title'] }}</h3>
+                                <a class="dailyve-btn dailyve-btn--primary-sm" href="{{ esc_url($item['url']) }}">Xem ngay</a>
                             </div>
-                            <div class="dailyve-stars" aria-label="5 sao">★★★★★</div>
-                            <p>{{ $testimonial['quote'] }}</p>
                         </article>
                     @endforeach
+                </div>
+
+                <div class="dailyve-press__footer">
+                    <a class="dailyve-btn dailyve-btn--accent" href="{{ esc_url(home_url('/tin-tuc/')) }}">Xem thêm</a>
                 </div>
             </div>
         </section>
 
-        <section class="dailyve-app-band" aria-labelledby="dailyve-app-title">
-            <div class="dailyve-container dailyve-app-band__inner">
-                <div class="dailyve-app-band__copy">
-                    <h2 id="dailyve-app-title">Trải nghiệm tiện lợi hơn với ứng dụng <span>Dailyve</span></h2>
-                    <p>Tải app ngay để nhận nhiều ưu đãi hấp dẫn và quản lý hành trình dễ dàng hơn.</p>
-                    <div class="dailyve-app-band__stores">
-                        <img src="{{ esc_url($upload('2025/01/App-QR-Code-1-300x300.png.avif')) }}" alt="QR tải ứng dụng Dailyve" loading="lazy">
-                        <div>
-                            <img src="{{ esc_url($upload('2025/01/download-app-store.png')) }}" alt="Tải trên App Store" loading="lazy">
-                            <img src="{{ esc_url($upload('2025/01/download-gg-play.png')) }}" alt="Tải trên Google Play" loading="lazy">
+        <!-- Merged App & Testimonials Band -->
+        <section class="dailyve-merged-band" aria-labelledby="dailyve-merged-title">
+            <div class="dailyve-container dailyve-merged-band__inner">
+                <!-- Left Column: App Downloads -->
+                <div class="dailyve-merged-band__left">
+                    <h2 id="dailyve-merged-title">
+                        <span>KHÁCH HÀNG</span> nói gì về Dailyve?
+                    </h2>
+                    
+                    <div class="dailyve-merged-band__app-downloads">
+                        <div class="dailyve-app-download-item">
+                            <p class="dailyve-app-download-label">Dailyve đã cập bến tại <strong>App Store</strong></p>
+                            <a href="#" class="dailyve-store-link">
+                                <img src="{{ esc_url($upload('2025/01/download-app-store.png')) }}" alt="Tải trên App Store" loading="lazy">
+                            </a>
+                        </div>
+
+                        <div class="dailyve-app-download-item">
+                            <p class="dailyve-app-download-label">Và tại <strong>Play Store</strong> cũng có Dailyve</p>
+                            <a href="#" class="dailyve-store-link">
+                                <img src="{{ esc_url($upload('2025/01/download-gg-play.png')) }}" alt="Tải trên Google Play" loading="lazy">
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="dailyve-app-band__visual" aria-hidden="true">
-                    <img src="{{ esc_url($upload('2025/06/banner-sale.png')) }}" alt="">
+
+                <!-- Center Column: iPhone Mockup -->
+                <div class="dailyve-merged-band__center" aria-hidden="true">
+                    <div class="dailyve-phone-mockup">
+                        <div class="dailyve-phone-screen">
+                            <img src="{{ esc_url($upload('2025/03/cach-dat-ve-xe-tai-dailyve-1.png')) }}" alt="Dailyve App" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Chat Bubble & QR Code -->
+                <div class="dailyve-merged-band__right">
+                    <!-- Chat Bubble -->
+                    <div class="dailyve-chat-bubble">
+                        <span class="dailyve-chat-bubble__text">Tiện lợi quá điiii!</span>
+                        <span class="dailyve-chat-bubble__subtext">Mười điểmmm!</span>
+                    </div>
+
+                    <!-- QR Code Card -->
+                    <div class="dailyve-qr-card">
+                        <div class="dailyve-qr-card__code">
+                            <img src="{{ esc_url($upload('2025/01/App-QR-Code-1-300x300.png.avif')) }}" alt="QR Code" loading="lazy">
+                        </div>
+                        <div class="dailyve-qr-card__info">
+                            <p class="dailyve-qr-card__title">Quét mã để tải app</p>
+                            <p class="dailyve-qr-card__subtitle">Hoặc tìm "Dailyve" trên App Store & Google Play</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

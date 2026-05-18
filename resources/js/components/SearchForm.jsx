@@ -1,10 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react';
-
-const getTomorrow = () => {
-  const date = new Date();
-  date.setDate(date.getDate() + 1);
-  return date.toISOString().slice(0, 10);
-};
+import {
+  buildLocationMap,
+  getToday,
+  getTomorrow,
+  LocationCombobox,
+  mapLocationPayload,
+  resolveLocationInput,
+  VietnameseDatePicker,
+  fetchLocationsWithCache,
+} from './SearchFields';
 
 const products = [
   { id: 'bus', label: 'Xe khách', icon: 'fas fa-bus' },
@@ -16,7 +20,6 @@ const products = [
 const SearchForm = () => {
   const [locations, setLocations] = useState([]);
   const [activeProduct, setActiveProduct] = useState('bus');
-  const [ticketCount, setTicketCount] = useState('1');
 
   const [from, setFrom] = useState(() => {
     const params = new URLSearchParams(window.location.search);
@@ -26,53 +29,72 @@ const SearchForm = () => {
     const params = new URLSearchParams(window.location.search);
     return params.get('to') || '';
   });
+  const [fromQuery, setFromQuery] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('nameFrom') || '';
+  });
+  const [toQuery, setToQuery] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('nameTo') || '';
+  });
   const [date, setDate] = useState(() => {
     const params = new URLSearchParams(window.location.search);
     return params.get('date') || getTomorrow();
   });
+  const [returnDate, setReturnDate] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('returnDate') || '';
+  });
 
   useEffect(() => {
-    fetch('/wp-json/api/v1/state-city-new')
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.success && Array.isArray(res.data)) {
-          setLocations(
-            res.data
-              .filter((item) => item.name)
-              .map((item) => ({
-                id: String(item._id),
-                name: item.nameWithType || item.name,
-              })),
-          );
-        }
-      })
-      .catch((err) => console.error('Error fetching locations:', err));
+    fetchLocationsWithCache(setLocations);
   }, []);
 
-  const locationMap = useMemo(() => {
-    return locations.reduce((map, location) => {
-      map[location.id] = location.name;
-      return map;
-    }, {});
-  }, [locations]);
+  const locationMap = useMemo(() => buildLocationMap(locations), [locations]);
+
+  useEffect(() => {
+    if (from && locationMap[from]) {
+      setFromQuery(locationMap[from].name);
+    }
+  }, [from, locationMap]);
+
+  useEffect(() => {
+    if (to && locationMap[to]) {
+      setToQuery(locationMap[to].name);
+    }
+  }, [to, locationMap]);
+
+  const handleDepartureDateChange = (nextDate) => {
+    setDate(nextDate);
+
+    if (returnDate && nextDate && returnDate < nextDate) {
+      setReturnDate('');
+    }
+  };
 
   const handleSearch = (event) => {
     event.preventDefault();
 
+    const fromLocation = resolveLocationInput(locations, locationMap, from, fromQuery);
+    const toLocation = resolveLocationInput(locations, locationMap, to, toQuery);
+
+    if (!fromLocation || !toLocation) {
+      alert('Vui lòng chọn điểm đi và điểm đến trong danh sách.');
+      return;
+    }
+
     const params = new URLSearchParams({
-      from,
-      to,
+      from: fromLocation.id,
+      to: toLocation.id,
       date,
-      passengers: ticketCount,
       service: activeProduct,
     });
 
-    if (locationMap[from]) {
-      params.set('nameFrom', locationMap[from]);
-    }
+    params.set('nameFrom', fromLocation.name);
+    params.set('nameTo', toLocation.name);
 
-    if (locationMap[to]) {
-      params.set('nameTo', locationMap[to]);
+    if (returnDate) {
+      params.set('returnDate', returnDate);
     }
 
     window.location.href = `/dat-ve-truc-tuyen/?${params.toString()}`;
@@ -98,19 +120,17 @@ const SearchForm = () => {
 
       <form onSubmit={handleSearch} className="dailyve-search__form">
         <div className="dailyve-search__locations-wrapper">
-          <label className="dailyve-search__field">
-            <span>Nơi đi</span>
-            <i className="fas fa-map-marker-alt" aria-hidden="true"></i>
-            <select value={from} onChange={(event) => setFrom(event.target.value)} required>
-              <option value="">Nhập nơi đi</option>
-              {locations.map((location) => (
-                <option key={location.id} value={location.id}>
-                  {location.name}
-                </option>
-              ))}
-            </select>
-            <i className="fas fa-chevron-down dailyve-search__chevron" aria-hidden="true"></i>
-          </label>
+          <LocationCombobox
+            fieldId="dailyve-from"
+            label="Nơi đi"
+            icon="fas fa-map-marker-alt"
+            placeholder="Nhập nơi đi"
+            locations={locations}
+            value={from}
+            inputValue={fromQuery}
+            onValueChange={setFrom}
+            onInputValueChange={setFromQuery}
+          />
 
           <button
             type="button"
@@ -118,51 +138,49 @@ const SearchForm = () => {
             aria-label="Đổi điểm đi và điểm đến"
             onClick={() => {
               const temp = from;
+              const tempQuery = fromQuery;
               setFrom(to);
+              setFromQuery(toQuery);
               setTo(temp);
+              setToQuery(tempQuery);
             }}
           >
             <i className="fas fa-exchange-alt" aria-hidden="true"></i>
           </button>
 
-          <label className="dailyve-search__field">
-            <span>Nơi đến</span>
-            <i className="fas fa-map-pin" aria-hidden="true"></i>
-            <select value={to} onChange={(event) => setTo(event.target.value)} required>
-              <option value="">Nhập nơi đến</option>
-              {locations.map((location) => (
-                <option key={location.id} value={location.id}>
-                  {location.name}
-                </option>
-              ))}
-            </select>
-            <i className="fas fa-chevron-down dailyve-search__chevron" aria-hidden="true"></i>
-          </label>
+          <LocationCombobox
+            fieldId="dailyve-to"
+            label="Nơi đến"
+            icon="fas fa-map-pin"
+            placeholder="Nhập nơi đến"
+            locations={locations}
+            value={to}
+            inputValue={toQuery}
+            onValueChange={setTo}
+            onInputValueChange={setToQuery}
+          />
         </div>
 
-        <label className="dailyve-search__field dailyve-search__field--date">
-          <span>Ngày đi</span>
-          <i className="fas fa-calendar-alt" aria-hidden="true"></i>
-          <input
-            type="date"
-            value={date}
-            min={new Date().toISOString().slice(0, 10)}
-            onChange={(event) => setDate(event.target.value)}
-            required
-          />
-        </label>
+        <VietnameseDatePicker
+          label="Ngày đi"
+          icon="fas fa-calendar-alt"
+          value={date}
+          min={getToday()}
+          onChange={handleDepartureDateChange}
+          className="dailyve-search__field dailyve-search__field--date"
+          required
+        />
 
-        <label className="dailyve-search__field dailyve-search__field--tickets">
-          <span>Số vé</span>
-          <i className="fas fa-user" aria-hidden="true"></i>
-          <select value={ticketCount} onChange={(event) => setTicketCount(event.target.value)}>
-            <option value="1">1 vé</option>
-            <option value="2">2 vé</option>
-            <option value="3">3 vé</option>
-            <option value="4">4 vé</option>
-          </select>
-          <i className="fas fa-chevron-down dailyve-search__chevron" aria-hidden="true"></i>
-        </label>
+        <VietnameseDatePicker
+          label="Ngày về"
+          icon="fas fa-calendar-check"
+          value={returnDate}
+          min={date || getToday()}
+          onChange={setReturnDate}
+          emptyText="Một chiều"
+          clearable
+          className="dailyve-search__field dailyve-search__field--return"
+        />
 
         <button type="submit" className="dailyve-search__submit">
           <i className="fas fa-search" aria-hidden="true"></i>
