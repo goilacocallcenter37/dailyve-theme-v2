@@ -59,3 +59,11 @@ collect(['setup', 'filters', 'shortcodes'])
             );
         }
     });
+
+/**
+ * Include Dailyve Custom Data and Init Logic
+ */
+if (file_exists(__DIR__ . '/dailyve/init.php')) {
+    include_once __DIR__ . '/dailyve/init.php';
+}
+

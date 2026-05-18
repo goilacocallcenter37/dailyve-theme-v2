@@ -1,4 +1,4 @@
-<article @php(post_class())>
+<article class="{{ implode(' ', get_post_class()) }}">
   <header>
     <h2 class="entry-title">
       <a href="{{ get_permalink() }}">
@@ -10,6 +10,8 @@
   </header>
 
   <div class="entry-summary">
-    @php(the_excerpt())
+    @php
+      the_excerpt();
+    @endphp
   </div>
 </article>
