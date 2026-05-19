@@ -55,11 +55,6 @@ body {
   color: var(--color-body);
 }
 
-h1, h2, h3, h4, h5, h6, .font-display {
-  font-family: var(--font-display);
-  color: var(--color-ink);
-}
-
 .glass-effect {
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(12px);
@@ -418,13 +413,13 @@ h1, h2, h3, h4, h5, h6, .font-display {
 
 /* Unified Global Typography - Be Vietnam Pro (Body) & Space Grotesk (Display) */
 html, body, p, a, input, select, textarea, button, label, td, th, li, span, strong, em {
-  font-family: "Be Vietnam Pro", sans-serif !important;
+  font-family: var(--font-display);
 }
 
-h1, h2, h3, h4, h5, h6, .font-display {
-  font-family: "Be Vietnam Pro", sans-serif !important;
+/* h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: "Be Vietnam Pro", sans-serif;
   letter-spacing: -0.02em;
-}
+} */
 
 /* Maintain Font Awesome Icons */
 .fa, .fas, .far, .fal, .fab, .fad, [class^="fa-"], [class*=" fa-"] {
@@ -2170,34 +2165,6 @@ h1, h2, h3, h4, h5, h6, .font-display {
   transform: translateY(-1px);
 }
 
-.dailyve-trip-list .glass-effect {
-  background: var(--dv-canvas);
-  border: 1px solid var(--dv-hairline);
-  box-shadow: var(--dv-shadow-elevated);
-  backdrop-filter: none;
-}
-
-.dailyve-trip-list .dailyve-search--results {
-  border: 1px solid var(--dv-hairline);
-  border-radius: var(--dv-radius-xl);
-  background: var(--dv-canvas);
-  box-shadow: var(--dv-shadow-soft);
-  padding: 20px;
-}
-
-.dailyve-trip-list .dailyve-search__tabs {
-  width: fit-content;
-  max-width: 100%;
-  min-height: 0;
-  margin-bottom: 20px;
-  padding: 6px;
-  gap: 4px;
-  border: 0;
-  border-radius: var(--dv-radius-pill);
-  background: var(--dv-surface-soft);
-}
-
-.dailyve-trip-list .dailyve-search__tabs button,
 .ol-card__tabs-nav-item {
   min-height: 40px;
   border-radius: var(--dv-radius-md);
@@ -2208,21 +2175,17 @@ h1, h2, h3, h4, h5, h6, .font-display {
   text-transform: none;
 }
 
-.dailyve-trip-list .dailyve-search__tabs button:hover,
 .ol-card__tabs-nav-item:hover {
   color: var(--dv-primary);
   background: var(--dv-canvas);
 }
 
-.dailyve-trip-list .dailyve-search__tabs button.is-active,
 .ol-card__tabs-nav-item.active {
   background: var(--dv-canvas);
   color: var(--dv-primary);
   box-shadow: var(--dv-shadow-soft);
 }
 
-.dailyve-trip-list .dailyve-search__field,
-.dailyve-trip-list .dailyve-search__locations-wrapper,
 .dailyve-datepicker,
 .dailyve-location-menu,
 .route-qa-item,
@@ -2234,14 +2197,6 @@ h1, h2, h3, h4, h5, h6, .font-display {
   box-shadow: none;
 }
 
-.dailyve-trip-list .dailyve-search__field {
-  min-height: 64px;
-  padding: 12px 16px 10px 44px;
-}
-
-.dailyve-trip-list .dailyve-search__field:hover,
-.dailyve-trip-list .dailyve-search__locations-wrapper:focus-within,
-.dailyve-trip-list .dailyve-search__field:focus-within,
 .dailyve-datepicker__header > button:hover,
 .dailyve-datepicker__grid button:hover:not(:disabled) {
   border-color: var(--dv-primary);
@@ -2249,39 +2204,17 @@ h1, h2, h3, h4, h5, h6, .font-display {
   box-shadow: var(--dv-shadow-focus);
 }
 
-.dailyve-trip-list .dailyve-search__field > span,
-.dailyve-trip-list .dailyve-search__label {
-  color: var(--dv-muted);
-  font-size: 13px;
-  font-weight: 500;
-  text-transform: none;
-  letter-spacing: 0;
-}
-
-.dailyve-trip-list .dailyve-search__field select,
-.dailyve-trip-list .dailyve-search__field input,
-.dailyve-trip-list .dailyve-date-trigger strong {
-  color: var(--dv-ink);
-  font-size: 15px;
-  font-weight: 500;
-}
-
-.dailyve-trip-list .dailyve-search__field i:not(.dailyve-search__chevron),
-.dailyve-trip-list .dailyve-search__clear-date:hover,
 .dailyve-datepicker__grid button.is-selected {
   color: var(--dv-primary);
 }
 
-.dailyve-trip-list .dailyve-search__clear-date,
-.dailyve-datepicker__header > button,
-.dailyve-trip-list .dailyve-search__swap {
+.dailyve-datepicker__header > button {
   border: 1px solid var(--dv-hairline);
   background: var(--dv-canvas);
   color: var(--dv-ink);
   box-shadow: var(--dv-shadow-soft);
 }
 
-.dailyve-trip-list .dailyve-search__swap:hover,
 .dailyve-datepicker__footer button,
 .dailyve-location-menu__option:hover,
 .dailyve-location-menu__option.is-active,
@@ -2314,8 +2247,7 @@ h1, h2, h3, h4, h5, h6, .font-display {
 .dailyve-results-summary,
 .dailyve-empty-state,
 .dailyve-trip-details,
-.dailyve-trip-skeleton,
-.dailyve-trip-search-card {
+.dailyve-trip-skeleton {
   border: 1px solid var(--dv-hairline) !important;
   border-radius: var(--dv-radius-lg) !important;
   background: var(--dv-canvas) !important;
@@ -2772,16 +2704,33 @@ h1, h2, h3, h4, h5, h6, .font-display {
   background: var(--dv-primary) !important;
 }
 
+.dailyve-bus-page .dailyve-bus-search-section {
+  position: relative;
+  z-index: 20;
+}
+
+.dailyve-bus-page .dailyve-bus-search-card,
+.dailyve-bus-page .dailyve-search,
+.dailyve-bus-page .dailyve-search__field,
+.dailyve-bus-page .dailyve-date-field {
+  overflow: visible;
+}
+
+.dailyve-bus-page .dailyve-search {
+  z-index: 20;
+}
+
+.dailyve-bus-page .dailyve-datepicker,
+.dailyve-bus-page .dailyve-location-menu {
+  z-index: 40;
+}
+
+.dailyve-bus-page .dailyve-bus-intro-section {
+  position: relative;
+  z-index: 1;
+}
+
 @media (max-width: 760px) {
-  .dailyve-trip-list .dailyve-search--results {
-    padding: 16px;
-    border-radius: var(--dv-radius-lg);
-  }
-
-  .dailyve-trip-list .dailyve-search__tabs {
-    width: 100%;
-  }
-
   .dailyve-trip-card > div:first-of-type {
     padding: 16px;
   }

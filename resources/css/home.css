@@ -527,9 +527,9 @@ body {
 }
 
 .dailyve-search__locations-wrapper .dailyve-search__field {
-  border: none;
-  background: transparent;
-  box-shadow: none;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 .dailyve-search__locations-wrapper .dailyve-search__field:first-child {
@@ -543,7 +543,9 @@ body {
 }
 
 .dailyve-search__locations-wrapper .dailyve-search__field:hover {
-  background-color: #fafcff;
+  border: none !important;
+  background-color: #fafcff !important;
+  box-shadow: none !important;
 }
 
 @media (min-width: 768px) {
@@ -828,15 +830,14 @@ body {
 }
 
 .dailyve-datepicker__grid button span {
-  font-size: 13px;
-  font-weight: 900;
+  font-size: 14px;
+  font-weight: 600;
   line-height: 1;
 }
 
 .dailyve-datepicker__grid button small {
   color: #f59e0b;
-  font-size: 9px;
-  font-weight: 800;
+  font-size: 10px;
   line-height: 1;
 }
 
@@ -907,7 +908,7 @@ body {
 }
 
 .dailyve-search__locations-wrapper .dailyve-search__field:focus-within {
-  border-color: transparent !important;
+  border: none !important;
   box-shadow: none !important;
 }
 
@@ -1066,8 +1067,6 @@ body {
   border-radius: 12px;
   color: #ffffff;
   background: linear-gradient(135deg, #007aff 0%, #0056b3 100%);
-  box-shadow: 0 8px 24px rgba(0, 122, 255, 0.25);
-  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 16px;
   font-weight: 800;
   cursor: pointer;
@@ -1076,7 +1075,6 @@ body {
 
 .dailyve-search__submit:hover {
   background: linear-gradient(135deg, #0088ff 0%, #0066cc 100%);
-  box-shadow: 0 10px 28px rgba(0, 122, 255, 0.35);
   transform: translateY(-1px);
 }
 
@@ -1107,6 +1105,10 @@ body {
 .dailyve-search__benefits i {
   color: #0064d2;
   font-size: 13px;
+}
+
+.dailyve-search--compact .dailyve-search__benefits {
+  display: none;
 }
 
 .dailyve-section {
@@ -2748,11 +2750,35 @@ body {
 
 @media (max-width: 760px) {
   .admin-bar .dailyve-site-header {
-    top: 46px;
+    top: 0;
+  }
+
+  .dailyve-site-header {
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+    backdrop-filter: none;
   }
 
   .dailyve-container {
     width: min(100% - 24px, 1220px);
+  }
+
+  .dailyve-site-header__inner {
+    min-height: 58px;
+    gap: 8px;
+  }
+
+  .dailyve-site-header__actions {
+    min-width: 0;
+    gap: 8px;
+  }
+
+  #react-auth-menu {
+    min-width: 0;
   }
 
   .dailyve-site-header__login,
@@ -2761,7 +2787,29 @@ body {
   }
 
   .dailyve-site-header__logo img {
-    width: 112px;
+    width: 108px;
+  }
+
+  .dailyve-site-header #react-auth-menu .dailyve-auth-menu button {
+    min-height: 36px !important;
+    height: 36px;
+    max-width: calc(100vw - 190px);
+    padding: 0 12px !important;
+    border-radius: 8px !important;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .dailyve-site-header #react-auth-menu .dailyve-auth-menu button span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dailyve-site-header__menu {
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
   }
 
   .dailyve-hero {
@@ -3014,6 +3062,12 @@ body {
   line-height: 1.8;
 }
 
+@media (min-width: 601px) and (max-width: 760px) {
+  .admin-bar .dailyve-site-header {
+    top: 46px;
+  }
+}
+
 .e-content p {
   margin-bottom: 1.5rem;
 }
@@ -3078,3 +3132,394 @@ body {
 .e-content a:hover {
   color: var(--dailyve-blue-dark);
 }
+
+@media (max-width: 380px) {
+  .dailyve-site-header #react-auth-menu .dailyve-auth-menu button {
+    width: 38px;
+    padding: 0 !important;
+    justify-content: center;
+  }
+
+  .dailyve-site-header #react-auth-menu .dailyve-auth-menu button span {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   DAILYVE RATINGS & REVIEWS STYLES
+   ========================================================================== */
+.reviews-criteria-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 24px;
+}
+
+@media (max-width: 640px) {
+  .reviews-criteria-container {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+.rating-tab__cat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rating-tab__cat-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.rating-tab__progress__wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rating-tab__progress__bar {
+  flex: 1;
+  height: 6px;
+  background-color: #f1f5f9;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.rating-tab__progress__bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
+  border-radius: 9999px;
+}
+
+.rating-tab__progress__txt {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+  min-width: 24px;
+  text-align: right;
+}
+
+/* PASSENGER REVIEWS CARD LIST */
+.rating-tab__comments-list__item {
+  background-color: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.rating-tab__comments-list__item:hover {
+  border-color: #e2e8f0;
+  box-shadow: 0 4px 12px rgba(148, 163, 184, 0.05);
+}
+
+.rating-tab__comments-list__item-personal__info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.rating-tab__comments-list__item-personal__info-avatar {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+  color: #475569;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.rating-tab__comments-list__item-personal_social-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.rating-tab__comments-list__item-personal_social-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rating-tab__comments-list__item-personal__info-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.rating-tab__comments-list__item-personal__info-star {
+  display: inline-block;
+}
+
+/* OVERLAY STARS COMPONENT */
+.ratings {
+  position: relative;
+  vertical-align: middle;
+  display: inline-block;
+  color: #cbd5e1;
+  overflow: hidden;
+  white-space: nowrap;
+  letter-spacing: 2px;
+}
+
+.ratings .empty-stars::before {
+  content: "★★★★★";
+}
+
+.ratings .full-stars {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #fbbf24;
+}
+
+.ratings .full-stars::before {
+  content: "★★★★★";
+}
+
+.rating-tab__comments-list__item-content {
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #334155;
+  margin-bottom: 12px;
+}
+
+.rating-tab__comments-list__item-depart-date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.rating-tab__comments-list__item-depart-date i {
+  color: #10b981;
+  font-size: 13px;
+}
+
+.rating-tab__comments-list__item-depart-date .verified {
+  color: #10b981;
+  font-weight: 700;
+}
+
+/* REPLIES */
+.rating-tab__comments-list__comment-reply {
+  background-color: #f8fafc;
+  border-left: 3px solid #3b82f6;
+  border-radius: 0 12px 12px 0;
+  padding: 12px 16px;
+  margin-top: 12px;
+}
+
+.item-comment-reply .comment-reply-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.item-comment-reply .comment-reply-content {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #475569;
+}
+
+/* ==========================================================================
+   DAILYVE CANCELLATION & POLICY STYLES
+   ========================================================================== */
+.cancellation-policy-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background-color: #ffffff;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.cancellation-policy-card__header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f8fafc;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cancellation-policy-card__header-time {
+  flex: 1;
+}
+
+.cancellation-policy-card__header-fee {
+  width: 100px;
+  text-align: right;
+}
+
+.cancellation-policy-card__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background-color 0.2s ease;
+}
+
+.cancellation-policy-card__row:last-child {
+  border-bottom: none;
+}
+
+.cancellation-policy-card__row--current {
+  background-color: #f0f9ff;
+}
+
+.cancellation-policy-card__row-time {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.cancellation-policy-card__row-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.cancellation-policy-card__row-time-text {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.cancellation-policy-card__row-fee {
+  width: 100px;
+  text-align: right;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Status colors */
+.cancellation-policy-card__row.is-green .cancellation-policy-card__row-dot {
+  background-color: #10b981;
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+}
+
+.cancellation-policy-card__row.is-green .cancellation-policy-card__row-fee {
+  color: #10b981;
+}
+
+.cancellation-policy-card__row.is-yellow .cancellation-policy-card__row-dot {
+  background-color: #f59e0b;
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
+}
+
+.cancellation-policy-card__row.is-yellow .cancellation-policy-card__row-fee {
+  color: #f59e0b;
+}
+
+.cancellation-policy-card__row.is-red .cancellation-policy-card__row-dot {
+  background-color: #ef4444;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+}
+
+.cancellation-policy-card__row.is-red .cancellation-policy-card__row-fee {
+  color: #ef4444;
+}
+
+/* Warnings Note */
+.cancellation-policy-card__note {
+  display: flex;
+  gap: 10px;
+  background-color: #fffbeb;
+  border: 1px dashed #fcd34d;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-top: 16px;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #b45309;
+}
+
+.cancellation-policy-card__note i {
+  font-size: 14px;
+  margin-top: 2px;
+  color: #d97706;
+}
+
+/* MAPPING POLICY (GENERAL RULES) */
+.policy-group-container {
+  margin-top: 24px;
+  background-color: #ffffff;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 16px 20px;
+}
+
+.policy-group-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 12px;
+  border-left: 3px solid #3b82f6;
+  padding-left: 10px;
+}
+
+.policy-group-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.policy-group-container li {
+  position: relative;
+  padding-left: 16px;
+}
+
+.policy-group-container li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #94a3b8;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.policy-option {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #475569;
+  margin: 0;
+}
+

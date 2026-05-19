@@ -17,9 +17,20 @@ const products = [
   { id: 'hotel', label: 'Khách sạn', icon: 'fas fa-hotel' },
 ];
 
-const SearchForm = () => {
+const getInitialProduct = (fallback = 'bus') => {
+  const params = new URLSearchParams(window.location.search);
+  const product = params.get('service') || fallback;
+
+  return products.some((item) => item.id === product) ? product : 'bus';
+};
+
+const SearchForm = ({
+  onSearch,
+  initialService = 'bus',
+  className = '',
+}) => {
   const [locations, setLocations] = useState([]);
-  const [activeProduct, setActiveProduct] = useState('bus');
+  const [activeProduct, setActiveProduct] = useState(() => getInitialProduct(initialService));
 
   const [from, setFrom] = useState(() => {
     const params = new URLSearchParams(window.location.search);
@@ -83,25 +94,40 @@ const SearchForm = () => {
       return;
     }
 
-    const params = new URLSearchParams({
+    const payload = {
       from: fromLocation.id,
       to: toLocation.id,
       date,
       service: activeProduct,
+      nameFrom: fromLocation.name,
+      nameTo: toLocation.name,
+      returnDate: returnDate || '',
+    };
+
+    if (typeof onSearch === 'function') {
+      onSearch(payload);
+      return;
+    }
+
+    const params = new URLSearchParams({
+      from: payload.from,
+      to: payload.to,
+      date: payload.date,
+      service: payload.service,
     });
 
-    params.set('nameFrom', fromLocation.name);
-    params.set('nameTo', toLocation.name);
+    params.set('nameFrom', payload.nameFrom);
+    params.set('nameTo', payload.nameTo);
 
-    if (returnDate) {
-      params.set('returnDate', returnDate);
+    if (payload.returnDate) {
+      params.set('returnDate', payload.returnDate);
     }
 
     window.location.href = `/dat-ve-truc-tuyen/?${params.toString()}`;
   };
 
   return (
-    <div className="dailyve-search">
+    <div className={['dailyve-search', className].filter(Boolean).join(' ')}>
       <div className="dailyve-search__tabs" role="tablist" aria-label="Chọn dịch vụ">
         {products.map((product) => (
           <button

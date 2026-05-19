@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="bg-slate-50 min-h-screen font-sans antialiased text-slate-800 pb-20">
+<div class="dailyve-bus-page bg-slate-50 min-h-screen font-sans antialiased text-slate-800 pb-20">
   
   {{-- Breadcrumbs --}}
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-4">
@@ -18,10 +18,10 @@
   </div>
 
   {{-- Search Widget Block --}}
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-    <div class="bg-white rounded-3xl shadow-xl shadow-slate-100 p-6 md:p-8 border border-slate-100 relative overflow-hidden">
+  <div class="dailyve-bus-search-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+    <div class="dailyve-bus-search-card bg-white rounded-3xl shadow-xl shadow-slate-100 p-6 md:p-8 border border-slate-100 relative overflow-visible">
       <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-sky-500 to-indigo-500"></div>
-      <h2 class="text-xl md:text-2xl font-black text-slate-900 mb-6 text-center tracking-tight flex items-center justify-center gap-2">
+      <h2 class="text-xl md:text-2xl font-bold text-slate-900 mb-6 text-center tracking-tight flex items-center justify-center gap-2">
         <svg class="w-6 h-6 text-blue-500 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
@@ -34,7 +34,7 @@
   </div>
 
   {{-- Hero Section (2-Column Grid) --}}
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+  <div class="dailyve-bus-intro-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
       
       {{-- Left Side: Introduce & Features (7/12) --}}
@@ -114,7 +114,7 @@
           
           <div>
             <span class="bg-white/20 text-white text-[10px] md:text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full inline-block mb-6 backdrop-blur-sm">Hỗ trợ hotline 24/7</span>
-            <h3 class="text-2xl md:text-3xl font-black mb-3 leading-snug tracking-tight">Tổng đài đặt vé & CSKH trực tuyến</h3>
+            <h3 class="text-2xl md:text-3xl text-white font-black mb-3 leading-snug tracking-tight">Tổng đài đặt vé & CSKH trực tuyến</h3>
             <p class="text-blue-100 text-xs md:text-sm leading-relaxed mb-6">
               Kết nối trực tiếp tới tổng đài hỗ trợ viên để đặt giữ chỗ nhanh nhất, tư vấn mọi lịch trình và xử lý nhanh chóng các yêu cầu hoàn hủy đổi vé.
             </p>

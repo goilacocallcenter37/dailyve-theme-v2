@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import SeatSelection from './SeatSelection';
+import SearchForm from './SearchForm';
 import {
   buildLocationMap,
   getToday,
@@ -88,6 +89,7 @@ const getInitialFilters = () => {
     nameTo: params.get('nameTo') || '',
     date: formatDateInput(params.get('date') || getTomorrow()),
     returnDate: formatDateInput(params.get('returnDate') || ''),
+    service: params.get('service') || 'bus',
     sort: params.get('sort') || 'time:asc',
     time: params.get('time') || '00:00-23:59',
     companies: params.get('companies') || '',
@@ -884,7 +886,7 @@ const DetailTabs = ({ trip, gallery }) => {
                   Chính sách & Quy định
                 </h4>
                 <div
-                  className="prose prose-slate max-w-none text-sm font-semibold leading-relaxed text-slate-600 bg-slate-50/50 rounded-3xl p-6 border border-slate-100
+                  className="prose prose-slate max-w-none text-sm font-semibold leading-relaxed text-slate-600 bg-slate-50/50 rounded-3xl md:p-6 p-2 border border-slate-100
                     prose-p:mb-4 prose-p:last:mb-0
                     prose-strong:text-slate-900 prose-strong:font-black
                     prose-ul:list-disc prose-ul:pl-5 prose-ul:space-y-2"
@@ -1110,7 +1112,7 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
             )}
           </div>
           <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-success px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-white shadow-md">
-            <i className="fas fa-shield-alt mr-1"></i> Tin cậy
+            <i className="fas fa-shield-alt mr-1"></i> Xác nhận tức thì
           </div>
         </div>
 
@@ -1357,6 +1359,7 @@ const TripList = () => {
       nameTo: payload.nameTo || '',
       date: payload.date,
       returnDate: payload.returnDate || '',
+      service: payload.service || filters.service || 'bus',
       companies: '',
       fa: '',
       ta: '',
@@ -1396,12 +1399,11 @@ const TripList = () => {
             </h1>
           </div>
           
-          <div className="dailyve-trip-search-card glass-effect rounded-[18px] p-1.5 shadow-premium sm:p-2 md:rounded-[28px]">
-            <SearchPanel
-              filters={filters}
-              onSubmit={handleNewSearch}
-            />
-          </div>
+          <SearchForm
+            className="dailyve-search--compact"
+            initialService={filters.service || 'bus'}
+            onSearch={handleNewSearch}
+          />
         </div>
       </section>
 

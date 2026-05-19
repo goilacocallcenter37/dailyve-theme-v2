@@ -634,7 +634,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
             </div>
           ))}
         </div>
-        <button onClick={onCancel} className="text-slate-400 hover:text-danger transition-colors">
+        <button onClick={onCancel} className="text-slate-400! bg-none! hover:text-danger transition-colors">
           <i className="fas fa-times text-xl"></i>
         </button>
       </div>
