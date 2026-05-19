@@ -39,7 +39,7 @@
   @endphp
 
   <!-- Categories Filter Carousel Header -->
-  <div class="bg-white border-b border-slate-100 shadow-sm py-4 sticky top-[72px] z-40 backdrop-blur-md bg-white/95">
+  <div class="dailyve-archive-filter bg-white border-b border-slate-100 shadow-sm py-4 sticky top-[72px] z-40 backdrop-blur-md bg-white/95">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center space-x-2 overflow-x-auto scrollbar-none py-1">
         <!-- Home Button -->
@@ -66,7 +66,7 @@
     </div>
   </div>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="dailyve-archive max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <!-- Archive Title Header -->
     <div class="mb-8 text-center md:text-left">
       <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
@@ -96,7 +96,7 @@
               $grid_class = $is_large ? 'md:col-span-2 md:row-span-2 min-h-[300px] md:h-full' : 'md:col-span-1 md:row-span-1 min-h-[180px] md:h-full';
             @endphp
             
-            <a href="{{ get_permalink() }}" class="group relative flex flex-col justify-end overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 {{ $grid_class }}">
+            <a href="{{ get_permalink() }}" class="dailyve-featured-post group relative flex flex-col justify-end overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 {{ $grid_class }}">
               <!-- Thumbnail -->
               <div class="absolute inset-0 z-0">
                 @if (has_post_thumbnail())

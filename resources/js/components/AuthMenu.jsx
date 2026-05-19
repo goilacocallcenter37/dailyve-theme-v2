@@ -44,7 +44,7 @@ const AuthMenu = () => {
 
     if (!isLoggedIn) {
         return (
-            <div className="flex items-center space-x-3">
+            <div className="dailyve-auth-menu flex items-center space-x-3">
                 <button 
                     onClick={handleLoginClick}
                     className="flex items-center space-x-2 text-slate-700 hover:text-blue-600 font-semibold text-sm py-2 px-4 rounded-full border border-slate-200 hover:border-blue-100 hover:bg-blue-50/20 active:scale-95 transition-all cursor-pointer"
@@ -60,7 +60,7 @@ const AuthMenu = () => {
     const avatar = customerData?.avatar || '/wp-content/uploads/images/user.png';
 
     return (
-        <div className="relative inline-block text-left" ref={menuRef}>
+        <div className="dailyve-auth-menu relative inline-block text-left" ref={menuRef}>
             {/* User Profile Trigger Button */}
             <button
                 onClick={toggleMenu}

@@ -297,7 +297,7 @@ const SearchPanel = ({ filters, onSubmit }) => {
 };
 
 const TripSkeleton = () => (
-  <div className="grid animate-pulse gap-5 overflow-hidden rounded-[18px] border border-slate-100 bg-white p-4 shadow-sm sm:p-5 lg:grid-cols-[140px_minmax(0,1fr)_200px] lg:items-center">
+  <div className="dailyve-trip-skeleton grid animate-pulse gap-5 overflow-hidden rounded-[18px] border border-slate-100 bg-white p-4 shadow-sm sm:p-5 lg:grid-cols-[140px_minmax(0,1fr)_200px] lg:items-center">
     <div className="aspect-[4/3] w-full max-w-[150px] rounded-xl bg-slate-100"></div>
     <div className="min-w-0 flex-1 space-y-4 py-2">
       <div className="h-6 w-1/3 rounded-md bg-slate-100"></div>
@@ -331,8 +331,8 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
   };
 
   return (
-    <aside className="order-2 grid gap-4 lg:order-1 lg:sticky lg:top-24 lg:self-start">
-      <div className="overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+    <aside className="dailyve-filter-panel order-2 grid gap-4 lg:order-1 lg:sticky lg:top-24 lg:self-start">
+      <div className="dailyve-filter-card overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
         <div className="mb-6 flex items-center justify-between border-b border-slate-50 pb-4">
           <h2 className="text-lg font-black text-slate-900">Bộ lọc</h2>
           <button
@@ -725,7 +725,7 @@ const DetailTabs = ({ trip, gallery }) => {
   };
 
   return (
-    <div className="overflow-hidden rounded-[2rem] border border-slate-100 bg-white shadow-sm">
+    <div className="dailyve-trip-details overflow-hidden rounded-[2rem] border border-slate-100 bg-white shadow-sm">
       <div className="flex flex-wrap border-b border-slate-50 bg-slate-50/50 p-2">
         {tabs.map((tab) => (
           <button
@@ -1046,12 +1046,12 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
   const partnerName = trip.partner?.partner_name || trip.partner_name || '';
 
   return (
-    <li className={`group relative flex flex-col overflow-hidden rounded-[18px] border bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-premium ${
+    <li className={`dailyve-trip-card group relative flex flex-col overflow-hidden rounded-[18px] border bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-premium ${
       isBooking ? 'border-primary ring-1 ring-primary/20' : 'border-slate-100 hover:border-primary/70'
     }`}>
       {/* Important Notification Modal */}
       {showNoteModal && trip.important_notification?.content && createPortal(
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div className="dailyve-important-modal fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-md transition-all duration-300" onClick={() => setShowNoteModal(false)}></div>
           <div className="relative w-full max-w-2xl transform overflow-hidden rounded-[2.5rem] bg-white border border-slate-100 shadow-[0_20px_50px_rgba(0,0,0,0.15)] animate-in zoom-in-95 duration-300 flex flex-col max-h-[85vh]">
             <div className="bg-gradient-to-r from-amber-500 to-orange-600 px-8 py-6 text-white shrink-0">
@@ -1384,8 +1384,8 @@ const TripList = () => {
     trips.length > 0 ? `${trips[0].from_name || 'Điểm đi'} đi ${trips[0].to_name || 'Điểm đến'}` : 'Tìm chuyến xe';
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-slate-50/50">
-      <section className="relative overflow-visible bg-white pb-8 pt-6 md:pb-12 md:pt-10">
+    <div className="dailyve-trip-list min-h-screen overflow-x-hidden bg-slate-50/50">
+      <section className="dailyve-trip-hero relative overflow-visible bg-white pb-8 pt-6 md:pb-12 md:pt-10">
         <div className="relative mx-auto max-w-7xl px-3 sm:px-4">
           <div className="mb-6 text-center md:mb-8 md:text-left">
             <p className="inline-block rounded-full bg-blue-50 px-4 py-1.5 text-xs font-black uppercase tracking-widest text-blue-600">
@@ -1396,7 +1396,7 @@ const TripList = () => {
             </h1>
           </div>
           
-          <div className="glass-effect rounded-[18px] p-1.5 shadow-premium sm:p-2 md:rounded-[28px]">
+          <div className="dailyve-trip-search-card glass-effect rounded-[18px] p-1.5 shadow-premium sm:p-2 md:rounded-[28px]">
             <SearchPanel
               filters={filters}
               onSubmit={handleNewSearch}
@@ -1415,7 +1415,7 @@ const TripList = () => {
         />
 
         <main className="order-1 min-w-0 lg:order-2">
-          <div className="mb-5 flex flex-col justify-between gap-4 rounded-[18px] border border-slate-100 bg-white p-4 shadow-sm sm:p-5 md:flex-row md:items-center">
+          <div className="dailyve-results-summary mb-5 flex flex-col justify-between gap-4 rounded-[18px] border border-slate-100 bg-white p-4 shadow-sm sm:p-5 md:flex-row md:items-center">
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="min-w-0 break-words text-lg font-bold leading-snug text-slate-900 sm:text-xl">
@@ -1444,7 +1444,7 @@ const TripList = () => {
           </div>
 
           {!filters.from || !filters.to ? (
-            <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-200 bg-white py-20 px-10 text-center">
+            <div className="dailyve-empty-state flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-200 bg-white py-20 px-10 text-center">
               <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-slate-50 text-3xl text-slate-300">
                  <i className="fas fa-search"></i>
               </div>
@@ -1482,7 +1482,7 @@ const TripList = () => {
                 <div className="mt-8 flex justify-center">
                   <button
                     type="button"
-                    className="group flex items-center gap-3 rounded-2xl border-2 border-blue-100 bg-white px-8 py-4 text-sm font-black text-blue-600 shadow-sm transition-all hover:border-blue-500 hover:bg-blue-50 active:scale-95 disabled:cursor-wait disabled:opacity-60"
+                    className="dailyve-load-more group flex items-center gap-3 rounded-2xl border-2 border-blue-100 bg-white px-8 py-4 text-sm font-black text-blue-600 shadow-sm transition-all hover:border-blue-500 hover:bg-blue-50 active:scale-95 disabled:cursor-wait disabled:opacity-60"
                     disabled={loadingMore}
                     onClick={() => fetchTrips(true, nextCursor)}
                   >
@@ -1496,7 +1496,7 @@ const TripList = () => {
               )}
             </>
           ) : (
-            <div className="flex flex-col items-center justify-center rounded-3xl border border-slate-100 bg-white py-20 px-10 text-center shadow-sm">
+            <div className="dailyve-empty-state flex flex-col items-center justify-center rounded-3xl border border-slate-100 bg-white py-20 px-10 text-center shadow-sm">
               <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-slate-50 text-3xl text-slate-300">
                  <i className="fas fa-bus"></i>
               </div>

@@ -3,7 +3,7 @@
   $primary_cat = !empty($categories) ? $categories[0] : null;
 @endphp
 
-<article class="{{ implode(' ', get_post_class('max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10')) }}">
+<article class="{{ implode(' ', get_post_class('dailyve-single max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10')) }}">
   <!-- Header -->
   <header class="text-center mb-8">
     <!-- Category Badge -->

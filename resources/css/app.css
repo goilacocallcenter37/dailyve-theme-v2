@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss" theme(static);
 @import "./home.css";
 
@@ -7,17 +7,41 @@
 @source "../**/*.js";
 
 @theme {
-  --font-sans: "Be Vietnam Pro", "Plus Jakarta Sans", sans-serif;
-  --font-display: "Be Vietnam Pro", "Plus Jakarta Sans", sans-serif;
-  
+  --font-sans: "Be Vietnam Pro", sans-serif;
+  --font-display: "Be Vietnam Pro", sans-serif;
+
   --color-primary: #2196F3;
+  --color-primary-active: #1565C0;
   --color-primary-dark: #1565C0;
-  --color-primary-light: #BBDEFB;
+  --color-primary-light: #90CAF9;
+  --color-primary-disabled: #E2E8F0;
+  --color-ink: #0F172A;
+  --color-body: #334155;
+  --color-muted: #64748B;
+  --color-muted-soft: #94A3B8;
+  --color-hairline: #E2E8F0;
+  --color-hairline-soft: #F1F5F9;
+  --color-canvas: #FFFFFF;
+  --color-surface-soft: #F8FAFC;
+  --color-surface-card: #F1F5F9;
+  --color-surface-strong: #CBD5E1;
+  --color-surface-dark: #0F172A;
+  --color-surface-dark-elevated: #1E293B;
+  --color-brand-accent: #F59E0B;
   --color-success: #16A34A;
   --color-warning: #F59E0B;
+  --color-warning-dark: #92400E;
+  --color-error: #DC2626;
   --color-danger: #DC2626;
-  
-  --shadow-premium: 0 20px 40px -15px rgba(21, 101, 192, 0.12);
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 9999px;
+
+  --shadow-premium: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 :root {
@@ -27,12 +51,13 @@
 
 body {
   font-family: var(--font-sans);
-  background-color: #F8FAFC;
-  color: #1E293B;
+  background-color: var(--color-surface-soft);
+  color: var(--color-body);
 }
 
-h1, h2, h3, .font-display {
+h1, h2, h3, h4, h5, h6, .font-display {
   font-family: var(--font-display);
+  color: var(--color-ink);
 }
 
 .glass-effect {
@@ -391,9 +416,14 @@ h1, h2, h3, .font-display {
   margin: 0;
 }
 
-/* Unified Global Typography - Be Vietnam Pro */
-html, body, p, a, h1, h2, h3, h4, h5, h6, input, select, textarea, button, label, td, th, li, span, strong, em {
-  font-family: "Be Vietnam Pro", "Plus Jakarta Sans", sans-serif !important;
+/* Unified Global Typography - Be Vietnam Pro (Body) & Space Grotesk (Display) */
+html, body, p, a, input, select, textarea, button, label, td, th, li, span, strong, em {
+  font-family: "Be Vietnam Pro", sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: "Be Vietnam Pro", sans-serif !important;
+  letter-spacing: -0.02em;
 }
 
 /* Maintain Font Awesome Icons */
@@ -2059,5 +2089,701 @@ html, body, p, a, h1, h2, h3, h4, h5, h6, input, select, textarea, button, label
   font-size: 0.85rem;
   color: #64748B;
   line-height: 1.7;
+}
+
+/* Dailyve scoped design-system refinements.
+   Keep home page sections controlled by home.css. */
+:root {
+  --dv-primary: #2196F3;
+  --dv-primary-active: #1565C0;
+  --dv-primary-disabled: #E2E8F0;
+  --dv-ink: #0F172A;
+  --dv-body: #334155;
+  --dv-muted: #64748B;
+  --dv-muted-soft: #94A3B8;
+  --dv-hairline: #E2E8F0;
+  --dv-hairline-soft: #F1F5F9;
+  --dv-canvas: #FFFFFF;
+  --dv-surface-soft: #F8FAFC;
+  --dv-surface-card: #F1F5F9;
+  --dv-surface-strong: #CBD5E1;
+  --dv-surface-dark: #0F172A;
+  --dv-surface-dark-elevated: #1E293B;
+  --dv-accent: #F59E0B;
+  --dv-success: #16A34A;
+  --dv-error: #DC2626;
+  --dv-radius-sm: 6px;
+  --dv-radius-md: 8px;
+  --dv-radius-lg: 12px;
+  --dv-radius-xl: 16px;
+  --dv-radius-pill: 9999px;
+  --dv-shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --dv-shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --dv-shadow-focus: 0 0 0 3px rgba(33, 150, 243, 0.16);
+}
+
+.dailyve-auth-menu button {
+  min-height: 40px;
+  border: 1px solid var(--dv-hairline) !important;
+  border-radius: var(--dv-radius-md) !important;
+  background: var(--dv-canvas) !important;
+  color: var(--dv-ink) !important;
+  box-shadow: var(--dv-shadow-soft);
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+.dailyve-auth-menu button:hover {
+  border-color: var(--dv-primary) !important;
+  color: var(--dv-primary) !important;
+  background: var(--dv-surface-soft) !important;
+}
+
+.dailyve-auth-menu [class*="shadow-xl"],
+.dailyve-auth-menu [class*="shadow-2xl"] {
+  border: 1px solid var(--dv-hairline);
+  border-radius: var(--dv-radius-lg) !important;
+  box-shadow: var(--dv-shadow-elevated) !important;
+}
+
+.view-ticket-btn,
+.ol-card__btn {
+  min-height: 40px;
+  padding: 12px 20px;
+  border-radius: var(--dv-radius-md);
+  border: 1px solid transparent;
+  background: var(--dv-primary);
+  color: var(--dv-canvas) !important;
+  box-shadow: var(--dv-shadow-soft);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+  text-decoration: none !important;
+}
+
+.view-ticket-btn:hover,
+.ol-card__btn:hover {
+  background: var(--dv-primary-active);
+  border-color: var(--dv-primary-active);
+  box-shadow: var(--dv-shadow-elevated);
+  transform: translateY(-1px);
+}
+
+.dailyve-trip-list .glass-effect {
+  background: var(--dv-canvas);
+  border: 1px solid var(--dv-hairline);
+  box-shadow: var(--dv-shadow-elevated);
+  backdrop-filter: none;
+}
+
+.dailyve-trip-list .dailyve-search--results {
+  border: 1px solid var(--dv-hairline);
+  border-radius: var(--dv-radius-xl);
+  background: var(--dv-canvas);
+  box-shadow: var(--dv-shadow-soft);
+  padding: 20px;
+}
+
+.dailyve-trip-list .dailyve-search__tabs {
+  width: fit-content;
+  max-width: 100%;
+  min-height: 0;
+  margin-bottom: 20px;
+  padding: 6px;
+  gap: 4px;
+  border: 0;
+  border-radius: var(--dv-radius-pill);
+  background: var(--dv-surface-soft);
+}
+
+.dailyve-trip-list .dailyve-search__tabs button,
+.ol-card__tabs-nav-item {
+  min-height: 40px;
+  border-radius: var(--dv-radius-md);
+  color: var(--dv-muted);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.dailyve-trip-list .dailyve-search__tabs button:hover,
+.ol-card__tabs-nav-item:hover {
+  color: var(--dv-primary);
+  background: var(--dv-canvas);
+}
+
+.dailyve-trip-list .dailyve-search__tabs button.is-active,
+.ol-card__tabs-nav-item.active {
+  background: var(--dv-canvas);
+  color: var(--dv-primary);
+  box-shadow: var(--dv-shadow-soft);
+}
+
+.dailyve-trip-list .dailyve-search__field,
+.dailyve-trip-list .dailyve-search__locations-wrapper,
+.dailyve-datepicker,
+.dailyve-location-menu,
+.route-qa-item,
+.ol-stats,
+.route-seo-article {
+  border: 1px solid var(--dv-hairline);
+  border-radius: var(--dv-radius-lg);
+  background: var(--dv-canvas);
+  box-shadow: none;
+}
+
+.dailyve-trip-list .dailyve-search__field {
+  min-height: 64px;
+  padding: 12px 16px 10px 44px;
+}
+
+.dailyve-trip-list .dailyve-search__field:hover,
+.dailyve-trip-list .dailyve-search__locations-wrapper:focus-within,
+.dailyve-trip-list .dailyve-search__field:focus-within,
+.dailyve-datepicker__header > button:hover,
+.dailyve-datepicker__grid button:hover:not(:disabled) {
+  border-color: var(--dv-primary);
+  background: var(--dv-canvas);
+  box-shadow: var(--dv-shadow-focus);
+}
+
+.dailyve-trip-list .dailyve-search__field > span,
+.dailyve-trip-list .dailyve-search__label {
+  color: var(--dv-muted);
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.dailyve-trip-list .dailyve-search__field select,
+.dailyve-trip-list .dailyve-search__field input,
+.dailyve-trip-list .dailyve-date-trigger strong {
+  color: var(--dv-ink);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.dailyve-trip-list .dailyve-search__field i:not(.dailyve-search__chevron),
+.dailyve-trip-list .dailyve-search__clear-date:hover,
+.dailyve-datepicker__grid button.is-selected {
+  color: var(--dv-primary);
+}
+
+.dailyve-trip-list .dailyve-search__clear-date,
+.dailyve-datepicker__header > button,
+.dailyve-trip-list .dailyve-search__swap {
+  border: 1px solid var(--dv-hairline);
+  background: var(--dv-canvas);
+  color: var(--dv-ink);
+  box-shadow: var(--dv-shadow-soft);
+}
+
+.dailyve-trip-list .dailyve-search__swap:hover,
+.dailyve-datepicker__footer button,
+.dailyve-location-menu__option:hover,
+.dailyve-location-menu__option.is-active,
+.dailyve-location-menu__option.is-selected {
+  background: var(--dv-surface-soft);
+  color: var(--dv-primary);
+}
+
+.dailyve-datepicker__grid button {
+  border-radius: var(--dv-radius-md);
+  background: var(--dv-surface-soft);
+}
+
+.dailyve-datepicker__grid button.is-selected {
+  border-color: var(--dv-primary);
+  background: var(--dv-primary);
+  color: var(--dv-canvas);
+  box-shadow: var(--dv-shadow-soft);
+}
+
+.dailyve-blog-card,
+.dailyve-featured-post,
+.tuyen-duong-item,
+.ticket-card,
+.ol-card,
+.profile-sidebar,
+.dailyve-account-card,
+.dailyve-trip-card,
+.dailyve-filter-card,
+.dailyve-results-summary,
+.dailyve-empty-state,
+.dailyve-trip-details,
+.dailyve-trip-skeleton,
+.dailyve-trip-search-card {
+  border: 1px solid var(--dv-hairline) !important;
+  border-radius: var(--dv-radius-lg) !important;
+  background: var(--dv-canvas) !important;
+  box-shadow: var(--dv-shadow-soft) !important;
+}
+
+.dailyve-blog-card:hover,
+.dailyve-featured-post:hover,
+.tuyen-duong-item:hover,
+.ticket-card:hover,
+.ol-card:hover,
+.dailyve-trip-card:hover {
+  border-color: var(--dv-hairline) !important;
+  box-shadow: var(--dv-shadow-elevated) !important;
+  transform: translateY(-1px);
+}
+
+.dailyve-blog-card h3,
+.tuyen-duong-item__content .tuyen-duong-item__content__title h3 a,
+.ol-card__name,
+.ticket-card-header h3,
+.profile-sidebar .profile-name {
+  color: var(--dv-ink) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0;
+}
+
+.info-company-content__seemore a,
+.lvn-tab-content .lvn-tab-content__seemore a {
+  min-height: 40px;
+  border-radius: var(--dv-radius-md);
+  background: var(--dv-primary);
+  color: var(--dv-canvas) !important;
+  box-shadow: var(--dv-shadow-soft);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.info-company-content__seemore a:hover,
+.lvn-tab-content .lvn-tab-content__seemore a:hover {
+  background: var(--dv-primary-active);
+}
+
+.ol-card__vehicle-badge,
+.ol-stats__badge {
+  border-radius: var(--dv-radius-pill);
+}
+
+.partner_tab ul {
+  padding: 6px;
+  border-radius: var(--dv-radius-pill);
+  background: var(--dv-surface-soft);
+  box-shadow: none;
+}
+
+.e-content table,
+.route-seo-article table {
+  border-color: var(--dv-hairline);
+  border-radius: var(--dv-radius-lg);
+  box-shadow: var(--dv-shadow-soft);
+}
+
+.e-content th,
+.route-seo-article th {
+  background: var(--dv-surface-soft);
+  color: var(--dv-ink);
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.e-content td,
+.route-seo-article td,
+.route-seo-article p,
+.route-qa-answer {
+  color: var(--dv-body);
+}
+
+.e-content h2,
+.e-content h3,
+.route-seo-article h2,
+.route-seo-article h3,
+.route-seo-article h4,
+.route-seo-qa__title {
+  color: var(--dv-ink);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.e-content img,
+.route-seo-article img,
+.dailyve-single .rounded-3xl {
+  border-radius: var(--dv-radius-xl) !important;
+  box-shadow: var(--dv-shadow-soft) !important;
+}
+
+.e-content a,
+.route-seo-article a,
+.dailyve-single a {
+  color: var(--dv-primary);
+}
+
+.route-seo-header__title {
+  color: var(--dv-ink);
+  font-weight: 600;
+}
+
+.ol-card {
+  overflow: hidden;
+}
+
+.ol-card__main {
+  gap: 24px;
+  padding: 24px;
+}
+
+.ol-card__media,
+.ol-card__media--placeholder,
+.ol-card__times,
+.ol-card__policy,
+.ol-card__rating-summary,
+.ol-card__rating-big,
+.ol-card__gallery-empty,
+.ol-card__amenities-empty,
+.ol-card__policy-empty {
+  border-color: var(--dv-hairline);
+  border-radius: var(--dv-radius-md);
+  background: var(--dv-surface-soft);
+  box-shadow: none;
+}
+
+.ol-card__instant {
+  background: var(--dv-success);
+  box-shadow: var(--dv-shadow-soft);
+}
+
+.ol-card__price strong,
+.ol-card__vehicle-more,
+.ol-card__toggle,
+.ol-card__tabs-nav-item.active {
+  color: var(--dv-primary);
+}
+
+.ol-card__btn {
+  width: 100%;
+}
+
+.ticket-card-header,
+.dailyve-account-card [class*="bg-slate-50"],
+.dailyve-trip-details [class*="bg-slate-50"] {
+  background: var(--dv-surface-soft) !important;
+}
+
+.view-ticket-btn.btn-refund-ticket,
+.view-ticket-btn.btn-refund-ticket:hover {
+  background: var(--dv-canvas);
+  border-color: var(--dv-error);
+  color: var(--dv-error) !important;
+}
+
+.profile-sidebar {
+  border-radius: var(--dv-radius-lg);
+  padding: 24px;
+}
+
+.profile-sidebar .profile-menu a {
+  border-radius: var(--dv-radius-md);
+  font-weight: 500;
+}
+
+.profile-sidebar .profile-menu li.active a,
+.profile-sidebar .profile-menu a:hover {
+  background: var(--dv-surface-soft);
+  color: var(--dv-primary);
+}
+
+.dailyve-blog-card h3,
+.dailyve-featured-post h3,
+.dailyve-single h1,
+.dailyve-single h3 {
+  font-weight: 600 !important;
+}
+
+.dailyve-blog-card,
+.dailyve-featured-post {
+  border-radius: var(--dv-radius-lg) !important;
+}
+
+.dailyve-archive-filter {
+  border-bottom: 1px solid var(--dv-hairline);
+  background: var(--dv-canvas);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.dailyve-archive-filter a {
+  border-radius: var(--dv-radius-md) !important;
+  box-shadow: var(--dv-shadow-soft) !important;
+  font-weight: 500 !important;
+}
+
+.dailyve-archive h1 {
+  font-weight: 600 !important;
+  letter-spacing: -0.025em;
+}
+
+.dailyve-archive h2,
+.dailyve-single h3 {
+  color: var(--dv-ink);
+  font-weight: 600 !important;
+}
+
+.dailyve-single {
+  color: var(--dv-body);
+}
+
+.dailyve-single h1 {
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -0.03125em;
+}
+
+.dailyve-single [class*="rounded-3xl"],
+.dailyve-single [class*="rounded-2xl"] {
+  border-radius: var(--dv-radius-lg) !important;
+}
+
+.dailyve-single [class*="shadow-md"],
+.dailyve-single [class*="shadow-lg"],
+.dailyve-single [class*="shadow-sm"] {
+  box-shadow: var(--dv-shadow-soft) !important;
+}
+
+.dailyve-trip-list,
+.dailyve-seat-selection,
+.dailyve-auth-modal,
+.dailyve-ticket-modal,
+.dailyve-account-card {
+  color: var(--dv-body);
+}
+
+.dailyve-trip-list :where(.font-black, .font-extrabold),
+.dailyve-seat-selection :where(.font-black, .font-extrabold),
+.dailyve-auth-modal :where(.font-black, .font-extrabold),
+.dailyve-ticket-modal :where(.font-black, .font-extrabold),
+.dailyve-account-card :where(.font-black, .font-extrabold) {
+  font-weight: 600 !important;
+}
+
+.dailyve-trip-list :where(.font-bold),
+.dailyve-seat-selection :where(.font-bold),
+.dailyve-auth-modal :where(.font-bold),
+.dailyve-ticket-modal :where(.font-bold),
+.dailyve-account-card :where(.font-bold) {
+  font-weight: 600 !important;
+}
+
+.dailyve-trip-list :where(.tracking-widest, .tracking-wider, .tracking-wide),
+.dailyve-seat-selection :where(.tracking-widest, .tracking-wider, .tracking-wide),
+.dailyve-auth-modal :where(.tracking-widest, .tracking-wider, .tracking-wide),
+.dailyve-ticket-modal :where(.tracking-widest, .tracking-wider, .tracking-wide),
+.dailyve-account-card :where(.tracking-widest, .tracking-wider, .tracking-wide) {
+  letter-spacing: 0 !important;
+}
+
+.dailyve-trip-list [class*="rounded-3xl"],
+.dailyve-trip-list [class*="rounded-2xl"],
+.dailyve-trip-list [class*="rounded-[18px]"],
+.dailyve-trip-list [class*="rounded-[20px]"],
+.dailyve-trip-list [class*="rounded-[2rem]"],
+.dailyve-trip-list [class*="rounded-[2.5rem]"],
+.dailyve-seat-selection [class*="rounded-3xl"],
+.dailyve-seat-selection [class*="rounded-2xl"],
+.dailyve-seat-selection [class*="rounded-[20px]"],
+.dailyve-seat-selection [class*="rounded-[2rem]"],
+.dailyve-seat-selection [class*="rounded-[2.5rem]"],
+.dailyve-auth-modal [class*="rounded-2xl"],
+.dailyve-ticket-modal [class*="rounded-2xl"],
+.dailyve-account-card[class*="rounded-2xl"] {
+  border-radius: var(--dv-radius-lg) !important;
+}
+
+.dailyve-trip-list button:not([class*="rounded-full"]),
+.dailyve-seat-selection button:not([class*="rounded-full"]),
+.dailyve-auth-modal button:not([class*="rounded-full"]),
+.dailyve-ticket-modal button:not([class*="rounded-full"]),
+.dailyve-account-card button:not([class*="rounded-full"]) {
+  border-radius: var(--dv-radius-md) !important;
+  font-size: 14px;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+}
+
+.dailyve-trip-list input,
+.dailyve-trip-list select,
+.dailyve-trip-list textarea,
+.dailyve-seat-selection input,
+.dailyve-seat-selection select,
+.dailyve-seat-selection textarea,
+.dailyve-auth-modal input,
+.dailyve-auth-modal textarea,
+.dailyve-ticket-modal input,
+.dailyve-ticket-modal textarea,
+.dailyve-account-card input,
+.dailyve-account-card select,
+.dailyve-account-card textarea {
+  border-color: var(--dv-hairline) !important;
+  border-radius: var(--dv-radius-md) !important;
+  color: var(--dv-ink);
+  font-weight: 400 !important;
+}
+
+.dailyve-trip-list input:focus,
+.dailyve-trip-list select:focus,
+.dailyve-trip-list textarea:focus,
+.dailyve-seat-selection input:focus,
+.dailyve-seat-selection select:focus,
+.dailyve-seat-selection textarea:focus,
+.dailyve-auth-modal input:focus,
+.dailyve-auth-modal textarea:focus,
+.dailyve-ticket-modal input:focus,
+.dailyve-ticket-modal textarea:focus,
+.dailyve-account-card input:focus,
+.dailyve-account-card select:focus,
+.dailyve-account-card textarea:focus {
+  border-color: var(--dv-primary) !important;
+  box-shadow: var(--dv-shadow-focus) !important;
+}
+
+.dailyve-trip-list :where(.shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl, .shadow-premium),
+.dailyve-seat-selection :where(.shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl, .shadow-premium),
+.dailyve-auth-modal :where(.shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl),
+.dailyve-ticket-modal :where(.shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl),
+.dailyve-account-card :where(.shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl) {
+  box-shadow: var(--dv-shadow-soft) !important;
+}
+
+.dailyve-trip-card:hover,
+.dailyve-trip-list .dailyve-load-more:hover,
+.dailyve-seat-selection button:hover,
+.dailyve-auth-modal button:hover,
+.dailyve-ticket-modal button:hover,
+.dailyve-account-card button:hover {
+  box-shadow: var(--dv-shadow-elevated) !important;
+}
+
+.dailyve-trip-list :where(.bg-blue-500, .bg-blue-600, .bg-primary),
+.dailyve-seat-selection :where(.bg-blue-500, .bg-blue-600, .bg-primary),
+.dailyve-auth-modal :where(.bg-blue-500, .bg-blue-600),
+.dailyve-ticket-modal :where(.bg-blue-500, .bg-blue-600),
+.dailyve-account-card :where(.bg-blue-500, .bg-blue-600) {
+  background-color: var(--dv-primary) !important;
+}
+
+.dailyve-trip-list :where(.text-blue-500, .text-blue-600, .text-primary),
+.dailyve-seat-selection :where(.text-blue-500, .text-blue-600, .text-primary),
+.dailyve-auth-modal :where(.text-blue-500, .text-blue-600),
+.dailyve-ticket-modal :where(.text-blue-500, .text-blue-600),
+.dailyve-account-card :where(.text-blue-500, .text-blue-600) {
+  color: var(--dv-primary) !important;
+}
+
+.dailyve-trip-list :where(.border-blue-100, .border-blue-500, .border-blue-600, .border-primary),
+.dailyve-seat-selection :where(.border-blue-100, .border-blue-500, .border-blue-600, .border-primary),
+.dailyve-auth-modal :where(.border-blue-500),
+.dailyve-ticket-modal :where(.border-blue-500),
+.dailyve-account-card :where(.border-blue-500) {
+  border-color: var(--dv-primary) !important;
+}
+
+.dailyve-trip-hero {
+  padding-block: 48px;
+}
+
+.dailyve-trip-hero h1 {
+  font-weight: 600 !important;
+  letter-spacing: -0.025em;
+}
+
+.dailyve-trip-hero p,
+.dailyve-results-summary > div:last-child,
+.ol-stats__badge,
+.dailyve-trip-card [class*="rounded-full"] {
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+}
+
+.dailyve-trip-card {
+  overflow: hidden;
+}
+
+.dailyve-trip-card > div:first-of-type {
+  gap: 24px;
+  padding: 24px;
+}
+
+.dailyve-trip-card h3,
+.dailyve-results-summary h2,
+.dailyve-filter-card h2,
+.dailyve-empty-state h3,
+.dailyve-account-card h2,
+.dailyve-account-card h3 {
+  color: var(--dv-ink) !important;
+  font-weight: 600 !important;
+}
+
+.dailyve-trip-card [style*="--grad-primary"],
+.dailyve-trip-card button[style] {
+  background: var(--dv-primary) !important;
+}
+
+.dailyve-trip-card button,
+.dailyve-seat-selection button,
+.dailyve-auth-modal button,
+.dailyve-ticket-modal button,
+.dailyve-account-card button {
+  min-height: 40px;
+}
+
+.dailyve-trip-card button:last-child,
+.dailyve-seat-selection button[class*="bg-primary"],
+.dailyve-auth-modal button[class*="bg-blue"],
+.dailyve-ticket-modal button[class*="bg-blue"],
+.dailyve-account-card button[class*="bg-blue"] {
+  background: var(--dv-primary) !important;
+  color: var(--dv-canvas) !important;
+}
+
+.dailyve-trip-card button:last-child:hover,
+.dailyve-seat-selection button[class*="bg-primary"]:hover,
+.dailyve-auth-modal button[class*="bg-blue"]:hover,
+.dailyve-ticket-modal button[class*="bg-blue"]:hover,
+.dailyve-account-card button[class*="bg-blue"]:hover {
+  background: var(--dv-primary-active) !important;
+}
+
+.dailyve-seat-selection aside > div,
+.dailyve-seat-selection label,
+.dailyve-seat-selection [class*="bg-white"],
+.dailyve-important-modal [class*="bg-white"],
+.dailyve-auth-modal [class*="bg-white"],
+.dailyve-ticket-modal [class*="bg-white"],
+.dailyve-account-card {
+  border-color: var(--dv-hairline) !important;
+}
+
+.dailyve-important-modal [class*="from-amber"],
+.dailyve-important-modal [class*="to-orange"] {
+  background: var(--dv-accent) !important;
+}
+
+.dailyve-important-modal button[class*="from-amber"] {
+  background: var(--dv-primary) !important;
+}
+
+@media (max-width: 760px) {
+  .dailyve-trip-list .dailyve-search--results {
+    padding: 16px;
+    border-radius: var(--dv-radius-lg);
+  }
+
+  .dailyve-trip-list .dailyve-search__tabs {
+    width: 100%;
+  }
+
+  .dailyve-trip-card > div:first-of-type {
+    padding: 16px;
+  }
 }
 

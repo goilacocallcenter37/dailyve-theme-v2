@@ -579,7 +579,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
   };
 
   return (
-    <div className="animate-in fade-in slide-in-from-top-4 duration-500">
+    <div className="dailyve-seat-selection animate-in fade-in slide-in-from-top-4 duration-500">
       {/* Seat Group Selector Modal */}
       {seatGroupSelector && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-sm animate-in fade-in duration-300">

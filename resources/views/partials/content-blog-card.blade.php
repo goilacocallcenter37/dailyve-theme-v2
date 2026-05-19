@@ -2,7 +2,7 @@
   $address = function_exists('get_field') ? get_field('company_address') : null;
 @endphp
 
-<article class="group bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col h-full overflow-hidden">
+<article class="dailyve-blog-card group bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex flex-col h-full overflow-hidden">
   <!-- Post Image -->
   <div class="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
     <a href="{{ get_permalink() }}" title="{{ the_title_attribute(['echo' => false]) }}" class="absolute inset-0">

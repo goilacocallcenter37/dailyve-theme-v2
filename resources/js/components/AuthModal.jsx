@@ -214,7 +214,7 @@ const AuthModal = () => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm animate-fade-in">
+        <div className="dailyve-auth-modal fixed inset-0 z-[99999] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm animate-fade-in">
             {/* Modal Container */}
             <div className="relative w-full max-w-[480px] overflow-hidden rounded-2xl bg-white shadow-2xl transition-all duration-300 transform scale-100 flex flex-col">
                 

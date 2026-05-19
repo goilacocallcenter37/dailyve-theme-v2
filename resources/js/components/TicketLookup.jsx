@@ -255,7 +255,7 @@ const TicketLookup = () => {
 
     if (!isLoggedIn) {
         return (
-            <div className="flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-sm border border-slate-100/80 max-w-md mx-auto my-12 text-center animate-fade-in">
+            <div className="dailyve-account-card flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-sm border border-slate-100/80 max-w-md mx-auto my-12 text-center animate-fade-in">
                 <div className="w-16 h-16 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-4 text-2xl">
                     <i className="fas fa-ticket-alt"></i>
                 </div>
@@ -274,7 +274,7 @@ const TicketLookup = () => {
     }
 
     return (
-        <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100/80 animate-fade-in flex flex-col" ref={ticketListRef}>
+        <div className="dailyve-account-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100/80 animate-fade-in flex flex-col" ref={ticketListRef}>
             
             {/* Header Tabs */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-4 mb-6 gap-4">
@@ -345,7 +345,7 @@ const TicketLookup = () => {
 
             {/* Premium Refund Modal */}
             {refundModal.isOpen && (
-                <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm animate-fade-in">
+                <div className="dailyve-ticket-modal fixed inset-0 z-[99999] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm animate-fade-in">
                     <div className="relative w-full max-w-[480px] bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
                         {/* Modal Header */}
                         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/50">

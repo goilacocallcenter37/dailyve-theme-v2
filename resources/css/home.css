@@ -1,12 +1,12 @@
 :root {
-  --dailyve-blue: #0f7be8;
-  --dailyve-blue-dark: #0b3f8a;
-  --dailyve-blue-section: #0a5fc7;
-  --dailyve-navy: #0b2f68;
-  --dailyve-orange: #f59e0b;
-  --dailyve-yellow: #ffc107;
-  --dailyve-line: #d7e6f7;
-  --dailyve-soft: #eef8ff;
+  --dailyve-blue: #2196F3;
+  --dailyve-blue-dark: #1565C0;
+  --dailyve-blue-section: #1565C0;
+  --dailyve-navy: #0F172A;
+  --dailyve-orange: #F59E0B;
+  --dailyve-yellow: #F59E0B;
+  --dailyve-line: #E2E8F0;
+  --dailyve-soft: #F1F5F9;
 }
 
 body {

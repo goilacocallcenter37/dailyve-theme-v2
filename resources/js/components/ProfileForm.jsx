@@ -93,7 +93,7 @@ const ProfileForm = () => {
 
     if (!isLoggedIn) {
         return (
-            <div className="flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-sm border border-slate-100/80 max-w-md mx-auto my-12 text-center animate-fade-in">
+            <div className="dailyve-account-card flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-sm border border-slate-100/80 max-w-md mx-auto my-12 text-center animate-fade-in">
                 <div className="w-16 h-16 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-4 text-2xl">
                     <i className="far fa-user"></i>
                 </div>
@@ -112,7 +112,7 @@ const ProfileForm = () => {
     }
 
     return (
-        <div className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100/80 animate-fade-in">
+        <div className="dailyve-account-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100/80 animate-fade-in">
             <div className="border-b border-slate-100 pb-5 mb-6">
                 <h2 className="text-xl font-bold text-slate-800">Thông tin tài khoản</h2>
                 <p className="text-sm text-slate-400 mt-1">Cập nhật thông tin cá nhân của bạn để nhận dịch vụ tốt nhất.</p>
