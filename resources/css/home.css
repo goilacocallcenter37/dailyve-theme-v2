@@ -432,6 +432,7 @@ body {
   padding: 12px 0 16px;
   border-bottom: 1px solid #f1f5f9;
   overflow-x: auto;
+  margin-bottom: 16px;
 }
 
 .dailyve-search__tabs button {
@@ -491,17 +492,7 @@ body {
   z-index: 10;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(15, 63, 138, 0.04);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.dailyve-search__locations-wrapper:focus-within {
-  border-color: #007aff;
-  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
-  z-index: 40;
+  gap: 16px;
 }
 
 .dailyve-search__field {
@@ -524,46 +515,6 @@ body {
 .dailyve-search__field:hover {
   border-color: #93c5fd;
   background-color: #fafcff;
-}
-
-.dailyve-search__locations-wrapper .dailyve-search__field {
-  border: none !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-.dailyve-search__locations-wrapper .dailyve-search__field:first-child {
-  border-top-left-radius: 11px;
-  border-bottom-left-radius: 11px;
-}
-
-.dailyve-search__locations-wrapper .dailyve-search__field:last-child {
-  border-top-right-radius: 11px;
-  border-bottom-right-radius: 11px;
-}
-
-.dailyve-search__locations-wrapper .dailyve-search__field:hover {
-  border: none !important;
-  background-color: #fafcff !important;
-  box-shadow: none !important;
-}
-
-@media (min-width: 768px) {
-  .dailyve-search__locations-wrapper .dailyve-search__field:first-child {
-    padding-right: 36px;
-  }
-
-  .dailyve-search__locations-wrapper .dailyve-search__field:first-child .dailyve-search__chevron {
-    right: 24px;
-  }
-
-  /* .dailyve-search__locations-wrapper .dailyve-search__field:last-child {
-    padding-left: 36px;
-  } */
-
-  .dailyve-search__locations-wrapper .dailyve-search__field:last-child i:not(.dailyve-search__chevron) {
-    left: 24px;
-  }
 }
 
 .dailyve-search__field>span,
@@ -907,10 +858,7 @@ body {
   box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
 }
 
-.dailyve-search__locations-wrapper .dailyve-search__field:focus-within {
-  border: none !important;
-  box-shadow: none !important;
-}
+
 
 .dailyve-search__chevron {
   position: absolute;
@@ -2881,14 +2829,7 @@ body {
   .dailyve-search__locations-wrapper {
     grid-template-columns: 1fr;
     grid-column: auto;
-  }
-
-  .dailyve-search__locations-wrapper::after {
-    display: none;
-  }
-
-  .dailyve-search__locations-wrapper .dailyve-search__field--combo:last-child {
-    border-top: 1px solid #e2e8f0;
+    gap: 16px;
   }
 
   .dailyve-search__field--return,
