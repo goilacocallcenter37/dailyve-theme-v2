@@ -247,13 +247,27 @@ body {
 }
 
 @keyframes dailyve-float-left {
-  0%, 100% { transform: translateY(0) rotate(0); }
-  50% { transform: translateY(-10px) rotate(-2deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(-2deg);
+  }
 }
 
 @keyframes dailyve-float-right {
-  0%, 100% { transform: translateY(0) scale(0.85) rotate(0); }
-  50% { transform: translateY(-8px) scale(0.85) rotate(3deg); }
+
+  0%,
+  100% {
+    transform: translateY(0) scale(0.85) rotate(0);
+  }
+
+  50% {
+    transform: translateY(-8px) scale(0.85) rotate(3deg);
+  }
 }
 
 .dailyve-hero__top {
@@ -295,6 +309,7 @@ body {
 }
 
 @keyframes dailyve-bounce {
+
   0%,
   100% {
     transform: translateY(0);
@@ -323,7 +338,8 @@ body {
 
 .dailyve-hero__copy h1 strong,
 .dailyve-hero__copy h1 em {
-  color: #ff9f1c; /* Orange matching mockup */
+  color: #ff9f1c;
+  /* Orange matching mockup */
   font-style: normal;
   font-weight: 900;
 }
@@ -414,7 +430,6 @@ body {
   align-items: center;
   padding: 12px 0 16px;
   border-bottom: 1px solid #f1f5f9;
-  margin-bottom: 24px;
   overflow-x: auto;
 }
 
@@ -429,7 +444,6 @@ body {
   border-radius: 99px;
   background: transparent;
   color: #64748b;
-  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 14px;
   font-weight: 700;
   white-space: nowrap;
@@ -462,7 +476,6 @@ body {
 .dailyve-search__tabs button.is-active {
   color: #ffffff;
   background: linear-gradient(135deg, #007aff 0%, #0056b3 100%);
-  box-shadow: 0 8px 20px rgba(0, 122, 255, 0.25);
 }
 
 .dailyve-search__form {
@@ -493,7 +506,7 @@ body {
 .dailyve-search__field {
   position: relative;
   min-width: 0;
-  min-height: 72px;
+  min-height: 66px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -541,9 +554,9 @@ body {
     right: 24px;
   }
 
-  .dailyve-search__locations-wrapper .dailyve-search__field:last-child {
+  /* .dailyve-search__locations-wrapper .dailyve-search__field:last-child {
     padding-left: 36px;
-  }
+  } */
 
   .dailyve-search__locations-wrapper .dailyve-search__field:last-child i:not(.dailyve-search__chevron) {
     left: 24px;
@@ -586,9 +599,8 @@ body {
   outline: 0;
   background: transparent;
   color: #0f172a;
-  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 15px;
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.25;
   appearance: none;
   cursor: pointer;
@@ -620,7 +632,7 @@ body {
 
 .dailyve-search__field--return {
   overflow: visible;
-  padding-right: 44px;
+  /* padding-right: 44px; */
 }
 
 .dailyve-date-trigger {
@@ -1024,8 +1036,8 @@ body {
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 50;
-  width: 38px;
-  height: 38px;
+  width: 32px;
+  height: 32px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1034,7 +1046,6 @@ body {
   color: #007aff;
   background: #ffffff;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1042,12 +1053,10 @@ body {
   border-color: #007aff;
   color: #ffffff;
   background: #007aff;
-  box-shadow: 0 6px 16px rgba(0, 122, 255, 0.3);
-  transform: translate(-50%, -50%) scale(1.08) rotate(180deg);
 }
 
 .dailyve-search__submit {
-  min-height: 72px;
+  min-height: 66px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1183,8 +1192,15 @@ body {
 }
 
 @keyframes dailyve-badge-pulse {
-  0%, 100% { transform: rotate(-6deg) scale(1); }
-  50% { transform: rotate(-6deg) scale(1.06); }
+
+  0%,
+  100% {
+    transform: rotate(-6deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(-6deg) scale(1.06);
+  }
 }
 
 .dailyve-offers h2 .title-sub {
@@ -1267,8 +1283,15 @@ body {
 }
 
 @keyframes dailyve-ticket-float {
-  0%, 100% { transform: rotate(-12deg) translateY(0); }
-  50% { transform: rotate(-10deg) translateY(-8px); }
+
+  0%,
+  100% {
+    transform: rotate(-12deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(-10deg) translateY(-8px);
+  }
 }
 
 /* Ticket Notches for CSS Art */
@@ -1279,7 +1302,8 @@ body {
   left: 45%;
   width: 16px;
   height: 16px;
-  background: #0958b4; /* Solid color approximating average gradient color under notches */
+  background: #0958b4;
+  /* Solid color approximating average gradient color under notches */
   border: 2px solid #ffffff;
   border-radius: 50%;
   z-index: 3;
@@ -1328,9 +1352,17 @@ body {
   border-radius: 2px;
 }
 
-.ticket-art-lines .line-1 { width: 80%; }
-.ticket-art-lines .line-2 { width: 100%; }
-.ticket-art-lines .line-3 { width: 60%; }
+.ticket-art-lines .line-1 {
+  width: 80%;
+}
+
+.ticket-art-lines .line-2 {
+  width: 100%;
+}
+
+.ticket-art-lines .line-3 {
+  width: 60%;
+}
 
 /* Floating Flame Tag */
 .ticket-art-tag {
@@ -1345,8 +1377,15 @@ body {
 }
 
 @keyframes dailyve-tag-float {
-  0%, 100% { transform: rotate(15deg) translateY(0); }
-  50% { transform: rotate(18deg) translateY(-6px); }
+
+  0%,
+  100% {
+    transform: rotate(15deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(18deg) translateY(-6px);
+  }
 }
 
 .tag-body {
@@ -1371,8 +1410,14 @@ body {
 }
 
 @keyframes dailyve-flame-burn {
-  0% { transform: scale(0.92) rotate(-2deg); }
-  100% { transform: scale(1.08) rotate(2deg); filter: drop-shadow(0 4px 10px rgba(255, 234, 0, 0.9)); }
+  0% {
+    transform: scale(0.92) rotate(-2deg);
+  }
+
+  100% {
+    transform: scale(1.08) rotate(2deg);
+    filter: drop-shadow(0 4px 10px rgba(255, 234, 0, 0.9));
+  }
 }
 
 /* Sparkles */
@@ -1385,13 +1430,36 @@ body {
   animation: dailyve-sparkle-glow 2.2s infinite ease-in-out;
 }
 
-.sparkle-1 { top: 0; left: -10px; animation-delay: 0.2s; }
-.sparkle-2 { bottom: 20px; left: 40px; animation-delay: 0.8s; }
-.sparkle-3 { top: 20px; right: 20px; animation-delay: 1.4s; }
+.sparkle-1 {
+  top: 0;
+  left: -10px;
+  animation-delay: 0.2s;
+}
+
+.sparkle-2 {
+  bottom: 20px;
+  left: 40px;
+  animation-delay: 0.8s;
+}
+
+.sparkle-3 {
+  top: 20px;
+  right: 20px;
+  animation-delay: 1.4s;
+}
 
 @keyframes dailyve-sparkle-glow {
-  0%, 100% { transform: scale(0.8); opacity: 0.5; }
-  50% { transform: scale(1.2); opacity: 1; }
+
+  0%,
+  100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
 }
 
 .dailyve-offer-grid {
@@ -1422,7 +1490,7 @@ body {
   padding: 22px 24px;
   border-radius: 16px;
   /* Radially notches that are fully transparent */
-  background: 
+  background:
     radial-gradient(circle at 78% 0, transparent 9px, #ffffff 10px) top left / 100% 51% no-repeat,
     radial-gradient(circle at 78% 100%, transparent 9px, #ffffff 10px) bottom left / 100% 51% no-repeat;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
@@ -1516,12 +1584,10 @@ body {
   font-size: 14px;
   font-weight: 900;
   /* Gorgeous 36-point rosette polygon clip-path */
-  clip-path: polygon(
-    50% 0%, 55% 10%, 65% 5%, 68% 15%, 78% 13%, 78% 23%, 87% 25%, 84% 35%, 92% 40%, 87% 50%,
-    92% 60%, 84% 65%, 87% 75%, 78% 77%, 78% 87%, 68% 85%, 65% 95%, 55% 90%, 50% 100%, 45% 90%,
-    35% 95%, 32% 85%, 22% 87%, 22% 77%, 13% 75%, 16% 65%, 8% 60%, 13% 50%, 8% 40%, 16% 35%,
-    13% 25%, 22% 23%, 22% 13%, 32% 15%, 35% 5%, 45% 10%
-  );
+  clip-path: polygon(50% 0%, 55% 10%, 65% 5%, 68% 15%, 78% 13%, 78% 23%, 87% 25%, 84% 35%, 92% 40%, 87% 50%,
+      92% 60%, 84% 65%, 87% 75%, 78% 77%, 78% 87%, 68% 85%, 65% 95%, 55% 90%, 50% 100%, 45% 90%,
+      35% 95%, 32% 85%, 22% 87%, 22% 77%, 13% 75%, 16% 65%, 8% 60%, 13% 50%, 8% 40%, 16% 35%,
+      13% 25%, 22% 23%, 22% 13%, 32% 15%, 35% 5%, 45% 10%);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transform: rotate(15deg);
   transition: transform 0.3s ease;
@@ -1579,6 +1645,7 @@ body {
     align-items: center;
     gap: 28px;
   }
+
   .dailyve-services h2 {
     text-align: center;
   }
@@ -1686,7 +1753,8 @@ body {
 
 @media (max-width: 1023px) {
   .dailyve-services__type.is-active::after {
-    display: none; /* Hide indicator triangle on stacked mobile layout */
+    display: none;
+    /* Hide indicator triangle on stacked mobile layout */
   }
 }
 
@@ -1808,8 +1876,11 @@ body {
 }
 
 @media (max-width: 991px) {
-  .map-pin, .map-curve-svg {
-    display: none; /* Hide complex background artwork on smaller devices */
+
+  .map-pin,
+  .map-curve-svg {
+    display: none;
+    /* Hide complex background artwork on smaller devices */
   }
 }
 
@@ -1845,8 +1916,15 @@ body {
 }
 
 @keyframes dailyve-pin-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
 .dailyve-services__text {
@@ -1992,12 +2070,15 @@ body {
   scroll-behavior: smooth;
   width: 100%;
   padding: 16px 4px 28px;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
 }
 
 .dailyve-press__track::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
+  /* Chrome, Safari, Opera */
 }
 
 .dailyve-press-card {
@@ -2116,7 +2197,8 @@ body {
 
 @media (max-width: 1199px) {
   .dailyve-press__nav {
-    display: none; /* Hide arrows on smaller monitors to prevent clipping */
+    display: none;
+    /* Hide arrows on smaller monitors to prevent clipping */
   }
 }
 
@@ -2300,7 +2382,8 @@ body {
 
 .dailyve-chat-bubble {
   position: relative;
-  background: #22c55e; /* Green bubble matching design */
+  background: #22c55e;
+  /* Green bubble matching design */
   padding: 18px 26px;
   border-radius: 20px;
   color: #ffffff;
@@ -2338,8 +2421,15 @@ body {
 }
 
 @keyframes dailyve-float-bubble {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 .dailyve-qr-card {
@@ -2641,7 +2731,8 @@ body {
   }
 
   .dailyve-merged-band__center {
-    display: none; /* Hide intermediate phone visual to fit 2-column nicely */
+    display: none;
+    /* Hide intermediate phone visual to fit 2-column nicely */
   }
 
   .dailyve-merged-band__left h2 {
@@ -2872,7 +2963,7 @@ body {
     height: 400px !important;
     border-width: 8px !important;
     border-radius: 28px !important;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
     margin-bottom: -80px !important;
   }
 
@@ -2897,7 +2988,8 @@ body {
   }
 
   .dailyve-qr-card {
-    display: none !important; /* Hide scanning QR card on mobile devices */
+    display: none !important;
+    /* Hide scanning QR card on mobile devices */
   }
 }
 

@@ -177,7 +177,7 @@ const SearchForm = () => {
           value={returnDate}
           min={date || getToday()}
           onChange={setReturnDate}
-          emptyText="Một chiều"
+          emptyText="Chọn ngày về"
           clearable
           className="dailyve-search__field dailyve-search__field--return"
         />

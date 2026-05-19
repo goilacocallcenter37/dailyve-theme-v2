@@ -414,7 +414,7 @@ export const LocationCombobox = ({
           }
         }}
       />
-      <i className="fas fa-chevron-down dailyve-search__chevron" aria-hidden="true"></i>
+      {/* <i className="fas fa-chevron-down dailyve-search__chevron" aria-hidden="true"></i> */}
 
       {isOpen && (
         <div className="dailyve-location-menu" id={`${fieldId}-listbox`} role="listbox">
