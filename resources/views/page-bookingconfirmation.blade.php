@@ -39,6 +39,7 @@
                     $ticket['seatsAndInfoData'] = [];
                 }
             }
+            unset($ticket); // Fix: Break the reference with the last element
             
             $collab_guest_name = $tickets[0]['collabGuestName'] ?? null;
             $collab_guest_phone = $tickets[0]['collabGuestPhone'] ?? null;

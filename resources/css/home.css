@@ -399,7 +399,7 @@ body {
 
 .dailyve-hero__search {
   position: relative;
-  z-index: 5;
+  z-index: 100;
   width: 100%;
   max-width: 1120px;
   margin: 8px auto 0;
@@ -412,6 +412,7 @@ body {
   box-shadow: 0 24px 60px rgba(11, 47, 104, 0.05), 0 4px 12px rgba(11, 47, 104, 0.01);
   padding: 8px 28px 24px;
   position: relative;
+  z-index: 50;
   text-align: left;
 }
 
