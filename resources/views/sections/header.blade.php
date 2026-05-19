@@ -22,10 +22,7 @@
         </nav>
 
         <div class="dailyve-site-header__actions">
-            <a class="dailyve-site-header__account" href="{{ esc_url(home_url('/tai-khoan/')) }}" aria-label="Tài khoản">
-                <i class="far fa-user" aria-hidden="true"></i>
-            </a>
-            <a class="dailyve-site-header__login" href="{{ esc_url(home_url('/tai-khoan/')) }}">Đăng nhập / Đăng ký</a>
+            <div id="react-auth-menu"></div>
             <button class="dailyve-site-header__menu" type="button" aria-label="Mở menu">
                 <i class="fas fa-bars" aria-hidden="true"></i>
             </button>

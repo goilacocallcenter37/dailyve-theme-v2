@@ -11,7 +11,15 @@
     <script>
       window.generic_data = {
         ajax_url: '{{ admin_url('admin-ajax.php') }}',
-        nonce: '{{ wp_create_nonce('ams_vexe') }}'
+        nonce: '{{ wp_create_nonce('ams_vexe') }}',
+        is_logged_in: {{ is_customer_logged_in() ? 'true' : 'false' }},
+        customer_data: {!! json_encode(isset($_SESSION['customer_data']) ? $_SESSION['customer_data'] : null) !!},
+        nonces: {
+          send_otp: '{{ wp_create_nonce('customer_send_otp_nonce') }}',
+          verify_otp: '{{ wp_create_nonce('customer_verify_otp_nonce') }}',
+          update_profile: '{{ wp_create_nonce('update_profile_action') }}',
+          auth: '{{ wp_create_nonce('auth_nonce') }}'
+        }
       };
     </script>
     @vite(['resources/css/app.css', 'resources/js/app.jsx'])
@@ -40,6 +48,7 @@
       @endif
 
       @include('sections.footer')
+      <div id="react-auth-modal"></div>
     </div>
 
     @php
