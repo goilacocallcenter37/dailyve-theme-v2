@@ -105,7 +105,7 @@ const SeatIcon = ({ type, color, status, onClick }) => {
   );
 };
 
-const SeatSelection = ({ trip, onCancel, onComplete }) => {
+const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(true);
   const [isFinalizing, setIsFinalizing] = useState(false);
@@ -117,12 +117,197 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
   const [dropoffAddress, setDropoffAddress] = useState('');
   const [seatGroupSelector, setSeatGroupSelector] = useState(null); // { seat, groups }
 
+  const partnerId = trip.partner?.partner_id || trip.partner_id || 'vexere';
+
+  const pointText = (value) => (value === undefined || value === null ? '' : String(value).trim());
+  const isMeaningfulPointKey = (value) => {
+    const text = pointText(value).toLowerCase();
+    return text !== '' && text !== '0' && text !== 'null' && text !== 'undefined';
+  };
+
+  const getPointName = (point) => pointText(point?.name || point?.pointName || point?.officeName);
+  const getPointTime = (point) => pointText(point?.real_time || point?.realTime || point?.time);
+  const getPointAddress = (point) => pointText(point?.address || point?.full_address || point?.fullAddress);
+
+  const getPointRawIdentity = (point) => {
+    if (!point) return '';
+
+    const directKeys = [
+      point.__selectionKey,
+      point.point_id,
+      point.pointId,
+      point.id,
+      point.officeId,
+      point.code,
+      point.value
+    ];
+
+    const directKey = directKeys.map(pointText).find(isMeaningfulPointKey);
+    if (directKey) return directKey;
+
+    const fallbackParts = [
+      getPointName(point),
+      getPointTime(point),
+      getPointAddress(point),
+      pointText(point.duration),
+      pointText(point.__pointType || point._point_type || point.point_type || point.type)
+    ].filter(Boolean);
+
+    return fallbackParts.length > 0 ? fallbackParts.join('|') : '';
+  };
+
+  const buildPointKey = (point, scope, index) => {
+    const rawIdentity = getPointRawIdentity(point);
+    return `${scope}:${rawIdentity || `index-${index}`}`;
+  };
+
+  const isTrueFlag = (value) => value === true || value === 1 || value === '1';
+
+  const decoratePoint = (point, scope, index) => {
+    const transferPoint = scope.includes('transfer') || isTrueFlag(point?.is_transfer) || isTrueFlag(point?.isTransfer) || isTrueFlag(point?._is_transfer);
+
+    return {
+      ...point,
+      __selectionKey: buildPointKey(point, scope, index),
+      __pointType: scope,
+      _point_type: scope,
+      is_transfer: transferPoint,
+      isTransfer: transferPoint,
+      _is_transfer: transferPoint
+    };
+  };
+
+  const isTransferPoint = (point, expectedScope = '') => {
+    if (!point) return false;
+    const pointType = pointText(point.__pointType || point._point_type || point.point_type);
+    return Boolean(
+      isTrueFlag(point.is_transfer) ||
+      isTrueFlag(point.isTransfer) ||
+      isTrueFlag(point._is_transfer) ||
+      pointType.includes('transfer') ||
+      (expectedScope && pointType === expectedScope)
+    );
+  };
+
+  const getNumericTime = (point) => {
+    if (!point) return null;
+    if (point.duration !== undefined && point.duration !== null) {
+      const num = Number(point.duration);
+      if (!isNaN(num)) return num;
+    }
+    const val = point.real_time || point.realTime;
+    if (!val || typeof val !== 'string') return null;
+    const parts = val.split(' ');
+    if (parts.length < 2) return null;
+    const t = parts[0].split(':');
+    const d = parts[1].split('-');
+    if (t.length < 2 || d.length < 3) return null;
+    const hh = ('0' + parseInt(t[0], 10)).slice(-2);
+    const mm = ('0' + parseInt(t[1], 10)).slice(-2);
+    const DD = ('0' + parseInt(d[0], 10)).slice(-2);
+    const MM = ('0' + parseInt(d[1], 10)).slice(-2);
+    const YYYY = d[2];
+    const iso = `${YYYY}-${MM}-${DD}T${hh}:${mm}:00`;
+    const ts = Date.parse(iso);
+    return isNaN(ts) ? null : ts;
+  };
+
+  const isPointSelected = (selected, current) => {
+    if (!selected || !current) return false;
+    const selectedKey = getPointRawIdentity(selected);
+    const currentKey = getPointRawIdentity(current);
+    return selectedKey !== '' && currentKey !== '' && selectedKey === currentKey;
+  };
+
+  const pickupPoints = useMemo(() => {
+    const regularPoints = (data?.pickup_points || []).map((point, index) => decoratePoint(point, 'pickup-point', index));
+    const transferPoints = (data?.transfer_points || []).map((point, index) => decoratePoint(point, 'transfer-point', index));
+    const points = [...regularPoints, ...transferPoints];
+
+    if (partnerId === 'goopay') {
+      return [...points].sort((a, b) => {
+        const tA = getNumericTime(a) || 0;
+        const tB = getNumericTime(b) || 0;
+        return tA - tB;
+      });
+    }
+
+    return points;
+  }, [data, partnerId]);
+
+  const allDropoffPoints = useMemo(() => {
+    const regularPoints = (data?.drop_off_points_at_arrive || []).map((point, index) => decoratePoint(point, 'dropoff-point', index));
+    const transferPoints = (data?.transfer_points_at_arrive || []).map((point, index) => decoratePoint(point, 'dropoff-transfer-point', index));
+    const points = [...regularPoints, ...transferPoints];
+
+    if (partnerId === 'goopay') {
+      return [...points].sort((a, b) => {
+        const tA = getNumericTime(a) || 0;
+        const tB = getNumericTime(b) || 0;
+        return tA - tB;
+      });
+    }
+
+    return points;
+  }, [data, partnerId]);
+
+  const visibleDropoffPoints = useMemo(() => {
+    if (partnerId !== 'goopay' || !selectedPickup) return allDropoffPoints;
+
+    const pickupTime = getNumericTime(selectedPickup);
+    let maxTs = -Infinity;
+    let maxPoint = null;
+
+    allDropoffPoints.forEach(point => {
+      const ts = getNumericTime(point);
+      if (ts !== null && ts > maxTs) {
+        maxTs = ts;
+        maxPoint = point;
+      }
+    });
+
+    return allDropoffPoints.filter(point => {
+      const ts = getNumericTime(point);
+      if (maxPoint && isPointSelected(maxPoint, point)) return true;
+      if (pickupTime !== null && ts !== null) return ts > pickupTime;
+      return true;
+    });
+  }, [allDropoffPoints, partnerId, selectedPickup]);
+
+  // Reset selected dropoff if it becomes invalid under new selected pickup (for Goopay)
+  useEffect(() => {
+    if (partnerId === 'goopay' && selectedPickup && selectedDropoff) {
+      const pickupTime = getNumericTime(selectedPickup);
+      const dropoffTime = getNumericTime(selectedDropoff);
+      
+      let maxTs = -Infinity;
+      let maxPoint = null;
+      allDropoffPoints.forEach(p => {
+        const ts = getNumericTime(p);
+        if (ts !== null && ts > maxTs) {
+          maxTs = ts;
+          maxPoint = p;
+        }
+      });
+
+      if (pickupTime !== null && dropoffTime !== null) {
+        const isEnd = maxPoint && isPointSelected(maxPoint, selectedDropoff);
+        if (dropoffTime <= pickupTime && !isEnd) {
+          setSelectedDropoff(null);
+        }
+      }
+    }
+  }, [selectedPickup, selectedDropoff, partnerId, allDropoffPoints]);
+
   useEffect(() => {
     const formData = new FormData();
     formData.append('action', 'choose_trip_ajax_booking');
     formData.append('partnerId', trip.partner?.partner_id || trip.partner_id || 'vexere');
     formData.append('tripCode', trip.trip_id);
-    formData.append('departureTime', trip.pickup_date);
+    const timeOnly = trip.departure_time || (trip.pickup_date ? (trip.pickup_date.includes('T') ? trip.pickup_date.split('T')[1]?.slice(0, 5) : (trip.pickup_date.includes(' ') ? trip.pickup_date.split(' ')[1]?.slice(0, 5) : '')) : '');
+    formData.append('departureTime', timeOnly || '00:00');
+    formData.append('wayId', trip.way_id || trip.wayId || '');
+    formData.append('bookingId', trip.booking_id || trip.bookingId || '');
     formData.append('nonce', window.generic_data?.nonce);
 
     fetch(window.generic_data?.ajax_url || '/wp-admin/admin-ajax.php', {
@@ -144,7 +329,17 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
   const calculatePointSurcharge = (point, seatCount) => {
     if (!point) return 0;
     let surcharge = Number(point.surcharge || 0);
-    const tiers = point.surcharge_tiers ? (typeof point.surcharge_tiers === 'string' ? JSON.parse(point.surcharge_tiers) : point.surcharge_tiers) : [];
+    let tiers = [];
+
+    if (point.surcharge_tiers) {
+      try {
+        tiers = typeof point.surcharge_tiers === 'string' ? JSON.parse(point.surcharge_tiers) : point.surcharge_tiers;
+      } catch (error) {
+        tiers = [];
+      }
+    }
+
+    if (!Array.isArray(tiers)) tiers = [];
     
     if (tiers.length > 0) {
       for (const tier of tiers) {
@@ -180,31 +375,64 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
 
     setIsFinalizing(true);
     
-    // Only keep essential info from data to reduce payload size
+    const seatTotal = selectedSeats.reduce((sum, seat) => sum + Number(seat.fare || 0), 0);
+    const pickupPayNowSurcharge = selectedPickup?.surcharge_type == 2 ? calculatePointSurcharge(selectedPickup, selectedSeats.length) : 0;
+    const dropoffPayNowSurcharge = selectedDropoff?.surcharge_type == 2 ? calculatePointSurcharge(selectedDropoff, selectedSeats.length) : 0;
+    const pickupDate = pointText(trip.pickup_date);
+    const departureDate = data.departure_date || trip.departure_date || (pickupDate ? pickupDate.split('T')[0].split(' ')[0] : '');
+    const departureTime = data.departure_time || trip.departure_time || (pickupDate ? (pickupDate.includes('T') ? pickupDate.split('T')[1]?.slice(0, 5) : (pickupDate.includes(' ') ? pickupDate.split(' ')[1]?.slice(0, 5) : '')) : '');
+
+    // Only keep booking-critical info from data to reduce payload size
     const essentialData = {
-      company_logo: data.company_logo,
-      company_name: data.company_name,
-      name: data.name
+      company_logo: data.company_logo || trip.company_logo || '',
+      company_name: data.company_name || trip.company_name || '',
+      name: data.name || trip.vehicle_type || trip.name || '',
+      trip_code: data.trip_code || trip.trip_code || trip.trip_id || '',
+      departure_date: departureDate,
+      departure_time: departureTime,
+      routeName: data.routeName || data.route_name || trip.route_name || trip.routeName || trip.name || ''
     };
+
+    const isPickupTransfer = isTransferPoint(selectedPickup, 'transfer-point');
+    const isDropoffTransfer = isTransferPoint(selectedDropoff, 'dropoff-transfer-point');
 
     const ticket = {
       tripId: trip.trip_id,
       partnerId: trip.partner?.partner_id || trip.partner_id || 'vexere',
-      selectedSeats: selectedSeats.map(s => ({
-        seatCode: s.seat_code,
-        full_code: s.full_code,
-        fare: s.fare,
-        group: s.seat_group_code || s.group // Compatibility
-      })),
-      pickupPoint: selectedPickup,
-      dropoffPoint: selectedDropoff,
+      selectedSeats: selectedSeats.map(s => {
+        const seatCode = s.seat_code || s.code || s.seatCode || s.full_code || s.fullCode || s.id || s.seat_id;
+        const fullCode = s.full_code || s.fullCode || s.id || s.seat_id || seatCode;
+        const seatGroupCode = s.seat_group_code || s.group || '';
+
+        return {
+          id: s.id || s.seat_id || fullCode,
+          seat_id: s.seat_id || s.id || fullCode,
+          seat_code: seatCode,
+          seatCode,
+          code: seatCode,
+          full_code: fullCode,
+          full_code_group: s.full_code_group,
+          fare: Number(s.fare || 0),
+          group: seatGroupCode, // Compatibility
+          seat_group_code: seatGroupCode
+        };
+      }),
+      pickupPoint: isPickupTransfer ? null : selectedPickup,
+      transferPickupPoint: isPickupTransfer ? selectedPickup : null,
+      dropoffPoint: isDropoffTransfer ? null : selectedDropoff,
+      transferDropoffPoint: isDropoffTransfer ? selectedDropoff : null,
       pickupPointMoreDesc: pickupAddress,
       dropoffPointMoreDesc: dropoffAddress,
-      pickupSurcharge: calculatePointSurcharge(selectedPickup, selectedSeats.length),
-      dropoffSurcharge: calculatePointSurcharge(selectedDropoff, selectedSeats.length),
-      departure_date: trip.departure_date || trip.pickup_date,
-      departure_time: trip.departure_time || (trip.pickup_date ? trip.pickup_date.split('T')[1]?.slice(0, 5) : ''),
-      seatsAndInfoData: essentialData
+      pickupSurcharge: pickupPayNowSurcharge,
+      dropoffSurcharge: dropoffPayNowSurcharge,
+      departure_date: departureDate,
+      departure_time: departureTime,
+      seatsAndInfoData: essentialData,
+      wayId: trip.way_id || trip.wayId || '',
+      bookingId: trip.booking_id || trip.bookingId || '',
+      routeName: trip.route_name || trip.routeName || trip.name || '',
+      subtotalSeats: seatTotal,
+      subtotal: seatTotal + pickupPayNowSurcharge + dropoffPayNowSurcharge
     };
 
     if (!window.generic_data?.nonce) {
@@ -218,11 +446,14 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
       const formData = new FormData();
       formData.append('action', 'save_ticket');
       formData.append('nonce', window.generic_data.nonce);
+      formData.append('legIndex', String(legIndex));
       
       formData.append('ticket[tripId]', ticket.tripId);
       formData.append('ticket[partnerId]', ticket.partnerId);
-      formData.append('ticket[pickupPoint]', JSON.stringify(ticket.pickupPoint));
-      formData.append('ticket[dropoffPoint]', JSON.stringify(ticket.dropoffPoint));
+      formData.append('ticket[pickupPoint]', ticket.pickupPoint ? JSON.stringify(ticket.pickupPoint) : '');
+      formData.append('ticket[transferPickupPoint]', ticket.transferPickupPoint ? JSON.stringify(ticket.transferPickupPoint) : '');
+      formData.append('ticket[dropoffPoint]', ticket.dropoffPoint ? JSON.stringify(ticket.dropoffPoint) : '');
+      formData.append('ticket[transferDropoffPoint]', ticket.transferDropoffPoint ? JSON.stringify(ticket.transferDropoffPoint) : '');
       formData.append('ticket[selectedSeats]', JSON.stringify(ticket.selectedSeats));
       formData.append('ticket[seatsAndInfoData]', JSON.stringify(ticket.seatsAndInfoData));
       formData.append('ticket[pickupPointMoreDesc]', ticket.pickupPointMoreDesc || '');
@@ -231,6 +462,11 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
       formData.append('ticket[dropoffSurcharge]', ticket.dropoffSurcharge);
       formData.append('ticket[departure_date]', ticket.departure_date || '');
       formData.append('ticket[departure_time]', ticket.departure_time || '');
+      formData.append('ticket[wayId]', ticket.wayId || '');
+      formData.append('ticket[bookingId]', ticket.bookingId || '');
+      formData.append('ticket[routeName]', ticket.routeName || '');
+      formData.append('ticket[subtotalSeats]', ticket.subtotalSeats || 0);
+      formData.append('ticket[subtotal]', ticket.subtotal || 0);
 
       const response = await fetch(window.generic_data.ajax_url || '/wp-admin/admin-ajax.php', {
         method: 'POST',
@@ -256,10 +492,24 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
   };
 
   const toggleSeat = (seat, group = null) => {
+    const maxSeats = partnerId === 'goopay' ? 5 : 8;
+    
     setSelectedSeats(prev => {
-      const isSelected = prev.find(s => s.seat_code === seat.seat_code);
+      const isSelected = prev.some(s => {
+        if (s.full_code && seat.full_code) return String(s.full_code) === String(seat.full_code);
+        return String(s.seat_code) === String(seat.seat_code);
+      });
+      
       if (isSelected) {
-        return prev.filter(s => s.seat_code !== seat.seat_code);
+        return prev.filter(s => {
+          if (s.full_code && seat.full_code) return String(s.full_code) !== String(seat.full_code);
+          return String(s.seat_code) !== String(seat.seat_code);
+        });
+      }
+      
+      if (prev.length >= maxSeats) {
+        alert(`Bạn được chọn tối đa ${maxSeats} chỗ cho mỗi lần đặt`);
+        return prev;
       }
       
       const newSeat = { ...seat };
@@ -267,6 +517,9 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
         newSeat.fare = group.fare;
         newSeat.seat_group_code = group.seat_group_id || group.seat_group_code;
         newSeat.seat_group = group.seat_group;
+        if (newSeat.full_code && newSeat.seat_group_code) {
+          newSeat.full_code_group = `${newSeat.full_code}|${newSeat.seat_group_code}`;
+        }
       }
       return [...prev, newSeat];
     });
@@ -274,7 +527,11 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
   };
 
   const handleSeatClick = (seat) => {
-    const isSelected = selectedSeats.find(s => s.seat_code === seat.seat_code);
+    const isSelected = selectedSeats.some(s => {
+      if (s.full_code && seat.full_code) return String(s.full_code) === String(seat.full_code);
+      return String(s.seat_code) === String(seat.seat_code);
+    });
+    
     if (isSelected) {
       toggleSeat(seat);
       return;
@@ -291,7 +548,7 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
   const currentDropoffSurcharge = useMemo(() => calculatePointSurcharge(selectedDropoff, selectedSeats.length), [selectedDropoff, selectedSeats.length]);
 
   const totalPrice = useMemo(() => {
-    const seatTotal = selectedSeats.reduce((sum, s) => sum + (s.fare || 0), 0);
+    const seatTotal = selectedSeats.reduce((sum, s) => sum + Number(s.fare || 0), 0);
     // Only add surcharge to total if it's "Pay Now" (type 2)
     const pSurcharge = (selectedPickup?.surcharge_type == 2) ? currentPickupSurcharge : 0;
     const dSurcharge = (selectedDropoff?.surcharge_type == 2) ? currentDropoffSurcharge : 0;
@@ -418,8 +675,8 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                     coach.seats.forEach(seat => {
                       if (!groups[seat.seat_group_code]) {
                         groups[seat.seat_group_code] = {
-                          name: seat.seat_group,
-                          color: seat.seat_color,
+                          name: seat.seat_group || 'Ghế còn trống',
+                          color: seat.seat_color || '#2196F3',
                           type: seat.seat_type,
                           fare: seat.fare
                         };
@@ -462,7 +719,10 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                               <SeatIcon
                                 type={seat.seat_type}
                                 color={seat.seat_color || '#2196F3'}
-                                status={!seat.is_available ? 'sold' : selectedSeats.find(s => s.seat_code === seat.seat_code) ? 'selected' : 'available'}
+                                status={!seat.is_available ? 'sold' : selectedSeats.some(s => {
+                                  if (s.full_code && seat.full_code) return String(s.full_code) === String(seat.full_code);
+                                  return String(s.seat_code) === String(seat.seat_code);
+                                }) ? 'selected' : 'available'}
                                 onClick={() => handleSeatClick(seat)}
                               />
                             </div>
@@ -486,17 +746,16 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                   Chọn điểm đón
                 </h3>
                 <div className="grid max-h-[500px] gap-3 overflow-auto pr-1 scrollbar-thin sm:gap-4 sm:pr-2">
-                  {/* Combine regular and transfer points */}
-                  {[...(data.pickup_points || []), ...(data.transfer_points || [])].map((point, idx) => {
+                  {pickupPoints.map((point, idx) => {
                     const disabled = isPointDisabled(point);
                     const pointSurcharge = calculatePointSurcharge(point, selectedSeats.length);
                     
                     return (
-                      <div key={idx} className="space-y-3">
+                      <div key={point.__selectionKey || idx} className="space-y-3">
                         <label 
                           className={`group flex cursor-pointer items-start gap-3 rounded-2xl border-2 p-4 transition-all sm:gap-4 sm:p-5 ${
                             disabled ? 'opacity-40 cursor-not-allowed bg-slate-50' :
-                            selectedPickup?.id === point.id ? 'border-primary bg-primary/5' : 'border-slate-50 bg-white hover:border-primary-light'
+                            isPointSelected(selectedPickup, point) ? 'border-primary bg-primary/5' : 'border-slate-50 bg-white hover:border-primary-light'
                           }`}
                         >
                           <input 
@@ -504,27 +763,30 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                             name="pickup" 
                             disabled={disabled}
                             className="mt-1 h-5 w-5 shrink-0 text-primary focus:ring-primary disabled:opacity-0"
-                            checked={selectedPickup?.id === point.id}
-                            onChange={() => setSelectedPickup(point)}
+                            checked={isPointSelected(selectedPickup, point)}
+                            onChange={() => {
+                              setSelectedPickup(point);
+                              setPickupAddress('');
+                            }}
                           />
                           <div className="min-w-0 flex-1">
                             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                              <span className="font-display text-lg font-black text-slate-900">{point.real_time}</span>
+                              <span className="font-display text-lg font-black text-slate-900">{getPointTime(point)}</span>
                               <div className="flex flex-wrap gap-1 sm:flex-col sm:items-end">
                                 {pointSurcharge > 0 && (
                                   <span className="rounded-lg bg-warning/10 px-2 py-1 text-[10px] font-black text-warning">
                                     +{pointSurcharge.toLocaleString()}đ {point.surcharge_type == 1 ? '(Thanh toán sau)' : '(Cùng tiền vé)'}
                                   </span>
                                 )}
-                                {point.is_transfer && (
+                                {isTransferPoint(point) && (
                                   <span className="rounded-lg bg-primary/10 px-2 py-1 text-[10px] font-black text-primary">
                                     <i className="fas fa-car-side mr-1"></i> Trung chuyển
                                   </span>
                                 )}
                               </div>
                             </div>
-                            <div className="mt-1 font-bold text-slate-700">{point.name}</div>
-                            <div className="mt-1 text-xs text-slate-400">{point.address}</div>
+                            <div className="mt-1 font-bold text-slate-700">{getPointName(point)}</div>
+                            <div className="mt-1 text-xs text-slate-400">{getPointAddress(point)}</div>
                             {point.min_customer > selectedSeats.length && (
                               <div className="mt-2 text-[10px] font-bold text-danger italic">
                                 * Cần đặt tối thiểu {point.min_customer} ghế để chọn điểm này
@@ -532,7 +794,7 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                             )}
                           </div>
                         </label>
-                        {selectedPickup?.id === point.id && point.unfixed_point == 1 && (
+                        {isPointSelected(selectedPickup, point) && point.unfixed_point == 1 && (
                           <div className="animate-in slide-in-from-top-2 duration-300 sm:ml-9">
                             <input 
                               type="text"
@@ -558,16 +820,16 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                   Chọn điểm trả
                 </h3>
                 <div className="grid max-h-[500px] gap-3 overflow-auto pr-1 scrollbar-thin sm:gap-4 sm:pr-2">
-                  {[...(data.drop_off_points_at_arrive || []), ...(data.transfer_points_at_arrive || [])].map((point, idx) => {
+                  {visibleDropoffPoints.map((point, idx) => {
                     const disabled = isPointDisabled(point);
                     const pointSurcharge = calculatePointSurcharge(point, selectedSeats.length);
 
                     return (
-                      <div key={idx} className="space-y-3">
+                      <div key={point.__selectionKey || idx} className="space-y-3">
                         <label 
                           className={`group flex cursor-pointer items-start gap-3 rounded-2xl border-2 p-4 transition-all sm:gap-4 sm:p-5 ${
                             disabled ? 'opacity-40 cursor-not-allowed bg-slate-50' :
-                            selectedDropoff?.id === point.id ? 'border-primary bg-primary/5' : 'border-slate-50 bg-white hover:border-primary-light'
+                            isPointSelected(selectedDropoff, point) ? 'border-primary bg-primary/5' : 'border-slate-50 bg-white hover:border-primary-light'
                           }`}
                         >
                           <input 
@@ -575,27 +837,30 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                             name="dropoff" 
                             disabled={disabled}
                             className="mt-1 h-5 w-5 shrink-0 text-primary focus:ring-primary disabled:opacity-0"
-                            checked={selectedDropoff?.id === point.id}
-                            onChange={() => setSelectedDropoff(point)}
+                            checked={isPointSelected(selectedDropoff, point)}
+                            onChange={() => {
+                              setSelectedDropoff(point);
+                              setDropoffAddress('');
+                            }}
                           />
                           <div className="min-w-0 flex-1">
                             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                              <span className="font-display text-lg font-black text-slate-900">{point.real_time}</span>
+                              <span className="font-display text-lg font-black text-slate-900">{getPointTime(point)}</span>
                               <div className="flex flex-wrap gap-1 sm:flex-col sm:items-end">
                                 {pointSurcharge > 0 && (
                                   <span className="rounded-lg bg-warning/10 px-2 py-1 text-[10px] font-black text-warning">
                                     +{pointSurcharge.toLocaleString()}đ {point.surcharge_type == 1 ? '(Thanh toán sau)' : '(Cùng tiền vé)'}
                                   </span>
                                 )}
-                                {point.is_transfer && (
+                                {isTransferPoint(point) && (
                                   <span className="rounded-lg bg-primary/10 px-2 py-1 text-[10px] font-black text-primary">
                                     <i className="fas fa-car-side mr-1"></i> Trung chuyển
                                   </span>
                                 )}
                               </div>
                             </div>
-                            <div className="mt-1 font-bold text-slate-700">{point.name}</div>
-                            <div className="mt-1 text-xs text-slate-400">{point.address}</div>
+                            <div className="mt-1 font-bold text-slate-700">{getPointName(point)}</div>
+                            <div className="mt-1 text-xs text-slate-400">{getPointAddress(point)}</div>
                             {point.min_customer > selectedSeats.length && (
                               <div className="mt-2 text-[10px] font-bold text-danger italic">
                                 * Cần đặt tối thiểu {point.min_customer} ghế để chọn điểm này
@@ -603,7 +868,7 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                             )}
                           </div>
                         </label>
-                        {selectedDropoff?.id === point.id && point.unfixed_point == 1 && (
+                        {isPointSelected(selectedDropoff, point) && point.unfixed_point == 1 && (
                           <div className="animate-in slide-in-from-top-2 duration-300 sm:ml-9">
                             <input 
                               type="text"
@@ -628,7 +893,7 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
         <aside className="space-y-6">
           <div className="overflow-hidden rounded-[20px] border border-slate-100 bg-white shadow-premium lg:sticky lg:top-24 lg:rounded-[2rem]">
             <div className="bg-slate-50/80 p-5 text-center sm:p-6">
-              <h4 className="font-display text-xs font-black uppercase tracking-widest text-slate-400 sm:text-sm">Tổng tiền thanh toán</h4>
+              <h4 className="font-display text-xs font-bold uppercase tracking-widest text-slate-400 sm:text-sm">Tổng tiền thanh toán</h4>
               <div className="mt-1 font-display text-3xl font-black text-primary-dark">
                 {totalPrice.toLocaleString()}đ
               </div>
@@ -641,7 +906,7 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                   <div className="flex-1">
                     <span className="text-xs font-bold text-slate-400 uppercase tracking-tighter">Số ghế:</span>
                     <div className="mt-0.5 text-sm font-black text-slate-900">
-                      {selectedSeats.length > 0 ? selectedSeats.map(s => s.seat_code).join(', ') : 'Chưa chọn'}
+                      {selectedSeats.length > 0 ? selectedSeats.map(s => s.seat_code || s.code || s.seatCode).filter(Boolean).join(', ') : 'Chưa chọn'}
                     </div>
                   </div>
                 </div>
@@ -652,7 +917,7 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                     <div className="flex-1">
                       <span className="text-xs font-bold text-slate-400 uppercase tracking-tighter">Điểm đón:</span>
                       <div className="mt-0.5 text-sm font-black text-slate-900 line-clamp-2">
-                        {selectedPickup.name}
+                        {getPointName(selectedPickup)}
                       </div>
                       {currentPickupSurcharge > 0 && (
                         <div className={`mt-1 text-[10px] font-bold ${selectedPickup.surcharge_type == 2 ? 'text-primary' : 'text-warning'}`}>
@@ -669,7 +934,7 @@ const SeatSelection = ({ trip, onCancel, onComplete }) => {
                     <div className="flex-1">
                       <span className="text-xs font-bold text-slate-400 uppercase tracking-tighter">Điểm trả:</span>
                       <div className="mt-0.5 text-sm font-black text-slate-900 line-clamp-2">
-                        {selectedDropoff.name}
+                        {getPointName(selectedDropoff)}
                       </div>
                       {currentDropoffSurcharge > 0 && (
                         <div className={`mt-1 text-[10px] font-bold ${selectedDropoff.surcharge_type == 2 ? 'text-primary' : 'text-warning'}`}>

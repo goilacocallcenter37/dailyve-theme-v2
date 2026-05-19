@@ -574,7 +574,8 @@ const DetailTabs = ({ trip, gallery }) => {
       formData.append('partnerId', trip.partner?.partner_id || trip.partner_id || 'vexere');
       formData.append('pickupDate', trip.pickup_date || '');
       formData.append('partnerName', (trip.partner?.partner_name || trip.partner?.partner_id || 'vexere').toLowerCase());
-      formData.append('departureTime', trip.pickup_date || '');
+      const timeOnly = trip.departure_time || (trip.pickup_date ? (trip.pickup_date.includes('T') ? trip.pickup_date.split('T')[1]?.slice(0, 5) : (trip.pickup_date.includes(' ') ? trip.pickup_date.split(' ')[1]?.slice(0, 5) : '')) : '');
+      formData.append('departureTime', timeOnly || '00:00');
       formData.append('wayId', trip.way_id || '');
       formData.append('bookingId', trip.booking_id || '');
       formData.append('fare', trip.fare || '');
@@ -1019,7 +1020,7 @@ const DetailTabs = ({ trip, gallery }) => {
   );
 };
 
-const TripCard = ({ trip, stepTicket, setStepTicket, filters, syncUrl }) => {
+const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUrl }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [isBooking, setIsBooking] = useState(false);
   const [showNoteModal, setShowNoteModal] = useState(false);
@@ -1083,7 +1084,7 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, syncUrl }) => {
             <div className="px-8 pb-8 pt-4 md:px-10 md:pb-10 shrink-0 border-t border-slate-50 bg-slate-50/30">
               <button
                 onClick={() => setShowNoteModal(false)}
-                className="w-full rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 py-4 text-sm font-black uppercase tracking-widest text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/30 active:scale-[0.98]"
+                className="w-full rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 py-4 text-sm font-semibold uppercase tracking-widest text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/30 active:scale-[0.98]"
               >
                 ĐÃ HIỂU & TIẾP TỤC
               </button>
@@ -1222,6 +1223,7 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, syncUrl }) => {
           <div className="p-4 sm:p-6 lg:p-8">
             <SeatSelection 
               trip={trip} 
+              legIndex={stepTicket}
               onCancel={() => setIsBooking(false)} 
               onComplete={(ticket) => {
                 const searchParams = new URLSearchParams(window.location.search);
@@ -1470,6 +1472,7 @@ const TripList = () => {
                     stepTicket={stepTicket}
                     setStepTicket={setStepTicket}
                     filters={filters}
+                    setFilters={setFilters}
                     syncUrl={syncUrl}
                   />
                 ))}

@@ -678,8 +678,8 @@ body {
 
 .dailyve-search__clear-date {
   position: absolute;
-  right: 12px;
-  top: 50%;
+  right: 6px;
+  top: 6%;
   z-index: 5;
   width: 26px;
   height: 26px;
