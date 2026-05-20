@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss" theme(static);
 @import "./home.css";
 
@@ -1580,6 +1580,547 @@ em {
   }
 }
 
+body.dailyve-date-range-picker-open {
+  overflow: hidden;
+}
+
+.dailyve-date-range-picker[hidden] {
+  display: none !important;
+}
+
+.dailyve-date-range-picker {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  font-family: var(--font-sans, "Be Vietnam Pro", Inter, sans-serif);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease;
+}
+
+.dailyve-date-range-picker.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dailyve-date-range-picker__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.52);
+}
+
+.dailyve-date-range-picker__dialog {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: min(820px, calc(100vw - 32px));
+  max-height: calc(100vh - 48px);
+  overflow: hidden;
+  border: 1px solid var(--dv-hairline, #E2E8F0);
+  border-radius: var(--dv-radius-xl, 16px);
+  background: var(--dv-canvas, #FFFFFF);
+  box-shadow: var(--dv-shadow-elevated, 0 4px 12px rgba(0, 0, 0, 0.08));
+  color: var(--dv-body, #334155);
+  outline: 0;
+  transform: translateY(10px) scale(0.99);
+  transition: transform 0.16s ease;
+}
+
+.dailyve-date-range-picker.is-open .dailyve-date-range-picker__dialog {
+  transform: translateY(0) scale(1);
+}
+
+.dailyve-date-range-picker__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 24px 18px;
+  border-bottom: 1px solid var(--dv-hairline-soft, #F1F5F9);
+  background: var(--dv-canvas, #FFFFFF);
+}
+
+.dailyve-date-range-picker__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  margin-bottom: 8px;
+  padding: 4px 12px;
+  border-radius: var(--dv-radius-pill, 9999px);
+  background: var(--dv-surface-card, #F1F5F9);
+  color: var(--dv-muted, #64748B);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.dailyve-date-range-picker__header h2 {
+  margin: 0;
+  color: var(--dv-ink, #0F172A);
+  font-family: "Space Grotesk", var(--font-display, "Be Vietnam Pro"), sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.dailyve-date-range-picker__header p {
+  margin: 6px 0 0;
+  color: var(--dv-muted, #64748B);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.dailyve-date-range-picker__x {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--dv-hairline, #E2E8F0);
+  border-radius: 50%;
+  background: var(--dv-canvas, #FFFFFF);
+  color: var(--dv-ink, #0F172A);
+  box-shadow: var(--dv-shadow-soft, 0 1px 2px rgba(0, 0, 0, 0.05));
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.dailyve-date-range-picker__x:hover {
+  border-color: var(--dv-primary, #2196F3);
+  color: var(--dv-primary, #2196F3);
+  background: var(--dv-surface-soft, #F8FAFC);
+}
+
+.dailyve-date-range-picker__x i {
+  pointer-events: none;
+}
+
+.dailyve-date-range-picker__calendar {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 20px 32px 24px;
+  background: var(--dv-canvas, #FFFFFF);
+  overflow: auto;
+}
+
+.dailyve-date-range-picker__months {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+
+.dailyve-date-range-picker__nav {
+  position: absolute;
+  top: 22px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--dv-hairline, #E2E8F0);
+  border-radius: 50%;
+  background: var(--dv-canvas, #FFFFFF);
+  color: var(--dv-ink, #0F172A);
+  box-shadow: var(--dv-shadow-soft, 0 1px 2px rgba(0, 0, 0, 0.05));
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dailyve-date-range-picker__nav:hover {
+  border-color: var(--dv-primary, #2196F3);
+  color: var(--dv-primary, #2196F3);
+  background: var(--dv-surface-soft, #F8FAFC);
+  box-shadow: var(--dv-shadow-focus, 0 0 0 3px rgba(33, 150, 243, 0.16));
+}
+
+.dailyve-date-range-picker__nav--prev {
+  left: 16px;
+}
+
+.dailyve-date-range-picker__nav--next {
+  right: 16px;
+}
+
+.dailyve-date-range-picker__month h3 {
+  margin: 0 0 16px;
+  color: var(--dv-ink, #0F172A);
+  font-family: "Space Grotesk", var(--font-display, "Be Vietnam Pro"), sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0;
+  text-align: center;
+}
+
+.dailyve-date-range-picker__weekdays,
+.dailyve-date-range-picker__grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.dailyve-date-range-picker__weekdays {
+  margin-bottom: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--dv-hairline, #E2E8F0);
+}
+
+.dailyve-date-range-picker__weekdays span {
+  color: var(--dv-muted, #64748B);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.dailyve-date-range-picker__weekdays span.is-weekend {
+  color: var(--dv-error, #DC2626);
+}
+
+.dailyve-date-range-picker__grid {
+  gap: 4px;
+}
+
+.dailyve-date-range-picker__day {
+  position: relative;
+  min-width: 0;
+  height: 48px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  border: 1px solid transparent;
+  border-radius: var(--dv-radius-md, 8px);
+  background: var(--dv-canvas, #FFFFFF);
+  color: var(--dv-ink, #0F172A);
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dailyve-date-range-picker__day:hover:not(:disabled) {
+  border-color: var(--dv-primary, #2196F3);
+  background: var(--dv-surface-soft, #F8FAFC);
+  color: var(--dv-primary, #2196F3);
+}
+
+.dailyve-date-range-picker__day:focus-visible {
+  outline: none;
+  border-color: var(--dv-primary, #2196F3);
+  box-shadow: var(--dv-shadow-focus, 0 0 0 3px rgba(33, 150, 243, 0.16));
+}
+
+.dailyve-date-range-picker__day span {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.dailyve-date-range-picker__day small {
+  color: var(--dv-muted-soft, #94A3B8);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.dailyve-date-range-picker__day.is-weekend:not(.is-selected) span {
+  color: var(--dv-error, #DC2626);
+}
+
+.dailyve-date-range-picker__day.is-outside {
+  color: var(--dv-muted-soft, #94A3B8);
+  opacity: 0.58;
+}
+
+.dailyve-date-range-picker__day.is-disabled {
+  background: var(--dv-surface-soft, #F8FAFC);
+  color: var(--dv-muted-soft, #94A3B8);
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
+.dailyve-date-range-picker__day.is-today:not(.is-selected) {
+  border-color: var(--dv-primary, #2196F3);
+}
+
+.dailyve-date-range-picker__day.is-today:not(.is-selected) span {
+  color: var(--dv-primary, #2196F3);
+}
+
+.dailyve-date-range-picker__day.is-lunar-month small {
+  color: var(--dv-accent, #F59E0B);
+}
+
+.dailyve-date-range-picker__day.is-in-range {
+  border-color: #DBEAFE;
+  background: #EFF6FF;
+  color: var(--dv-primary-active, #1565C0);
+}
+
+.dailyve-date-range-picker__day.is-selected {
+  border-color: var(--dv-primary, #2196F3);
+  background: var(--dv-primary, #2196F3);
+  color: #FFFFFF;
+  box-shadow: var(--dv-shadow-elevated, 0 4px 12px rgba(0, 0, 0, 0.08));
+}
+
+.dailyve-date-range-picker__day.is-selected span,
+.dailyve-date-range-picker__day.is-selected small {
+  color: #FFFFFF;
+}
+
+.dailyve-date-range-picker__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--dv-hairline, #E2E8F0);
+  background: var(--dv-surface-soft, #F8FAFC);
+}
+
+.dailyve-date-range-picker__summary {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  min-width: 0;
+}
+
+.dailyve-date-range-picker__summary-item[hidden] {
+  display: none;
+}
+
+.dailyve-date-range-picker__summary-item span {
+  display: block;
+  color: var(--dv-muted, #64748B);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.dailyve-date-range-picker__summary-item strong {
+  display: block;
+  margin-top: 3px;
+  color: var(--dv-muted-soft, #94A3B8);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.dailyve-date-range-picker__summary-item strong.has-value {
+  color: var(--dv-ink, #0F172A);
+}
+
+.dailyve-date-range-picker__switch {
+  position: relative;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 6px 12px 6px 6px;
+  border-radius: var(--dv-radius-pill, 9999px);
+  background: var(--dv-surface-card, #F1F5F9);
+  color: var(--dv-ink, #0F172A);
+  cursor: pointer;
+  user-select: none;
+}
+
+.dailyve-date-range-picker__switch input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dailyve-date-range-picker__switch span {
+  position: relative;
+  width: 38px;
+  height: 22px;
+  border-radius: var(--dv-radius-pill, 9999px);
+  background: var(--dv-surface-strong, #CBD5E1);
+  transition: background 0.15s ease;
+}
+
+.dailyve-date-range-picker__switch span::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--dv-canvas, #FFFFFF);
+  box-shadow: var(--dv-shadow-soft, 0 1px 2px rgba(0, 0, 0, 0.05));
+  transition: transform 0.15s ease;
+}
+
+.dailyve-date-range-picker__switch input:checked + span {
+  background: var(--dv-primary, #2196F3);
+}
+
+.dailyve-date-range-picker__switch input:checked + span::after {
+  transform: translateX(16px);
+}
+
+.dailyve-date-range-picker__switch input:focus-visible + span {
+  box-shadow: var(--dv-shadow-focus, 0 0 0 3px rgba(33, 150, 243, 0.16));
+}
+
+.dailyve-date-range-picker__switch strong {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.dailyve-date-range-picker__actions {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 16px;
+  padding: 16px 24px 24px;
+  background: var(--dv-canvas, #FFFFFF);
+}
+
+.dailyve-date-range-picker__actions button {
+  min-height: 40px;
+  border-radius: var(--dv-radius-md, 8px);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dailyve-date-range-picker__actions button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--dv-shadow-elevated, 0 4px 12px rgba(0, 0, 0, 0.08));
+}
+
+.dailyve-date-range-picker__close {
+  border: 1px solid var(--dv-primary, #2196F3);
+  background: var(--dv-canvas, #FFFFFF);
+  color: var(--dv-primary, #2196F3);
+}
+
+.dailyve-date-range-picker__close:hover {
+  border-color: var(--dv-primary-active, #1565C0);
+  color: var(--dv-primary-active, #1565C0);
+}
+
+.dailyve-date-range-picker__confirm {
+  border: 1px solid var(--dv-primary, #2196F3);
+  background: var(--dv-primary, #2196F3);
+  color: #FFFFFF;
+}
+
+.dailyve-date-range-picker__confirm:hover:not(:disabled) {
+  border-color: var(--dv-primary-active, #1565C0);
+  background: var(--dv-primary-active, #1565C0);
+}
+
+.dailyve-date-range-picker__confirm:disabled {
+  border-color: var(--dv-primary-disabled, #E2E8F0);
+  background: var(--dv-primary-disabled, #E2E8F0);
+  color: var(--dv-muted, #64748B);
+  cursor: not-allowed;
+}
+
+@media (max-width: 760px) {
+  .dailyve-date-range-picker {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .dailyve-date-range-picker__dialog {
+    width: 100%;
+    max-height: 92vh;
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+    border-radius: var(--dv-radius-xl, 16px) var(--dv-radius-xl, 16px) 0 0;
+  }
+
+  .dailyve-date-range-picker__header {
+    padding: 20px 16px 16px;
+  }
+
+  .dailyve-date-range-picker__calendar {
+    padding: 18px 16px 20px;
+  }
+
+  .dailyve-date-range-picker__months {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .dailyve-date-range-picker__nav {
+    top: 20px;
+  }
+
+  .dailyve-date-range-picker__nav--prev {
+    left: 8px;
+  }
+
+  .dailyve-date-range-picker__nav--next {
+    right: 8px;
+  }
+
+  .dailyve-date-range-picker__footer {
+    align-items: flex-start;
+    gap: 16px;
+    padding: 14px 16px;
+  }
+
+  .dailyve-date-range-picker__summary {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .dailyve-date-range-picker__actions {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 14px 16px 18px;
+  }
+
+  .dailyve-date-range-picker__confirm {
+    order: -1;
+  }
+}
+
+@media (max-width: 420px) {
+  .dailyve-date-range-picker__day {
+    height: 43px;
+  }
+
+  .dailyve-date-range-picker__month h3 {
+    font-size: 18px;
+  }
+
+  .dailyve-date-range-picker__weekdays span {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dailyve-date-range-picker,
+  .dailyve-date-range-picker__dialog,
+  .dailyve-date-range-picker__day,
+  .dailyve-date-range-picker__actions button {
+    transition: none;
+  }
+}
 /* Footer accordion details tag */
 .ol-card__accordion {
   border-top: 1px solid #EDF2F7;
@@ -2948,3 +3489,4 @@ em {
     padding: 16px;
   }
 }
+

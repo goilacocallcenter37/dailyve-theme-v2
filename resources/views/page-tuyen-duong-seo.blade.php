@@ -373,14 +373,24 @@
                           <strong>{{ number_format($lowest_price, 0, ',', '.') }}đ</strong>
                         </div>
                       @endif
-                      <a href="{{ esc_url($booking_url) }}" class="ol-card__btn" target="_blank" rel="noopener noreferrer">
+                      <a
+                        href="{!! esc_url($booking_url) !!}"
+                        class="ol-card__btn"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-dailyve-date-range-trigger
+                        data-date-range-url="{!! esc_url($booking_url) !!}"
+                        data-date-range-from-name="{{ esc_attr($from_name) }}"
+                        data-date-range-to-name="{{ esc_attr($to_name) }}"
+                        data-date-range-service="bus"
+                        data-date-range-min="today"
+                      >
                         Xem giá
                       </a>
                     </div>
                   </div>
                 </div>
 
-                <!-- HTML5 Native Interactive details container for high-perf client action without loading bloated libraries -->
                 <details class="ol-card__accordion">
                   <summary class="ol-card__toggle">
                     <span>Thông tin chi tiết</span>
@@ -757,3 +767,4 @@
     });
   </script>
 @endsection
+

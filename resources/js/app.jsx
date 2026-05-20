@@ -6,6 +6,7 @@ import AuthMenu from './components/AuthMenu';
 import AuthModal from './components/AuthModal';
 import ProfileForm from './components/ProfileForm';
 import TicketLookup from './components/TicketLookup';
+import { initDailyveDateRangePicker } from './components/DailyveDateRangePicker';
 import { initHomePage } from './home';
 
 const roots = new WeakMap();
@@ -46,5 +47,6 @@ const initReactApps = () => {
 // DOM Content Loaded
 document.addEventListener('DOMContentLoaded', () => {
     initReactApps();
+    initDailyveDateRangePicker();
     initHomePage();
 });
