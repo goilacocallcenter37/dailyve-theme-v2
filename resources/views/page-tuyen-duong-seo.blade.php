@@ -161,6 +161,8 @@
                 $operator_gallery = $operator_media['gallery'] ?? [];
                 $operator_images = [];
 
+                $company_url = $operator_media['url'] ?? '';
+
                 $normalize_company_image = function ($image) use ($op) {
                     $url = '';
                     $thumb = '';
@@ -278,7 +280,15 @@
 
                   <div class="ol-card__info">
                     <div class="ol-card__header">
-                      <h3 class="ol-card__name">{{ $op['name'] }}</h3>
+                      <h3 class="ol-card__name">
+                        @if (!empty($company_url))
+                          <a href="{{ esc_url($company_url) }}" target="_blank" rel="noopener noreferrer" class="ol-card__name-link">
+                            {{ $op['name'] }}
+                          </a>
+                        @else
+                          {{ $op['name'] }}
+                        @endif
+                      </h3>
                       @if ($has_rating)
                         <div class="ol-card__rating" style="color: {{ $rating_color }}">
                           <span class="ol-card__rating-value">{{ number_format($rating, 1) }}</span>
