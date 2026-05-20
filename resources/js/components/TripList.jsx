@@ -36,6 +36,116 @@ const PRICE_OPTIONS = [
   { value: 'over-400', label: 'Trên 400.000đ' },
 ];
 
+const DEFAULT_FILTER_PATCH = {
+  companies: '',
+  time: '00:00-23:59',
+  sort: 'time:asc',
+  islimousine: '',
+  fa: '',
+  ta: '',
+  rating: '',
+};
+
+const EMPTY_FILTER_OPTIONS = {
+  key: '',
+  companies: [],
+  pickupPoints: [],
+  dropoffPoints: [],
+};
+
+const getOptionKey = (item, field) => String(item?.[field] ?? '').trim();
+
+const mergeOptionList = (current, incoming, field) => {
+  if (!Array.isArray(incoming) || incoming.length === 0) return current;
+
+  const merged = new Map();
+  current.forEach((item) => {
+    const key = getOptionKey(item, field);
+    if (key) merged.set(key, item);
+  });
+
+  incoming.forEach((item) => {
+    const key = getOptionKey(item, field);
+    if (key) {
+      merged.set(key, { ...(merged.get(key) || {}), ...item });
+    }
+  });
+
+  return Array.from(merged.values());
+};
+
+const getPointName = (point) => String(point?.district || point?.name || point?.point_name || point?.address || '').trim();
+
+const mergePointList = (current, incoming) => {
+  if (!Array.isArray(incoming) || incoming.length === 0) return current;
+
+  const merged = new Map();
+  current.forEach((point) => {
+    const key = getPointName(point);
+    if (key) merged.set(key, point);
+  });
+
+  incoming.forEach((point) => {
+    const key = getPointName(point);
+    if (key) {
+      merged.set(key, { ...(merged.get(key) || {}), ...point });
+    }
+  });
+
+  return Array.from(merged.values());
+};
+
+const MobileFilterSheet = ({ title, children, footer, variant = 'compact', onClose }) => {
+  const isFull = variant === 'full';
+
+  return (
+    <div className="fixed inset-0 z-[1000] lg:hidden" role="dialog" aria-modal="true" aria-label={title}>
+      <button
+        type="button"
+        className="dailyve-mobile-sheet__backdrop absolute inset-0 h-full w-full bg-slate-950/50"
+        onClick={onClose}
+        aria-label="Đóng"
+      ></button>
+
+      <div className={`dailyve-mobile-sheet__panel absolute bottom-0 left-0 right-0 flex flex-col overflow-hidden rounded-t-2xl bg-white shadow-2xl ${isFull ? 'h-[88vh]' : 'max-h-[82vh]'}`}>
+        {isFull ? (
+          <div className="flex h-14 shrink-0 items-center gap-2 bg-blue-600 px-3 text-white">
+            <button
+              type="button"
+              className="flex h-10 w-10 items-center justify-center rounded-full text-white"
+              onClick={onClose}
+              aria-label="Quay lại"
+            >
+              <i className="fas fa-arrow-left"></i>
+            </button>
+            <h2 className="text-base font-bold">{title}</h2>
+          </div>
+        ) : (
+          <div className="shrink-0 bg-white px-4 pt-3">
+            <div className="mx-auto mb-2 h-1 w-10 rounded-full bg-slate-300"></div>
+            <div className="flex min-h-12 items-center justify-between border-b border-slate-100">
+              <h2 className="text-base font-bold text-slate-950">{title}</h2>
+              <button type="button" className="text-sm font-bold text-blue-600" onClick={onClose}>
+                Đóng
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div className={`min-h-0 flex-1 overflow-y-auto ${isFull ? 'bg-slate-50' : 'bg-white'}`}>
+          {children}
+        </div>
+
+        {footer && (
+          <div className="shrink-0 border-t border-slate-100 bg-white px-4 pb-[calc(env(safe-area-inset-bottom)+16px)] pt-3">
+            {footer}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const formatDateInput = (value) => {
   if (!value) return '';
   if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
@@ -316,10 +426,21 @@ const TripSkeleton = () => (
   </div>
 );
 
-const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }) => {
-  const companies = statistics?.companies?.data || [];
-  const vehicleTypes = statistics?.vehicle_types || [];
+const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, resultCount = 0, cacheKey = '' }) => {
+  const incomingCompanies = useMemo(
+    () => (statistics?.companies?.data || []).filter((company) => Number(company.id) !== 11071),
+    [statistics]
+  );
+  const incomingPickupPoints = useMemo(() => statistics?.pickup_points || [], [statistics]);
+  const incomingDropoffPoints = useMemo(() => statistics?.dropoff_points || [], [statistics]);
+  const vehicleTypes = Array.isArray(statistics?.vehicle_types) ? statistics.vehicle_types : [];
   const selectedCompanies = filters.companies ? filters.companies.split(',').filter(Boolean) : [];
+  const selectedPickups = filters.fa ? filters.fa.split(',').filter(Boolean) : [];
+  const selectedDropoffs = filters.ta ? filters.ta.split(',').filter(Boolean) : [];
+  const [activeSheet, setActiveSheet] = useState(null);
+  const [companyQuery, setCompanyQuery] = useState('');
+  const [pointQuery, setPointQuery] = useState('');
+  const [optionCache, setOptionCache] = useState(() => ({ ...EMPTY_FILTER_OPTIONS, key: cacheKey }));
 
   const toggleCompany = (companyId) => {
     const next = new Set(selectedCompanies);
@@ -336,15 +457,473 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
   const [pickupsExpanded, setPickupsExpanded] = useState(() => !!filters.fa);
   const [dropoffsExpanded, setDropoffsExpanded] = useState(() => !!filters.ta);
 
+  const selectedTimeLabel = TIME_OPTIONS.find((option) => option.value === filters.time)?.label || 'Cả ngày';
+  const selectedPriceLabel = PRICE_OPTIONS.find((option) => option.value === priceRange)?.label || 'Tất cả giá';
+  const activeOptionCache = optionCache.key === cacheKey ? optionCache : EMPTY_FILTER_OPTIONS;
+  const cachedCompanyList = mergeOptionList(activeOptionCache.companies, incomingCompanies, 'id');
+  const cachedPickupPoints = mergePointList(activeOptionCache.pickupPoints, incomingPickupPoints);
+  const cachedDropoffPoints = mergePointList(activeOptionCache.dropoffPoints, incomingDropoffPoints);
+  const companyList = [
+    ...selectedCompanies
+      .filter((companyId) => !cachedCompanyList.some((company) => String(company.id) === companyId))
+      .map((companyId) => ({ id: companyId, name: `Nhà xe đã chọn (${companyId})`, trip_count: 0 })),
+    ...cachedCompanyList,
+  ];
+  const pickupPoints = [
+    ...selectedPickups
+      .filter((pointName) => !cachedPickupPoints.some((point) => getPointName(point) === pointName))
+      .map((pointName) => ({ district: pointName, trip_count: 0 })),
+    ...cachedPickupPoints,
+  ];
+  const dropoffPoints = [
+    ...selectedDropoffs
+      .filter((pointName) => !cachedDropoffPoints.some((point) => getPointName(point) === pointName))
+      .map((pointName) => ({ district: pointName, trip_count: 0 })),
+    ...cachedDropoffPoints,
+  ];
+  const normalizedCompanyQuery = companyQuery.trim().toLowerCase();
+  const normalizedPointQuery = pointQuery.trim().toLowerCase();
+  const visibleCompanies = companyList.filter((company) => (
+    !normalizedCompanyQuery || String(company.name || '').toLowerCase().includes(normalizedCompanyQuery)
+  ));
+  const visiblePickupPoints = pickupPoints.filter((point) => (
+    !normalizedPointQuery || getPointName(point).toLowerCase().includes(normalizedPointQuery)
+  ));
+  const visibleDropoffPoints = dropoffPoints.filter((point) => (
+    !normalizedPointQuery || getPointName(point).toLowerCase().includes(normalizedPointQuery)
+  ));
+  const resultButtonLabel = Number.isFinite(resultCount) ? `Xem ${resultCount} chuyến` : 'Xem chuyến';
+  const activeFilterCount = [
+    filters.time && filters.time !== '00:00-23:59',
+    priceRange !== 'all',
+    selectedCompanies.length > 0,
+    selectedPickups.length > 0,
+    selectedDropoffs.length > 0,
+    !!filters.rating,
+    !!filters.islimousine,
+  ].filter(Boolean).length;
+
+  const resetAllFilters = () => {
+    onPriceRange('all');
+    onChange(DEFAULT_FILTER_PATCH);
+  };
+
+  const closeSheet = () => {
+    setActiveSheet(null);
+    setCompanyQuery('');
+    setPointQuery('');
+  };
+
+  const openSheet = (sheet) => {
+    setCompanyQuery('');
+    setPointQuery('');
+    setActiveSheet(sheet);
+  };
+
+  const toggleFilterValue = (field, value) => {
+    if (!value) return;
+
+    const current = filters[field] ? filters[field].split(',').filter(Boolean) : [];
+    const next = current.includes(value) ? current.filter((item) => item !== value) : [...current, value];
+    onChange({ [field]: next.join(',') });
+  };
+
+  const clearFilterField = (field) => {
+    onChange({ [field]: '' });
+  };
+
+  useEffect(() => {
+    setOptionCache((current) => (
+      current.key === cacheKey ? current : { ...EMPTY_FILTER_OPTIONS, key: cacheKey }
+    ));
+  }, [cacheKey]);
+
+  useEffect(() => {
+    if (incomingCompanies.length === 0 && incomingPickupPoints.length === 0 && incomingDropoffPoints.length === 0) {
+      return;
+    }
+
+    setOptionCache((current) => {
+      const base = current.key === cacheKey ? current : { ...EMPTY_FILTER_OPTIONS, key: cacheKey };
+      const next = {
+        key: cacheKey,
+        companies: mergeOptionList(base.companies, incomingCompanies, 'id'),
+        pickupPoints: mergePointList(base.pickupPoints, incomingPickupPoints),
+        dropoffPoints: mergePointList(base.dropoffPoints, incomingDropoffPoints),
+      };
+
+      if (
+        next.companies === base.companies &&
+        next.pickupPoints === base.pickupPoints &&
+        next.dropoffPoints === base.dropoffPoints
+      ) {
+        return base;
+      }
+
+      return next;
+    });
+  }, [cacheKey, incomingCompanies, incomingPickupPoints, incomingDropoffPoints]);
+
+  useEffect(() => {
+    if (!activeSheet || typeof document === 'undefined') return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [activeSheet]);
+
+  const renderRadioSheet = (title, options, value, handleSelect) => (
+    <MobileFilterSheet title={title} onClose={closeSheet}>
+      <div className="px-4 py-2">
+        {options.map((option) => {
+          const checked = option.value === value;
+
+          return (
+            <button
+              key={option.value}
+              type="button"
+              className="flex min-h-14 w-full items-center justify-between border-b border-slate-100 text-left text-sm text-slate-900"
+              onClick={() => {
+                handleSelect(option.value);
+                closeSheet();
+              }}
+            >
+              <span>{option.label}</span>
+              <span className={`flex h-5 w-5 items-center justify-center rounded-full border-2 ${checked ? 'border-blue-600' : 'border-slate-800'}`}>
+                {checked && <span className="h-2.5 w-2.5 rounded-full bg-blue-600"></span>}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    </MobileFilterSheet>
+  );
+
+  const renderFilterRow = (label, value, sheet, disabled = false) => (
+    <button
+      type="button"
+      className="flex min-h-12 w-full items-center justify-between border-b border-slate-100 bg-white px-5 py-4 text-left disabled:opacity-50"
+      onClick={() => openSheet(sheet)}
+      disabled={disabled}
+    >
+      <span className="text-sm font-semibold text-slate-950">{label}</span>
+      <span className="flex min-w-0 items-center gap-3 text-sm text-slate-400">
+        <span className="max-w-[180px] truncate">{value}</span>
+        <i className="fas fa-chevron-right text-xs"></i>
+      </span>
+    </button>
+  );
+
+  const renderFilterSheet = () => (
+    <MobileFilterSheet
+      title="Lọc"
+      variant="full"
+      onClose={closeSheet}
+      footer={(
+        <div className="grid grid-cols-2 gap-3">
+          <button
+            type="button"
+            className="min-h-12 rounded-lg border border-slate-200 bg-white text-sm font-bold text-slate-950"
+            onClick={resetAllFilters}
+          >
+            Xóa lọc
+          </button>
+          <button
+            type="button"
+            className="min-h-12 rounded-lg bg-slate-900 text-sm font-bold text-white"
+            onClick={closeSheet}
+          >
+            {resultButtonLabel}
+          </button>
+        </div>
+      )}
+    >
+      <div className="space-y-2">
+        <section className="bg-white px-5 py-4">
+          <div className="mb-3 flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-slate-950">Giờ đi</h3>
+            <span className="text-sm font-bold text-slate-950">{selectedTimeLabel}</span>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            {TIME_OPTIONS.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                className={`min-h-11 rounded-lg border px-3 text-sm ${filters.time === option.value
+                  ? 'border-blue-600 bg-blue-50 text-blue-700'
+                  : 'border-slate-200 bg-white text-slate-700'
+                  }`}
+                onClick={() => onChange({ time: option.value })}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <div className="bg-white">
+          {renderFilterRow('Nhà xe', selectedCompanies.length ? `${selectedCompanies.length} đã chọn` : 'Tất cả', 'company', companyList.length === 0)}
+          {renderFilterRow('Điểm đón', selectedPickups.length ? `${selectedPickups.length} đã chọn` : 'Tất cả', 'pickup', pickupPoints.length === 0)}
+          {renderFilterRow('Điểm trả', selectedDropoffs.length ? `${selectedDropoffs.length} đã chọn` : 'Tất cả', 'dropoff', dropoffPoints.length === 0)}
+          {renderFilterRow('Loại xe', filters.islimousine ? 'Limousine' : 'Tất cả', 'vehicle')}
+        </div>
+
+        <section className="bg-white px-5 py-4">
+          <div className="mb-3 flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-slate-950">Giá vé</h3>
+            <span className="text-sm font-bold text-slate-950">{selectedPriceLabel}</span>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            {PRICE_OPTIONS.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                className={`min-h-11 rounded-lg border px-3 text-sm ${priceRange === option.value
+                  ? 'border-blue-600 bg-blue-50 text-blue-700'
+                  : 'border-slate-200 bg-white text-slate-700'
+                  }`}
+                onClick={() => onPriceRange(option.value)}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <section className="bg-white px-5 py-4">
+          <h3 className="mb-3 text-xs font-bold uppercase text-slate-400">Tiêu chí phổ biến</h3>
+          <div className="space-y-3">
+            {[4, 3].map((r) => (
+              <button
+                key={r}
+                type="button"
+                className={`flex min-h-12 w-full items-center justify-between rounded-lg border px-4 text-left text-sm ${filters.rating === `${r}-5`
+                  ? 'border-blue-600 bg-blue-50 text-blue-700'
+                  : 'border-slate-200 bg-white text-slate-700'
+                  }`}
+                onClick={() => onChange({ rating: filters.rating === `${r}-5` ? '' : `${r}-5` })}
+              >
+                <span>Từ {r} sao</span>
+                <span className="text-yellow-400">
+                  {Array.from({ length: r }).map((_, index) => (
+                    <i key={index} className="fas fa-star text-xs"></i>
+                  ))}
+                </span>
+              </button>
+            ))}
+          </div>
+        </section>
+      </div>
+    </MobileFilterSheet>
+  );
+
+  const renderVehicleSheet = () => (
+    <MobileFilterSheet
+      title="Loại xe"
+      onClose={closeSheet}
+      footer={(
+        <div className="grid grid-cols-2 gap-3">
+          <button type="button" className="min-h-12 rounded-lg border border-slate-200 bg-white text-sm font-bold text-slate-950" onClick={() => onChange({ islimousine: '' })}>
+            Bỏ chọn
+          </button>
+          <button type="button" className="min-h-12 rounded-lg bg-slate-900 text-sm font-bold text-white" onClick={closeSheet}>
+            Lưu
+          </button>
+        </div>
+      )}
+    >
+      <div className="px-4 py-2">
+        <button
+          type="button"
+          className="flex min-h-14 w-full items-center justify-between border-b border-slate-100 text-left text-sm text-slate-900"
+          onClick={() => onChange({ islimousine: filters.islimousine ? '' : '1' })}
+        >
+          <span>Limousine</span>
+          <span className={`flex h-5 w-5 items-center justify-center rounded border ${filters.islimousine ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-400 bg-white'}`}>
+            {filters.islimousine && <i className="fas fa-check text-[10px]"></i>}
+          </span>
+        </button>
+        {vehicleTypes.length > 0 && (
+          <p className="mt-4 text-xs leading-relaxed text-slate-400">
+            Các loại xe khác sẽ được Dailyve cập nhật thêm khi API trả về mã lọc tương ứng.
+          </p>
+        )}
+      </div>
+    </MobileFilterSheet>
+  );
+
+  const renderCompanySheet = () => (
+    <MobileFilterSheet
+      title="Chọn nhà xe"
+      variant="full"
+      onClose={closeSheet}
+      footer={(
+        <div className="grid grid-cols-2 gap-3">
+          <button type="button" className="min-h-12 rounded-lg border border-slate-200 bg-white text-sm font-bold text-slate-950" onClick={() => clearFilterField('companies')}>
+            Bỏ chọn tất cả
+          </button>
+          <button type="button" className="min-h-12 rounded-lg bg-slate-900 text-sm font-bold text-white" onClick={closeSheet}>
+            Lưu
+          </button>
+        </div>
+      )}
+    >
+      <div className="bg-white px-4 py-3">
+        <label className="flex h-11 items-center gap-3 rounded-full bg-slate-50 px-4 text-slate-400">
+          <i className="fas fa-search"></i>
+          <input
+            type="search"
+            value={companyQuery}
+            onChange={(event) => setCompanyQuery(event.target.value)}
+            className="h-full min-w-0 flex-1 border-0 bg-transparent text-sm outline-none"
+            placeholder="Tìm trong danh sách"
+          />
+        </label>
+      </div>
+
+      <div className="bg-white px-4">
+        {visibleCompanies.map((company) => {
+          const checked = selectedCompanies.includes(String(company.id));
+          const rating = company.rating || company.average_rating || company.avg_rating;
+
+          return (
+            <label key={company.id} className="flex min-h-14 cursor-pointer items-center gap-3 border-b border-slate-100 py-2">
+              <input
+                type="checkbox"
+                className="h-4 w-4 rounded border-slate-400 text-blue-600"
+                checked={checked}
+                onChange={() => toggleCompany(company.id)}
+              />
+              <span className="min-w-0 flex-1 truncate text-sm font-semibold text-slate-950">{company.name}</span>
+              <span className="shrink-0 text-xs text-slate-500">
+                {rating ? (
+                  <>{Number(rating).toFixed(1)} <i className="fas fa-star text-yellow-400"></i></>
+                ) : (
+                  `${company.trip_count || 0} chuyến`
+                )}
+              </span>
+            </label>
+          );
+        })}
+        {visibleCompanies.length === 0 && (
+          <div className="py-8 text-center text-sm font-semibold text-slate-400">Không tìm thấy nhà xe phù hợp.</div>
+        )}
+      </div>
+    </MobileFilterSheet>
+  );
+
+  const renderPointSheet = (type) => {
+    const isPickup = type === 'pickup';
+    const field = isPickup ? 'fa' : 'ta';
+    const points = isPickup ? visiblePickupPoints : visibleDropoffPoints;
+    const selected = isPickup ? selectedPickups : selectedDropoffs;
+
+    return (
+      <MobileFilterSheet
+        title={isPickup ? 'Chọn điểm đón' : 'Chọn điểm trả'}
+        variant="full"
+        onClose={closeSheet}
+        footer={(
+          <div className="grid grid-cols-2 gap-3">
+            <button type="button" className="min-h-12 rounded-lg border border-slate-200 bg-white text-sm font-bold text-slate-950" onClick={() => clearFilterField(field)}>
+              Bỏ chọn tất cả
+            </button>
+            <button type="button" className="min-h-12 rounded-lg bg-slate-950 text-sm font-bold text-white" onClick={closeSheet}>
+              Lưu
+            </button>
+          </div>
+        )}
+      >
+        <div className="bg-white px-4 py-3">
+          <label className="flex h-11 items-center gap-3 rounded-full bg-slate-50 px-4 text-slate-400">
+            <i className="fas fa-search"></i>
+            <input
+              type="search"
+              value={pointQuery}
+              onChange={(event) => setPointQuery(event.target.value)}
+              className="h-full min-w-0 flex-1 border-0 bg-transparent text-sm outline-none"
+              placeholder="Tìm trong danh sách"
+            />
+          </label>
+        </div>
+
+        <div className="bg-white px-4">
+          {points.map((point, index) => {
+            const pointName = getPointName(point);
+            const checked = selected.includes(pointName);
+
+            return (
+              <label key={`${pointName}-${index}`} className="flex min-h-14 cursor-pointer items-center gap-3 border-b border-slate-100 py-2">
+                <input
+                  type="checkbox"
+                  className="h-4 w-4 rounded border-slate-400 text-blue-600"
+                  checked={checked}
+                  onChange={() => toggleFilterValue(field, pointName)}
+                />
+                <span className="min-w-0 flex-1 truncate text-sm font-semibold text-slate-950">{pointName}</span>
+                <span className="shrink-0 text-xs text-slate-400">{point.trip_count || 0} chuyến</span>
+              </label>
+            );
+          })}
+          {points.length === 0 && (
+            <div className="py-8 text-center text-sm font-semibold text-slate-400">Không tìm thấy điểm phù hợp.</div>
+          )}
+        </div>
+      </MobileFilterSheet>
+    );
+  };
+
+  const renderActiveSheet = () => {
+    if (activeSheet === 'sort') {
+      return renderRadioSheet('Sắp xếp', SORT_OPTIONS, filters.sort, (value) => onChange({ sort: value }));
+    }
+
+    if (activeSheet === 'time') {
+      return renderRadioSheet('Giờ đi', TIME_OPTIONS, filters.time, (value) => onChange({ time: value }));
+    }
+
+    if (activeSheet === 'filter') return renderFilterSheet();
+    if (activeSheet === 'company') return renderCompanySheet();
+    if (activeSheet === 'pickup') return renderPointSheet('pickup');
+    if (activeSheet === 'dropoff') return renderPointSheet('dropoff');
+    if (activeSheet === 'vehicle') return renderVehicleSheet();
+
+    return null;
+  };
+
+  const mobileSheet = activeSheet && typeof document !== 'undefined'
+    ? createPortal(renderActiveSheet(), document.body)
+    : null;
+
+  const MobileToolbarButton = ({ sheet, icon, label, badge, active }) => (
+    <button
+      type="button"
+      className={`relative flex min-h-9 items-center gap-2 rounded-full px-3 text-xs font-bold transition-colors ${active ? 'bg-white text-slate-900' : 'text-white'}`}
+      onClick={() => openSheet(sheet)}
+    >
+      <i className={`fas ${icon} text-[11px]`}></i>
+      <span>{label}</span>
+      {badge ? (
+        <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] leading-none text-white">
+          {badge}
+        </span>
+      ) : null}
+    </button>
+  );
+
   return (
-    <aside className="dailyve-filter-panel order-2 grid gap-4 lg:order-1 lg:sticky lg:top-24 lg:self-start">
+    <>
+    <aside className="dailyve-filter-panel order-2 hidden gap-4 lg:order-1 lg:sticky lg:top-24 lg:grid lg:self-start">
       <div className="dailyve-filter-card overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
         <div className="mb-6 flex items-center justify-between border-b border-slate-50 pb-4">
           <h2 className="text-lg font-black text-slate-900">Bộ lọc</h2>
           <button
             type="button"
             className="text-sm font-bold text-blue-600 transition-colors hover:text-blue-700"
-            onClick={() => onChange({ companies: '', time: '00:00-23:59', sort: 'time:asc', islimousine: '', fa: '', ta: '', rating: '' })}
+            onClick={resetAllFilters}
           >
             Xóa hết
           </button>
@@ -430,7 +1009,7 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
             </div>
           </section>
 
-          {companies.length > 0 && (
+          {companyList.length > 0 && (
             <section className="space-y-3 border-t border-slate-100 pt-4">
               <button
                 type="button"
@@ -450,8 +1029,7 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
 
               {companiesExpanded && (
                 <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 animate-in fade-in slide-in-from-top-2 duration-200">
-                  {companies
-                    .filter((company) => Number(company.id) !== 11071)
+                  {companyList
                     .map((company) => (
                       <label
                         key={company.id}
@@ -477,7 +1055,7 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
             </section>
           )}
 
-          {statistics?.pickup_points?.length > 0 && (
+          {pickupPoints.length > 0 && (
             <section className="space-y-3 border-t border-slate-100 pt-4">
               <button
                 type="button"
@@ -497,8 +1075,9 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
 
               {pickupsExpanded && (
                 <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 animate-in fade-in slide-in-from-top-2 duration-200">
-                  {statistics.pickup_points.map((point, idx) => {
-                    const selected = filters.fa.split(',').includes(point.district);
+                  {pickupPoints.map((point, idx) => {
+                    const pointName = getPointName(point);
+                    const selected = filters.fa.split(',').includes(pointName);
                     return (
                       <label
                         key={idx}
@@ -512,11 +1091,11 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
                             checked={selected}
                             onChange={() => {
                               const current = filters.fa ? filters.fa.split(',') : [];
-                              const next = selected ? current.filter(x => x !== point.district) : [...current, point.district];
+                              const next = selected ? current.filter(x => x !== pointName) : [...current, pointName];
                               onChange({ fa: next.join(',') });
                             }}
                           />
-                          <span className="truncate text-sm font-bold">{point.district}</span>
+                          <span className="truncate text-sm font-bold">{pointName}</span>
                         </span>
                         <span className="text-[10px] font-black opacity-40">{point.trip_count}</span>
                       </label>
@@ -527,7 +1106,7 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
             </section>
           )}
 
-          {statistics?.dropoff_points?.length > 0 && (
+          {dropoffPoints.length > 0 && (
             <section className="space-y-3 border-t border-slate-100 pt-4">
               <button
                 type="button"
@@ -547,8 +1126,9 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
 
               {dropoffsExpanded && (
                 <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 animate-in fade-in slide-in-from-top-2 duration-200">
-                  {statistics.dropoff_points.map((point, idx) => {
-                    const selected = filters.ta.split(',').includes(point.district);
+                  {dropoffPoints.map((point, idx) => {
+                    const pointName = getPointName(point);
+                    const selected = filters.ta.split(',').includes(pointName);
                     return (
                       <label
                         key={idx}
@@ -562,11 +1142,11 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
                             checked={selected}
                             onChange={() => {
                               const current = filters.ta ? filters.ta.split(',') : [];
-                              const next = selected ? current.filter(x => x !== point.district) : [...current, point.district];
+                              const next = selected ? current.filter(x => x !== pointName) : [...current, pointName];
                               onChange({ ta: next.join(',') });
                             }}
                           />
-                          <span className="truncate text-sm font-bold">{point.district}</span>
+                          <span className="truncate text-sm font-bold">{pointName}</span>
                         </span>
                         <span className="text-[10px] font-black opacity-40">{point.trip_count}</span>
                       </label>
@@ -579,6 +1159,14 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
         </div>
       </div>
     </aside>
+    <div className="fixed bottom-[calc(env(safe-area-inset-bottom)+16px)] left-1/2 z-50 flex w-[calc(100%-32px)] max-w-md -translate-x-1/2 items-center justify-between gap-1 rounded-full bg-slate-900 px-2 py-2 text-white shadow-2xl lg:hidden">
+      <MobileToolbarButton sheet="filter" icon="fa-sliders-h" label="Lọc" badge={activeFilterCount || ''} active={activeSheet === 'filter'} />
+      <MobileToolbarButton sheet="sort" icon="fa-sort-amount-down" label="Sắp xếp" active={activeSheet === 'sort'} />
+      <MobileToolbarButton sheet="time" icon="fa-clock" label="Giờ đi" active={activeSheet === 'time'} />
+      <MobileToolbarButton sheet="company" icon="fa-bus" label="Nhà xe" badge={selectedCompanies.length || ''} active={activeSheet === 'company'} />
+    </div>
+    {mobileSheet}
+    </>
   );
 };
 
@@ -1308,7 +1896,7 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
         <div className="min-w-0 space-y-4">
           <div className="flex min-w-0 flex-col gap-3">
             <div className="min-w-0">
-              <h3 className="truncate font-display text-[22px] font-semibold tracking-tight text-slate-900 sm:text-2xl lg:text-[26px]">{trip.company_name}</h3>
+              <h3 className="truncate font-display text-[22px] font-semibold tracking-tight text-slate-900 sm:text-2xl lg:text-[24px]">{trip.company_name}</h3>
               <div className="mt-2 flex flex-wrap items-center gap-2 sm:gap-3">
                 <span className="flex max-w-full items-center truncate rounded-lg bg-slate-100 px-3 py-1.5 text-[10px] font-bold tracking-wide text-slate-600 sm:text-[11px]">
                   <i className="fas fa-bus-alt mr-2 text-primary"></i> {trip.vehicle_type}
@@ -1624,6 +2212,14 @@ const TripList = () => {
   const total = paging.totalItems ?? trips.length;
   const routeTitle =
     trips.length > 0 ? `${trips[0].from_name || 'Điểm đi'} đi ${trips[0].to_name || 'Điểm đến'}` : 'Tìm chuyến xe';
+  const filterOptionCacheKey = (() => {
+    const returnDate = filters.returnDate || new URLSearchParams(window.location.search).get('returnDate') || '';
+    const fromForLeg = stepTicket === 1 ? filters.to : filters.from;
+    const toForLeg = stepTicket === 1 ? filters.from : filters.to;
+    const dateForLeg = stepTicket === 1 && returnDate ? formatDateInput(returnDate) : filters.date;
+
+    return [filters.service || 'bus', fromForLeg, toForLeg, dateForLeg, stepTicket].join('|');
+  })();
 
   return (
     <div className="dailyve-trip-list min-h-screen overflow-x-hidden bg-slate-50/50">
@@ -1646,13 +2242,15 @@ const TripList = () => {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-5 px-3 py-5 sm:px-4 lg:grid-cols-[280px_1fr]">
+      <section className="mx-auto grid max-w-7xl gap-5 px-3 pb-28 pt-5 sm:px-4 lg:grid-cols-[280px_1fr] lg:py-5">
         <FilterPanel
           filters={filters}
           statistics={statistics}
           priceRange={priceRange}
           onPriceRange={setPriceRange}
           onChange={updateFilters}
+          resultCount={visibleTrips.length}
+          cacheKey={filterOptionCacheKey}
         />
 
         <main className="order-1 min-w-0 lg:order-2">
