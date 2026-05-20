@@ -901,10 +901,14 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
   const MobileToolbarButton = ({ sheet, icon, label, badge, active }) => (
     <button
       type="button"
-      className={`relative flex min-h-9 items-center gap-2 rounded-full px-3 text-xs font-bold transition-colors ${active ? 'bg-white text-slate-900' : 'text-white'}`}
+      className={`relative flex h-10 items-center justify-center gap-1.5 rounded-full px-3 sm:px-4 text-[11px] sm:text-xs font-bold transition-all duration-200 cursor-pointer active:scale-95 ${
+        active
+          ? 'bg-[#2196F3] text-white shadow-md shadow-[#2196F3]/20'
+          : 'text-slate-300 hover:text-white hover:bg-white/5'
+      }`}
       onClick={() => openSheet(sheet)}
     >
-      <i className={`fas ${icon} text-[11px]`}></i>
+      <i className={`fas ${icon} text-[10px] sm:text-[11px] ${active ? 'text-white' : 'text-slate-400'}`}></i>
       <span>{label}</span>
       {badge ? (
         <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] leading-none text-white">
@@ -1159,7 +1163,7 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
         </div>
       </div>
     </aside>
-    <div className="fixed bottom-[calc(env(safe-area-inset-bottom)+16px)] left-1/2 z-50 flex w-[calc(100%-32px)] max-w-md -translate-x-1/2 items-center justify-between gap-1 rounded-full bg-slate-900 px-2 py-2 text-white shadow-2xl lg:hidden">
+    <div className="fixed bottom-[calc(env(safe-area-inset-bottom)+16px)] left-1/2 z-50 flex w-[calc(100%-32px)] max-w-md -translate-x-1/2 items-center justify-between gap-1 rounded-full bg-[#0F172A] border border-white/10 p-1.5 text-white shadow-2xl lg:hidden">
       <MobileToolbarButton sheet="filter" icon="fa-sliders-h" label="Lọc" badge={activeFilterCount || ''} active={activeSheet === 'filter'} />
       <MobileToolbarButton sheet="sort" icon="fa-sort-amount-down" label="Sắp xếp" active={activeSheet === 'sort'} />
       <MobileToolbarButton sheet="time" icon="fa-clock" label="Giờ đi" active={activeSheet === 'time'} />
