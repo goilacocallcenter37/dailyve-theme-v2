@@ -370,11 +370,10 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
                   key={option.value}
                   type="button"
                   onClick={() => onChange({ time: option.value })}
-                  className={`rounded-xl border-2 py-2.5 text-[11px] font-bold transition-all ${
-                    filters.time === option.value
-                      ? 'border-blue-600 bg-blue-600 text-white shadow-lg shadow-blue-200'
-                      : 'border-slate-50 bg-slate-50 text-slate-600 hover:border-slate-200'
-                  }`}
+                  className={`rounded-xl border-2 py-2.5 text-[11px] font-bold transition-all ${filters.time === option.value
+                    ? 'border-blue-600 bg-blue-600 text-white shadow-lg shadow-blue-200'
+                    : 'border-slate-50 bg-slate-50 text-slate-600 hover:border-slate-200'
+                    }`}
                 >
                   {option.label}
                 </button>
@@ -405,11 +404,10 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
                   key={r}
                   type="button"
                   onClick={() => onChange({ rating: filters.rating === `${r}-5` ? '' : `${r}-5` })}
-                  className={`flex items-center justify-between rounded-xl border-2 px-4 py-2.5 text-sm font-bold transition-all ${
-                    filters.rating === `${r}-5`
-                      ? 'border-blue-600 bg-blue-600 text-white shadow-lg shadow-blue-200'
-                      : 'border-slate-50 bg-slate-50 text-slate-600 hover:border-slate-200'
-                  }`}
+                  className={`flex items-center justify-between rounded-xl border-2 px-4 py-2.5 text-sm font-bold transition-all ${filters.rating === `${r}-5`
+                    ? 'border-blue-600 bg-blue-600 text-white shadow-lg shadow-blue-200'
+                    : 'border-slate-50 bg-slate-50 text-slate-600 hover:border-slate-200'
+                    }`}
                 >
                   <span className="flex items-center gap-1">
                     {Array.from({ length: r }).map((_, i) => (
@@ -431,11 +429,10 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
                   .map((company) => (
                     <label
                       key={company.id}
-                      className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${
-                        selectedCompanies.includes(String(company.id))
-                          ? 'bg-blue-50 text-blue-700'
-                          : 'hover:bg-slate-50 text-slate-600'
-                      }`}
+                      className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${selectedCompanies.includes(String(company.id))
+                        ? 'bg-blue-50 text-blue-700'
+                        : 'hover:bg-slate-50 text-slate-600'
+                        }`}
                     >
                       <span className="flex min-w-0 items-center gap-3">
                         <input
@@ -462,9 +459,8 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
                   return (
                     <label
                       key={idx}
-                      className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${
-                        selected ? 'bg-blue-50 text-blue-700' : 'hover:bg-slate-50 text-slate-600'
-                      }`}
+                      className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${selected ? 'bg-blue-50 text-blue-700' : 'hover:bg-slate-50 text-slate-600'
+                        }`}
                     >
                       <span className="flex min-w-0 items-center gap-3">
                         <input
@@ -496,9 +492,8 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
                   return (
                     <label
                       key={idx}
-                      className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${
-                        selected ? 'bg-blue-50 text-blue-700' : 'hover:bg-slate-50 text-slate-600'
-                      }`}
+                      className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${selected ? 'bg-blue-50 text-blue-700' : 'hover:bg-slate-50 text-slate-600'
+                        }`}
                     >
                       <span className="flex min-w-0 items-center gap-3">
                         <input
@@ -693,7 +688,7 @@ const DetailTabs = ({ trip, gallery }) => {
 
   const LoadingSpinner = () => (
     <div className="flex flex-col items-center justify-center py-12 gap-3">
-      <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary/20 border-t-primary"></div>
+      <div className="h-10 w-10 premium-spinner"></div>
       <span className="text-xs font-black tracking-wider text-slate-400 uppercase">Đang tải dữ liệu...</span>
     </div>
   );
@@ -733,11 +728,10 @@ const DetailTabs = ({ trip, gallery }) => {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-2 rounded-2xl px-6 py-3 text-xs font-black uppercase tracking-wider transition-all ${
-              activeTab === tab.id
-                ? 'bg-white text-primary shadow-sm'
-                : 'text-slate-400 hover:text-slate-600'
-            }`}
+            className={`flex items-center gap-2 rounded-2xl px-6 py-3 text-xs font-black uppercase tracking-wider transition-all ${activeTab === tab.id
+              ? 'bg-white text-primary shadow-sm'
+              : 'text-slate-400 hover:text-slate-600'
+              }`}
           >
             <i className={`fas ${tab.icon}`}></i> {tab.label}
           </button>
@@ -987,11 +981,10 @@ const DetailTabs = ({ trip, gallery }) => {
                               setReviewsPage(page);
                               loadReviews(page);
                             }}
-                            className={`flex h-9 w-9 items-center justify-center rounded-xl text-xs font-black transition-all ${
-                              reviewsPage === page
-                                ? 'bg-primary text-white shadow-md'
-                                : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
-                            }`}
+                            className={`flex h-9 w-9 items-center justify-center rounded-xl text-xs font-black transition-all ${reviewsPage === page
+                              ? 'bg-primary text-white shadow-md'
+                              : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
+                              }`}
                           >
                             {page}
                           </button>
@@ -1043,50 +1036,54 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
     || normalizeImageUrl(trip.company_logo);
   const availableSeats = Number(trip.available_seat || 0);
   const hasDiscount = Number(trip.fare_discount || 0) > 0 && Number(trip.fare_original || 0) > 0;
+  const hasMultipleFares = trip.fare != null && trip.fare_max != null && Number(trip.fare_max) > Number(trip.fare_original || trip.fare);
 
   const partnerId = trip.partner?.partner_id || trip.partner_id || '';
   const partnerName = trip.partner?.partner_name || trip.partner_name || '';
 
   return (
-    <li className={`dailyve-trip-card group relative flex flex-col overflow-hidden rounded-[18px] border bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-premium ${
-      isBooking ? 'border-primary ring-1 ring-primary/20' : 'border-slate-100 hover:border-primary/70'
-    }`}>
+    <li className={`dailyve-trip-card group relative flex flex-col overflow-hidden rounded-[18px] border bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-premium ${isBooking ? 'border-primary ring-1 ring-primary/20' : 'border-slate-100 hover:border-primary/70'
+      }`}>
       {/* Important Notification Modal */}
       {showNoteModal && trip.important_notification?.content && createPortal(
         <div className="dailyve-important-modal fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-md transition-all duration-300" onClick={() => setShowNoteModal(false)}></div>
-          <div className="relative w-full max-w-2xl transform overflow-hidden rounded-[2.5rem] bg-white border border-slate-100 shadow-[0_20px_50px_rgba(0,0,0,0.15)] animate-in zoom-in-95 duration-300 flex flex-col max-h-[85vh]">
-            <div className="bg-gradient-to-r from-amber-500 to-orange-600 px-8 py-6 text-white shrink-0">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/20 shadow-inner">
-                    <i className="fas fa-exclamation-triangle"></i>
-                  </div>
-                  <h3 className="font-display text-xl font-black uppercase tracking-wider">Thông báo quan trọng</h3>
+          <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-all duration-300" onClick={() => setShowNoteModal(false)}></div>
+          <div className="relative w-full max-w-xl transform overflow-hidden rounded-xl bg-white border border-slate-200 shadow-premium animate-in zoom-in-95 duration-300 flex flex-col max-h-[80vh]">
+            {/* Header */}
+            <div className="px-6 py-5 border-b border-slate-100 flex items-center justify-between shrink-0 bg-white">
+              <div className="flex items-center gap-3.5">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-50 text-amber-500 border border-amber-100/50 shadow-sm shrink-0">
+                  <i className="fas fa-exclamation-triangle text-base"></i>
                 </div>
-                <button 
-                  onClick={() => setShowNoteModal(false)}
-                  className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10 transition-all hover:bg-white/20 active:scale-90 hover:rotate-90 duration-300"
-                >
-                  <i className="fas fa-times"></i>
-                </button>
+                <div>
+                  <h3 className="font-display text-lg font-semibold tracking-tight text-slate-900 leading-snug">Thông báo quan trọng</h3>
+                  <p className="text-xs text-slate-500 font-medium mt-0.5">Vui lòng lưu ý kỹ quy định của nhà xe trước khi đặt vé</p>
+                </div>
               </div>
+              <button
+                onClick={() => setShowNoteModal(false)}
+                className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-50 text-slate-400 border border-slate-100 transition-all hover:bg-slate-100 hover:text-slate-600 active:scale-95 duration-200 shrink-0"
+              >
+                <i className="fas fa-times text-sm"></i>
+              </button>
             </div>
-            
-            <div className="p-8 md:p-10 overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent flex-1">
-              <div 
-                className="prose prose-slate max-w-none text-slate-600 font-medium leading-relaxed
+
+            {/* Body Content */}
+            <div className="p-6 md:p-8 overflow-y-auto pr-4 scrollbar-thin scrollbar-thumb-slate-200 scrollbar-track-transparent flex-1 bg-white">
+              <div
+                className="prose prose-slate max-w-none text-slate-600 font-medium text-sm leading-relaxed
                   prose-p:mb-4 prose-p:last:mb-0
                   prose-ul:list-disc prose-ul:pl-5 prose-ul:space-y-2
-                  prose-strong:text-slate-900 prose-strong:font-black"
+                  prose-strong:text-slate-900 prose-strong:font-semibold"
                 dangerouslySetInnerHTML={{ __html: trip.important_notification.content }}
               />
             </div>
-            
-            <div className="px-8 pb-8 pt-4 md:px-10 md:pb-10 shrink-0 border-t border-slate-50 bg-slate-50/30">
+
+            {/* Footer Action */}
+            <div className="px-6 pb-6 pt-4 md:px-8 md:pb-8 md:pt-4 shrink-0 border-t border-slate-100 bg-slate-50/50">
               <button
                 onClick={() => setShowNoteModal(false)}
-                className="w-full rounded-2xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 py-4 text-sm font-semibold uppercase tracking-widest text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/30 active:scale-[0.98]"
+                className="w-full rounded-md bg-primary hover:bg-primary-active py-3 text-sm font-semibold uppercase tracking-wider text-white shadow-md shadow-primary/10 transition-all duration-200 active:scale-[0.98]"
               >
                 ĐÃ HIỂU & TIẾP TỤC
               </button>
@@ -1142,7 +1139,7 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
                   </span>
                   <span className="truncate text-[11px] font-black uppercase tracking-wider text-amber-700">{trip.notification.label}</span>
                 </div>
-                
+
                 {/* Tooltip content */}
                 <div className="invisible absolute bottom-full left-0 z-50 mb-3 w-72 max-w-[calc(100vw-2rem)] opacity-0 transition-all duration-300 group-hover/notify:visible group-hover/notify:opacity-100 sm:left-1/2 sm:-translate-x-1/2">
                   <div className="relative bg-slate-900 text-white p-4 rounded-2xl shadow-2xl text-xs font-medium leading-relaxed">
@@ -1158,28 +1155,28 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
           </div>
 
           <div className="grid grid-cols-[minmax(0,1fr)_minmax(82px,120px)_minmax(0,1fr)] items-start gap-2 sm:grid-cols-[minmax(0,1fr)_minmax(110px,150px)_minmax(0,1fr)] sm:gap-4">
-             <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <span className="font-display text-2xl font-semibold text-slate-950 sm:text-[28px]">{formatTime(trip.pickup_date)}</span>
-                  <span className="h-2 w-2 shrink-0 rounded-full bg-primary"></span>
-                </div>
-                <div className="mt-1 truncate text-[11px] font-semibold tracking-wide text-slate-600 sm:text-xs">{trip.from_name}</div>
-             </div>
+            <div className="min-w-0">
+              <div className="flex items-center gap-2">
+                <span className="font-display text-2xl font-semibold text-slate-950 sm:text-[24px]">{formatTime(trip.pickup_date)}</span>
+                <span className="h-2 w-2 shrink-0 rounded-full bg-primary"></span>
+              </div>
+              <div className="mt-1 truncate text-[11px] font-semibold tracking-wide text-slate-600 sm:text-xs">{trip.from_name}</div>
+            </div>
 
-             <div className="relative mt-4 flex min-w-0 items-center justify-center">
-                <span className="absolute left-0 right-0 top-1/2 border-t border-dashed border-blue-100"></span>
-                <span className="relative max-w-full rounded-full border border-blue-100 bg-blue-50 px-2 py-1 text-center text-[9px] font-black leading-tight text-primary sm:px-3 sm:text-[10px]">
-                  {routeDuration(trip.pickup_date, trip.arrival_date) || '...'}
-                </span>
-             </div>
+            <div className="relative mt-4 flex min-w-0 items-center justify-center">
+              <span className="absolute left-0 right-0 top-1/2 border-t border-dashed border-blue-100"></span>
+              <span className="relative max-w-full rounded-full border border-blue-100 bg-blue-50 px-2 py-1 text-center text-[9px] font-black leading-tight text-primary sm:px-3 sm:text-[10px]">
+                {routeDuration(trip.pickup_date, trip.arrival_date) || '...'}
+              </span>
+            </div>
 
-             <div className="min-w-0 text-right">
-                <div className="flex items-center justify-end gap-2">
-                  <span className="font-display text-2xl font-semibold text-slate-950 sm:text-[28px]">{formatTime(trip.arrival_date)}</span>
-                  <i className="fas fa-map-marker-alt text-xs text-primary"></i>
-                </div>
-                <div className="mt-1 truncate text-[11px] font-semibold tracking-wide text-slate-600 sm:text-xs">{trip.to_name}</div>
-             </div>
+            <div className="min-w-0 text-right">
+              <div className="flex items-center justify-end gap-2">
+                <i className="fas fa-map-marker-alt text-xs text-primary"></i>
+                <span className="font-display text-2xl font-semibold text-slate-950 sm:text-[24px]">{formatTime(trip.arrival_date)}</span>
+              </div>
+              <div className="mt-1 truncate text-[11px] font-semibold tracking-wide text-slate-600 sm:text-xs">{trip.to_name}</div>
+            </div>
           </div>
         </div>
 
@@ -1187,12 +1184,12 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
         <div className="flex min-w-0 flex-col justify-between gap-4 border-t border-slate-100 pt-4 lg:h-full lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
           <div className="text-left sm:text-right">
             {hasDiscount && (
-              <div className="text-sm font-bold text-slate-300 line-through">
+              <div className="text-sm font-bold text-slate-500 line-through">
                 {formatCurrency(trip.fare_original)}
               </div>
             )}
-            <div className="font-display text-3xl font-bold tracking-tight text-primary-dark sm:text-4xl">
-              {formatCurrency(trip.fare)}
+            <div className="font-display text-2xl font-bold tracking-tight text-primary-dark sm:text-3xl">
+              {hasMultipleFares ? <span className="text-xs sm:text-sm font-bold text-slate-400 mr-1 uppercase tracking-wider">Từ</span> : ''}{formatCurrency(trip.fare)}
             </div>
             <div className={`mt-1 text-xs font-semibold uppercase tracking-wide ${availableSeats <= 5 ? 'text-danger' : 'text-success'}`}>
               {availableSeats <= 5 ? `Chỉ còn ${trip.available_seat} ghế` : `Còn ${trip.available_seat} chỗ trống`}
@@ -1200,13 +1197,13 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
           </div>
 
           <div className="grid grid-cols-2 gap-2 lg:grid-cols-1">
-            <button 
+            <button
               onClick={() => setShowDetails(!showDetails)}
               className="flex min-h-12 items-center justify-center rounded-xl border-2 border-blue-100 bg-white px-3 text-xs font-black uppercase text-primary transition-all hover:border-primary hover:bg-blue-50 active:scale-95"
             >
               CHI TIẾT
             </button>
-            <button 
+            <button
               style={{ background: 'var(--grad-primary)' }}
               onClick={() => {
                 setShowDetails(false);
@@ -1223,10 +1220,10 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
       {isBooking && (
         <div className="border-t-2 border-primary/10 bg-white">
           <div className="p-4 sm:p-6 lg:p-8">
-            <SeatSelection 
-              trip={trip} 
+            <SeatSelection
+              trip={trip}
               legIndex={stepTicket}
-              onCancel={() => setIsBooking(false)} 
+              onCancel={() => setIsBooking(false)}
               onComplete={(ticket) => {
                 const searchParams = new URLSearchParams(window.location.search);
                 if (searchParams.get('returnDate') && stepTicket === 0) {
@@ -1258,7 +1255,7 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
 const TripList = () => {
   const [queryString, setQueryString] = useState(window.location.search);
   const [filters, setFilters] = useState(getInitialFilters());
-  
+
   // Initialize stepTicket from URL or default to 0
   const [stepTicket, setStepTicket] = useState(() => {
     const params = new URLSearchParams(window.location.search);
@@ -1275,6 +1272,57 @@ const TripList = () => {
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState('');
   const [priceRange, setPriceRange] = useState('all');
+  const [locations, setLocations] = useState([]);
+
+  useEffect(() => {
+    fetchLocationsWithCache(setLocations);
+  }, []);
+
+  const locationMap = useMemo(() => buildLocationMap(locations), [locations]);
+
+  useEffect(() => {
+    if (locations.length === 0) return;
+
+    const fromVal = filters.from;
+    const toVal = filters.to;
+
+    const isValidFrom = fromVal && locationMap[fromVal];
+    const isValidTo = toVal && locationMap[toVal];
+
+    let resolvedFrom = fromVal;
+    let resolvedTo = toVal;
+    let needsSync = false;
+
+    if (!isValidFrom && (filters.nameFrom || filters.from)) {
+      const searchName = filters.nameFrom || filters.from;
+      const found = resolveLocationInput(locations, locationMap, '', searchName);
+      if (found) {
+        resolvedFrom = found.id;
+        needsSync = true;
+      }
+    }
+
+    if (!isValidTo && (filters.nameTo || filters.to)) {
+      const searchName = filters.nameTo || filters.to;
+      const found = resolveLocationInput(locations, locationMap, '', searchName);
+      if (found) {
+        resolvedTo = found.id;
+        needsSync = true;
+      }
+    }
+
+    if (needsSync) {
+      const nextFilters = {
+        ...filters,
+        from: resolvedFrom,
+        to: resolvedTo,
+        nameFrom: locationMap[resolvedFrom]?.name || filters.nameFrom,
+        nameTo: locationMap[resolvedTo]?.name || filters.nameTo,
+      };
+      setFilters(nextFilters);
+      syncUrl(nextFilters);
+    }
+  }, [locations, locationMap]);
 
   const syncUrl = (next, step = stepTicket) => {
     const params = buildQuery(next);
@@ -1366,17 +1414,17 @@ const TripList = () => {
       rating: '',
     };
     setFilters(next);
-    
+
     // Reset cleared flag for new search
     hasClearedRef.current = false;
-    
+
     const params = buildQuery(next);
     if (payload.nameFrom) params.set('nameFrom', payload.nameFrom);
     if (payload.nameTo) params.set('nameTo', payload.nameTo);
     // Ensure step is reset to 0 for new search
     params.delete('step');
     setStepTicket(0);
-    
+
     window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
     setQueryString(window.location.search);
   };
@@ -1392,13 +1440,13 @@ const TripList = () => {
         <div className="relative mx-auto max-w-7xl px-3 sm:px-4">
           <div className="mb-6 text-center md:mb-8 md:text-left">
             <p className="inline-block rounded-full bg-blue-50 px-4 py-1.5 text-xs font-black uppercase tracking-widest text-blue-600">
-               <i className="fas fa-route mr-2"></i> Hệ thống đặt vé Dailyve
+              <i className="fas fa-route mr-2"></i> Hệ thống đặt vé Dailyve
             </p>
             <h1 className="mt-4 font-display text-2xl font-black leading-snug tracking-tight text-slate-900 sm:text-3xl md:text-5xl">
               Khám phá <span className="text-blue-600">Hành trình</span> của bạn
             </h1>
           </div>
-          
+
           <SearchForm
             className="dailyve-search--compact"
             initialService={filters.service || 'bus'}
@@ -1433,8 +1481,8 @@ const TripList = () => {
               <p className="mt-1 text-sm font-normal text-slate-400">
                 {(() => {
                   const searchParams = new URLSearchParams(window.location.search);
-                  const displayDate = (stepTicket === 1 && searchParams.get('returnDate')) 
-                    ? searchParams.get('returnDate') 
+                  const displayDate = (stepTicket === 1 && searchParams.get('returnDate'))
+                    ? searchParams.get('returnDate')
                     : filters.date;
                   return displayDate ? `Ngày ${displayDate}` : 'Chọn ngày đi';
                 })()} • {loading ? 'Đang tìm kiếm...' : `${total} chuyến phù hợp`}
@@ -1448,15 +1496,15 @@ const TripList = () => {
           {!filters.from || !filters.to ? (
             <div className="dailyve-empty-state flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-200 bg-white py-20 px-10 text-center">
               <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-slate-50 text-3xl text-slate-300">
-                 <i className="fas fa-search"></i>
+                <i className="fas fa-search"></i>
               </div>
               <h3 className="text-lg font-black text-slate-900">Sẵn sàng tìm chuyến?</h3>
               <p className="mt-2 max-w-xs text-sm font-bold text-slate-400">Chọn điểm đi, điểm đến và ngày khởi hành để xem các chuyến xe tốt nhất dành cho bạn.</p>
             </div>
           ) : error ? (
             <div className="rounded-3xl border border-red-100 bg-red-50 p-6 text-center">
-               <div className="text-red-500 text-3xl mb-3"><i className="fas fa-exclamation-triangle"></i></div>
-               <p className="text-sm font-bold text-red-700">{error}</p>
+              <div className="text-red-500 text-3xl mb-3"><i className="fas fa-exclamation-triangle"></i></div>
+              <p className="text-sm font-bold text-red-700">{error}</p>
             </div>
           ) : loading ? (
             <div className="grid gap-5">
@@ -1468,9 +1516,9 @@ const TripList = () => {
             <>
               <div className="grid gap-5">
                 {visibleTrips.map((trip) => (
-                  <TripCard 
-                    key={`${trip.trip_id}-${trip.pickup_date}`} 
-                    trip={trip} 
+                  <TripCard
+                    key={`${trip.trip_id}-${trip.pickup_date}`}
+                    trip={trip}
                     stepTicket={stepTicket}
                     setStepTicket={setStepTicket}
                     filters={filters}
@@ -1500,7 +1548,7 @@ const TripList = () => {
           ) : (
             <div className="dailyve-empty-state flex flex-col items-center justify-center rounded-3xl border border-slate-100 bg-white py-20 px-10 text-center shadow-sm">
               <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-slate-50 text-3xl text-slate-300">
-                 <i className="fas fa-bus"></i>
+                <i className="fas fa-bus"></i>
               </div>
               <h3 className="text-lg font-black text-slate-900">Không tìm thấy chuyến xe</h3>
               <p className="mt-2 max-w-xs text-sm font-bold text-slate-400">Rất tiếc, chúng tôi không tìm thấy chuyến xe nào phù hợp với yêu cầu của bạn. Vui lòng thử lại với ngày khác hoặc nhà xe khác.</p>

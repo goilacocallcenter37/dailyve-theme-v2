@@ -279,7 +279,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
     if (partnerId === 'goopay' && selectedPickup && selectedDropoff) {
       const pickupTime = getNumericTime(selectedPickup);
       const dropoffTime = getNumericTime(selectedDropoff);
-      
+
       let maxTs = -Infinity;
       let maxPoint = null;
       allDropoffPoints.forEach(p => {
@@ -340,7 +340,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
     }
 
     if (!Array.isArray(tiers)) tiers = [];
-    
+
     if (tiers.length > 0) {
       for (const tier of tiers) {
         const from = Number(tier.from);
@@ -362,7 +362,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
 
   const handleFinalize = async () => {
     if (!selectedPickup || !selectedDropoff || selectedSeats.length === 0) return;
-    
+
     // Validate unfixed points
     if (selectedPickup.unfixed_point == 1 && !pickupAddress) {
       alert('Vui lòng nhập địa chỉ điểm đón');
@@ -374,7 +374,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
     }
 
     setIsFinalizing(true);
-    
+
     const seatTotal = selectedSeats.reduce((sum, seat) => sum + Number(seat.fare || 0), 0);
     const pickupPayNowSurcharge = selectedPickup?.surcharge_type == 2 ? calculatePointSurcharge(selectedPickup, selectedSeats.length) : 0;
     const dropoffPayNowSurcharge = selectedDropoff?.surcharge_type == 2 ? calculatePointSurcharge(selectedDropoff, selectedSeats.length) : 0;
@@ -447,7 +447,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
       formData.append('action', 'save_ticket');
       formData.append('nonce', window.generic_data.nonce);
       formData.append('legIndex', String(legIndex));
-      
+
       formData.append('ticket[tripId]', ticket.tripId);
       formData.append('ticket[partnerId]', ticket.partnerId);
       formData.append('ticket[pickupPoint]', ticket.pickupPoint ? JSON.stringify(ticket.pickupPoint) : '');
@@ -493,25 +493,25 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
 
   const toggleSeat = (seat, group = null) => {
     const maxSeats = partnerId === 'goopay' ? 5 : 8;
-    
+
     setSelectedSeats(prev => {
       const isSelected = prev.some(s => {
         if (s.full_code && seat.full_code) return String(s.full_code) === String(seat.full_code);
         return String(s.seat_code) === String(seat.seat_code);
       });
-      
+
       if (isSelected) {
         return prev.filter(s => {
           if (s.full_code && seat.full_code) return String(s.full_code) !== String(seat.full_code);
           return String(s.seat_code) !== String(seat.seat_code);
         });
       }
-      
+
       if (prev.length >= maxSeats) {
         alert(`Bạn được chọn tối đa ${maxSeats} chỗ cho mỗi lần đặt`);
         return prev;
       }
-      
+
       const newSeat = { ...seat };
       if (group) {
         newSeat.fare = group.fare;
@@ -531,7 +531,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
       if (s.full_code && seat.full_code) return String(s.full_code) === String(seat.full_code);
       return String(s.seat_code) === String(seat.seat_code);
     });
-    
+
     if (isSelected) {
       toggleSeat(seat);
       return;
@@ -558,7 +558,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+        <div className="h-12 w-12 premium-spinner"></div>
       </div>
     );
   }
@@ -568,13 +568,13 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
   const isPointDisabled = (point) => {
     // Check min_customer
     if (point.min_customer && selectedSeats.length < point.min_customer) return true;
-    
+
     // Check transfer disabled time
     if (point.transfer_disabled_real_time) {
       const target = new Date(point.transfer_disabled_real_time.replace(/(\d{2}):(\d{2}) (\d{2})-(\d{2})-(\d{4})/, '$5-$4-$3T$1:$2:00'));
       if (target < new Date()) return true;
     }
-    
+
     return false;
   };
 
@@ -589,22 +589,33 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
               <p className="mt-1 text-sm opacity-80">Giường {seatGroupSelector.seat.seat_code} có nhiều lựa chọn giá</p>
             </div>
             <div className="p-8 space-y-4">
-              {seatGroupSelector.groups.map((group, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => toggleSeat(seatGroupSelector.seat, group)}
-                  className="flex w-full items-center justify-between rounded-2xl border-2 border-slate-100 p-5 transition-all hover:border-primary hover:bg-primary/5 active:scale-95"
-                >
-                  <div className="text-left">
-                    <div className="font-bold text-slate-900">{group.seat_group}</div>
-                    <div className="text-xs text-slate-400">Giá áp dụng cho loại này</div>
-                  </div>
-                  <div className="font-display text-lg font-black text-primary">
-                    {(group.fare || 0).toLocaleString()}đ
-                  </div>
-                </button>
-              ))}
-              <button 
+              {seatGroupSelector.groups.map((group, idx) => {
+                const originalPrice = group.fares?.original || group.originalPrice || group.fares?.original_fare || group.original_fare;
+                const hasDiscount = originalPrice && originalPrice > group.fare;
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => toggleSeat(seatGroupSelector.seat, group)}
+                    className="flex w-full items-center justify-between rounded-2xl border-2 border-slate-100 p-5 transition-all hover:border-primary hover:bg-primary/5 active:scale-95"
+                  >
+                    <div className="text-left">
+                      <div className="font-bold text-slate-900">{group.seat_group}</div>
+                      <div className="text-xs text-slate-400">Giá áp dụng cho loại này</div>
+                    </div>
+                    <div className="text-right">
+                      {hasDiscount && (
+                        <div className="text-xs font-bold text-slate-400 line-through">
+                          {originalPrice.toLocaleString()}đ
+                        </div>
+                      )}
+                      <div className="font-display text-lg font-black text-primary">
+                        {(group.fare || 0).toLocaleString()}đ
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+              <button
                 onClick={() => setSeatGroupSelector(null)}
                 className="mt-4 w-full py-2 text-sm font-bold text-slate-400 hover:text-slate-600 transition-colors"
               >
@@ -619,13 +630,12 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
       <div className="mb-6 flex items-center justify-between gap-3 border-b border-slate-100 pb-5 sm:mb-8 sm:pb-6">
         <div className="flex min-w-0 flex-wrap items-center gap-3 sm:gap-8">
           {[1, 2].map((s) => (
-            <div 
-              key={s} 
+            <div
+              key={s}
               className={`flex items-center gap-3 transition-all ${step === s ? 'opacity-100' : 'opacity-40'}`}
             >
-              <div className={`flex h-10 w-10 items-center justify-center rounded-full font-black ${
-                step === s ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-slate-200 text-slate-500'
-              }`}>
+              <div className={`flex h-10 w-10 items-center justify-center rounded-full font-black ${step === s ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-slate-200 text-slate-500'
+                }`}>
                 {s}
               </div>
               <span className="hidden text-sm font-black uppercase tracking-widest sm:block">
@@ -634,7 +644,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
             </div>
           ))}
         </div>
-        <button onClick={onCancel} className="text-slate-400! bg-none! hover:text-danger transition-colors">
+        <button onClick={onCancel} className="text-slate-400! hover:text-danger! bg-white! transition-colors">
           <i className="fas fa-times text-xl"></i>
         </button>
       </div>
@@ -678,20 +688,31 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
                           name: seat.seat_group || 'Ghế còn trống',
                           color: seat.seat_color || '#2196F3',
                           type: seat.seat_type,
-                          fare: seat.fare
+                          fare: seat.fare,
+                          originalFare: seat.fares?.original || seat.fares?.original_fare || seat.original_fare || seat.originalPrice
                         };
                       }
                     });
                   });
-                  return Object.values(groups).map((group, idx) => (
-                    <div key={idx} className="flex items-center gap-4">
-                      <SeatIcon type={group.type} color={group.color} status="available" />
-                      <div className="flex flex-col">
-                        <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">{group.name}</span>
-                        <span className="font-display text-[11px] font-black text-primary">{(group.fare || 0).toLocaleString()}đ</span>
+                  return Object.values(groups).map((group, idx) => {
+                    const hasDiscount = group.originalFare && group.originalFare > group.fare;
+                    return (
+                      <div key={idx} className="flex items-center gap-4">
+                        <SeatIcon type={group.type} color={group.color} status="available" />
+                        <div className="flex flex-col">
+                          <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">{group.name}</span>
+                          <div className="flex items-center gap-1.5 mt-0.5">
+                            {hasDiscount && (
+                              <span className="text-[10px] font-bold text-slate-400 line-through">
+                                {(group.originalFare).toLocaleString()}đ
+                              </span>
+                            )}
+                            <span className="font-display text-[11px] font-black text-primary">{(group.fare || 0).toLocaleString()}đ</span>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  ));
+                    );
+                  });
                 })()}
               </div>
 
@@ -749,18 +770,17 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
                   {pickupPoints.map((point, idx) => {
                     const disabled = isPointDisabled(point);
                     const pointSurcharge = calculatePointSurcharge(point, selectedSeats.length);
-                    
+
                     return (
                       <div key={point.__selectionKey || idx} className="space-y-3">
-                        <label 
-                          className={`group flex cursor-pointer items-start gap-3 rounded-2xl border-2 p-4 transition-all sm:gap-4 sm:p-5 ${
-                            disabled ? 'opacity-40 cursor-not-allowed bg-slate-50' :
-                            isPointSelected(selectedPickup, point) ? 'border-primary bg-primary/5' : 'border-slate-50 bg-white hover:border-primary-light'
-                          }`}
+                        <label
+                          className={`group flex cursor-pointer items-start gap-3 rounded-2xl border-2 p-4 transition-all sm:gap-4 sm:p-5 ${disabled ? 'opacity-40 cursor-not-allowed bg-slate-50' :
+                              isPointSelected(selectedPickup, point) ? 'border-primary bg-primary/5' : 'border-slate-50 bg-white hover:border-primary-light'
+                            }`}
                         >
-                          <input 
-                            type="radio" 
-                            name="pickup" 
+                          <input
+                            type="radio"
+                            name="pickup"
                             disabled={disabled}
                             className="mt-1 h-5 w-5 shrink-0 text-primary focus:ring-primary disabled:opacity-0"
                             checked={isPointSelected(selectedPickup, point)}
@@ -796,7 +816,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
                         </label>
                         {isPointSelected(selectedPickup, point) && point.unfixed_point == 1 && (
                           <div className="animate-in slide-in-from-top-2 duration-300 sm:ml-9">
-                            <input 
+                            <input
                               type="text"
                               value={pickupAddress}
                               onChange={(e) => setPickupAddress(e.target.value)}
@@ -826,15 +846,14 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
 
                     return (
                       <div key={point.__selectionKey || idx} className="space-y-3">
-                        <label 
-                          className={`group flex cursor-pointer items-start gap-3 rounded-2xl border-2 p-4 transition-all sm:gap-4 sm:p-5 ${
-                            disabled ? 'opacity-40 cursor-not-allowed bg-slate-50' :
-                            isPointSelected(selectedDropoff, point) ? 'border-primary bg-primary/5' : 'border-slate-50 bg-white hover:border-primary-light'
-                          }`}
+                        <label
+                          className={`group flex cursor-pointer items-start gap-3 rounded-2xl border-2 p-4 transition-all sm:gap-4 sm:p-5 ${disabled ? 'opacity-40 cursor-not-allowed bg-slate-50' :
+                              isPointSelected(selectedDropoff, point) ? 'border-primary bg-primary/5' : 'border-slate-50 bg-white hover:border-primary-light'
+                            }`}
                         >
-                          <input 
-                            type="radio" 
-                            name="dropoff" 
+                          <input
+                            type="radio"
+                            name="dropoff"
                             disabled={disabled}
                             className="mt-1 h-5 w-5 shrink-0 text-primary focus:ring-primary disabled:opacity-0"
                             checked={isPointSelected(selectedDropoff, point)}
@@ -870,7 +889,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
                         </label>
                         {isPointSelected(selectedDropoff, point) && point.unfixed_point == 1 && (
                           <div className="animate-in slide-in-from-top-2 duration-300 sm:ml-9">
-                            <input 
+                            <input
                               type="text"
                               value={dropoffAddress}
                               onChange={(e) => setDropoffAddress(e.target.value)}
@@ -898,7 +917,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
                 {totalPrice.toLocaleString()}đ
               </div>
             </div>
-            
+
             <div className="space-y-6 p-5 sm:p-8">
               <div className="space-y-4">
                 <div className="flex items-start gap-3 border-b border-slate-50 pb-4">
@@ -910,7 +929,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
                     </div>
                   </div>
                 </div>
-                
+
                 {selectedPickup && (
                   <div className="flex items-start gap-3 border-b border-slate-50 pb-4">
                     <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-success"></div>
@@ -948,7 +967,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
 
               <div className="pt-6">
                 {step === 1 && (
-                  <button 
+                  <button
                     disabled={selectedSeats.length === 0}
                     onClick={() => setStep(2)}
                     className="w-full rounded-2xl bg-primary py-4 text-sm font-black text-white shadow-xl shadow-primary/20 transition-all hover:bg-primary-dark active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
@@ -959,7 +978,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
                 {step === 2 && (
                   <div className="grid grid-cols-2 gap-3">
                     <button onClick={() => setStep(1)} className="rounded-2xl border-2 border-slate-100 py-4 text-xs font-black text-slate-500 hover:bg-slate-50">QUAY LẠI</button>
-                    <button 
+                    <button
                       disabled={!selectedPickup || !selectedDropoff || isFinalizing}
                       onClick={handleFinalize}
                       className="rounded-2xl bg-primary py-4 text-xs font-black text-white shadow-lg shadow-primary/20 hover:bg-primary-dark disabled:opacity-50"
@@ -971,7 +990,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
               </div>
             </div>
           </div>
-          
+
           <div className="rounded-2xl border border-warning/10 bg-warning/5 p-4 sm:p-6">
             <h5 className="flex items-center gap-2 text-xs font-black text-warning uppercase">
               <i className="fas fa-info-circle"></i> Lưu ý:

@@ -255,14 +255,11 @@
                     }
                 }
                 
-                // Direct booking url query parameters using custom field location IDs with route's IDs as fallback
-                $booking_url = home_url('/dat-ve-truc-tuyen/') . '?from=' . urlencode($from_id ?: ($route['from_id'] ?? '')) . '&to=' . urlencode($to_id ?: ($route['to_id'] ?? ''));
+                $booking_url = home_url('/dat-ve-truc-tuyen/') . '?from=' . urlencode($from_id ?: ($route['from_id'] ?? '')) . '&to=' . urlencode($to_id ?: ($route['to_id'] ?? '')) . '&nameFrom=' . urlencode($from_name) . '&nameTo=' . urlencode($to_name);
                 
-                // Stars display setup
                 $full_stars = floor($rating);
                 $half_star = ($rating - $full_stars) >= 0.3;
                 
-                // Rating badge color coding
                 $rating_color = '#dc2626';
                 if ($rating >= 4.5) $rating_color = '#16a34a';
                 elseif ($rating >= 3.5) $rating_color = '#2196F3';
@@ -490,7 +487,7 @@
                                   <div class="ol-card__amenity-detailed-item">
                                     <div class="ol-card__amenity-detailed-header">
                                       @if ($img)
-                                        <img class="ol-card__amenity-detailed-icon" src="{{ esc_url($img) }}" alt="{{ esc_attr($a['title'] ?? '') }}" loading="lazy" />
+                                        <img class="ol-card__amenity-detailed-icon" rel="nofollow noreferrer" src="{{ esc_url($img) }}" alt="{{ esc_attr($a['title'] ?? '') }}" loading="lazy" />
                                       @endif
                                       <span class="ol-card__amenity-detailed-title">{{ $a['title'] ?? '' }}</span>
                                     </div>
@@ -660,7 +657,6 @@
   @endif
 
   <script>
-    // Premium Image Slider Coordination Logic
     function goToSlide(opIndex, slideIdx) {
       var track = document.getElementById('slider-track-' + opIndex);
       if (!track) return;

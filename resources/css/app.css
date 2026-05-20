@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss" theme(static);
 @import "./home.css";
 
@@ -1173,14 +1173,14 @@ em {
 
 .ol-card__main {
   display: grid;
-  grid-template-columns: 160px minmax(0, 1fr) minmax(280px, 340px);
+  grid-template-columns: 130px minmax(0, 1fr) minmax(280px, 340px);
   gap: 16px;
   padding: 16px;
 }
 
 @media (max-width: 1024px) {
   .ol-card__main {
-    grid-template-columns: 148px minmax(0, 1fr);
+    grid-template-columns: 120px minmax(0, 1fr);
     gap: 16px;
   }
 
@@ -1191,7 +1191,8 @@ em {
 
 @media (max-width: 640px) {
   .ol-card__main {
-    grid-template-columns: 1fr;
+    grid-template-columns: 100px minmax(0, 1fr);
+    gap: 12px;
     padding: 12px;
   }
 }
@@ -1199,7 +1200,8 @@ em {
 .ol-card__media {
   position: relative;
   width: 100%;
-  min-height: 160px;
+  min-height: 130px;
+  height: 130px;
   overflow: hidden;
   border-radius: 6px;
   background: linear-gradient(135deg, #E0F2FE 0%, #F8FAFC 100%);
@@ -1208,7 +1210,7 @@ em {
 .ol-card__media img {
   width: 100%;
   height: 100%;
-  min-height: 160px;
+  min-height: 130px;
   object-fit: cover;
   display: block;
 }
@@ -1221,7 +1223,7 @@ em {
 .ol-card__media--placeholder img {
   box-sizing: border-box;
   object-fit: contain;
-  padding: 28px;
+  padding: 24px;
 }
 
 .ol-card__instant {
@@ -1253,14 +1255,38 @@ em {
   font-size: 0.65rem;
 }
 
+@media (max-width: 1024px) {
+  .ol-card__media {
+    min-height: 120px;
+    height: 120px;
+  }
+  .ol-card__media img {
+    min-height: 120px;
+  }
+}
+
 @media (max-width: 640px) {
   .ol-card__media {
-    min-height: 0;
-    aspect-ratio: 16 / 9;
+    min-height: 100px;
+    height: 100px;
+    aspect-ratio: 1 / 1;
   }
 
   .ol-card__media img {
-    min-height: 0;
+    min-height: 100px;
+  }
+
+  .ol-card__media--placeholder img {
+    padding: 16px;
+  }
+
+  .ol-card__instant span {
+    display: none;
+  }
+
+  .ol-card__instant {
+    padding: 6px;
+    border-radius: 0 2px 2px 0;
   }
 }
 
@@ -3479,6 +3505,200 @@ body.dailyve-date-range-picker-open {
   z-index: 40;
 }
 
+.dailyve-trip-list button:not([class*="rounded-full"]),
+.dailyve-seat-selection button:not([class*="rounded-full"]),
+.dailyve-auth-modal button:not([class*="rounded-full"]),
+.dailyve-ticket-modal button:not([class*="rounded-full"]),
+.dailyve-account-card button:not([class*="rounded-full"]) {
+  border-radius: var(--dv-radius-md) !important;
+  font-size: 14px;
+  font-weight: 600 !important;
+  letter-spacing: 0 !important;
+}
+
+.dailyve-trip-list input,
+.dailyve-trip-list select,
+.dailyve-trip-list textarea,
+.dailyve-seat-selection input,
+.dailyve-seat-selection select,
+.dailyve-seat-selection textarea,
+.dailyve-auth-modal input,
+.dailyve-auth-modal textarea,
+.dailyve-ticket-modal input,
+.dailyve-ticket-modal textarea,
+.dailyve-account-card input,
+.dailyve-account-card select,
+.dailyve-account-card textarea {
+  border-color: var(--dv-hairline) !important;
+  border-radius: var(--dv-radius-md) !important;
+  color: var(--dv-ink);
+  font-weight: 400 !important;
+}
+
+.dailyve-trip-list input:focus,
+.dailyve-trip-list select:focus,
+.dailyve-trip-list textarea:focus,
+.dailyve-seat-selection input:focus,
+.dailyve-seat-selection select:focus,
+.dailyve-seat-selection textarea:focus,
+.dailyve-auth-modal input:focus,
+.dailyve-auth-modal textarea:focus,
+.dailyve-ticket-modal input:focus,
+.dailyve-ticket-modal textarea:focus,
+.dailyve-account-card input:focus,
+.dailyve-account-card select:focus,
+.dailyve-account-card textarea:focus {
+  border-color: var(--dv-primary) !important;
+  box-shadow: var(--dv-shadow-focus) !important;
+}
+
+.dailyve-trip-list :where(.shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl, .shadow-premium),
+.dailyve-seat-selection :where(.shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl, .shadow-premium),
+.dailyve-auth-modal :where(.shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl),
+.dailyve-ticket-modal :where(.shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl),
+.dailyve-account-card :where(.shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl) {
+  box-shadow: var(--dv-shadow-soft) !important;
+}
+
+.dailyve-trip-card:hover,
+.dailyve-trip-list .dailyve-load-more:hover,
+.dailyve-seat-selection button:hover,
+.dailyve-auth-modal button:hover,
+.dailyve-ticket-modal button:hover,
+.dailyve-account-card button:hover {
+  box-shadow: var(--dv-shadow-elevated) !important;
+}
+
+.dailyve-trip-list :where(.bg-blue-500, .bg-blue-600, .bg-primary),
+.dailyve-seat-selection :where(.bg-blue-500, .bg-blue-600, .bg-primary),
+.dailyve-auth-modal :where(.bg-blue-500, .bg-blue-600),
+.dailyve-ticket-modal :where(.bg-blue-500, .bg-blue-600),
+.dailyve-account-card :where(.bg-blue-500, .bg-blue-600) {
+  background-color: var(--dv-primary) !important;
+}
+
+.dailyve-trip-list :where(.text-blue-500, .text-blue-600, .text-primary),
+.dailyve-seat-selection :where(.text-blue-500, .text-blue-600, .text-primary),
+.dailyve-auth-modal :where(.text-blue-500, .text-blue-600),
+.dailyve-ticket-modal :where(.text-blue-500, .text-blue-600),
+.dailyve-account-card :where(.text-blue-500, .text-blue-600) {
+  color: var(--dv-primary) !important;
+}
+
+.dailyve-trip-list :where(.border-blue-100, .border-blue-500, .border-blue-600, .border-primary),
+.dailyve-seat-selection :where(.border-blue-100, .border-blue-500, .border-blue-600, .border-primary),
+.dailyve-auth-modal :where(.border-blue-500),
+.dailyve-ticket-modal :where(.border-blue-500),
+.dailyve-account-card :where(.border-blue-500) {
+  border-color: var(--dv-primary) !important;
+}
+
+.dailyve-trip-hero {
+  padding-block: 48px;
+}
+
+.dailyve-trip-hero h1 {
+  font-weight: 600 !important;
+  letter-spacing: -0.025em;
+}
+
+.dailyve-trip-hero p,
+.dailyve-results-summary>div:last-child,
+.ol-stats__badge,
+.dailyve-trip-card [class*="rounded-full"] {
+  font-weight: 500 !important;
+  letter-spacing: 0 !important;
+}
+
+.dailyve-trip-card {
+  overflow: hidden;
+}
+
+.dailyve-trip-card>div:first-of-type {
+  gap: 24px;
+  padding: 24px;
+}
+
+.dailyve-trip-card h3,
+.dailyve-results-summary h2,
+.dailyve-filter-card h2,
+.dailyve-empty-state h3,
+.dailyve-account-card h2,
+.dailyve-account-card h3 {
+  color: var(--dv-ink) !important;
+  font-weight: 600 !important;
+}
+
+.dailyve-trip-card [style*="--grad-primary"],
+.dailyve-trip-card button[style] {
+  background: var(--dv-primary) !important;
+}
+
+.dailyve-trip-card button,
+.dailyve-seat-selection button,
+.dailyve-auth-modal button,
+.dailyve-ticket-modal button,
+.dailyve-account-card button {
+  min-height: 40px;
+}
+
+.dailyve-trip-card button:last-child,
+.dailyve-seat-selection button[class*="bg-primary"],
+.dailyve-auth-modal button[class*="bg-blue"],
+.dailyve-ticket-modal button[class*="bg-blue"],
+.dailyve-account-card button[class*="bg-blue"] {
+  background: var(--dv-primary) !important;
+  color: var(--dv-canvas) !important;
+}
+
+.dailyve-trip-card button:last-child:hover,
+.dailyve-seat-selection button[class*="bg-primary"]:hover,
+.dailyve-auth-modal button[class*="bg-blue"]:hover,
+.dailyve-ticket-modal button[class*="bg-blue"]:hover,
+.dailyve-account-card button[class*="bg-blue"]:hover {
+  background: var(--dv-primary-active) !important;
+}
+
+.dailyve-seat-selection aside>div,
+.dailyve-seat-selection label,
+.dailyve-seat-selection [class*="bg-white"],
+.dailyve-important-modal [class*="bg-white"],
+.dailyve-auth-modal [class*="bg-white"],
+.dailyve-ticket-modal [class*="bg-white"],
+.dailyve-account-card {
+  border-color: var(--dv-hairline) !important;
+}
+
+.dailyve-important-modal [class*="from-amber"],
+.dailyve-important-modal [class*="to-orange"] {
+  background: var(--dv-accent) !important;
+}
+
+.dailyve-important-modal button[class*="from-amber"] {
+  background: var(--dv-primary) !important;
+}
+
+.dailyve-bus-page .dailyve-bus-search-section {
+  position: relative;
+  z-index: 20;
+}
+
+.dailyve-bus-page .dailyve-bus-search-card,
+.dailyve-bus-page .dailyve-search,
+.dailyve-bus-page .dailyve-search__field,
+.dailyve-bus-page .dailyve-date-field {
+  overflow: visible;
+}
+
+.dailyve-bus-page .dailyve-search {
+  z-index: 20;
+}
+
+.dailyve-bus-page .dailyve-datepicker,
+.dailyve-bus-page .dailyve-location-menu {
+  z-index: 40;
+}
+
 .dailyve-bus-page .dailyve-bus-intro-section {
   position: relative;
   z-index: 1;
@@ -3490,3 +3710,19 @@ body.dailyve-date-range-picker-open {
   }
 }
 
+/* Premium spinner for loading animations to prevent Tailwind border conflicts */
+.premium-spinner {
+  border: 3.5px solid rgba(33, 150, 243, 0.15) !important;
+  border-top-color: var(--color-primary, #2196F3) !important;
+  border-radius: 9999px !important;
+  animation: premium-spin 0.8s linear infinite !important;
+}
+
+@keyframes premium-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

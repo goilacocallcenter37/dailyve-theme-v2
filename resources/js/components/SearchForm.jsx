@@ -34,19 +34,19 @@ const SearchForm = ({
 
   const [from, setFrom] = useState(() => {
     const params = new URLSearchParams(window.location.search);
-    return params.get('from') || '';
+    return params.get('from') || window.route_data?.from_id || '';
   });
   const [to, setTo] = useState(() => {
     const params = new URLSearchParams(window.location.search);
-    return params.get('to') || '';
+    return params.get('to') || window.route_data?.to_id || '';
   });
   const [fromQuery, setFromQuery] = useState(() => {
     const params = new URLSearchParams(window.location.search);
-    return params.get('nameFrom') || '';
+    return params.get('nameFrom') || window.route_data?.from_name || '';
   });
   const [toQuery, setToQuery] = useState(() => {
     const params = new URLSearchParams(window.location.search);
-    return params.get('nameTo') || '';
+    return params.get('nameTo') || window.route_data?.to_name || '';
   });
   const [date, setDate] = useState(() => {
     const params = new URLSearchParams(window.location.search);
