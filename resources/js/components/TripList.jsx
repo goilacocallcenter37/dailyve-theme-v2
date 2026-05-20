@@ -2155,6 +2155,29 @@ const TripList = () => {
         setStatistics(payload.statistics || {});
         setPaging(payload.paging || {});
         setNextCursor(payload.nextCursor || '');
+
+        // Handle operator_id mapping from url parameters to local statistics company list
+        if (!append && payload.statistics?.companies?.data) {
+          const params = new URLSearchParams(window.location.search);
+          const operatorIdStr = params.get('operator_id');
+          if (operatorIdStr) {
+            const operatorId = Number(operatorIdStr);
+            const foundCompany = payload.statistics.companies.data.find(
+              (c) => Number(c.vexere_company_id) === operatorId
+            );
+
+            if (foundCompany) {
+              const nextFilters = { ...filters, companies: foundCompany.id };
+              setFilters(nextFilters);
+              syncUrl(nextFilters);
+            } else {
+              // Silently remove operator_id from the address bar to avoid refetching
+              const cleanParams = new URLSearchParams(window.location.search);
+              cleanParams.delete('operator_id');
+              window.history.replaceState({}, '', `${window.location.pathname}?${cleanParams.toString()}`);
+            }
+          }
+        }
       })
       .catch((fetchError) => {
         setError(fetchError.message || 'Không thể tải dữ liệu chuyến xe.');

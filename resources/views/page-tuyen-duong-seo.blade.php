@@ -147,7 +147,7 @@
                 $route = $op['routes'][0] ?? [];
                 $rating = (float) ($op['rating'] ?? 0);
                 $review_count = (int) ($op['review_count'] ?? 0);
-                $vehicles = $op['vehicle_type_summary'] ?? [];
+                $vehicles = $route['vehicle_type_details'] ?? [];
                 $short_content = $op['short_content'] ?? '';
                 $pickups = $route['pickup_points'] ?? [];
                 $dropoffs = $route['dropoff_points'] ?? [];
@@ -238,8 +238,8 @@
                 }
 
                 $has_rating = $rating > 0;
-                $visible_vehicles = array_slice($vehicles, 0, 3);
-                $hidden_vehicle_count = max(count($vehicles) - count($visible_vehicles), 0);
+                $visible_vehicles = $vehicles;
+                $hidden_vehicle_count = 0;
                 
                 // Extract lowest price from prices string array
                 $lowest_price = null;
@@ -370,13 +370,19 @@
                           <strong>{{ number_format($lowest_price, 0, ',', '.') }}đ</strong>
                         </div>
                       @endif
+                      @php
+                        $card_booking_url = $booking_url;
+                        if (!empty($operator_id)) {
+                            $card_booking_url .= '&operator_id=' . urlencode($operator_id);
+                        }
+                      @endphp
                       <a
-                        href="{!! esc_url($booking_url) !!}"
+                        href="{!! esc_url($card_booking_url) !!}"
                         class="ol-card__btn"
                         target="_blank"
                         rel="noopener noreferrer"
                         data-dailyve-date-range-trigger
-                        data-date-range-url="{!! esc_url($booking_url) !!}"
+                        data-date-range-url="{!! esc_url($card_booking_url) !!}"
                         data-date-range-from-name="{{ esc_attr($from_name) }}"
                         data-date-range-to-name="{{ esc_attr($to_name) }}"
                         data-date-range-service="bus"
