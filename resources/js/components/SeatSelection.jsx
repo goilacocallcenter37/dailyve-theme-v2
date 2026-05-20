@@ -1,13 +1,30 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 
-const SeatIcon = ({ type, color, status, onClick }) => {
+const SeatIcon = ({ type, color, status, onClick, price, code, seatGroups }) => {
   const isSelected = status === 'selected';
   const isSold = status === 'sold';
-  const fillColor = isSelected ? color : isSold ? '#CBD5E1' : '#FFFFFF';
-  const strokeColor = isSold ? '#CBD5E1' : color;
-  const detailFill = isSelected ? '#FFFFFF' : isSold ? '#CBD5E1' : '#F8FAFC';
-  const detailStroke = isSelected ? '#FFFFFF' : isSold ? '#CBD5E1' : '#CBD5E1';
+  const fillColor = isSelected ? '#D1FAE5' : isSold ? '#CBD5E1' : '#FFFFFF';
+  const strokeColor = isSelected ? '#10B981' : isSold ? '#CBD5E1' : color;
+  const detailFill = isSelected ? '#10B981' : isSold ? '#CBD5E1' : '#F8FAFC';
+  const detailStroke = isSelected ? '#10B981' : isSold ? '#CBD5E1' : '#CBD5E1';
   const opacity = status === 'sold' ? '0.8' : '1';
+
+  let priceLabel = '';
+  if (status !== 'sold') {
+    if (seatGroups && seatGroups.length > 1) {
+      const fares = seatGroups.map(g => Number(g.fare || 0));
+      const minFare = Math.min(...fares);
+      const maxFare = Math.max(...fares);
+      if (minFare === maxFare) {
+        priceLabel = `${minFare.toLocaleString()}đ`;
+      } else {
+        priceLabel = `${minFare.toLocaleString()}đ - ${maxFare.toLocaleString()}đ`;
+      }
+    } else if (price) {
+      priceLabel = `${Number(price).toLocaleString()}đ`;
+    }
+  }
 
   const renderPath = () => {
     switch (type) {
@@ -91,14 +108,30 @@ const SeatIcon = ({ type, color, status, onClick }) => {
 
   return (
     <div
-      className={`relative cursor-pointer transition-transform hover:scale-110 ${status === 'sold' ? 'cursor-not-allowed opacity-50' : ''}`}
+      className={`relative group/seat cursor-pointer transition-transform hover:scale-105 ${status === 'sold' ? 'cursor-not-allowed opacity-50' : ''}`}
       onClick={status !== 'sold' ? onClick : undefined}
       style={{ opacity }}
     >
       {renderPath()}
       {status === 'selected' && (
-        <div className="absolute inset-0 flex items-center justify-center text-white text-[10px]">
-          <i className="fas fa-check"></i>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="flex h-[12px] w-[12px] items-center justify-center rounded-full bg-[#10B981] text-[5px] mb-1 text-white shadow-sm">
+            <i className="fas fa-check"></i>
+          </div>
+        </div>
+      )}
+
+      {/* Tooltip on Hover */}
+      {code && (
+        <div className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2.5 -translate-x-1/2 whitespace-nowrap rounded-lg bg-slate-900 px-3 py-1.5 shadow-xl opacity-0 scale-90 origin-bottom transition-all duration-200 group-hover/seat:opacity-100 group-hover/seat:scale-100 flex flex-col items-center gap-0.5">
+          <div className="text-[10px] font-semibold tracking-wider text-slate-300 uppercase leading-none mb-1">
+            {code}
+          </div>
+          <div className="text-[11px] font-black text-white leading-none">
+            {status === 'sold' ? 'Đã bán' : priceLabel || 'Liên hệ'}
+          </div>
+          {/* Arrow */}
+          <div className="absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 bg-slate-900"></div>
         </div>
       )}
     </div>
@@ -581,49 +614,88 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
   return (
     <div className="dailyve-seat-selection animate-in fade-in slide-in-from-top-4 duration-500">
       {/* Seat Group Selector Modal */}
-      {seatGroupSelector && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 p-4 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="w-full max-w-md overflow-hidden rounded-[2.5rem] bg-white shadow-2xl animate-in zoom-in-95 duration-300">
-            <div className="bg-primary p-8 text-center text-white">
-              <h3 className="font-display text-xl font-black">Chọn loại vé</h3>
-              <p className="mt-1 text-sm opacity-80">Giường {seatGroupSelector.seat.seat_code} có nhiều lựa chọn giá</p>
+      {seatGroupSelector && createPortal(
+        <div className="fixed inset-0 z-[999] flex items-center justify-center p-4">
+          <div 
+            className="absolute inset-0 bg-[#0F172A]/60 transition-all duration-300 animate-in fade-in"
+            onClick={() => setSeatGroupSelector(null)}
+          ></div>
+          
+          <div className="relative w-full max-w-md overflow-hidden rounded-2xl bg-white border border-[#E2E8F0] shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col">
+            <div className="relative bg-[#2196F3] p-6 text-center text-white shrink-0 shadow-sm">
+              <button 
+                onClick={() => setSeatGroupSelector(null)}
+                className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white/90 hover:bg-white/20 transition-all active:scale-95"
+              >
+                <i className="fas fa-times text-sm"></i>
+              </button>
+              <h3 className="font-display text-xl font-semibold tracking-tight leading-tight">Chọn loại vé</h3>
+              <p className="mt-1 text-xs text-white/90 font-medium">
+                Giường <span className="font-semibold bg-white/20 px-2 py-0.5 rounded-md">{seatGroupSelector.seat.seat_code}</span> có nhiều lựa chọn giá
+              </p>
             </div>
-            <div className="p-8 space-y-4">
+
+            {/* Options list in body */}
+            <div className="p-6 space-y-3 max-h-[50vh] overflow-y-auto pr-2 scrollbar-thin">
               {seatGroupSelector.groups.map((group, idx) => {
                 const originalPrice = group.fares?.original || group.originalPrice || group.fares?.original_fare || group.original_fare;
                 const hasDiscount = originalPrice && originalPrice > group.fare;
+                const discountPercent = hasDiscount ? Math.round(((originalPrice - group.fare) / originalPrice) * 100) : 0;
+                
                 return (
                   <button
                     key={idx}
                     onClick={() => toggleSeat(seatGroupSelector.seat, group)}
-                    className="flex w-full items-center justify-between rounded-2xl border-2 border-slate-100 p-5 transition-all hover:border-primary hover:bg-primary/5 active:scale-95"
+                    className="group relative flex w-full items-center justify-between rounded-xl border border-[#E2E8F0] bg-white p-4 transition-all duration-200 hover:bg-[#0F172A] hover:border-[#0F172A] hover:shadow-md active:scale-[0.98]"
                   >
-                    <div className="text-left">
-                      <div className="font-bold text-slate-900">{group.seat_group}</div>
-                      <div className="text-xs text-slate-400">Giá áp dụng cho loại này</div>
+                    {/* Option Details */}
+                    <div className="flex items-center gap-3 text-left">
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[#F1F5F9] text-[#2196F3] group-hover:bg-white/10 group-hover:text-white transition-colors">
+                        <i className="fas fa-chair text-sm"></i>
+                      </div>
+                      <div className="min-w-0">
+                        <div className="font-semibold text-slate-800 group-hover:text-white transition-colors text-sm tracking-tight leading-snug">
+                          {group.seat_group}
+                        </div>
+                        <div className="text-[11px] font-medium text-slate-400 group-hover:text-slate-400 mt-0.5">
+                          Giá áp dụng cho loại này
+                        </div>
+                      </div>
                     </div>
+
+                    {/* Pricing details */}
                     <div className="text-right">
                       {hasDiscount && (
-                        <div className="text-xs font-bold text-slate-400 line-through">
-                          {originalPrice.toLocaleString()}đ
+                        <div className="flex items-center justify-end gap-1.5 mb-0.5">
+                          <span className="text-[10px] font-bold text-slate-400 line-through group-hover:text-slate-400">
+                            {originalPrice.toLocaleString()}đ
+                          </span>
+                          <span className="rounded bg-[#FB923C]/15 px-1.5 py-0.5 text-[9px] font-black text-[#FB923C] group-hover:bg-[#FB923C] group-hover:text-white transition-colors">
+                            -{discountPercent}%
+                          </span>
                         </div>
                       )}
-                      <div className="font-display text-lg font-black text-primary">
+                      <div className="font-display text-base font-semibold text-[#2196F3] group-hover:text-white transition-colors">
                         {(group.fare || 0).toLocaleString()}đ
                       </div>
                     </div>
                   </button>
                 );
               })}
+            </div>
+
+            {/* Modal Footer with subtle close text button: h-10 standard button-secondary */}
+            <div className="px-6 pb-6 pt-2 border-t border-[#F1F5F9] bg-[#F8FAFC] flex justify-center shrink-0">
               <button
                 onClick={() => setSeatGroupSelector(null)}
-                className="mt-4 w-full py-2 text-sm font-bold text-slate-400 hover:text-slate-600 transition-colors"
+                className="w-full rounded-lg border border-[#E2E8F0] bg-white py-2.5 text-xs font-semibold uppercase tracking-wider text-slate-500 transition-all hover:bg-[#F8FAFC] hover:text-[#0F172A] active:scale-95 duration-150"
               >
-                Hủy bỏ
+                HỦY BỎ
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Steps Header */}
@@ -667,13 +739,10 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
                 {/* Selected Seats */}
                 <div className="flex items-center gap-4">
                   <div className="relative">
-                    <SeatIcon type={data.coach_seat_template[0]?.seats[0]?.seat_type || 2} color="#2196F3" status="selected" />
-                    <div className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[8px] text-white shadow-sm">
-                      <i className="fas fa-check"></i>
-                    </div>
+                    <SeatIcon type={data.coach_seat_template[0]?.seats[0]?.seat_type || 2} color="#10B981" status="selected" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-xs font-black text-primary uppercase tracking-wider">Đang chọn</span>
+                    <span className="text-xs font-black text-emerald-600 uppercase tracking-wider text-emerald-600">Đang chọn</span>
                     <span className="text-[10px] font-bold text-slate-400">Chỗ bạn vừa click</span>
                   </div>
                 </div>
@@ -722,7 +791,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
                   return (
                     <div key={idx} className={`${maxGridWidth} space-y-4`}>
                       <h4 className="text-center font-display text-sm font-black uppercase tracking-widest text-slate-400">{coach.coach_name}</h4>
-                      <div className="w-full overflow-hidden">
+                      <div className="w-full">
                         <div
                           className="grid w-full gap-2 rounded-2xl border-4 border-slate-100 bg-slate-50/30 p-3 shadow-inner sm:gap-3 sm:p-5 lg:rounded-[2rem] lg:p-6"
                           style={{
@@ -745,6 +814,9 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
                                   return String(s.seat_code) === String(seat.seat_code);
                                 }) ? 'selected' : 'available'}
                                 onClick={() => handleSeatClick(seat)}
+                                price={seat.fare}
+                                code={seat.seat_code}
+                                seatGroups={seat.seat_groups}
                               />
                             </div>
                           ))}

@@ -332,6 +332,10 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
     onChange({ companies: Array.from(next).join(',') });
   };
 
+  const [companiesExpanded, setCompaniesExpanded] = useState(() => selectedCompanies.length > 0);
+  const [pickupsExpanded, setPickupsExpanded] = useState(() => !!filters.fa);
+  const [dropoffsExpanded, setDropoffsExpanded] = useState(() => !!filters.ta);
+
   return (
     <aside className="dailyve-filter-panel order-2 grid gap-4 lg:order-1 lg:sticky lg:top-24 lg:self-start">
       <div className="dailyve-filter-card overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
@@ -349,17 +353,20 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
         <div className="space-y-6">
           <section className="space-y-3">
             <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Sắp xếp</h3>
-            <select
-              className="w-full rounded-xl border-2 border-slate-50 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700 outline-none transition-all focus:border-blue-500 focus:bg-white"
-              value={filters.sort}
-              onChange={(event) => onChange({ sort: event.target.value })}
-            >
-              {SORT_OPTIONS.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+            <div className="relative">
+              <select
+                className="w-full h-11 pl-4 pr-10 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 outline-none transition-all focus:border-blue-500 focus:ring-1 focus:ring-blue-500 cursor-pointer appearance-none shadow-sm"
+                value={filters.sort}
+                onChange={(event) => onChange({ sort: event.target.value })}
+              >
+                {SORT_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              <i className="fas fa-chevron-down pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-slate-400"></i>
+            </div>
           </section>
 
           <section className="space-y-3">
@@ -383,17 +390,20 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
 
           <section className="space-y-3">
             <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Mức giá</h3>
-            <select
-              className="w-full rounded-xl border-2 border-slate-50 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-700 outline-none transition-all focus:border-blue-500 focus:bg-white"
-              value={priceRange}
-              onChange={(event) => onPriceRange(event.target.value)}
-            >
-              {PRICE_OPTIONS.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+            <div className="relative">
+              <select
+                className="w-full h-11 pl-4 pr-10 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 outline-none transition-all focus:border-blue-500 focus:ring-1 focus:ring-blue-500 cursor-pointer appearance-none shadow-sm"
+                value={priceRange}
+                onChange={(event) => onPriceRange(event.target.value)}
+              >
+                {PRICE_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              <i className="fas fa-chevron-down pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-slate-400"></i>
+            </div>
           </section>
 
           <section className="space-y-3">
@@ -421,98 +431,149 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
           </section>
 
           {companies.length > 0 && (
-            <section className="space-y-3">
-              <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Nhà xe</h3>
-              <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200">
-                {companies
-                  .filter((company) => Number(company.id) !== 11071)
-                  .map((company) => (
-                    <label
-                      key={company.id}
-                      className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${selectedCompanies.includes(String(company.id))
-                        ? 'bg-blue-50 text-blue-700'
-                        : 'hover:bg-slate-50 text-slate-600'
-                        }`}
-                    >
-                      <span className="flex min-w-0 items-center gap-3">
-                        <input
-                          type="checkbox"
-                          className="h-4 w-4 rounded-md border-slate-300 text-blue-600 transition-all focus:ring-blue-500"
-                          checked={selectedCompanies.includes(String(company.id))}
-                          onChange={() => toggleCompany(company.id)}
-                        />
-                        <span className="truncate text-sm font-bold">{company.name}</span>
-                      </span>
-                      <span className="text-[10px] font-black opacity-40">{company.trip_count}</span>
-                    </label>
-                  ))}
-              </div>
+            <section className="space-y-3 border-t border-slate-100 pt-4">
+              <button
+                type="button"
+                onClick={() => setCompaniesExpanded(!companiesExpanded)}
+                className="flex w-full items-center justify-between text-left focus:outline-none group/btn cursor-pointer"
+              >
+                <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 group-hover/btn:text-slate-600 transition-colors">Nhà xe</h3>
+                <span className="text-xs text-slate-400 group-hover/btn:text-slate-600 transition-colors flex items-center">
+                  {selectedCompanies.length > 0 && (
+                    <span className="mr-2 rounded-full bg-blue-50 px-2 py-0.5 text-[9px] font-black text-blue-600">
+                      {selectedCompanies.length}
+                    </span>
+                  )}
+                  <i className={`fas fa-chevron-down transition-transform duration-200 ${companiesExpanded ? 'rotate-180' : ''}`}></i>
+                </span>
+              </button>
+
+              {companiesExpanded && (
+                <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 animate-in fade-in slide-in-from-top-2 duration-200">
+                  {companies
+                    .filter((company) => Number(company.id) !== 11071)
+                    .map((company) => (
+                      <label
+                        key={company.id}
+                        className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${selectedCompanies.includes(String(company.id))
+                          ? 'bg-blue-50 text-blue-700'
+                          : 'hover:bg-slate-50 text-slate-600'
+                          }`}
+                      >
+                        <span className="flex min-w-0 items-center gap-3">
+                          <input
+                            type="checkbox"
+                            className="h-4 w-4 rounded-md border-slate-300 text-blue-600 transition-all focus:ring-blue-500"
+                            checked={selectedCompanies.includes(String(company.id))}
+                            onChange={() => toggleCompany(company.id)}
+                          />
+                          <span className="truncate text-sm font-bold">{company.name}</span>
+                        </span>
+                        <span className="text-[10px] font-black opacity-40">{company.trip_count}</span>
+                      </label>
+                    ))}
+                </div>
+              )}
             </section>
           )}
 
           {statistics?.pickup_points?.length > 0 && (
-            <section className="space-y-3">
-              <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Điểm đón</h3>
-              <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200">
-                {statistics.pickup_points.map((point, idx) => {
-                  const selected = filters.fa.split(',').includes(point.district);
-                  return (
-                    <label
-                      key={idx}
-                      className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${selected ? 'bg-blue-50 text-blue-700' : 'hover:bg-slate-50 text-slate-600'
-                        }`}
-                    >
-                      <span className="flex min-w-0 items-center gap-3">
-                        <input
-                          type="checkbox"
-                          className="h-4 w-4 rounded-md border-slate-300 text-blue-600"
-                          checked={selected}
-                          onChange={() => {
-                            const current = filters.fa ? filters.fa.split(',') : [];
-                            const next = selected ? current.filter(x => x !== point.district) : [...current, point.district];
-                            onChange({ fa: next.join(',') });
-                          }}
-                        />
-                        <span className="truncate text-sm font-bold">{point.district}</span>
-                      </span>
-                      <span className="text-[10px] font-black opacity-40">{point.trip_count}</span>
-                    </label>
-                  );
-                })}
-              </div>
+            <section className="space-y-3 border-t border-slate-100 pt-4">
+              <button
+                type="button"
+                onClick={() => setPickupsExpanded(!pickupsExpanded)}
+                className="flex w-full items-center justify-between text-left focus:outline-none group/btn cursor-pointer"
+              >
+                <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 group-hover/btn:text-slate-600 transition-colors">Điểm đón</h3>
+                <span className="text-xs text-slate-400 group-hover/btn:text-slate-600 transition-colors flex items-center">
+                  {filters.fa && (
+                    <span className="mr-2 rounded-full bg-blue-50 px-2 py-0.5 text-[9px] font-black text-blue-600">
+                      {filters.fa.split(',').filter(Boolean).length}
+                    </span>
+                  )}
+                  <i className={`fas fa-chevron-down transition-transform duration-200 ${pickupsExpanded ? 'rotate-180' : ''}`}></i>
+                </span>
+              </button>
+
+              {pickupsExpanded && (
+                <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 animate-in fade-in slide-in-from-top-2 duration-200">
+                  {statistics.pickup_points.map((point, idx) => {
+                    const selected = filters.fa.split(',').includes(point.district);
+                    return (
+                      <label
+                        key={idx}
+                        className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${selected ? 'bg-blue-50 text-blue-700' : 'hover:bg-slate-50 text-slate-600'
+                          }`}
+                      >
+                        <span className="flex min-w-0 items-center gap-3">
+                          <input
+                            type="checkbox"
+                            className="h-4 w-4 rounded-md border-slate-300 text-blue-600"
+                            checked={selected}
+                            onChange={() => {
+                              const current = filters.fa ? filters.fa.split(',') : [];
+                              const next = selected ? current.filter(x => x !== point.district) : [...current, point.district];
+                              onChange({ fa: next.join(',') });
+                            }}
+                          />
+                          <span className="truncate text-sm font-bold">{point.district}</span>
+                        </span>
+                        <span className="text-[10px] font-black opacity-40">{point.trip_count}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              )}
             </section>
           )}
 
           {statistics?.dropoff_points?.length > 0 && (
-            <section className="space-y-3">
-              <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Điểm trả</h3>
-              <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200">
-                {statistics.dropoff_points.map((point, idx) => {
-                  const selected = filters.ta.split(',').includes(point.district);
-                  return (
-                    <label
-                      key={idx}
-                      className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${selected ? 'bg-blue-50 text-blue-700' : 'hover:bg-slate-50 text-slate-600'
-                        }`}
-                    >
-                      <span className="flex min-w-0 items-center gap-3">
-                        <input
-                          type="checkbox"
-                          className="h-4 w-4 rounded-md border-slate-300 text-blue-600"
-                          checked={selected}
-                          onChange={() => {
-                            const current = filters.ta ? filters.ta.split(',') : [];
-                            const next = selected ? current.filter(x => x !== point.district) : [...current, point.district];
-                            onChange({ ta: next.join(',') });
-                          }}
-                        />
-                        <span className="truncate text-sm font-bold">{point.district}</span>
-                      </span>
-                      <span className="text-[10px] font-black opacity-40">{point.trip_count}</span>
-                    </label>
-                  );
-                })}
-              </div>
+            <section className="space-y-3 border-t border-slate-100 pt-4">
+              <button
+                type="button"
+                onClick={() => setDropoffsExpanded(!dropoffsExpanded)}
+                className="flex w-full items-center justify-between text-left focus:outline-none group/btn cursor-pointer"
+              >
+                <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 group-hover/btn:text-slate-600 transition-colors">Điểm trả</h3>
+                <span className="text-xs text-slate-400 group-hover/btn:text-slate-600 transition-colors flex items-center">
+                  {filters.ta && (
+                    <span className="mr-2 rounded-full bg-blue-50 px-2 py-0.5 text-[9px] font-black text-blue-600">
+                      {filters.ta.split(',').filter(Boolean).length}
+                    </span>
+                  )}
+                  <i className={`fas fa-chevron-down transition-transform duration-200 ${dropoffsExpanded ? 'rotate-180' : ''}`}></i>
+                </span>
+              </button>
+
+              {dropoffsExpanded && (
+                <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 animate-in fade-in slide-in-from-top-2 duration-200">
+                  {statistics.dropoff_points.map((point, idx) => {
+                    const selected = filters.ta.split(',').includes(point.district);
+                    return (
+                      <label
+                        key={idx}
+                        className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${selected ? 'bg-blue-50 text-blue-700' : 'hover:bg-slate-50 text-slate-600'
+                          }`}
+                      >
+                        <span className="flex min-w-0 items-center gap-3">
+                          <input
+                            type="checkbox"
+                            className="h-4 w-4 rounded-md border-slate-300 text-blue-600"
+                            checked={selected}
+                            onChange={() => {
+                              const current = filters.ta ? filters.ta.split(',') : [];
+                              const next = selected ? current.filter(x => x !== point.district) : [...current, point.district];
+                              onChange({ ta: next.join(',') });
+                            }}
+                          />
+                          <span className="truncate text-sm font-bold">{point.district}</span>
+                        </span>
+                        <span className="text-[10px] font-black opacity-40">{point.trip_count}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              )}
             </section>
           )}
         </div>
