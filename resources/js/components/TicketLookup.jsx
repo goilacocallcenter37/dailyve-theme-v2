@@ -255,7 +255,7 @@ const TicketLookup = () => {
 
     if (!isLoggedIn) {
         return (
-            <div className="dailyve-account-card flex flex-col items-center justify-center p-8 bg-white rounded-2xl shadow-sm border border-slate-100/80 max-w-md mx-auto my-12 text-center animate-fade-in">
+            <div className="dailyve-account-card flex flex-col items-center justify-center p-8 bg-white rounded-xl shadow-sm border border-slate-200 max-w-md mx-auto my-12 text-center animate-fade-in">
                 <div className="w-16 h-16 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-4 text-2xl">
                     <i className="fas fa-ticket-alt"></i>
                 </div>
@@ -265,7 +265,7 @@ const TicketLookup = () => {
                 </p>
                 <button
                     onClick={handleLoginTrigger}
-                    className="bg-blue-500 hover:bg-blue-600 active:scale-95 text-white font-semibold py-2.5 px-6 rounded-xl shadow-lg shadow-blue-500/10 transition-all cursor-pointer"
+                    className="bg-blue-500 hover:bg-blue-600 active:scale-95 text-white font-semibold py-2.5 px-6 rounded-lg shadow-sm transition-all cursor-pointer"
                 >
                     Đăng nhập ngay
                 </button>
@@ -274,7 +274,7 @@ const TicketLookup = () => {
     }
 
     return (
-        <div className="dailyve-account-card bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100/80 animate-fade-in flex flex-col" ref={ticketListRef}>
+        <div className="dailyve-account-card bg-white rounded-xl p-6 md:p-8 shadow-sm border border-slate-200 animate-fade-in flex flex-col" ref={ticketListRef}>
             
             {/* Header Tabs */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-4 mb-6 gap-4">
@@ -284,22 +284,22 @@ const TicketLookup = () => {
                 </div>
                 
                 {/* Tabs */}
-                <div className="flex bg-slate-100/80 p-1 rounded-xl w-fit border border-slate-200/20">
+                <div className="flex bg-slate-100/80 p-1 rounded-lg w-fit border border-slate-200/40">
                     <button
                         onClick={() => handleTabChange('2')}
-                        className={`px-4 py-2 text-xs md:text-sm font-semibold rounded-lg transition-all cursor-pointer ${status === '2' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                        className={`px-4 py-2 text-xs md:text-sm font-semibold rounded-md transition-all cursor-pointer ${status === '2' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
                     >
                         Đã thanh toán
                     </button>
                     <button
                         onClick={() => handleTabChange('1')}
-                        className={`px-4 py-2 text-xs md:text-sm font-semibold rounded-lg transition-all cursor-pointer ${status === '1' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                        className={`px-4 py-2 text-xs md:text-sm font-semibold rounded-md transition-all cursor-pointer ${status === '1' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
                     >
                         Chưa thanh toán
                     </button>
                     <button
                         onClick={() => handleTabChange('3,5')}
-                        className={`px-4 py-2 text-xs md:text-sm font-semibold rounded-lg transition-all cursor-pointer ${status === '3,5' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+                        className={`px-4 py-2 text-xs md:text-sm font-semibold rounded-md transition-all cursor-pointer ${status === '3,5' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
                     >
                         Đã hủy
                     </button>

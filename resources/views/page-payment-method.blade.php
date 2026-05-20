@@ -69,7 +69,7 @@
     }
 @endphp
 
-<div class="min-h-screen bg-slate-50/50 pb-20 pt-10">
+<div class="dailyve-payment-page min-h-screen bg-slate-50/50 pb-20 pt-10">
     <div class="mx-auto max-w-7xl px-4">
         @if (!empty($existing_post))
             <div class="mb-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
@@ -78,7 +78,7 @@
                     <p class="mt-2 font-bold text-slate-400">Mã đơn hàng: <span class="text-slate-900">#{{ $payment_key }}</span></p>
                 </div>
                 @if ($paymentStatus == 1)
-                    <div class="inline-flex items-center gap-4 rounded-3xl bg-primary px-8 py-4 text-white shadow-xl shadow-primary/20">
+                    <div class="inline-flex items-center gap-4 rounded-xl bg-primary px-6 py-3 text-white shadow-sm">
                         <div class="h-10 w-10 animate-pulse rounded-full bg-white/20 p-2">
                             <i class="fas fa-clock"></i>
                         </div>
@@ -94,7 +94,7 @@
                 {{-- Left: Payment Methods --}}
                 <div class="space-y-8">
                     @if ($paymentStatus == 1)
-                        <section class="rounded-[2.5rem] bg-white p-8 shadow-premium md:p-12">
+                        <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
                             <h3 class="flex items-center gap-3 font-display text-2xl font-black text-slate-900">
                                 <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-success/10 text-success">
                                     <i class="fas fa-wallet"></i>
@@ -104,7 +104,7 @@
 
                             <div class="mt-10 space-y-6">
                                 {{-- QR Transfer --}}
-                                <div class="relative overflow-hidden rounded-[2rem] border-2 border-primary bg-primary/5 p-8 transition-all">
+                                <div class="relative overflow-hidden rounded-2xl border border-primary/30 bg-primary/5 p-6 transition-all">
                                     <div class="absolute right-0 top-0 rounded-bl-3xl bg-primary px-6 py-2 text-[10px] font-black uppercase tracking-widest text-white">
                                         Khuyên dùng
                                     </div>
@@ -121,7 +121,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="space-y-4 rounded-2xl bg-white p-6 shadow-sm">
+                                            <div class="space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
                                                 <div class="flex justify-between">
                                                     <span class="text-xs font-bold text-slate-400">Ngân hàng</span>
                                                     <span class="text-sm font-black text-slate-900">MBBank</span>
@@ -148,7 +148,7 @@
                                         </div>
 
                                         <div class="flex shrink-0 flex-col items-center justify-center space-y-4 md:w-48">
-                                            <div class="rounded-3xl border-4 border-white bg-white p-4 shadow-xl">
+                                            <div class="rounded-xl border-2 border-slate-100 bg-white p-3 shadow-sm">
                                                 <img src="https://img.vietqr.io/image/MB-VQRQAAVUO1996-qr_only.png?amount={{ (int)$totalPrice }}&addInfo={{ urlencode($paymentContent) }}" class="h-40 w-40" alt="Payment QR">
                                             </div>
                                             <div class="text-center text-[10px] font-black uppercase tracking-widest text-slate-400">
@@ -160,29 +160,29 @@
                             </div>
                         </section>
                     @elseif ($paymentStatus == 2)
-                        <section class="rounded-[2.5rem] bg-white p-16 text-center shadow-premium">
+                        <section class="rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm">
                             <div class="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-full bg-success/10 text-4xl text-success">
                                 <i class="fas fa-check-circle"></i>
                             </div>
                             <h2 class="font-display text-3xl font-black text-slate-900">Thanh toán thành công!</h2>
                             <p class="mt-4 text-slate-500">Cảm ơn quý khách đã đặt vé. Thông báo xác nhận đã được gửi đến email/SĐT của bạn.</p>
-                            <a href="/" class="mt-10 inline-block rounded-2xl bg-primary px-10 py-4 text-sm font-black text-white shadow-lg shadow-primary/20">QUAY LẠI TRANG CHỦ</a>
+                            <a href="/" class="mt-10 inline-block rounded-lg bg-primary px-8 py-3 text-sm font-semibold text-white shadow-sm">QUAY LẠI TRANG CHỦ</a>
                         </section>
                     @else
-                        <section class="rounded-[2.5rem] bg-white p-16 text-center shadow-premium">
+                        <section class="rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm">
                             <div class="mx-auto mb-8 flex h-24 w-24 items-center justify-center rounded-full bg-danger/10 text-4xl text-danger">
                                 <i class="fas fa-times-circle"></i>
                             </div>
                             <h2 class="font-display text-3xl font-black text-slate-900">Đơn hàng đã bị hủy</h2>
                             <p class="mt-4 text-slate-500">Tiếc quá, đơn hàng của bạn đã quá hạn thanh toán hoặc đã bị hủy.</p>
-                            <a href="/" class="mt-10 inline-block rounded-2xl bg-primary px-10 py-4 text-sm font-black text-white shadow-lg shadow-primary/20">ĐẶT VÉ MỚI</a>
+                            <a href="/" class="mt-10 inline-block rounded-lg bg-primary px-8 py-3 text-sm font-semibold text-white shadow-sm">ĐẶT VÉ MỚI</a>
                         </section>
                     @endif
                 </div>
 
                 {{-- Right: Summary --}}
                 <aside class="space-y-6">
-                    <section class="overflow-hidden rounded-[2.5rem] bg-white shadow-premium">
+                    <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                         <div class="bg-slate-50/80 px-8 py-6">
                             <h3 class="font-display text-lg font-black text-slate-900">Chi tiết đơn hàng</h3>
                         </div>
@@ -200,7 +200,7 @@
                             @foreach ($displayTickets as $key => $item)
                                 <div class="space-y-4">
                                     @if (count($displayTickets) > 1)
-                                        <div class="inline-block rounded-lg bg-primary/10 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-primary">
+                                        <div class="inline-block rounded-md bg-primary/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary">
                                             {{ $key === 0 ? 'Chiều đi' : 'Chiều về' }}
                                         </div>
                                     @endif
@@ -239,7 +239,7 @@
                 </aside>
             </div>
         @else
-            <div class="flex flex-col items-center justify-center rounded-[3rem] border-2 border-dashed border-slate-200 bg-white py-32 text-center shadow-sm">
+            <div class="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-white py-24 text-center shadow-sm">
                 <div class="mb-8 flex h-32 w-32 items-center justify-center rounded-full bg-slate-50 text-5xl text-slate-200">
                     <i class="fas fa-search"></i>
                 </div>
@@ -256,16 +256,46 @@
         navigator.clipboard.writeText(text).then(() => alert('Đã sao chép: ' + text));
     }
 
+    function showExpiredReservationNotice() {
+        const pageContainer = document.querySelector('.dailyve-payment-page .max-w-7xl');
+        if (!pageContainer) {
+            return;
+        }
+
+        pageContainer.innerHTML = `
+            <div class="flex flex-col items-center justify-center rounded-2xl border border-red-200 bg-white py-20 text-center shadow-sm">
+                <div class="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-red-50 text-3xl text-red-500">
+                    <i class="fas fa-times-circle" aria-hidden="true"></i>
+                </div>
+                <h2 class="font-display text-3xl font-black text-slate-900">Vé đã bị hủy giữ chỗ</h2>
+                <p class="mt-3 max-w-lg text-sm font-semibold text-slate-500">
+                    Thời gian thanh toán đã hết. Vui lòng quay lại trang chủ để tìm và đặt lại chuyến phù hợp.
+                </p>
+                <a href="/" class="mt-8 inline-flex min-h-10 items-center justify-center rounded-lg bg-primary px-8 py-3 text-sm font-semibold text-white shadow-sm">
+                    VỀ TRANG CHỦ
+                </a>
+            </div>
+        `;
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         @if ($paymentStatus == 1)
             let remaining = {{ (int)$remaining_seconds }};
             const expireAt = Date.now() + remaining * 1000;
+            let isExpiredRendered = false;
+            let checkStatus = null;
             const timer = setInterval(() => {
                 const rem = Math.floor((expireAt - Date.now()) / 1000);
                 if (rem <= 0) {
                     clearInterval(timer);
                     document.getElementById('time-expired').innerText = '00:00';
-                    location.reload();
+                    if (checkStatus) {
+                        clearInterval(checkStatus);
+                    }
+                    if (!isExpiredRendered) {
+                        isExpiredRendered = true;
+                        showExpiredReservationNotice();
+                    }
                     return;
                 }
                 const m = Math.floor(rem / 60);
@@ -274,7 +304,7 @@
             }, 1000);
 
             // Polling transaction status
-            const checkStatus = setInterval(() => {
+            checkStatus = setInterval(() => {
                 const formData = new FormData();
                 formData.append('action', 'check_transaction_ticket');
                 formData.append('nonce', '{{ wp_create_nonce('ams_vexe_check_transaction') }}');

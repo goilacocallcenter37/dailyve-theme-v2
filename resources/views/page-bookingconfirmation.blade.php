@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="min-h-screen bg-slate-50/50 pb-20 pt-10">
+<div class="dailyve-booking-page min-h-screen bg-slate-50/50 pb-20 pt-10">
     <div class="mx-auto max-w-7xl px-4">
         @php
             if (session_status() === PHP_SESSION_NONE) {
@@ -54,7 +54,7 @@
             <div class="grid gap-10 lg:grid-cols-[1fr_400px]">
                 {{-- Left Column: Contact Form --}}
                 <div class="space-y-8">
-                    <section class="rounded-[2.5rem] bg-white p-8 shadow-premium md:p-12">
+                    <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
                         <h3 class="flex items-center gap-3 font-display text-2xl font-bold text-slate-900">
                             <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
                                 <i class="fas fa-user-edit"></i>
@@ -65,47 +65,47 @@
                         <div class="mt-10 grid gap-8 md:grid-cols-2">
                             <div class="space-y-2">
                                 <label class="text-xs font-bold uppercase tracking-widest text-slate-400">Họ và tên *</label>
-                                <input 
+                                <input
                                     type="text" 
                                     name="customer-name"
                                     placeholder="Nguyễn Văn A"
                                     value="{{ $collab_guest_name }}"
                                     {{ $collab_guest_name ? 'readonly' : '' }}
-                                    class="w-full rounded-2xl border-2 border-slate-50 bg-slate-50/50 px-6 py-4 font-semibold text-slate-700 outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10"
+                                    class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 font-medium text-slate-700 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
                                 />
                             </div>
                             <div class="space-y-2">
                                 <label class="text-xs font-bold uppercase tracking-widest text-slate-400">Số điện thoại *</label>
-                                <input 
+                                <input
                                     type="tel" 
                                     name="customer-phone"
                                     placeholder="09xx xxx xxx"
                                     value="{{ $collab_guest_phone }}"
                                     {{ $collab_guest_phone ? 'readonly' : '' }}
-                                    class="w-full rounded-2xl border-2 border-slate-50 bg-slate-50/50 px-6 py-4 font-semibold text-slate-700 outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10"
+                                    class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 font-medium text-slate-700 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
                                 />
                             </div>
                             <div class="space-y-2 md:col-span-2">
                                 <label class="text-xs font-bold uppercase tracking-widest text-slate-400">Email *</label>
-                                <input 
+                                <input
                                     type="email" 
                                     name="customer-email"
                                     placeholder="email@example.com"
-                                    class="w-full rounded-2xl border-2 border-slate-50 bg-slate-50/50 px-6 py-4 font-semibold text-slate-700 outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10"
+                                    class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 font-medium text-slate-700 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
                                 />
                             </div>
                             <div class="space-y-2 md:col-span-2">
                                 <label class="text-xs font-bold uppercase tracking-widest text-slate-400">Ghi chú</label>
-                                <textarea 
+                                <textarea
                                     name="customer-note"
                                     rows="3"
                                     placeholder="Ví dụ: Đón tôi tại cổng số 1..."
-                                    class="w-full rounded-2xl border-2 border-slate-50 bg-slate-50/50 px-6 py-4 font-bold text-slate-700 outline-none transition-all focus:border-primary focus:bg-white focus:ring-4 focus:ring-primary/10"
+                                    class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 font-medium text-slate-700 outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
                                 ></textarea>
                             </div>
                         </div>
 
-                        <div class="mt-8 flex items-center gap-4 rounded-2xl border-2 border-blue-50 bg-blue-50/30 p-6">
+                        <div class="mt-8 flex items-center gap-4 rounded-xl border border-blue-100 bg-blue-50/40 p-4">
                             <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white">
                                 <i class="fas fa-shield-alt"></i>
                             </div>
@@ -116,7 +116,7 @@
                     </section>
 
                     <div class="hidden lg:block">
-                        <button id="btn_payment_desktop" class="group flex w-full items-center justify-center gap-4 rounded-[2rem] bg-success py-6 text-xl font-bold text-white shadow-xl shadow-success/20 transition-all hover:scale-[1.02] hover:opacity-95 active:scale-95">
+                        <button id="btn_payment_desktop" class="group flex w-full items-center justify-center gap-3 rounded-lg bg-primary py-4 text-base font-semibold text-white shadow-sm transition-all hover:bg-primary-active active:scale-95">
                             TIẾP TỤC THANH TOÁN
                             <i class="fas fa-arrow-right transition-transform group-hover:translate-x-2"></i>
                         </button>
@@ -129,7 +129,7 @@
                 {{-- Right Column: Trip Summary --}}
                 <aside class="space-y-6">
                     <div class="sticky top-24 space-y-6">
-                        <section class="overflow-hidden rounded-[2.5rem] bg-white shadow-premium">
+                        <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                             <div class="bg-slate-50/80 px-8 py-6">
                                 <h3 class="font-display text-lg font-bold text-slate-900">Chi tiết chuyến đi</h3>
                             </div>
@@ -138,7 +138,7 @@
                                 @foreach ($tickets as $key => $ticket)
                                     <div class="relative space-y-6">
                                         @if (count($tickets) > 1)
-                                            <div class="inline-block rounded-lg bg-primary/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary">
+                                        <div class="inline-block rounded-md bg-primary/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary">
                                                 {{ $key === 0 ? 'Chiều đi' : 'Chiều về' }}
                                             </div>
                                         @endif
@@ -173,7 +173,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="flex items-center gap-3 rounded-2xl bg-slate-50 p-4">
+                                        <div class="flex items-center gap-3 rounded-lg bg-slate-50 p-4">
                                             <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-slate-400 shadow-sm">
                                                 <i class="fas fa-couch"></i>
                                             </div>
@@ -211,7 +211,7 @@
                 </aside>
             </div>
         @else
-            <div class="flex flex-col items-center justify-center rounded-[3rem] border-2 border-dashed border-slate-200 bg-white py-32 text-center shadow-sm">
+            <div class="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 bg-white py-24 text-center shadow-sm">
                 <div class="mb-8 flex h-32 w-32 items-center justify-center rounded-full bg-slate-50 text-5xl text-slate-200">
                     <i class="fas fa-shopping-cart"></i>
                 </div>

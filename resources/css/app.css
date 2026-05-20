@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss" theme(static);
 @import "./home.css";
 
@@ -2164,8 +2164,8 @@ body.dailyve-date-range-picker-open {
   background: none;
   border: none;
   color: #1D7AE8;
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
   list-style: none;
   outline: none;
@@ -2596,8 +2596,8 @@ body.dailyve-date-range-picker-open {
 }
 
 .ol-card__amenity-detailed-icon {
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -2640,8 +2640,8 @@ body.dailyve-date-range-picker-open {
 }
 
 .ol-card__amenity-simple-icon {
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
   flex-shrink: 0;
 }
@@ -3716,6 +3716,38 @@ body.dailyve-date-range-picker-open {
   border-top-color: var(--color-primary, #2196F3) !important;
   border-radius: 9999px !important;
   animation: premium-spin 0.8s linear infinite !important;
+}
+
+/* Booking / Payment / Lookup pages */
+.dailyve-booking-page h1,
+.dailyve-payment-page h1,
+.dailyve-lookup-page h1 {
+  font-family: "Space Grotesk", "Be Vietnam Pro", sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #0F172A;
+}
+
+.dailyve-booking-page .font-display,
+.dailyve-payment-page .font-display {
+  font-weight: 600 !important;
+  letter-spacing: -0.01em;
+}
+
+.dailyve-booking-page [class*="rounded-[2.5rem]"],
+.dailyve-payment-page [class*="rounded-[2.5rem]"],
+.dailyve-booking-page [class*="rounded-[3rem]"],
+.dailyve-payment-page [class*="rounded-[3rem]"] {
+  border-radius: 12px !important;
+}
+
+.dailyve-booking-page .shadow-premium,
+.dailyve-payment-page .shadow-premium {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+.dailyve-lookup-page + .profile-dashboard-layout {
+  margin-top: 0;
 }
 
 @keyframes premium-spin {

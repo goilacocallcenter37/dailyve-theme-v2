@@ -121,10 +121,8 @@
           </div>
           
           <div class="relative z-10">
-            <a href="tel:19000155" class="bg-white text-blue-900 hover:bg-slate-50 transition-all font-black text-xl md:text-2xl py-4 px-6 rounded-2xl flex items-center justify-center gap-3 shadow-lg hover:shadow-xl active:scale-[0.98] duration-200 group/btn">
-              <svg class="w-6 h-6 text-red-500 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-              </svg>
+            <a href="tel:19000155" class="bg-white no-underline! text-blue-900 hover:bg-slate-50 transition-all font-black text-xl md:text-2xl py-4 px-6 rounded-2xl flex items-center justify-center gap-3 shadow-lg hover:shadow-xl active:scale-[0.98] duration-200 group/btn">
+              <i class="fas fa-phone-alt text-blue-600 group-hover/btn:text-blue-800 transition-colors"></i>
               <span>1900 0155</span>
             </a>
             <p class="text-center text-[10px] md:text-xs text-blue-200 mt-3 font-medium">Cước phí theo quy định nhà mạng</p>

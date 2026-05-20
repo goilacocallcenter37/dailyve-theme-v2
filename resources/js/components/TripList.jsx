@@ -898,9 +898,9 @@ const DetailTabs = ({ trip, gallery }) => {
                           key={i}
                           className="flex gap-4 rounded-3xl border border-slate-100 p-5 transition-all hover:border-primary-light/30 hover:bg-blue-50/20"
                         >
-                          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 shadow-inner">
+                          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50">
                             {item.icon_url ? (
-                              <img src={item.icon_url} className="h-6 w-6 object-contain" alt={item.name} />
+                              <img src={item.icon_url} className="h-7 w-7 object-contain" alt={item.name} rel='nofollow noreferrer' />
                             ) : (
                               <i className="fas fa-wifi text-primary text-lg"></i>
                             )}
