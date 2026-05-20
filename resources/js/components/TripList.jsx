@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import SeatSelection from './SeatSelection';
 import SearchForm from './SearchForm';
@@ -521,6 +521,146 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange }
   );
 };
 
+const TripImageSlider = ({ gallery, companyName }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const trackRef = useRef(null);
+  const thumbnailsRef = useRef(null);
+
+  const goToSlide = (idx) => {
+    if (!trackRef.current) return;
+    const width = trackRef.current.offsetWidth;
+    trackRef.current.scrollTo({
+      left: idx * width,
+      behavior: 'smooth',
+    });
+    setCurrentIndex(idx);
+    scrollThumbnailIntoView(idx);
+  };
+
+  const slidePrev = () => {
+    const nextIdx = currentIndex === 0 ? gallery.length - 1 : currentIndex - 1;
+    goToSlide(nextIdx);
+  };
+
+  const slideNext = () => {
+    const nextIdx = currentIndex === gallery.length - 1 ? 0 : currentIndex + 1;
+    goToSlide(nextIdx);
+  };
+
+  const handleScroll = () => {
+    if (!trackRef.current) return;
+    const scrollLeft = trackRef.current.scrollLeft;
+    const width = trackRef.current.offsetWidth;
+    if (width > 0) {
+      const idx = Math.round(scrollLeft / width);
+      if (idx !== currentIndex && idx >= 0 && idx < gallery.length) {
+        setCurrentIndex(idx);
+        scrollThumbnailIntoView(idx);
+      }
+    }
+  };
+
+  const scrollThumbnailIntoView = (idx) => {
+    if (!thumbnailsRef.current) return;
+    const thumbs = thumbnailsRef.current.querySelectorAll('.ol-card__thumbnail');
+    const targetThumb = thumbs[idx];
+    if (targetThumb) {
+      const container = thumbnailsRef.current;
+      const left = targetThumb.offsetLeft - container.offsetWidth / 2 + targetThumb.offsetWidth / 2;
+      container.scrollTo({
+        left: left,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (trackRef.current) {
+        const width = trackRef.current.offsetWidth;
+        trackRef.current.scrollLeft = currentIndex * width;
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [currentIndex]);
+
+  if (!gallery || gallery.length === 0) {
+    return (
+      <div className="ol-card__gallery-empty">
+        <p>Hình ảnh nhà xe đang được cập nhật.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full space-y-4">
+      <div className="ol-card__slider">
+        <div
+          className="ol-card__slider-track"
+          ref={trackRef}
+          onScroll={handleScroll}
+          style={{ scrollBehavior: 'smooth' }}
+        >
+          {gallery.map((img, i) => (
+            <div key={i} className="ol-card__slider-slide">
+              <img
+                src={img.url || img.medium}
+                alt={img.title || companyName}
+                loading="lazy"
+              />
+              {img.title && img.title !== companyName && (
+                <div className="ol-card__slider-caption">{img.title}</div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {gallery.length > 1 && (
+          <>
+            <button
+              type="button"
+              className="ol-card__slider-btn ol-card__slider-btn--prev"
+              onClick={slidePrev}
+              aria-label="Slide trước"
+            >
+              <i className="fas fa-chevron-left"></i>
+            </button>
+            <button
+              type="button"
+              className="ol-card__slider-btn ol-card__slider-btn--next"
+              onClick={slideNext}
+              aria-label="Slide tiếp theo"
+            >
+              <i className="fas fa-chevron-right"></i>
+            </button>
+            <div className="ol-card__slider-counter">
+              <span className="current">{currentIndex + 1}</span>/
+              <span className="total">{gallery.length}</span>
+            </div>
+          </>
+        )}
+      </div>
+
+      {gallery.length > 1 && (
+        <div className="ol-card__thumbnails" ref={thumbnailsRef}>
+          {gallery.map((img, i) => (
+            <button
+              key={i}
+              type="button"
+              className={`ol-card__thumbnail ${i === currentIndex ? 'active' : ''}`}
+              onClick={() => goToSlide(i)}
+              aria-label={`Xem ảnh ${i + 1}`}
+            >
+              <img src={img.medium || img.url} alt={img.title || companyName} loading="lazy" />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
 const DetailTabs = ({ trip, gallery }) => {
   const [activeTab, setActiveTab] = useState('images');
 
@@ -723,12 +863,12 @@ const DetailTabs = ({ trip, gallery }) => {
 
   return (
     <div className="dailyve-trip-details overflow-hidden rounded-[2rem] border border-slate-100 bg-white shadow-sm">
-      <div className="flex flex-wrap border-b border-slate-50 bg-slate-50/50 p-2">
+      <div className="flex overflow-x-auto flex-nowrap [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden border-b border-slate-50 bg-slate-50/50 p-2 md:flex-wrap md:overflow-x-visible">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-2 rounded-2xl px-6 py-3 text-xs font-black uppercase tracking-wider transition-all ${activeTab === tab.id
+            className={`flex shrink-0 items-center gap-2 rounded-2xl px-6 py-3 text-xs font-black uppercase tracking-wider transition-all ${activeTab === tab.id
               ? 'bg-white text-primary shadow-sm'
               : 'text-slate-400 hover:text-slate-600'
               }`}
@@ -738,19 +878,9 @@ const DetailTabs = ({ trip, gallery }) => {
         ))}
       </div>
 
-      <div className="p-8">
+      <div className="p-2 sm:p-8">
         {activeTab === 'images' && (
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            {gallery.map((img, i) => (
-              <div key={i} className="group relative aspect-video overflow-hidden rounded-2xl bg-slate-100">
-                <img
-                  src={img.medium || img.url}
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  alt={img.title || trip.company_name}
-                />
-              </div>
-            ))}
-          </div>
+          <TripImageSlider gallery={gallery} companyName={trip.company_name} />
         )}
 
         {activeTab === 'utilities' && (

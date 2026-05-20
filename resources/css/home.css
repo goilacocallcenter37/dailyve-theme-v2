@@ -848,14 +848,35 @@ body {
   cursor: not-allowed;
 }
 
-.dailyve-search__field select:focus,
-.dailyve-search__field input:focus {
-  outline: 0;
+.dailyve-search .dailyve-search__field input,
+.dailyve-search .dailyve-search__field input:focus,
+.dailyve-search .dailyve-search__field input:focus-visible,
+.dailyve-search .dailyve-search__field select,
+.dailyve-search .dailyve-search__field select:focus,
+.dailyve-trip-list .dailyve-search__field input,
+.dailyve-trip-list .dailyve-search__field input:focus,
+.dailyve-trip-list .dailyve-search__field input:focus-visible,
+.dailyve-trip-list .dailyve-search__field select,
+.dailyve-trip-list .dailyve-search__field select:focus {
+  border: 0 !important;
+  border-width: 0 !important;
+  border-style: none !important;
+  outline: none !important;
+  outline-style: none !important;
+  box-shadow: none !important;
+  --tw-ring-color: transparent !important;
+  --tw-ring-width: 0px !important;
+  --tw-ring-offset-width: 0px !important;
 }
 
 .dailyve-search__field:focus-within {
-  border-color: #007aff;
-  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+  border-color: #cbd5e1;
+  box-shadow: none;
+}
+
+.dailyve-search__field:focus-within:hover {
+  border-color: #93c5fd;
+  background-color: #fafcff;
 }
 
 

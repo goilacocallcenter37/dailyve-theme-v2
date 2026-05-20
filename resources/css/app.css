@@ -3726,3 +3726,25 @@ body.dailyve-date-range-picker-open {
     transform: rotate(360deg);
   }
 }
+
+/* Specific resets for SearchForm inputs inside trip lists or other containers */
+.dailyve-search .dailyve-search__field input,
+.dailyve-search .dailyve-search__field input:focus,
+.dailyve-search .dailyve-search__field input:focus-visible,
+.dailyve-search .dailyve-search__field select,
+.dailyve-search .dailyve-search__field select:focus,
+.dailyve-trip-list .dailyve-search__field input,
+.dailyve-trip-list .dailyve-search__field input:focus,
+.dailyve-trip-list .dailyve-search__field input:focus-visible,
+.dailyve-trip-list .dailyve-search__field select,
+.dailyve-trip-list .dailyve-search__field select:focus {
+  border: 0 !important;
+  border-width: 0 !important;
+  border-style: none !important;
+  outline: none !important;
+  outline-style: none !important;
+  box-shadow: none !important;
+  --tw-ring-color: transparent !important;
+  --tw-ring-width: 0px !important;
+  --tw-ring-offset-width: 0px !important;
+}

@@ -198,6 +198,7 @@ export const LocationCombobox = ({
         ref={inputRef}
         id={fieldId}
         type="text"
+        className="border-none outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 bg-transparent p-0 w-full shadow-none"
         value={inputValue}
         placeholder={placeholder}
         autoComplete="off"
