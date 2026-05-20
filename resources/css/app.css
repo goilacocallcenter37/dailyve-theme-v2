@@ -318,7 +318,7 @@ body {
   font-size: 0.875rem;
 }
 
-.tuyen-duong-item__content__address > span {
+.tuyen-duong-item__content__address>span {
   margin-left: 5px;
 }
 
@@ -390,6 +390,7 @@ body {
   .posts-list--grid {
     grid-template-columns: 1fr;
   }
+
   .lvn-tab-content {
     flex-direction: column;
     align-items: stretch;
@@ -412,7 +413,21 @@ body {
 }
 
 /* Unified Global Typography - Be Vietnam Pro (Body) & Space Grotesk (Display) */
-html, body, p, a, input, select, textarea, button, label, td, th, li, span, strong, em {
+html,
+body,
+p,
+a,
+input,
+select,
+textarea,
+button,
+label,
+td,
+th,
+li,
+span,
+strong,
+em {
   font-family: var(--font-display);
 }
 
@@ -422,7 +437,14 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
 } */
 
 /* Maintain Font Awesome Icons */
-.fa, .fas, .far, .fal, .fab, .fad, [class^="fa-"], [class*=" fa-"] {
+.fa,
+.fas,
+.far,
+.fal,
+.fab,
+.fad,
+[class^="fa-"],
+[class*=" fa-"] {
   font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", sans-serif !important;
 }
 
@@ -431,7 +453,8 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
   position: relative;
   vertical-align: middle;
   display: inline-block;
-  color: #e2e8f0 !important; /* Tailwind slate-200 */
+  color: #e2e8f0 !important;
+  /* Tailwind slate-200 */
   overflow: hidden;
   line-height: 1;
 }
@@ -442,7 +465,8 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
   top: 0;
   white-space: nowrap;
   overflow: hidden;
-  color: #fbbf24 !important; /* Tailwind amber-400 */
+  color: #fbbf24 !important;
+  /* Tailwind amber-400 */
   line-height: 1;
 }
 
@@ -470,7 +494,8 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
   top: 8px !important;
   bottom: 8px !important;
   width: 2px !important;
-  background: #f1f5f9 !important; /* slate-100 */
+  background: #f1f5f9 !important;
+  /* slate-100 */
 }
 
 .points-timeline-list li {
@@ -498,17 +523,20 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
   height: 10px !important;
   border-radius: 50% !important;
   background: #ffffff !important;
-  border: 3px solid #cbd5e1 !important; /* slate-300 */
+  border: 3px solid #cbd5e1 !important;
+  /* slate-300 */
   z-index: 2 !important;
 }
 
 /* Timeline nodes colors */
 .pickup-list li::before {
-  border-color: #10b981 !important; /* emerald-500 */
+  border-color: #10b981 !important;
+  /* emerald-500 */
 }
 
 .dropoff-list li::before {
-  border-color: #ef4444 !important; /* red-500 */
+  border-color: #ef4444 !important;
+  /* red-500 */
 }
 
 /* Premium Time Pill Tag */
@@ -518,8 +546,10 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
   justify-content: center !important;
   font-size: 0.8rem !important;
   font-weight: 800 !important;
-  color: #0f172a !important; /* slate-900 */
-  background: #f1f5f9 !important; /* slate-100 */
+  color: #0f172a !important;
+  /* slate-900 */
+  background: #f1f5f9 !important;
+  /* slate-100 */
   padding: 0.25rem 0.5rem !important;
   border-radius: 0.5rem !important;
   min-width: 52px !important;
@@ -532,7 +562,8 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
 .points-timeline-list .accordion-sub-item__list__place {
   font-size: 0.85rem !important;
   font-weight: 700 !important;
-  color: #334155 !important; /* slate-700 */
+  color: #334155 !important;
+  /* slate-700 */
   line-height: 1.4 !important;
   font-family: "Be Vietnam Pro", sans-serif !important;
 }
@@ -555,12 +586,14 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
 }
 
 .points-timeline-container::-webkit-scrollbar-thumb {
-  background: #cbd5e1; /* slate-300 */
+  background: #cbd5e1;
+  /* slate-300 */
   border-radius: 3px;
 }
 
 .points-timeline-container::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8; /* slate-400 */
+  background: #94a3b8;
+  /* slate-400 */
 }
 
 /* Premium Review Criteria Progress Bars Grid */
@@ -587,7 +620,8 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
 .rating-tab__cat-name {
   font-size: 0.8rem !important;
   font-weight: 700 !important;
-  color: #475569 !important; /* slate-600 */
+  color: #475569 !important;
+  /* slate-600 */
   font-family: "Be Vietnam Pro", sans-serif !important;
 }
 
@@ -601,7 +635,8 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
 .rating-tab__progress__bar {
   flex: 1 !important;
   height: 6px !important;
-  background: #f1f5f9 !important; /* slate-100 */
+  background: #f1f5f9 !important;
+  /* slate-100 */
   border-radius: 9999px !important;
   overflow: hidden !important;
 }
@@ -616,7 +651,8 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
 .rating-tab__progress__txt {
   font-size: 0.8rem !important;
   font-weight: 800 !important;
-  color: #0f172a !important; /* slate-900 */
+  color: #0f172a !important;
+  /* slate-900 */
   min-width: 24px !important;
   text-align: right !important;
   font-family: "Be Vietnam Pro", sans-serif !important;
@@ -624,18 +660,37 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
 
 /* --- PREMIUM AUTH & PROFILE PORTAL ANIMS --- */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(12px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes slideDown {
-  from { transform: translateY(-8px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(-8px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .animate-fade-in {
@@ -955,7 +1010,7 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
   font-weight: 500;
 }
 
-.route-breadcrumb li + li::before {
+.route-breadcrumb li+li::before {
   content: '›';
   margin-right: 8px;
   color: #CBD5E1;
@@ -1616,12 +1671,14 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
   border-bottom: 2px solid #EDF2F7;
   gap: 8px;
   overflow-x: auto;
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
+  /* Firefox */
   -webkit-overflow-scrolling: touch;
 }
 
 .ol-card__tabs-nav::-webkit-scrollbar {
-  display: none; /* Hide scrollbar for Chrome/Safari */
+  display: none;
+  /* Hide scrollbar for Chrome/Safari */
 }
 
 .ol-card__tabs-nav-item {
@@ -1680,6 +1737,7 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
     opacity: 0;
     transform: translateY(4px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1690,6 +1748,8 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
 .ol-card__slider {
   position: relative;
   width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
   border-radius: 12px;
   overflow: hidden;
   background: #111827;
@@ -1732,11 +1792,82 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
   left: 0;
   right: 0;
   padding: 12px 16px;
-  background: linear-gradient(transparent, rgba(0,0,0,0.85));
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
   color: #FFFFFF;
   font-size: 0.8rem;
   font-weight: 600;
   text-align: center;
+}
+
+/* Premium Vexere Slider Counter & Thumbnails */
+.ol-card__slider-counter {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #FFFFFF;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  z-index: 10;
+  letter-spacing: 0.5px;
+}
+
+.ol-card__thumbnails {
+  display: flex;
+  gap: 8px;
+  margin: 12px auto 0;
+  max-width: 600px;
+  overflow-x: auto;
+  padding: 2px 2px 8px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ol-card__thumbnails::-webkit-scrollbar {
+  height: 5px;
+}
+
+.ol-card__thumbnails::-webkit-scrollbar-track {
+  background: #F1F5F9;
+  border-radius: 10px;
+}
+
+.ol-card__thumbnails::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 10px;
+}
+
+.ol-card__thumbnail {
+  flex: 0 0 80px;
+  width: 80px;
+  height: 50px;
+  padding: 0;
+  border: 2px solid #E2E8F0;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  background: none;
+  transition: all 0.2s ease;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.ol-card__thumbnail:hover {
+  border-color: #94A3B8;
+}
+
+.ol-card__thumbnail.active {
+  border-color: #2196F3;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.25);
+}
+
+.ol-card__thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .ol-card__slider-btn {
@@ -1821,7 +1952,7 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
   border: 1px solid #E2E8F0;
   padding: 8px 16px;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .ol-card__rating-score {
@@ -1870,6 +2001,88 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
   font-size: 0.72rem;
   color: #475569;
   font-weight: 500;
+}
+
+/* Premium Vexere-style Utilities */
+.ol-card__amenities-detailed {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 0 16px;
+  margin-bottom: 20px;
+}
+
+.ol-card__amenity-detailed-item {
+  padding: 16px 0;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.ol-card__amenity-detailed-item:last-child {
+  border-bottom: none;
+}
+
+.ol-card__amenity-detailed-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.ol-card__amenity-detailed-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.ol-card__amenity-detailed-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.ol-card__amenity-detailed-desc {
+  font-size: 0.825rem;
+  color: #475569;
+  line-height: 1.5;
+  padding-left: 30px;
+  /* Aligns with the title text under the icon */
+}
+
+/* Simple utilities grid */
+.ol-card__amenities-simple-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.ol-card__amenity-simple {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.ol-card__amenity-simple:hover {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+}
+
+.ol-card__amenity-simple-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.ol-card__amenity-simple-title {
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: #334155;
 }
 
 /* All stations */
@@ -2197,7 +2410,7 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
   box-shadow: none;
 }
 
-.dailyve-datepicker__header > button:hover,
+.dailyve-datepicker__header>button:hover,
 .dailyve-datepicker__grid button:hover:not(:disabled) {
   border-color: var(--dv-primary);
   background: var(--dv-canvas);
@@ -2208,7 +2421,7 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
   color: var(--dv-primary);
 }
 
-.dailyve-datepicker__header > button {
+.dailyve-datepicker__header>button {
   border: 1px solid var(--dv-hairline);
   background: var(--dv-canvas);
   color: var(--dv-ink);
@@ -2629,7 +2842,7 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
 }
 
 .dailyve-trip-hero p,
-.dailyve-results-summary > div:last-child,
+.dailyve-results-summary>div:last-child,
 .ol-stats__badge,
 .dailyve-trip-card [class*="rounded-full"] {
   font-weight: 500 !important;
@@ -2640,7 +2853,7 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
   overflow: hidden;
 }
 
-.dailyve-trip-card > div:first-of-type {
+.dailyve-trip-card>div:first-of-type {
   gap: 24px;
   padding: 24px;
 }
@@ -2685,7 +2898,7 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
   background: var(--dv-primary-active) !important;
 }
 
-.dailyve-seat-selection aside > div,
+.dailyve-seat-selection aside>div,
 .dailyve-seat-selection label,
 .dailyve-seat-selection [class*="bg-white"],
 .dailyve-important-modal [class*="bg-white"],
@@ -2731,8 +2944,7 @@ html, body, p, a, input, select, textarea, button, label, td, th, li, span, stro
 }
 
 @media (max-width: 760px) {
-  .dailyve-trip-card > div:first-of-type {
+  .dailyve-trip-card>div:first-of-type {
     padding: 16px;
   }
 }
-

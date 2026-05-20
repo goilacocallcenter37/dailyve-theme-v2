@@ -412,9 +412,9 @@
                       <div class="ol-card__tab-pane active" id="images-{{ $operator_index }}">
                         @if (!empty($operator_images))
                           <div class="ol-card__slider">
-                            <div class="ol-card__slider-track" id="slider-track-{{ $operator_index }}">
-                              @foreach ($operator_images as $image)
-                                <div class="ol-card__slider-slide">
+                            <div class="ol-card__slider-track" id="slider-track-{{ $operator_index }}" onscroll="handleSliderScroll({{ $operator_index }})">
+                              @foreach ($operator_images as $img_idx => $image)
+                                <div class="ol-card__slider-slide" data-index="{{ $img_idx }}">
                                   <img src="{{ esc_url($image['url']) }}" alt="{{ esc_attr($image['alt']) }}" loading="lazy" decoding="async" />
                                   @if (!empty($image['caption']))
                                     <div class="ol-card__slider-caption">{{ $image['caption'] }}</div>
@@ -423,14 +423,27 @@
                               @endforeach
                             </div>
                             @if (count($operator_images) > 1)
-                              <button type="button" class="ol-card__slider-btn ol-card__slider-btn--prev" onclick="document.getElementById('slider-track-{{ $operator_index }}').scrollBy({left: -document.getElementById('slider-track-{{ $operator_index }}').offsetWidth, behavior: 'smooth'})" aria-label="Slide trước">
+                              <button type="button" class="ol-card__slider-btn ol-card__slider-btn--prev" onclick="slidePrev({{ $operator_index }})" aria-label="Slide trước">
                                 <i class="fas fa-chevron-left"></i>
                               </button>
-                              <button type="button" class="ol-card__slider-btn ol-card__slider-btn--next" onclick="document.getElementById('slider-track-{{ $operator_index }}').scrollBy({left: document.getElementById('slider-track-{{ $operator_index }}').offsetWidth, behavior: 'smooth'})" aria-label="Slide tiếp theo">
+                              <button type="button" class="ol-card__slider-btn ol-card__slider-btn--next" onclick="slideNext({{ $operator_index }})" aria-label="Slide tiếp theo">
                                 <i class="fas fa-chevron-right"></i>
                               </button>
+                              <div class="ol-card__slider-counter" id="slider-counter-{{ $operator_index }}">
+                                <span class="current">1</span>/<span class="total">{{ count($operator_images) }}</span>
+                              </div>
                             @endif
                           </div>
+
+                          @if (count($operator_images) > 1)
+                            <div class="ol-card__thumbnails" id="slider-thumbnails-{{ $operator_index }}">
+                              @foreach ($operator_images as $img_idx => $image)
+                                <button type="button" class="ol-card__thumbnail {{ $img_idx === 0 ? 'active' : '' }}" onclick="goToSlide({{ $operator_index }}, {{ $img_idx }})" aria-label="Xem ảnh {{ $img_idx + 1 }}">
+                                  <img src="{{ esc_url($image['thumb'] ?? $image['url']) }}" alt="{{ esc_attr($image['alt']) }}" loading="lazy" />
+                                </button>
+                              @endforeach
+                            </div>
+                          @endif
                         @else
                           <div class="ol-card__gallery-empty">
                             <p>Hình ảnh nhà xe đang được cập nhật.</p>
@@ -441,23 +454,63 @@
                       <!-- Tab Pane: Tiện ích -->
                       <div class="ol-card__tab-pane" id="amenities-{{ $operator_index }}">
                         @if (!empty($amenities))
+                          @php
+                            $amenities_with_desc = [];
+                            $amenities_no_desc = [];
+                            foreach ($amenities as $a) {
+                                if (!empty($a['description'])) {
+                                    $amenities_with_desc[] = $a;
+                                } else {
+                                    $amenities_no_desc[] = $a;
+                                }
+                            }
+                          @endphp
+
                           <div class="ol-card__amenities">
-                            <div class="ol-card__amenity-grid">
-                              @foreach ($amenities as $a)
-                                @php
-                                  $img = $a['image'] ?? '';
-                                  if (str_starts_with($img, '//')) {
-                                      $img = 'https:' . $img;
-                                  }
-                                @endphp
-                                <div class="ol-card__amenity" title="{{ $a['description'] ?? $a['title'] ?? '' }}">
-                                  @if ($img)
-                                    <img src="{{ esc_url($img) }}" alt="{{ esc_attr($a['title'] ?? '') }}" loading="lazy" />
-                                  @endif
-                                  <span>{{ $a['title'] ?? '' }}</span>
-                                </div>
-                              @endforeach
-                            </div>
+                            {{-- Utilities with descriptions: detailed vertical list --}}
+                            @if (!empty($amenities_with_desc))
+                              <div class="ol-card__amenities-detailed">
+                                @foreach ($amenities_with_desc as $a)
+                                  @php
+                                    $img = $a['image'] ?? '';
+                                    if (str_starts_with($img, '//')) {
+                                        $img = 'https:' . $img;
+                                    }
+                                  @endphp
+                                  <div class="ol-card__amenity-detailed-item">
+                                    <div class="ol-card__amenity-detailed-header">
+                                      @if ($img)
+                                        <img class="ol-card__amenity-detailed-icon" src="{{ esc_url($img) }}" alt="{{ esc_attr($a['title'] ?? '') }}" loading="lazy" />
+                                      @endif
+                                      <span class="ol-card__amenity-detailed-title">{{ $a['title'] ?? '' }}</span>
+                                    </div>
+                                    <div class="ol-card__amenity-detailed-desc">
+                                      {{ $a['description'] }}
+                                    </div>
+                                  </div>
+                                @endforeach
+                              </div>
+                            @endif
+
+                            {{-- Utilities without descriptions: responsive grid --}}
+                            @if (!empty($amenities_no_desc))
+                              <div class="ol-card__amenities-simple-grid">
+                                @foreach ($amenities_no_desc as $a)
+                                  @php
+                                    $img = $a['image'] ?? '';
+                                    if (str_starts_with($img, '//')) {
+                                        $img = 'https:' . $img;
+                                    }
+                                  @endphp
+                                  <div class="ol-card__amenity-simple" title="{{ $a['title'] ?? '' }}">
+                                    @if ($img)
+                                      <img class="ol-card__amenity-simple-icon" src="{{ esc_url($img) }}" alt="{{ esc_attr($a['title'] ?? '') }}" loading="lazy" />
+                                    @endif
+                                    <span class="ol-card__amenity-simple-title">{{ $a['title'] ?? '' }}</span>
+                                  </div>
+                                @endforeach
+                              </div>
+                            @endif
                           </div>
                         @else
                           <div class="ol-card__amenities-empty">
@@ -597,6 +650,83 @@
   @endif
 
   <script>
+    // Premium Image Slider Coordination Logic
+    function goToSlide(opIndex, slideIdx) {
+      var track = document.getElementById('slider-track-' + opIndex);
+      if (!track) return;
+      var firstSlide = track.querySelector('.ol-card__slider-slide');
+      if (!firstSlide) return;
+      var slideWidth = firstSlide.offsetWidth;
+      track.scrollTo({
+        left: slideIdx * slideWidth,
+        behavior: 'smooth'
+      });
+      updateSliderUI(opIndex, slideIdx);
+    }
+
+    function slidePrev(opIndex) {
+      var track = document.getElementById('slider-track-' + opIndex);
+      if (!track) return;
+      var firstSlide = track.querySelector('.ol-card__slider-slide');
+      if (!firstSlide) return;
+      var slideWidth = firstSlide.offsetWidth;
+      var currentIndex = Math.round(track.scrollLeft / slideWidth);
+      var nextIndex = Math.max(0, currentIndex - 1);
+      goToSlide(opIndex, nextIndex);
+    }
+
+    function slideNext(opIndex) {
+      var track = document.getElementById('slider-track-' + opIndex);
+      if (!track) return;
+      var firstSlide = track.querySelector('.ol-card__slider-slide');
+      if (!firstSlide) return;
+      var slideWidth = firstSlide.offsetWidth;
+      var totalSlides = track.querySelectorAll('.ol-card__slider-slide').length;
+      var currentIndex = Math.round(track.scrollLeft / slideWidth);
+      var nextIndex = Math.min(totalSlides - 1, currentIndex + 1);
+      goToSlide(opIndex, nextIndex);
+    }
+
+    function updateSliderUI(opIndex, activeIndex) {
+      // Update page counter text
+      var counterVal = document.querySelector('#slider-counter-' + opIndex + ' .current');
+      if (counterVal) {
+        counterVal.textContent = activeIndex + 1;
+      }
+      
+      // Highlight active thumbnail and scroll it into view if overflowed
+      var thumbsContainer = document.getElementById('slider-thumbnails-' + opIndex);
+      if (thumbsContainer) {
+        var thumbs = thumbsContainer.querySelectorAll('.ol-card__thumbnail');
+        thumbs.forEach(function(thumb, idx) {
+          if (idx === activeIndex) {
+            thumb.classList.add('active');
+            if (typeof thumb.scrollIntoView === 'function') {
+              thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+          } else {
+            thumb.classList.remove('active');
+          }
+        });
+      }
+    }
+
+    var scrollTimeouts = {};
+    function handleSliderScroll(opIndex) {
+      clearTimeout(scrollTimeouts[opIndex]);
+      scrollTimeouts[opIndex] = setTimeout(function() {
+        var track = document.getElementById('slider-track-' + opIndex);
+        if (!track) return;
+        var firstSlide = track.querySelector('.ol-card__slider-slide');
+        if (!firstSlide) return;
+        var slideWidth = firstSlide.offsetWidth;
+        if (slideWidth > 0) {
+          var activeIndex = Math.round(track.scrollLeft / slideWidth);
+          updateSliderUI(opIndex, activeIndex);
+        }
+      }, 100);
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
       // Global click handler for tabs inside .ol-card
       document.addEventListener('click', function(e) {
