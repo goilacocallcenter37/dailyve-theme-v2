@@ -152,7 +152,7 @@
           </section>
 
           {{-- Page Body Content --}}
-          <article class="prose max-w-none text-slate-600 leading-relaxed font-medium">
+          <article class="prose max-w-none text-slate-600 leading-relaxed">
             @while(have_posts())
               @php
                 the_post();

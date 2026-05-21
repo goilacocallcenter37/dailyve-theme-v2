@@ -3364,7 +3364,7 @@ body.dailyve-date-range-picker-open {
   border-radius: var(--dv-radius-lg) !important;
 }
 
-.dailyve-trip-list button:not([class*="rounded-full"]),
+/* .dailyve-trip-list button:not([class*="rounded-full"]), */
 .dailyve-seat-selection button:not([class*="rounded-full"]),
 .dailyve-auth-modal button:not([class*="rounded-full"]),
 .dailyve-ticket-modal button:not([class*="rounded-full"]),
@@ -3556,17 +3556,6 @@ body.dailyve-date-range-picker-open {
 .dailyve-bus-page .dailyve-datepicker,
 .dailyve-bus-page .dailyve-location-menu {
   z-index: 40;
-}
-
-.dailyve-trip-list button:not([class*="rounded-full"]),
-.dailyve-seat-selection button:not([class*="rounded-full"]),
-.dailyve-auth-modal button:not([class*="rounded-full"]),
-.dailyve-ticket-modal button:not([class*="rounded-full"]),
-.dailyve-account-card button:not([class*="rounded-full"]) {
-  border-radius: var(--dv-radius-md) !important;
-  font-size: 14px;
-  font-weight: 600 !important;
-  letter-spacing: 0 !important;
 }
 
 .dailyve-trip-list input,
@@ -4046,4 +4035,4 @@ body.dailyve-date-range-picker-open {
 body.dailyve-mobile-menu-active {
   overflow: hidden !important;
   height: 100vh;
-}
+}

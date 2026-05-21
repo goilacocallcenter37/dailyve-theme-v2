@@ -9,20 +9,12 @@
 
         {{-- Search Widget Block --}}
         <div class="dailyve-bus-search-section max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-            <div
-                class="dailyve-bus-search-card bg-white rounded-3xl shadow-xl shadow-slate-100 p-6 md:p-8 border border-slate-100 relative overflow-visible">
-                <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-sky-500 to-indigo-500">
-                </div>
-                <h2
-                    class="text-xl md:text-2xl font-bold text-slate-900 mb-6 text-center tracking-tight flex items-center justify-center gap-2">
-                    <svg class="w-6 h-6 text-blue-500 animate-bounce" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
+            <div class="dailyve-bus-search-card relative overflow-visible">
+                <h2 class="dailyve-bus-search-title">
+                    <i class="fas fa-search" aria-hidden="true"></i>
                     TÌM VÉ TÀU HỎA TRỰC TUYẾN
                 </h2>
-                <div id="react-search-form" class="min-h-[120px]">
+                <div id="react-search-form" class="min-h-[120px]" data-initial-service="train">
                     {{-- React search widget mounts here --}}
                 </div>
             </div>

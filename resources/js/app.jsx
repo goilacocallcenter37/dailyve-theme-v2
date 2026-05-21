@@ -26,7 +26,10 @@ const renderRoot = (element, component) => {
  */
 const initReactApps = () => {
     const searchFormEl = document.getElementById('react-search-form');
-    renderRoot(searchFormEl, <SearchForm />);
+    renderRoot(
+        searchFormEl,
+        <SearchForm initialService={searchFormEl?.dataset.initialService || 'bus'} />,
+    );
 
     const tripListEl = document.getElementById('react-trip-list');
     renderRoot(tripListEl, <TripList />);

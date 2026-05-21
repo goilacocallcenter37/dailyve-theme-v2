@@ -102,7 +102,7 @@
           @endif
 
           <!-- Post Body Content -->
-          <div class="e-content prose max-w-none text-slate-600 leading-relaxed font-medium">
+          <div class="e-content prose max-w-none text-slate-600 leading-relaxed">
             @php
               the_content();
             @endphp
