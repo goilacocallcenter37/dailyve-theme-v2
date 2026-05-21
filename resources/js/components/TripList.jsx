@@ -2036,8 +2036,13 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
 };
 
 const TripList = () => {
+  const initialFiltersRef = useRef(null);
+  if (initialFiltersRef.current === null) {
+    initialFiltersRef.current = getInitialFilters();
+  }
+
   const [queryString, setQueryString] = useState(window.location.search);
-  const [filters, setFilters] = useState(getInitialFilters());
+  const [filters, setFilters] = useState(() => initialFiltersRef.current);
 
   // Initialize stepTicket from URL or default to 0
   const [stepTicket, setStepTicket] = useState(() => {
@@ -2051,7 +2056,7 @@ const TripList = () => {
   const [statistics, setStatistics] = useState({});
   const [paging, setPaging] = useState({});
   const [nextCursor, setNextCursor] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(() => Boolean(initialFiltersRef.current.from && initialFiltersRef.current.to));
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState('');
   const [priceRange, setPriceRange] = useState('all');

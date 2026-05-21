@@ -5,5 +5,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div id="react-trip-list"></div>
+  <div id="react-trip-list">
+    @include('partials.trip-list-loading')
+  </div>
 @endsection

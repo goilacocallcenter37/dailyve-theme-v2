@@ -133,77 +133,126 @@ function renderPostItem($type, $isAddress = false) {
 
     if ($content === false) {
         ob_start();
-        ?>
-        <div class="tuyen-duong-item">
-            <?php if (has_post_thumbnail($post_id)) {
-                $thumb = get_the_post_thumbnail($post_id, 'medium', [
-                    'loading' => 'lazy',
-                    'decoding' => 'async'
-                ]);
-                ?>
-                <picture class="post-thumbnail block overflow-hidden">
-                    <a href="<?php echo esc_url(get_permalink($post_id)); ?>"
-                        title="<?php echo esc_attr(get_the_title($post_id)); ?>">
-                        <?php echo $thumb; ?>
-                    </a>
-                </picture>
-            <?php } ?>
-
-            <div class="tuyen-duong-item__content">
-                <?php if ($type === 'tuyenduong') {
-                    // Cache meta values
-                    $price = get_field('routes_price', $post_id);
-                    $distance = get_field('routes_distance', $post_id);
-                    $time = get_field('routes_time', $post_id);
-                    ?>
-                    <div class="tuyen-duong-item__content__title">
-                        <h3 class="one-line">
-                            <a href="<?php echo esc_url(get_permalink($post_id)); ?>"
-                                title="<?php echo esc_attr(get_the_title($post_id)); ?>">
-                                <?php echo get_the_title($post_id); ?>
-                            </a>
-                        </h3>
-                        <?php if ($price): ?>
-                            <span><?php echo number_format($price, 0, ',', '.') ?>đ</span>
-                        <?php endif; ?>
-                    </div>
-                    <div class="tuyen-duong-item__content__desc">
-                        <?php if ($distance && $time): ?>
-                            <span><?php echo $distance . ' - ' . $time ?></span>
-                        <?php endif; ?>
-                        <a href="<?php echo esc_url(get_permalink($post_id)); ?>" title="Đặt vé" target="_blank">Đặt vé</a>
-                    </div>
-                <?php } else { 
-                    $address = $isAddress ? get_field('company_address', $post_id) : '';
-                    ?>
-                    <div class="tuyen-duong-item__content__title">
-                        <h3 class="one-line">
-                            <a href="<?php echo esc_url(get_permalink($post_id)); ?>"
-                                title="<?php echo esc_attr(get_the_title($post_id)); ?>">
-                                <?php echo get_the_title($post_id); ?>
-                            </a>
-                        </h3>
-                    </div>
-                    <?php if ($isAddress && !empty($address)): ?>
-                        <div class="tuyen-duong-item__content__address">
-                            <i class="fas fa-map-marker-alt text-primary"></i>
-                            <span><?php echo esc_html($address); ?></span>
+        if ($type === 'tuyenduong' || $type === 'tuyenduongairline') {
+            $price = get_field('routes_price', $post_id);
+            $distance = get_field('routes_distance', $post_id);
+            $time = get_field('routes_time', $post_id);
+            ?>
+            <article class="group flex min-h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md">
+                <a href="<?php echo esc_url(get_permalink($post_id)); ?>" class="block aspect-[4/3] overflow-hidden bg-slate-100" aria-label="Xem <?php echo esc_attr(get_the_title($post_id)); ?>">
+                    <?php if (has_post_thumbnail($post_id)) {
+                        echo get_the_post_thumbnail($post_id, 'medium', [
+                            'class' => 'h-full w-full object-cover transition-transform duration-300 group-hover:scale-105',
+                            'loading' => 'lazy',
+                            'decoding' => 'async'
+                        ]);
+                    } else { ?>
+                        <div class="flex h-full w-full items-center justify-center text-4xl text-slate-300">
+                            <i class="fas fa-route" aria-hidden="true"></i>
                         </div>
+                    <?php } ?>
+                </a>
+
+                <div class="flex flex-1 flex-col p-5">
+                    <h3 class="text-base md:text-lg font-semibold leading-snug text-slate-950">
+                        <a class="hover:text-blue-600 transition-colors" href="<?php echo esc_url(get_permalink($post_id)); ?>">
+                            <?php echo get_the_title($post_id); ?>
+                        </a>
+                    </h3>
+
+                    <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
+                        <div class="rounded-lg bg-slate-50 p-3">
+                            <span class="block text-xs font-medium text-slate-500">Giá từ</span>
+                            <strong class="mt-1 block text-base font-semibold text-slate-950"><?php echo $price ? number_format($price, 0, ',', '.') . 'đ' : 'Liên hệ'; ?></strong>
+                        </div>
+                        <div class="rounded-lg bg-slate-50 p-3">
+                            <span class="block text-xs font-medium text-slate-500">Thời gian</span>
+                            <strong class="mt-1 block text-base font-semibold text-slate-950"><?php echo $time ?: 'Đang cập nhật'; ?></strong>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 flex items-center justify-between border-t border-slate-100 pt-3.5">
+                        <?php if ($distance): ?>
+                            <span class="inline-flex items-center gap-1.5 text-xs text-slate-500">
+                                <i class="fas fa-road text-blue-500" aria-hidden="true"></i>
+                                <span>Quãng đường: <strong class="font-semibold text-slate-800"><?php echo esc_html($distance); ?></strong></span>
+                            </span>
+                        <?php else: ?>
+                            <span class="inline-flex items-center gap-1.5 text-xs text-slate-400">
+                                <i class="fas fa-road text-slate-300" aria-hidden="true"></i>
+                                <span class="font-medium text-slate-400">Đang cập nhật chiều dài</span>
+                            </span>
+                        <?php endif; ?>
+                        <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700">
+                            <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            Vé điện tử
+                        </span>
+                    </div>
+
+                    <a class="mt-5 inline-flex h-10 items-center justify-center rounded-lg bg-blue-500 px-5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors" href="<?php echo esc_url(get_permalink($post_id)); ?>">
+                        Đặt vé
+                    </a>
+                </div>
+            </article>
+        <?php } else { 
+            $address = $isAddress ? get_field('company_address', $post_id) : '';
+            ?>
+            <article class="group flex min-h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md">
+                <a href="<?php echo esc_url(get_permalink($post_id)); ?>" class="block aspect-[4/3] overflow-hidden bg-slate-100" aria-label="Xem <?php echo esc_attr(get_the_title($post_id)); ?>">
+                    <?php if (has_post_thumbnail($post_id)) {
+                        echo get_the_post_thumbnail($post_id, 'medium', [
+                            'class' => 'h-full w-full object-cover transition-transform duration-300 group-hover:scale-105',
+                            'loading' => 'lazy',
+                            'decoding' => 'async'
+                        ]);
+                    } else { ?>
+                        <div class="flex h-full w-full items-center justify-center text-4xl text-slate-300">
+                            <i class="fas fa-bus" aria-hidden="true"></i>
+                        </div>
+                    <?php } ?>
+                </a>
+
+                <div class="flex flex-1 flex-col p-5">
+                    <h3 class="text-base md:text-lg font-semibold leading-snug text-slate-950">
+                        <a class="hover:text-blue-600 transition-colors" href="<?php echo esc_url(get_permalink($post_id)); ?>">
+                            <?php echo get_the_title($post_id); ?>
+                        </a>
+                    </h3>
+
+                    <?php if ($isAddress && !empty($address)): ?>
+                        <p class="mt-3 flex items-start gap-2 text-xs md:text-sm text-slate-600 leading-relaxed">
+                            <i class="fas fa-map-marker-alt text-blue-500 mt-0.5 shrink-0" aria-hidden="true"></i>
+                            <span><?php echo esc_html($address); ?></span>
+                        </p>
                     <?php endif; ?>
 
-                    <div class="tuyen-duong-item__content__desc two-line">
+                    <div class="mt-4 flex-1 text-xs md:text-sm text-slate-500 leading-relaxed line-clamp-2">
                         <?php
                         $excerpt = get_the_excerpt($post_id);
                         if (!$excerpt) {
-                            $excerpt = wp_trim_words(get_post_field('post_content', $post_id), 20);
+                            $excerpt = wp_trim_words(get_post_field('post_content', $post_id), 18);
                         }
-                        echo $excerpt;
+                        echo esc_html($excerpt);
                         ?>
                     </div>
-                <?php } ?>
-            </div>
-        </div>
-        <?php
+
+                    <div class="mt-4 flex items-center justify-between border-t border-slate-100 pt-3.5">
+                        <span class="inline-flex items-center gap-1.5 text-xs text-slate-500 font-medium">
+                            <i class="fas fa-shield-alt text-blue-500" aria-hidden="true"></i>
+                            <span>Đối tác chính thức</span>
+                        </span>
+                        <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700">
+                            <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            Đã xác thực
+                        </span>
+                    </div>
+
+                    <a class="mt-5 inline-flex h-10 items-center justify-center rounded-lg bg-blue-500 px-5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors" href="<?php echo esc_url(get_permalink($post_id)); ?>">
+                        Xem thông tin
+                    </a>
+                </div>
+            </article>
+        <?php }
         $content = ob_get_clean();
         wp_cache_set($cache_key, $content, 'post_renders', HOUR_IN_SECONDS * 2);
     }
@@ -226,7 +275,7 @@ add_shortcode('show_list_post', function ($attr) {
     ], $attr);
 
     $paged = get_query_var('paged') ? get_query_var('paged') : 1;
-    $cache_key = 'post_grid_' . md5(serialize($atts)) . '_' . $paged;
+    $cache_key = 'post_grid_v2_' . md5(serialize($atts)) . '_' . $paged;
     $output = get_transient($cache_key);
 
     if ($output === false) {
@@ -507,4 +556,22 @@ add_action('post_updated', function ($post_id) {
 
     global $wpdb;
     $wpdb->query("DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_post_grid_%'");
+});
+
+/**
+ * Flatsome Shortcodes Compatibility Stub
+ */
+add_shortcode('ux_html', function ($atts, $content = null) {
+    return do_shortcode($content);
+});
+
+add_shortcode('title', function ($atts) {
+    $atts = shortcode_atts([
+        'text' => '',
+        'tag_name' => 'h2',
+        'style' => 'center'
+    ], $atts);
+
+    $alignClass = $atts['style'] === 'center' ? 'text-center' : 'text-left';
+    return '<h2 class="route-directory__display text-2xl md:text-3xl font-semibold text-slate-950 ' . $alignClass . ' my-8">' . esc_html($atts['text']) . '</h2>';
 });

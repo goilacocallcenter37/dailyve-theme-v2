@@ -750,6 +750,28 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+      try {
+        var currentRoute = {!! wp_json_encode([
+          'id' => $post_id,
+          'title' => get_the_title($post_id),
+          'url' => get_permalink($post_id),
+          'image' => get_post_thumbnail_id($post_id) ? wp_get_attachment_image_url(get_post_thumbnail_id($post_id), 'medium') : '',
+          'price' => function_exists('get_field') && get_field('routes_price', $post_id) ? number_format((float) get_field('routes_price', $post_id), 0, ',', '.') . 'đ' : '',
+          'distance' => function_exists('get_field') ? (get_field('routes_distance', $post_id) ?: '') : '',
+          'time' => function_exists('get_field') ? (get_field('routes_time', $post_id) ?: '') : '',
+          'viewedAt' => 0,
+        ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!};
+        currentRoute.viewedAt = Date.now();
+        var storageKey = 'dailyve:viewed-routes';
+        var viewedRoutes = JSON.parse(localStorage.getItem(storageKey) || '[]');
+        if (!Array.isArray(viewedRoutes)) viewedRoutes = [];
+        viewedRoutes = viewedRoutes.filter(function(item) {
+          return String(item.id || item.url) !== String(currentRoute.id || currentRoute.url);
+        });
+        viewedRoutes.unshift(currentRoute);
+        localStorage.setItem(storageKey, JSON.stringify(viewedRoutes.slice(0, 12)));
+      } catch (error) {}
+
       // Global click handler for tabs inside .ol-card
       document.addEventListener('click', function(e) {
         var tabItem = e.target.closest('.ol-card__tabs-nav-item');
