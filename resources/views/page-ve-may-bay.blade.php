@@ -15,7 +15,7 @@
                     Trang chủ
                 </a>
                 <span class="text-slate-400">/</span>
-                <span class="text-slate-800 font-semibold">Vé xe khách</span>
+                <span class="text-slate-800 font-semibold">Vé máy bay</span>
             </nav>
         </div>
 
@@ -32,7 +32,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
                             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
-                    TÌM VÉ XE KHÁCH TRỰC TUYẾN
+                    TÌM VÉ MÁY BAY TRỰC TUYẾN
                 </h2>
                 <div id="react-search-form" class="min-h-[120px]">
                     {{-- React search widget mounts here --}}
@@ -49,13 +49,13 @@
                     <div>
                         <h1
                             class="text-2xl md:text-3.5xl font-bold text-slate-950 mb-4 tracking-tight leading-tight uppercase bg-gradient-to-r from-slate-950 via-blue-900 to-indigo-950 bg-clip-text text-transparent">
-                            Đặt vé xe khách trực tuyến tại Dailyve
+                            Đặt vé máy bay trực tuyến tại Dailyve
                         </h1>
                         <p class="text-slate-600 leading-relaxed mb-8 text-sm md:text-base">
-                            Đặt vé xe khách trực tuyến với hàng trăm tuyến đường trên Việt Nam tại Dailyve.com.vn. Chúng tôi
-                            là đối tác tin cậy của hơn 100 nhà xe uy tín cung cấp đa dạng dòng xe đáp ứng nhu cầu đi lại của
+                            Đặt vé máy bay trực tuyến với hàng trăm tuyến đường trên Việt Nam tại Dailyve.com.vn. Chúng tôi
+                            là đối tác tin cậy của hơn 100 hãng hàng không uy tín cung cấp đa dạng dòng xe đáp ứng nhu cầu đi lại của
                             hàng khách. Bạn có thể lựa chọn tuyến đường, ghế ngồi, khung giờ phù hợp và so sánh giá giữa các
-                            nhà xe một cách dễ dàng trên hệ thống của chúng tôi.
+                            hãng hàng không một cách dễ dàng trên hệ thống của chúng tôi.
                         </p>
                     </div>
 
@@ -109,7 +109,7 @@
                                 </svg>
                             </div>
                             <div>
-                                <h4 class="font-bold text-slate-900 mb-1 text-sm md:text-base">Nhà xe uy tín cao</h4>
+                                <h4 class="font-bold text-slate-900 mb-1 text-sm md:text-base">Hãng hàng không uy tín cao</h4>
                                 <p class="text-xs text-slate-500 leading-relaxed">Hợp tác cùng 100+ đối tác vận tải chất
                                     lượng vượt trội.</p>
                             </div>
@@ -175,18 +175,18 @@
 
         {{-- Offers Section ("Ưu đãi Dailyve.com.vn") --}}
         @php
-            $bus_offers = [
+            $flight_offers = [
                 ['discount' => '10%', 'label' => 'Cho Người Mới', 'code' => 'DLVNEW10'],
-                ['discount' => '50K', 'label' => 'Vé xe khách', 'code' => 'DAILY50'],
+                ['discount' => '50K', 'label' => 'Vé máy bay', 'code' => 'DAILY50'],
                 ['discount' => '30K', 'label' => 'Vé tàu hỏa', 'code' => 'TAU30'],
                 ['discount' => '100K', 'label' => 'Vé máy bay', 'code' => 'MAYBAY100'],
                 ['discount' => '15%', 'label' => 'Khách sạn', 'code' => 'KS15'],
                 ['discount' => '20K', 'label' => 'Đơn từ 200K', 'code' => 'DLV20'],
             ];
         @endphp
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16" aria-label="Ưu đãi vé xe khách">
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16" aria-label="Ưu đãi vé máy bay">
             <div class="relative group">
-                <button onclick="slideLeft('bus-offers-slider')" id="bus-offers-slider-prev"
+                <button onclick="slideLeft('flight-offers-slider')" id="flight-offers-slider-prev"
                     class="absolute -left-4 md:-left-6 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-900 opacity-0 shadow-lg shadow-slate-200/70 transition-all duration-200 hover:scale-105 hover:bg-slate-50 pointer-events-none md:flex"
                     type="button" aria-label="Ưu đãi trước">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -195,9 +195,9 @@
                     </svg>
                 </button>
 
-                <div id="bus-offers-slider" onscroll="updateSliderButtons('bus-offers-slider')"
+                <div id="flight-offers-slider" onscroll="updateSliderButtons('flight-offers-slider')"
                     class="scrollbar-none -mx-4 flex snap-x gap-5 overflow-x-auto scroll-smooth px-4 py-2 sm:mx-0 sm:px-1">
-                    @foreach ($bus_offers as $offer)
+                    @foreach ($flight_offers as $offer)
                         <article class="dailyve-offer-card min-h-[146px] w-[278px] shrink-0 snap-start">
                             <div class="dailyve-offer-card__body">
                                 <p class="dailyve-offer-card__discount">Giảm Giá {{ $offer['discount'] }}</p>
@@ -214,7 +214,7 @@
                     @endforeach
                 </div>
 
-                <button onclick="slideRight('bus-offers-slider')" id="bus-offers-slider-next"
+                <button onclick="slideRight('flight-offers-slider')" id="flight-offers-slider-next"
                     class="absolute -right-4 md:-right-6 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-900 shadow-lg shadow-slate-200/70 transition-all duration-200 hover:scale-105 hover:bg-slate-50 md:flex"
                     type="button" aria-label="Ưu đãi tiếp theo">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -240,7 +240,7 @@
         @php
             $routes_query = new \WP_Query([
                 'post_type' => 'page',
-                'post_parent' => 15738,
+                'post_parent' => 16844,
                 'posts_per_page' => 12,
                 'post_status' => 'publish',
                 'meta_query' => [
@@ -347,197 +347,8 @@
             @php wp_reset_postdata(); @endphp
         @endif
 
-        {{-- Section 2: Nhà xe phổ biến --}}
         @php
-            $operators_query = new \WP_Query([
-                'post_type' => 'page',
-                'post_parent' => 15764,
-                'posts_per_page' => 12,
-                'post_status' => 'publish',
-                'meta_query' => [
-                    [
-                        'key' => 'outstanding',
-                        'value' => true,
-                        'compare' => '=',
-                    ],
-                ],
-            ]);
-        @endphp
-        @if ($operators_query->have_posts())
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 relative">
-                <div class="flex items-center justify-between mb-6">
-                    <h2
-                        class="text-xl md:text-2xl font-extrabold text-slate-900 tracking-tight uppercase flex items-center gap-2">
-                        <span class="w-2.5 h-6 bg-indigo-600 rounded-full animate-pulse"></span>
-                        Nhà xe phổ biến
-                    </h2>
-                </div>
-
-                <div class="relative group">
-                    {{-- Left Arrow --}}
-                    <button onclick="slideLeft('operators-slider')" id="operators-slider-prev"
-                        class="absolute -left-4 md:-left-6 top-1/2 -translate-y-1/2 bg-white text-slate-800 p-3 rounded-full shadow-xl border border-slate-100 hover:bg-slate-50 transition-all hover:scale-110 active:scale-95 z-20 flex items-center justify-center cursor-pointer opacity-0 group-hover:opacity-100 duration-300 pointer-events-none">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7">
-                            </path>
-                        </svg>
-                    </button>
-
-                    {{-- Container --}}
-                    <div id="operators-slider" onscroll="updateSliderButtons('operators-slider')"
-                        class="flex overflow-x-auto scroll-smooth gap-5 pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 snap-x scrollbar-none">
-                        @while ($operators_query->have_posts())
-                            @php $operators_query->the_post(); @endphp
-                            <div
-                                class="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-md shadow-slate-100/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between shrink-0 w-[290px] snap-start group/card">
-                                <div class="relative overflow-hidden aspect-[4/3]">
-                                    @if (has_post_thumbnail())
-                                        {!! get_the_post_thumbnail(get_the_ID(), 'medium', [
-                                            'class' => 'w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500',
-                                        ]) !!}
-                                    @else
-                                        <div
-                                            class="w-full h-full bg-slate-100 flex items-center justify-center text-slate-400">
-                                            Không có ảnh</div>
-                                    @endif
-                                </div>
-                                <div class="p-5 flex-1 flex flex-col justify-between">
-                                    <div>
-                                        <h3
-                                            class="font-bold text-slate-900 text-sm md:text-base leading-snug mb-3 line-clamp-1 hover:text-blue-600 transition-colors">
-                                            <a class="no-underline!"
-                                                href="{{ get_permalink() }}">{{ get_the_title() }}</a>
-                                        </h3>
-                                        <p class="text-xs text-slate-500 leading-relaxed line-clamp-2 mb-4">
-                                            {{ get_the_excerpt() ?: wp_trim_words(get_post_field('post_content', get_the_ID()), 15) }}
-                                        </p>
-                                    </div>
-                                    <a href="{{ get_permalink() }}"
-                                        class="no-underline! w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-3 px-4 rounded-xl text-center shadow-md active:scale-[0.98] transition-all block">
-                                        Chi tiết nhà xe
-                                    </a>
-                                </div>
-                            </div>
-                        @endwhile
-                    </div>
-
-                    {{-- Right Arrow --}}
-                    <button onclick="slideRight('operators-slider')" id="operators-slider-next"
-                        class="absolute -right-4 md:-right-6 top-1/2 -translate-y-1/2 bg-white text-slate-800 p-3 rounded-full shadow-xl border border-slate-100 hover:bg-slate-50 transition-all hover:scale-110 active:scale-95 z-20 flex items-center justify-center cursor-pointer opacity-0 group-hover:opacity-100 duration-300">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7">
-                            </path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            @php wp_reset_postdata(); @endphp
-        @endif
-
-        {{-- Section 3: Bến xe phổ biến --}}
-        @php
-            $stations_query = new \WP_Query([
-                'post_type' => 'page',
-                'post_parent' => 15896,
-                'posts_per_page' => 12,
-                'post_status' => 'publish',
-                'meta_query' => [
-                    [
-                        'key' => 'outstanding',
-                        'value' => true,
-                        'compare' => '=',
-                    ],
-                ],
-            ]);
-        @endphp
-        @if ($stations_query->have_posts())
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 relative">
-                <div class="flex items-center justify-between mb-6">
-                    <h2
-                        class="text-xl md:text-2xl font-extrabold text-slate-900 tracking-tight uppercase flex items-center gap-2">
-                        <span class="w-2.5 h-6 bg-emerald-600 rounded-full animate-pulse"></span>
-                        Bến xe phổ biến
-                    </h2>
-                </div>
-
-                <div class="relative group">
-                    {{-- Left Arrow --}}
-                    <button onclick="slideLeft('stations-slider')" id="stations-slider-prev"
-                        class="absolute -left-4 md:-left-6 top-1/2 -translate-y-1/2 bg-white text-slate-800 p-3 rounded-full shadow-xl border border-slate-100 hover:bg-slate-50 transition-all hover:scale-110 active:scale-95 z-20 flex items-center justify-center cursor-pointer opacity-0 group-hover:opacity-100 duration-300 pointer-events-none">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7">
-                            </path>
-                        </svg>
-                    </button>
-
-                    {{-- Container --}}
-                    <div id="stations-slider" onscroll="updateSliderButtons('stations-slider')"
-                        class="flex overflow-x-auto scroll-smooth gap-5 pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 snap-x scrollbar-none">
-                        @while ($stations_query->have_posts())
-                            @php
-                                $stations_query->the_post();
-                                $post_id = get_the_ID();
-                                $address = get_field('company_address', $post_id);
-                            @endphp
-                            <div
-                                class="bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-md shadow-slate-100/50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between shrink-0 w-[290px] snap-start group/card">
-                                <div class="relative overflow-hidden aspect-[4/3]">
-                                    @if (has_post_thumbnail())
-                                        {!! get_the_post_thumbnail($post_id, 'medium', [
-                                            'class' => 'w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500',
-                                        ]) !!}
-                                    @else
-                                        <div
-                                            class="w-full h-full bg-slate-100 flex items-center justify-center text-slate-400">
-                                            Không có ảnh</div>
-                                    @endif
-                                </div>
-                                <div class="p-5 flex-1 flex flex-col justify-between">
-                                    <div>
-                                        <h3
-                                            class="font-bold text-slate-900 text-sm md:text-base leading-snug mb-2 line-clamp-1 hover:text-blue-600 transition-colors">
-                                            <a class="no-underline!"
-                                                href="{{ get_permalink() }}">{{ get_the_title() }}</a>
-                                        </h3>
-                                        @if ($address)
-                                            <p
-                                                class="text-xs text-slate-500 flex items-start gap-1.5 leading-relaxed line-clamp-2 mb-4">
-                                                <svg class="w-4 h-4 text-red-500 shrink-0 mt-0.5" fill="none"
-                                                    stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                                    </path>
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                </svg>
-                                                {{ $address }}
-                                            </p>
-                                        @endif
-                                    </div>
-                                    <a href="{{ get_permalink() }}"
-                                        class="no-underline! w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-3 px-4 rounded-xl text-center shadow-md active:scale-[0.98] transition-all block">
-                                        Chi tiết bến xe
-                                    </a>
-                                </div>
-                            </div>
-                        @endwhile
-                    </div>
-
-                    {{-- Right Arrow --}}
-                    <button onclick="slideRight('stations-slider')" id="stations-slider-next"
-                        class="absolute -right-4 md:-right-6 top-1/2 -translate-y-1/2 bg-white text-slate-800 p-3 rounded-full shadow-xl border border-slate-100 hover:bg-slate-50 transition-all hover:scale-110 active:scale-95 z-20 flex items-center justify-center cursor-pointer opacity-0 group-hover:opacity-100 duration-300">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7">
-                            </path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            @php wp_reset_postdata(); @endphp
-        @endif
-
-        @php
-            $bus_image = home_url('/wp-content/uploads/images/front-of-bus.png');
+            $bus_image = home_url('/wp-content/uploads/images/plane-icon.png');
             $qr_blocks = [0, 1, 3, 5, 7, 8, 10, 12, 13, 14, 16, 18, 20, 21, 23, 24];
             $booking_guide_slides = [
                 [
@@ -547,7 +358,7 @@
                     'steps' => [
                         ['title' => 'Bước 1', 'text' => 'Bật ứng dụng Dailyve - bắt chuyến đi!'],
                         ['title' => 'Bước 2', 'text' => 'Nhập điểm đi, điểm đến và ngày khởi hành'],
-                        ['title' => 'Bước 3', 'text' => 'Chọn chuyến xe ưng ý'],
+                        ['title' => 'Bước 3', 'text' => 'Chọn chuyến bay ưng ý'],
                         ['title' => 'Bước 4', 'text' => 'Giữ ngay chỗ ngồi ưng mắt'],
                         ['title' => 'Bước 5', 'text' => 'Chọn điểm đón/trả thuận tiện'],
                         ['title' => 'Bước 6', 'text' => 'Điền nhanh thông tin hành khách'],
@@ -562,12 +373,12 @@
                     'steps' => [
                         ['title' => 'Bước 1', 'text' => 'Chọn điểm xuất phát, điểm đến và ngày đi'],
                         ['title' => 'Bước 2', 'text' => 'Bấm Tìm vé để xem danh sách chuyến'],
-                        ['title' => 'Bước 3', 'text' => 'So sánh giá, giờ chạy và nhà xe'],
+                        ['title' => 'Bước 3', 'text' => 'So sánh giá, giờ chạy và hãng hàng không'],
                         ['title' => 'Bước 4', 'text' => 'Chọn ghế hoặc giường còn trống'],
                         ['title' => 'Bước 5', 'text' => 'Xác nhận điểm đón/trả phù hợp'],
                         ['title' => 'Bước 6', 'text' => 'Nhập thông tin liên hệ nhận vé'],
                         ['title' => 'Bước 7', 'text' => 'Thanh toán an toàn qua cổng hỗ trợ'],
-                        ['title' => 'Bước 8', 'text' => 'Nhận mã vé điện tử và lên xe'],
+                        ['title' => 'Bước 8', 'text' => 'Nhận mã vé điện tử và lên máy bay'],
                     ],
                 ],
                 [
@@ -595,34 +406,34 @@
                 'khuyen-mai' => 'Giảm giá - khuyến mãi',
             ];
 
-            $bus_faqs = [
+            $flight_faqs = [
                 [
                     'category' => 'tong-quan',
                     'question' => 'Làm thế nào để đặt vé xe trực tuyến trên Dailyve?',
                     'answer' =>
-                        'Bạn chỉ cần điền điểm xuất phát, điểm đến và ngày đi tại form tìm kiếm, sau đó nhấn Tìm vé. Hệ thống sẽ hiển thị các chuyến xe phù hợp để bạn chọn ghế, nhập thông tin và thanh toán.',
+                        'Bạn chỉ cần điền điểm xuất phát, điểm đến và ngày đi tại form tìm kiếm, sau đó nhấn Tìm vé. Hệ thống sẽ hiển thị các chuyến bay phù hợp để bạn chọn ghế, nhập thông tin và thanh toán.',
                 ],
                 [
                     'category' => 'tong-quan',
                     'question' => 'Dailyve có những tuyến xe nào?',
                     'answer' =>
-                        'Dailyve kết nối nhiều tuyến xe khách phổ biến trên toàn quốc, bao gồm các chặng liên tỉnh, tuyến du lịch và tuyến về quê. Danh sách chuyến sẽ được lọc theo điểm đi, điểm đến và ngày khởi hành bạn chọn.',
+                        'Dailyve kết nối nhiều tuyến máy bay phổ biến trên toàn quốc, bao gồm các chặng liên tỉnh, tuyến du lịch và tuyến về quê. Danh sách chuyến sẽ được lọc theo điểm đi, điểm đến và ngày khởi hành bạn chọn.',
                 ],
                 [
                     'category' => 'dat-cho',
                     'question' => 'Tôi có thể chọn vị trí ghế ngồi trước không?',
                     'answer' =>
-                        'Có. Với các nhà xe hỗ trợ sơ đồ ghế, bạn có thể xem ghế hoặc giường còn trống và chọn vị trí phù hợp trước khi thanh toán.',
+                        'Có. Với các hãng hàng không hỗ trợ sơ đồ ghế, bạn có thể xem ghế hoặc giường còn trống và chọn vị trí phù hợp trước khi thanh toán.',
                 ],
                 [
                     'category' => 'dat-cho',
                     'question' => 'Nếu nhập sai thông tin hành khách thì xử lý thế nào?',
                     'answer' =>
-                        'Bạn nên liên hệ Dailyve càng sớm càng tốt qua hotline để được kiểm tra điều kiện chỉnh sửa. Một số nhà xe cho phép cập nhật thông tin trước giờ khởi hành theo chính sách riêng.',
+                        'Bạn nên liên hệ Dailyve càng sớm càng tốt qua hotline để được kiểm tra điều kiện chỉnh sửa. Một số hãng hàng không cho phép cập nhật thông tin trước giờ khởi hành theo chính sách riêng.',
                 ],
                 [
                     'category' => 'thanh-toan',
-                    'question' => 'Thanh toán vé xe khách bằng những phương thức nào?',
+                    'question' => 'Thanh toán vé máy bay bằng những phương thức nào?',
                     'answer' =>
                         'Dailyve hỗ trợ nhiều hình thức thanh toán như QR ngân hàng, chuyển khoản, thẻ nội địa hoặc thẻ quốc tế tùy từng thời điểm và từng đơn hàng.',
                 ],
@@ -636,7 +447,7 @@
                     'category' => 'huy-ve',
                     'question' => 'Chính sách hoàn hủy vé trên hệ thống thế nào?',
                     'answer' =>
-                        'Quy định hoàn hủy phụ thuộc vào chính sách của từng nhà xe và thời điểm yêu cầu hủy. Dailyve sẽ hỗ trợ kiểm tra điều kiện hoàn/hủy cụ thể cho mã vé của bạn.',
+                        'Quy định hoàn hủy phụ thuộc vào chính sách của từng hãng hàng không và thời điểm yêu cầu hủy. Dailyve sẽ hỗ trợ kiểm tra điều kiện hoàn/hủy cụ thể cho mã vé của bạn.',
                 ],
                 [
                     'category' => 'huy-ve',
@@ -660,7 +471,7 @@
         @endphp
 
         {{-- Booking Guide Section --}}
-        <section class="px-4 sm:px-6 lg:px-8 mb-16 bg-sky-50" aria-label="Hướng dẫn đặt vé xe khách"
+        <section class="px-4 sm:px-6 lg:px-8 mb-16 bg-sky-50" aria-label="Hướng dẫn đặt vé máy bay"
             id="booking-guide-section">
             <div class="max-w-7xl mx-auto relative overflow-hidden p-6 md:p-10 lg:p-12">
                 <div
@@ -672,7 +483,7 @@
                     class="flex flex-col md:flex-row items-center justify-between gap-6 mb-10 pb-6 border-b border-sky-100">
                     <div>
                         <h2 class="text-2xl md:text-3.5xl font-bold tracking-tight text-blue-950 text-center md:text-left">
-                            Hướng dẫn đặt vé xe khách
+                            Hướng dẫn đặt vé máy bay
                         </h2>
                         <p class="text-xs md:text-sm text-slate-500 mt-1.5 text-center md:text-left">Dễ dàng, nhanh chóng
                             và an toàn qua nhiều kênh tiện lợi</p>
@@ -840,10 +651,10 @@
         </section>
 
         {{-- FAQ / Accordion Section --}}
-        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-labelledby="bus-faq-title" data-faq-section>
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" aria-labelledby="flight-faq-title" data-faq-section>
             <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                 <div class="bg-[#2196f3] px-5 py-5 md:px-8">
-                    <h2 id="bus-faq-title" class="text-2xl font-semibold tracking-[-0.5px] text-white md:text-3xl">
+                    <h2 id="flight-faq-title" class="text-2xl font-semibold tracking-[-0.5px] text-white md:text-3xl">
                         Một số câu hỏi thường gặp
                     </h2>
                 </div>
@@ -862,7 +673,7 @@
                     </div>
 
                     <div class="mt-6 space-y-3">
-                        @foreach ($bus_faqs as $faq)
+                        @foreach ($flight_faqs as $faq)
                             <div class="dailyve-faq-item overflow-hidden rounded-xl border border-slate-200 bg-white transition-all duration-200 {{ $faq['category'] !== 'tong-quan' ? 'hidden' : '' }}"
                                 data-faq-item data-faq-category="{{ esc_attr($faq['category']) }}">
                                 <button onclick="toggleAccordion(this)"
@@ -1118,7 +929,7 @@
 
         // Initial slider buttons checks
         document.addEventListener('DOMContentLoaded', () => {
-            ['bus-offers-slider', 'routes-slider', 'operators-slider', 'stations-slider'].forEach(id => {
+            ['flight-offers-slider', 'routes-slider', 'operators-slider', 'stations-slider'].forEach(id => {
                 setTimeout(() => updateSliderButtons(id), 500);
             });
             initFaqTabs();

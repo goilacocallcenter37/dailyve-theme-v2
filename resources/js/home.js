@@ -17,6 +17,12 @@ const copyText = async (text) => {
 
 const initOfferCodes = () => {
   document.querySelectorAll('.dailyve-offer-card__save').forEach((button) => {
+    if (button.dataset.offerCodeReady === 'true') {
+      return;
+    }
+
+    button.dataset.offerCodeReady = 'true';
+
     button.addEventListener('click', async () => {
       const code = button.dataset.code;
       if (!code) {
@@ -143,11 +149,12 @@ const initPressSlider = () => {
 };
 
 export const initHomePage = () => {
+  initOfferCodes();
+
   if (!document.querySelector('.dailyve-home')) {
     return;
   }
 
-  initOfferCodes();
   initServiceTabs();
   initTestimonialsSlider();
   initPressSlider();

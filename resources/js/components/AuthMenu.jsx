@@ -45,11 +45,11 @@ const AuthMenu = () => {
     if (!isLoggedIn) {
         return (
             <div className="dailyve-auth-menu flex items-center space-x-3">
-                <button 
+                <button
                     onClick={handleLoginClick}
                     className="flex items-center space-x-2 text-slate-700 hover:text-blue-600 font-semibold text-sm py-2 px-4 rounded-full border border-slate-200 hover:border-blue-100 hover:bg-blue-50/20 active:scale-95 transition-all cursor-pointer"
                 >
-                    <i className="far fa-user text-xs"></i>
+                    <i className="far fa-user text-xs mr-0 sm:mr-2"></i>
                     <span>Đăng nhập / Đăng ký</span>
                 </button>
             </div>
@@ -66,9 +66,9 @@ const AuthMenu = () => {
                 onClick={toggleMenu}
                 className="flex items-center space-x-2.5 bg-slate-50 hover:bg-slate-100/80 active:scale-[0.98] border border-slate-200/60 rounded-full py-1.5 pl-2 pr-3.5 transition-all focus:outline-none cursor-pointer"
             >
-                <img 
-                    src={avatar} 
-                    alt="Avatar" 
+                <img
+                    src={avatar}
+                    alt="Avatar"
                     className="w-7 h-7 rounded-full object-cover shadow-sm border border-white"
                     onError={(e) => {
                         e.target.src = '/wp-content/uploads/images/user.png';
@@ -85,7 +85,7 @@ const AuthMenu = () => {
                         <p className="text-xs font-medium text-slate-400">Tài khoản Dailyve</p>
                         <p className="text-sm font-bold text-slate-700 truncate mt-0.5">{phone}</p>
                     </div>
-                    
+
                     <div className="py-1">
                         <a
                             href="/tai-khoan"
@@ -95,7 +95,7 @@ const AuthMenu = () => {
                             <i className="far fa-user text-slate-400 w-4 text-center"></i>
                             <span>Thông tin tài khoản</span>
                         </a>
-                        
+
                         <a
                             href="/don-hang-cua-toi"
                             className="flex items-center space-x-3 px-4 py-2.5 text-sm text-slate-600 hover:bg-slate-50 hover:text-blue-600 transition-colors"

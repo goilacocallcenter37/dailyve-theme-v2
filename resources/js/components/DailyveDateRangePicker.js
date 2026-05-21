@@ -101,7 +101,6 @@ class DailyveDateRangePicker {
       <div class="dailyve-date-range-picker__dialog" role="dialog" aria-modal="true" aria-labelledby="dailyve-date-range-picker-title" tabindex="-1">
         <header class="dailyve-date-range-picker__header">
           <div>
-            <span class="dailyve-date-range-picker__eyebrow" data-dv-drp-eyebrow>Âm lịch Việt Nam</span>
             <h2 id="dailyve-date-range-picker-title">Chọn ngày đi</h2>
             <p data-dv-drp-route></p>
           </div>
