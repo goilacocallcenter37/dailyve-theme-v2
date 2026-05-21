@@ -45,16 +45,18 @@ add_action('wp_head', function () {
 
 /**
  * Remove Gutenberg default styles to improve performance (LCP)
+ * (Commented out to prevent breaking block layouts like columns/galleries in single posts)
  */
 add_action('wp_enqueue_scripts', function () {
-    wp_dequeue_style('wp-block-library');
-    wp_dequeue_style('wp-block-library-theme');
+    // wp_dequeue_style('wp-block-library');
+    // wp_dequeue_style('wp-block-library-theme');
     wp_dequeue_style('wc-block-style'); // WooCommerce blocks
 }, 100);
 
 /**
  * Auto-select page-tuyen-duong-seo.blade.php template for child pages of "Vé xe khách > Tuyến đường".
  * Parent page ID = 15738.
+ * Auto-select page-transit-route.blade.php template for child pages of "Vé máy bay" (16844) and "Vé tàu hỏa" (16846).
  */
 add_filter('page_template_hierarchy', function ($templates) {
     $post_id = get_the_ID();
@@ -62,10 +64,13 @@ add_filter('page_template_hierarchy', function ($templates) {
         $parent_id = wp_get_post_parent_id($post_id);
         if ((int) $parent_id === 15738) {
             array_unshift($templates, 'page-tuyen-duong-seo.php');
+        } elseif ((int) $parent_id === 16844 || (int) $parent_id === 16846) {
+            array_unshift($templates, 'page-transit-route.php');
         }
     }
     return $templates;
 }, 5);
+
 
 /**
  * Inject route_data into window for React OperatorList component on route SEO pages.

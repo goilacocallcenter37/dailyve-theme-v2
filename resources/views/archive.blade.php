@@ -39,7 +39,7 @@
   @endphp
 
   <!-- Categories Filter Carousel Header -->
-  <div class="dailyve-archive-filter bg-white border-b border-slate-100 shadow-sm py-4 sticky top-[72px] z-40 backdrop-blur-md bg-white/95">
+  <div class="dailyve-archive-filter border-b border-slate-100 shadow-sm py-4 sticky top-[58px] md:top-[68px] z-40 backdrop-blur-md bg-white/95">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center space-x-2 overflow-x-auto scrollbar-none py-1">
         <!-- Home Button -->

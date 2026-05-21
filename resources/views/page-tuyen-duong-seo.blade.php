@@ -92,19 +92,8 @@
   @endphp
 
   {{-- Breadcrumb --}}
-  <nav class="route-breadcrumb" aria-label="Breadcrumb">
-    <div class="dailyve-container">
-      <ol>
-        @foreach ($breadcrumbs as $crumb)
-          @if ($crumb['url'])
-            <li><a href="{{ esc_url($crumb['url']) }}">{{ $crumb['title'] }}</a></li>
-          @else
-            <li aria-current="page">{{ $crumb['title'] }}</li>
-          @endif
-        @endforeach
-      </ol>
-    </div>
-  </nav>
+  <x-breadcrumb :items="$breadcrumbs" preset="seo" />
+
 
   {{-- Route Header --}}
   <section class="route-seo-header">

@@ -114,16 +114,8 @@
             }
         </style>
 
-        <nav class="border-b border-slate-200 bg-white" aria-label="Breadcrumb">
-            <ol
-                class="mx-auto flex max-w-7xl flex-wrap items-center gap-2 px-4 py-4 text-sm font-medium text-slate-500 sm:px-6 lg:px-8">
-                <li><a class="text-slate-500 hover:text-blue-600" href="{{ esc_url(home_url('/')) }}">Dailyve</a></li>
-                <li aria-hidden="true">/</li>
-                <li><a class="text-slate-500 hover:text-blue-600" href="{{ esc_url(home_url('/ve-xe-khach/')) }}">Vé xe khách</a></li>
-                <li aria-hidden="true">/</li>
-                <li class="font-semibold text-slate-900" aria-current="page">Bến xe</li>
-            </ol>
-        </nav>
+        <x-breadcrumb :items="[['title' => 'Dailyve', 'url' => home_url('/')], ['title' => 'Vé xe khách', 'url' => home_url('/ve-xe-khach/')], ['title' => 'Bến xe', 'url' => '']]" preset="directory" />
+
 
         <header class="bg-white">
             <div
