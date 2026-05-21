@@ -17,7 +17,8 @@ export { getToday, getTomorrow, toLocalISODate } from '../utils/vietnameseCalend
 const locationGroups = [
   { level: 1, label: 'Tỉnh / Thành phố' },
   { level: 2, label: 'Quận / Huyện' },
-  { level: 3, label: 'Điểm đón phổ biến' },
+  { level: 3, label: 'Phường - Xã' },
+  { level: 4, label: 'Điểm đón phổ biến' },
 ];
 
 export const normalizeText = (value) =>
@@ -188,7 +189,7 @@ export const LocationCombobox = ({
   };
 
   return (
-    <div 
+    <div
       className="dailyve-search__field dailyve-search__field--combo"
       onClick={() => inputRef.current?.focus()}
     >
@@ -264,9 +265,8 @@ export const LocationCombobox = ({
                     type="button"
                     role="option"
                     aria-selected={location.id === value}
-                    className={`dailyve-location-menu__option ${
-                      location.id === activeId ? 'is-active' : ''
-                    } ${location.id === value ? 'is-selected' : ''}`}
+                    className={`dailyve-location-menu__option ${location.id === activeId ? 'is-active' : ''
+                      } ${location.id === value ? 'is-selected' : ''}`}
                     onMouseDown={(event) => event.preventDefault()}
                     onClick={() => selectLocation(location)}
                   >
@@ -362,10 +362,10 @@ export const VietnameseDatePicker = ({
         aria-label={label}
         aria-expanded={isOpen}
         aria-haspopup="dialog"
-        >
+      >
         <strong>{value ? formatDisplayDate(value) : emptyText}</strong>
       </button>
-      {required && <input className="dailyve-date-required" value={value || ''} onChange={() => {}} required tabIndex={-1} aria-hidden="true" />}
+      {required && <input className="dailyve-date-required" value={value || ''} onChange={() => { }} required tabIndex={-1} aria-hidden="true" />}
       {clearable && value && (
         <button
           type="button"

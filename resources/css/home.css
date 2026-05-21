@@ -2451,168 +2451,6 @@ body {
   line-height: 1.45;
 }
 
-.dailyve-footer__apps img {
-  width: 148px;
-  height: auto;
-  display: block;
-}
-
-.dailyve-footer {
-  color: rgba(255, 255, 255, 0.86);
-  background: linear-gradient(180deg, #031a38 0%, #052a52 100%);
-}
-
-.dailyve-footer__grid {
-  display: grid;
-  grid-template-columns: 1.35fr repeat(4, minmax(0, 1fr));
-  gap: 36px;
-  padding: 44px 0 32px;
-}
-
-.dailyve-footer h2 {
-  margin: 0 0 16px;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 900;
-}
-
-.dailyve-footer a {
-  color: rgba(255, 255, 255, 0.86);
-  text-decoration: none;
-}
-
-.dailyve-footer nav a {
-  display: block;
-  margin-top: 12px;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.dailyve-footer__brand img {
-  width: 132px;
-  height: auto;
-}
-
-.dailyve-footer__brand p {
-  margin: 8px 0 16px;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.dailyve-footer__brand ul {
-  display: grid;
-  gap: 10px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  font-size: 13px;
-  line-height: 1.45;
-}
-
-.dailyve-footer__brand li {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-}
-
-.dailyve-footer__brand i {
-  width: 16px;
-  margin-top: 2px;
-}
-
-.dailyve-footer__social-inline,
-.dailyve-footer__social div {
-  display: flex;
-  gap: 12px;
-}
-
-.dailyve-footer__social-inline a,
-.dailyve-footer__social a {
-  width: 34px;
-  height: 34px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  background: #fff;
-  color: #075bd1;
-}
-
-.dailyve-footer__contact ul {
-  display: grid;
-  gap: 10px;
-  padding: 0;
-  margin: 0 0 16px;
-  list-style: none;
-  font-size: 13px;
-}
-
-.dailyve-footer__contact li {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-}
-
-.dailyve-footer__contact img {
-  width: 132px;
-  height: auto;
-  display: block;
-  margin-top: 8px;
-}
-
-.dailyve-footer__bottom {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 16px 0 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
-}
-
-.dailyve-footer__bottom p {
-  margin: 0;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.dailyve-footer__payments {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.dailyve-footer__pay {
-  min-height: 28px;
-  display: inline-flex;
-  align-items: center;
-  padding: 0 10px;
-  border-radius: 6px;
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.12);
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 0.02em;
-}
-
-.dailyve-footer__pay--visa {
-  background: #1a1f71;
-}
-
-.dailyve-footer__pay--mc {
-  background: #eb001b;
-}
-
-.dailyve-footer__pay--momo {
-  background: #a50064;
-}
-
-.dailyve-footer__pay--zalo {
-  background: #0068ff;
-}
 
 @media (max-width: 1180px) {
   .dailyve-site-header__nav {
@@ -2712,9 +2550,7 @@ body {
     font-size: 32px;
   }
 
-  .dailyve-footer__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+
 }
 
 @media (max-width: 760px) {
@@ -2920,10 +2756,7 @@ body {
     padding: 36px 0 56px;
   }
 
-  .dailyve-footer__grid {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
+
 
   /* Custom App Download mobile responses */
   .dailyve-merged-band__inner {
