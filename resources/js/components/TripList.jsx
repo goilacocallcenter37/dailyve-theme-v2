@@ -901,11 +901,10 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
   const MobileToolbarButton = ({ sheet, icon, label, badge, active }) => (
     <button
       type="button"
-      className={`relative flex h-10 items-center justify-center gap-1.5 rounded-full px-3 sm:px-4 text-[11px] sm:text-xs font-bold transition-all duration-200 cursor-pointer active:scale-95 ${
-        active
-          ? 'bg-[#2196F3] text-white shadow-md shadow-[#2196F3]/20'
-          : 'text-slate-300 hover:text-white hover:bg-white/5'
-      }`}
+      className={`relative flex h-10 items-center justify-center gap-1.5 rounded-full px-3 sm:px-4 text-[11px] sm:text-xs font-bold transition-all duration-200 cursor-pointer active:scale-95 ${active
+        ? 'bg-[#2196F3] text-white shadow-md shadow-[#2196F3]/20'
+        : 'text-slate-300 hover:text-white hover:bg-white/5'
+        }`}
       onClick={() => openSheet(sheet)}
     >
       <i className={`fas ${icon} text-[10px] sm:text-[11px] ${active ? 'text-white' : 'text-slate-400'}`}></i>
@@ -920,256 +919,256 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
 
   return (
     <>
-    <aside className="dailyve-filter-panel order-2 hidden gap-4 lg:order-1 lg:sticky lg:top-24 lg:grid lg:self-start">
-      <div className="dailyve-filter-card overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
-        <div className="mb-6 flex items-center justify-between border-b border-slate-50 pb-4">
-          <h2 className="text-lg font-black text-slate-900">Bộ lọc</h2>
-          <button
-            type="button"
-            className="text-sm font-bold text-blue-600 transition-colors hover:text-blue-700"
-            onClick={resetAllFilters}
-          >
-            Xóa hết
-          </button>
-        </div>
+      <aside className="dailyve-filter-panel order-2 hidden gap-4 lg:order-1 lg:sticky lg:top-24 lg:grid lg:self-start">
+        <div className="dailyve-filter-card overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+          <div className="mb-6 flex items-center justify-between border-b border-slate-50 pb-4">
+            <h2 className="text-lg font-black text-slate-900">Bộ lọc</h2>
+            <button
+              type="button"
+              className="text-sm font-bold text-blue-600 transition-colors hover:text-blue-700"
+              onClick={resetAllFilters}
+            >
+              Xóa hết
+            </button>
+          </div>
 
-        <div className="space-y-6">
-          <section className="space-y-3">
-            <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Sắp xếp</h3>
-            <div className="relative">
-              <select
-                className="w-full h-11 pl-4 pr-10 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 outline-none transition-all focus:border-blue-500 focus:ring-1 focus:ring-blue-500 cursor-pointer appearance-none shadow-sm"
-                value={filters.sort}
-                onChange={(event) => onChange({ sort: event.target.value })}
-              >
-                {SORT_OPTIONS.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-              <i className="fas fa-chevron-down pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-slate-400"></i>
-            </div>
-          </section>
-
-          <section className="space-y-3">
-            <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Khung giờ đi</h3>
-            <div className="grid grid-cols-2 gap-2">
-              {TIME_OPTIONS.map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  onClick={() => onChange({ time: option.value })}
-                  className={`rounded-xl border-2 py-2.5 text-[11px] font-bold transition-all ${filters.time === option.value
-                    ? 'border-blue-600 bg-blue-600 text-white shadow-lg shadow-blue-200'
-                    : 'border-slate-50 bg-slate-50 text-slate-600 hover:border-slate-200'
-                    }`}
+          <div className="space-y-6">
+            <section className="space-y-3">
+              <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Sắp xếp</h3>
+              <div className="relative">
+                <select
+                  className="w-full h-11 pl-4 pr-10 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 outline-none transition-all focus:border-blue-500 focus:ring-1 focus:ring-blue-500 cursor-pointer appearance-none shadow-sm"
+                  value={filters.sort}
+                  onChange={(event) => onChange({ sort: event.target.value })}
                 >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-          </section>
+                  {SORT_OPTIONS.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+                <i className="fas fa-chevron-down pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-slate-400"></i>
+              </div>
+            </section>
 
-          <section className="space-y-3">
-            <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Mức giá</h3>
-            <div className="relative">
-              <select
-                className="w-full h-11 pl-4 pr-10 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 outline-none transition-all focus:border-blue-500 focus:ring-1 focus:ring-blue-500 cursor-pointer appearance-none shadow-sm"
-                value={priceRange}
-                onChange={(event) => onPriceRange(event.target.value)}
-              >
-                {PRICE_OPTIONS.map((option) => (
-                  <option key={option.value} value={option.value}>
+            <section className="space-y-3">
+              <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Khung giờ đi</h3>
+              <div className="grid grid-cols-2 gap-2">
+                {TIME_OPTIONS.map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => onChange({ time: option.value })}
+                    className={`rounded-lg border-2 py-2.5 text-[12px] font-semibold transition-all ${filters.time === option.value
+                      ? 'border-blue-600 bg-blue-600 text-white shadow-lg shadow-blue-200'
+                      : 'border-slate-50 bg-slate-50 text-slate-600 hover:border-slate-200'
+                      }`}
+                  >
                     {option.label}
-                  </option>
+                  </button>
                 ))}
-              </select>
-              <i className="fas fa-chevron-down pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-slate-400"></i>
-            </div>
-          </section>
+              </div>
+            </section>
 
-          <section className="space-y-3">
-            <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Đánh giá</h3>
-            <div className="grid grid-cols-1 gap-2">
-              {[4, 3, 2].map((r) => (
-                <button
-                  key={r}
-                  type="button"
-                  onClick={() => onChange({ rating: filters.rating === `${r}-5` ? '' : `${r}-5` })}
-                  className={`flex items-center justify-between rounded-xl border-2 px-4 py-2.5 text-sm font-bold transition-all ${filters.rating === `${r}-5`
-                    ? 'border-blue-600 bg-blue-600 text-white shadow-lg shadow-blue-200'
-                    : 'border-slate-50 bg-slate-50 text-slate-600 hover:border-slate-200'
-                    }`}
+            <section className="space-y-3">
+              <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Mức giá</h3>
+              <div className="relative">
+                <select
+                  className="w-full h-11 pl-4 pr-10 rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 outline-none transition-all focus:border-blue-500 focus:ring-1 focus:ring-blue-500 cursor-pointer appearance-none shadow-sm"
+                  value={priceRange}
+                  onChange={(event) => onPriceRange(event.target.value)}
                 >
-                  <span className="flex items-center gap-1">
-                    {Array.from({ length: r }).map((_, i) => (
-                      <i key={i} className="fas fa-star text-yellow-400 text-[10px]"></i>
-                    ))}
-                    <span className="ml-1">từ {r} sao</span>
+                  {PRICE_OPTIONS.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+                <i className="fas fa-chevron-down pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-xs text-slate-400"></i>
+              </div>
+            </section>
+
+            <section className="space-y-3">
+              <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Đánh giá</h3>
+              <div className="grid grid-cols-1 gap-2">
+                {[4, 3, 2].map((r) => (
+                  <button
+                    key={r}
+                    type="button"
+                    onClick={() => onChange({ rating: filters.rating === `${r}-5` ? '' : `${r}-5` })}
+                    className={`flex items-center justify-between rounded-xl border-2 px-4 py-2.5 text-sm font-bold transition-all ${filters.rating === `${r}-5`
+                      ? 'border-blue-600 bg-blue-600 text-white shadow-lg shadow-blue-200'
+                      : 'border-slate-50 bg-slate-50 text-slate-600 hover:border-slate-200'
+                      }`}
+                  >
+                    <span className="flex items-center gap-1">
+                      {Array.from({ length: r }).map((_, i) => (
+                        <i key={i} className="fas fa-star text-yellow-400 text-[10px]"></i>
+                      ))}
+                      <span className="ml-1">từ {r} sao</span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            {companyList.length > 0 && (
+              <section className="space-y-3 border-t border-slate-100 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setCompaniesExpanded(!companiesExpanded)}
+                  className="flex w-full items-center justify-between text-left focus:outline-none group/btn cursor-pointer"
+                >
+                  <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 group-hover/btn:text-slate-600 transition-colors">Nhà xe</h3>
+                  <span className="text-xs text-slate-400 group-hover/btn:text-slate-600 transition-colors flex items-center">
+                    {selectedCompanies.length > 0 && (
+                      <span className="mr-2 rounded-full bg-blue-50 px-2 py-0.5 text-[9px] font-black text-blue-600">
+                        {selectedCompanies.length}
+                      </span>
+                    )}
+                    <i className={`fas fa-chevron-down transition-transform duration-200 ${companiesExpanded ? 'rotate-180' : ''}`}></i>
                   </span>
                 </button>
-              ))}
-            </div>
-          </section>
 
-          {companyList.length > 0 && (
-            <section className="space-y-3 border-t border-slate-100 pt-4">
-              <button
-                type="button"
-                onClick={() => setCompaniesExpanded(!companiesExpanded)}
-                className="flex w-full items-center justify-between text-left focus:outline-none group/btn cursor-pointer"
-              >
-                <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 group-hover/btn:text-slate-600 transition-colors">Nhà xe</h3>
-                <span className="text-xs text-slate-400 group-hover/btn:text-slate-600 transition-colors flex items-center">
-                  {selectedCompanies.length > 0 && (
-                    <span className="mr-2 rounded-full bg-blue-50 px-2 py-0.5 text-[9px] font-black text-blue-600">
-                      {selectedCompanies.length}
-                    </span>
-                  )}
-                  <i className={`fas fa-chevron-down transition-transform duration-200 ${companiesExpanded ? 'rotate-180' : ''}`}></i>
-                </span>
-              </button>
+                {companiesExpanded && (
+                  <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 animate-in fade-in slide-in-from-top-2 duration-200">
+                    {companyList
+                      .map((company) => (
+                        <label
+                          key={company.id}
+                          className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${selectedCompanies.includes(String(company.id))
+                            ? 'bg-blue-50 text-blue-700'
+                            : 'hover:bg-slate-50 text-slate-600'
+                            }`}
+                        >
+                          <span className="flex min-w-0 items-center gap-3">
+                            <input
+                              type="checkbox"
+                              className="h-4 w-4 rounded-md border-slate-300 text-blue-600 transition-all focus:ring-blue-500"
+                              checked={selectedCompanies.includes(String(company.id))}
+                              onChange={() => toggleCompany(company.id)}
+                            />
+                            <span className="truncate text-sm font-bold">{company.name}</span>
+                          </span>
+                          <span className="text-[10px] font-black opacity-40">{company.trip_count}</span>
+                        </label>
+                      ))}
+                  </div>
+                )}
+              </section>
+            )}
 
-              {companiesExpanded && (
-                <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 animate-in fade-in slide-in-from-top-2 duration-200">
-                  {companyList
-                    .map((company) => (
-                      <label
-                        key={company.id}
-                        className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${selectedCompanies.includes(String(company.id))
-                          ? 'bg-blue-50 text-blue-700'
-                          : 'hover:bg-slate-50 text-slate-600'
-                          }`}
-                      >
-                        <span className="flex min-w-0 items-center gap-3">
-                          <input
-                            type="checkbox"
-                            className="h-4 w-4 rounded-md border-slate-300 text-blue-600 transition-all focus:ring-blue-500"
-                            checked={selectedCompanies.includes(String(company.id))}
-                            onChange={() => toggleCompany(company.id)}
-                          />
-                          <span className="truncate text-sm font-bold">{company.name}</span>
-                        </span>
-                        <span className="text-[10px] font-black opacity-40">{company.trip_count}</span>
-                      </label>
-                    ))}
-                </div>
-              )}
-            </section>
-          )}
+            {pickupPoints.length > 0 && (
+              <section className="space-y-3 border-t border-slate-100 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setPickupsExpanded(!pickupsExpanded)}
+                  className="flex w-full items-center justify-between text-left focus:outline-none group/btn cursor-pointer"
+                >
+                  <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 group-hover/btn:text-slate-600 transition-colors">Điểm đón</h3>
+                  <span className="text-xs text-slate-400 group-hover/btn:text-slate-600 transition-colors flex items-center">
+                    {filters.fa && (
+                      <span className="mr-2 rounded-full bg-blue-50 px-2 py-0.5 text-[9px] font-black text-blue-600">
+                        {filters.fa.split(',').filter(Boolean).length}
+                      </span>
+                    )}
+                    <i className={`fas fa-chevron-down transition-transform duration-200 ${pickupsExpanded ? 'rotate-180' : ''}`}></i>
+                  </span>
+                </button>
 
-          {pickupPoints.length > 0 && (
-            <section className="space-y-3 border-t border-slate-100 pt-4">
-              <button
-                type="button"
-                onClick={() => setPickupsExpanded(!pickupsExpanded)}
-                className="flex w-full items-center justify-between text-left focus:outline-none group/btn cursor-pointer"
-              >
-                <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 group-hover/btn:text-slate-600 transition-colors">Điểm đón</h3>
-                <span className="text-xs text-slate-400 group-hover/btn:text-slate-600 transition-colors flex items-center">
-                  {filters.fa && (
-                    <span className="mr-2 rounded-full bg-blue-50 px-2 py-0.5 text-[9px] font-black text-blue-600">
-                      {filters.fa.split(',').filter(Boolean).length}
-                    </span>
-                  )}
-                  <i className={`fas fa-chevron-down transition-transform duration-200 ${pickupsExpanded ? 'rotate-180' : ''}`}></i>
-                </span>
-              </button>
+                {pickupsExpanded && (
+                  <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 animate-in fade-in slide-in-from-top-2 duration-200">
+                    {pickupPoints.map((point, idx) => {
+                      const pointName = getPointName(point);
+                      const selected = filters.fa.split(',').includes(pointName);
+                      return (
+                        <label
+                          key={idx}
+                          className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${selected ? 'bg-blue-50 text-blue-700' : 'hover:bg-slate-50 text-slate-600'
+                            }`}
+                        >
+                          <span className="flex min-w-0 items-center gap-3">
+                            <input
+                              type="checkbox"
+                              className="h-4 w-4 rounded-md border-slate-300 text-blue-600"
+                              checked={selected}
+                              onChange={() => {
+                                const current = filters.fa ? filters.fa.split(',') : [];
+                                const next = selected ? current.filter(x => x !== pointName) : [...current, pointName];
+                                onChange({ fa: next.join(',') });
+                              }}
+                            />
+                            <span className="truncate text-sm font-bold">{pointName}</span>
+                          </span>
+                          <span className="text-[10px] font-black opacity-40">{point.trip_count}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                )}
+              </section>
+            )}
 
-              {pickupsExpanded && (
-                <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 animate-in fade-in slide-in-from-top-2 duration-200">
-                  {pickupPoints.map((point, idx) => {
-                    const pointName = getPointName(point);
-                    const selected = filters.fa.split(',').includes(pointName);
-                    return (
-                      <label
-                        key={idx}
-                        className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${selected ? 'bg-blue-50 text-blue-700' : 'hover:bg-slate-50 text-slate-600'
-                          }`}
-                      >
-                        <span className="flex min-w-0 items-center gap-3">
-                          <input
-                            type="checkbox"
-                            className="h-4 w-4 rounded-md border-slate-300 text-blue-600"
-                            checked={selected}
-                            onChange={() => {
-                              const current = filters.fa ? filters.fa.split(',') : [];
-                              const next = selected ? current.filter(x => x !== pointName) : [...current, pointName];
-                              onChange({ fa: next.join(',') });
-                            }}
-                          />
-                          <span className="truncate text-sm font-bold">{pointName}</span>
-                        </span>
-                        <span className="text-[10px] font-black opacity-40">{point.trip_count}</span>
-                      </label>
-                    );
-                  })}
-                </div>
-              )}
-            </section>
-          )}
+            {dropoffPoints.length > 0 && (
+              <section className="space-y-3 border-t border-slate-100 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setDropoffsExpanded(!dropoffsExpanded)}
+                  className="flex w-full items-center justify-between text-left focus:outline-none group/btn cursor-pointer"
+                >
+                  <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 group-hover/btn:text-slate-600 transition-colors">Điểm trả</h3>
+                  <span className="text-xs text-slate-400 group-hover/btn:text-slate-600 transition-colors flex items-center">
+                    {filters.ta && (
+                      <span className="mr-2 rounded-full bg-blue-50 px-2 py-0.5 text-[9px] font-black text-blue-600">
+                        {filters.ta.split(',').filter(Boolean).length}
+                      </span>
+                    )}
+                    <i className={`fas fa-chevron-down transition-transform duration-200 ${dropoffsExpanded ? 'rotate-180' : ''}`}></i>
+                  </span>
+                </button>
 
-          {dropoffPoints.length > 0 && (
-            <section className="space-y-3 border-t border-slate-100 pt-4">
-              <button
-                type="button"
-                onClick={() => setDropoffsExpanded(!dropoffsExpanded)}
-                className="flex w-full items-center justify-between text-left focus:outline-none group/btn cursor-pointer"
-              >
-                <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 group-hover/btn:text-slate-600 transition-colors">Điểm trả</h3>
-                <span className="text-xs text-slate-400 group-hover/btn:text-slate-600 transition-colors flex items-center">
-                  {filters.ta && (
-                    <span className="mr-2 rounded-full bg-blue-50 px-2 py-0.5 text-[9px] font-black text-blue-600">
-                      {filters.ta.split(',').filter(Boolean).length}
-                    </span>
-                  )}
-                  <i className={`fas fa-chevron-down transition-transform duration-200 ${dropoffsExpanded ? 'rotate-180' : ''}`}></i>
-                </span>
-              </button>
-
-              {dropoffsExpanded && (
-                <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 animate-in fade-in slide-in-from-top-2 duration-200">
-                  {dropoffPoints.map((point, idx) => {
-                    const pointName = getPointName(point);
-                    const selected = filters.ta.split(',').includes(pointName);
-                    return (
-                      <label
-                        key={idx}
-                        className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${selected ? 'bg-blue-50 text-blue-700' : 'hover:bg-slate-50 text-slate-600'
-                          }`}
-                      >
-                        <span className="flex min-w-0 items-center gap-3">
-                          <input
-                            type="checkbox"
-                            className="h-4 w-4 rounded-md border-slate-300 text-blue-600"
-                            checked={selected}
-                            onChange={() => {
-                              const current = filters.ta ? filters.ta.split(',') : [];
-                              const next = selected ? current.filter(x => x !== pointName) : [...current, pointName];
-                              onChange({ ta: next.join(',') });
-                            }}
-                          />
-                          <span className="truncate text-sm font-bold">{pointName}</span>
-                        </span>
-                        <span className="text-[10px] font-black opacity-40">{point.trip_count}</span>
-                      </label>
-                    );
-                  })}
-                </div>
-              )}
-            </section>
-          )}
+                {dropoffsExpanded && (
+                  <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 animate-in fade-in slide-in-from-top-2 duration-200">
+                    {dropoffPoints.map((point, idx) => {
+                      const pointName = getPointName(point);
+                      const selected = filters.ta.split(',').includes(pointName);
+                      return (
+                        <label
+                          key={idx}
+                          className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${selected ? 'bg-blue-50 text-blue-700' : 'hover:bg-slate-50 text-slate-600'
+                            }`}
+                        >
+                          <span className="flex min-w-0 items-center gap-3">
+                            <input
+                              type="checkbox"
+                              className="h-4 w-4 rounded-md border-slate-300 text-blue-600"
+                              checked={selected}
+                              onChange={() => {
+                                const current = filters.ta ? filters.ta.split(',') : [];
+                                const next = selected ? current.filter(x => x !== pointName) : [...current, pointName];
+                                onChange({ ta: next.join(',') });
+                              }}
+                            />
+                            <span className="truncate text-sm font-bold">{pointName}</span>
+                          </span>
+                          <span className="text-[10px] font-black opacity-40">{point.trip_count}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                )}
+              </section>
+            )}
+          </div>
         </div>
+      </aside>
+      <div className="fixed bottom-[calc(env(safe-area-inset-bottom)+16px)] left-1/2 z-50 flex w-[calc(100%-32px)] max-w-md -translate-x-1/2 items-center justify-between gap-1 rounded-full bg-[#0F172A] border border-white/10 p-1.5 text-white shadow-2xl lg:hidden">
+        <MobileToolbarButton sheet="filter" icon="fa-sliders-h" label="Lọc" badge={activeFilterCount || ''} active={activeSheet === 'filter'} />
+        <MobileToolbarButton sheet="sort" icon="fa-sort-amount-down" label="Sắp xếp" active={activeSheet === 'sort'} />
+        <MobileToolbarButton sheet="time" icon="fa-clock" label="Giờ đi" active={activeSheet === 'time'} />
+        <MobileToolbarButton sheet="company" icon="fa-bus" label="Nhà xe" badge={selectedCompanies.length || ''} active={activeSheet === 'company'} />
       </div>
-    </aside>
-    <div className="fixed bottom-[calc(env(safe-area-inset-bottom)+16px)] left-1/2 z-50 flex w-[calc(100%-32px)] max-w-md -translate-x-1/2 items-center justify-between gap-1 rounded-full bg-[#0F172A] border border-white/10 p-1.5 text-white shadow-2xl lg:hidden">
-      <MobileToolbarButton sheet="filter" icon="fa-sliders-h" label="Lọc" badge={activeFilterCount || ''} active={activeSheet === 'filter'} />
-      <MobileToolbarButton sheet="sort" icon="fa-sort-amount-down" label="Sắp xếp" active={activeSheet === 'sort'} />
-      <MobileToolbarButton sheet="time" icon="fa-clock" label="Giờ đi" active={activeSheet === 'time'} />
-      <MobileToolbarButton sheet="company" icon="fa-bus" label="Nhà xe" badge={selectedCompanies.length || ''} active={activeSheet === 'company'} />
-    </div>
-    {mobileSheet}
+      {mobileSheet}
     </>
   );
 };
@@ -1982,7 +1981,7 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
           <div className="grid grid-cols-2 gap-2 lg:grid-cols-1">
             <button
               onClick={() => setShowDetails(!showDetails)}
-              className="flex min-h-12 items-center justify-center rounded-xl border-2 border-blue-100 bg-white px-3 text-xs font-black uppercase text-primary transition-all hover:border-primary hover:bg-blue-50 active:scale-95"
+              className="flex min-h-12 items-center justify-center rounded-md border-2 border-blue-100 bg-white px-3 text-xs font-black uppercase text-primary transition-all hover:border-primary hover:bg-blue-50 active:scale-95"
             >
               CHI TIẾT
             </button>
@@ -1992,7 +1991,7 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
                 setShowDetails(false);
                 setIsBooking(true);
               }}
-              className="flex min-h-12 items-center justify-center rounded-xl px-3 text-xs font-black uppercase text-white shadow-lg shadow-primary/20 transition-all hover:opacity-90 active:scale-95"
+              className="flex min-h-12 items-center justify-center rounded-md px-3 text-xs font-black uppercase text-white shadow-lg shadow-primary/20 transition-all hover:opacity-90 active:scale-95"
             >
               CHỌN CHUYẾN
             </button>

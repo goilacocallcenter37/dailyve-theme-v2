@@ -23,7 +23,7 @@
         [
             'id' => 'bus',
             'label' => 'Xe khách',
-            'icon' => $upload('images/front-of-bus.png'),
+            'icon' => $upload('images/bus-icon-web.png'),
             'tabs' => [
                 'intro' => [
                     'label' => 'Giới thiệu',
@@ -46,7 +46,7 @@
         [
             'id' => 'plane',
             'label' => 'Máy bay',
-            'icon' => $upload('images/plane.png'),
+            'icon' => $upload('images/plane-icon-web.png'),
             'tabs' => [
                 'intro' => [
                     'label' => 'Giới thiệu',
@@ -69,7 +69,7 @@
         [
             'id' => 'train',
             'label' => 'Tàu hỏa',
-            'icon' => $upload('images/train.png'),
+            'icon' => $upload('images/train-icon-web.png'),
             'tabs' => [
                 'intro' => [
                     'label' => 'Giới thiệu',
@@ -114,32 +114,26 @@
         ],
     ];
 
-    $press = [
-        [
-            'brand' => 'VNEXPRESS',
-            'title' => 'Dailyve – Nền tảng đặt vé xe khách tiện lợi và hiện đại',
-            'image' => $upload('2025/06/nha-xe-hong-thinh-ha-noi-di-ha-tinh-gia-tot-nhat.jpg'),
-            'url' => home_url('/tin-tuc/'),
-        ],
-        [
-            'brand' => 'DANTRI',
-            'title' => 'Dailyve hợp tác cùng nhiều hãng xe lớn, mang đến trải nghiệm thuận tiện',
-            'image' => $upload('2025/08/chuyen-tau-hoa-da-nang-di-hue.jpg'),
-            'url' => home_url('/tin-tuc/'),
-        ],
-        [
-            'brand' => 'TUỔI TRẺ',
-            'title' => 'Đặt vé tàu, vé máy bay siêu nhanh với Dailyve',
-            'image' => $upload('2025/08/chang-bay-tu-san-bay-lien-khuong-di-ha-noi.jpg'),
-            'url' => home_url('/tin-tuc/'),
-        ],
-        [
-            'brand' => 'ZING NEWS',
-            'title' => 'Dailyve – Ứng dụng đặt vé toàn diện cho mọi hành trình',
-            'image' => $upload('2025/03/cach-dat-ve-xe-tai-dailyve-1.png'),
-            'url' => home_url('/tin-tuc/'),
-        ],
-    ];
+    $acf_press_slider = function_exists('get_field') ? get_field('slider_bao_chi', 'option') : [];
+    $press = [];
+    if (!empty($acf_press_slider) && is_array($acf_press_slider)) {
+        foreach ($acf_press_slider as $item) {
+            $image_url = '';
+            if (!empty($item['img'])) {
+                $image_url = is_array($item['img']) ? $item['img']['url'] ?? '' : $item['img'];
+            }
+            $link_url = '#';
+            if (!empty($item['link'])) {
+                $link_url = is_array($item['link']) ? $item['link']['url'] ?? '#' : $item['link'];
+            }
+            $press[] = [
+                'brand' => '',
+                'title' => $item['title'] ?? '',
+                'image' => $image_url,
+                'url' => $link_url,
+            ];
+        }
+    }
 
     $testimonials = [
         [
@@ -165,6 +159,66 @@
             'quote' => 'Tìm vé và so sánh giá rất tiện. Đội hỗ trợ phản hồi nhanh khi cần đổi lịch chuyến đi.',
         ],
     ];
+
+    $customerReviews = [
+        [
+            'name' => 'Nguyễn Minh Anh',
+            'avatar' => 'https://randomuser.me/api/portraits/women/44.jpg',
+            'rating' => 5,
+            'quote' => 'Đặt vé rất nhanh, giao diện dễ dùng. Mọi thứ đều tiện lợi!',
+        ],
+        [
+            'name' => 'Trần Quốc Bảo',
+            'avatar' => 'https://randomuser.me/api/portraits/men/46.jpg',
+            'rating' => 5,
+            'quote' => 'Săn ưu đãi tiện hơn trên app. Nhiều chương trình hấp dẫn!',
+        ],
+        [
+            'name' => 'Lê Thu Hà',
+            'avatar' => 'https://randomuser.me/api/portraits/women/68.jpg',
+            'rating' => 5,
+            'quote' => 'Tìm chuyến và thanh toán rất mượt. Trải nghiệm tuyệt vời!',
+        ],
+        [
+            'name' => 'Phạm Hoàng Nam',
+            'avatar' => 'https://randomuser.me/api/portraits/men/22.jpg',
+            'rating' => 5,
+            'quote' => 'Hỗ trợ nhanh chóng 24/7. Mình rất yên tâm khi đặt vé.',
+        ],
+        [
+            'name' => 'Đỗ Thanh Vy',
+            'avatar' => 'https://randomuser.me/api/portraits/women/12.jpg',
+            'rating' => 5,
+            'quote' => 'Vé điện tử rõ ràng, không phải chờ lâu khi cần đổi lịch.',
+        ],
+        [
+            'name' => 'Huỳnh Tuấn Anh',
+            'avatar' => 'https://randomuser.me/api/portraits/men/33.jpg',
+            'rating' => 5,
+            'quote' => 'Thường xuyên có mã giảm giá. Đặt vé chưa bao giờ rẻ và dễ đến thế.',
+        ],
+        [
+            'name' => 'Huỳnh Quốc Cường',
+            'avatar' => 'https://randomuser.me/api/portraits/men/23.jpg',
+            'rating' => 5,
+            'quote' => 'Hỗ trợ nhanh chóng 24/7. Mình rất yên tâm khi đặt vé.',
+        ],
+    ];
+
+    $reviewStats = [
+        ['value' => '1.000.000+', 'label' => 'Khách hàng tin tưởng', 'icon' => 'fas fa-users'],
+        ['value' => '5.000.000+', 'label' => 'Vé đã được đặt', 'icon' => 'fas fa-ticket-alt'],
+        ['value' => '4.8/5', 'label' => 'Đánh giá trung bình', 'icon' => 'fas fa-star'],
+        ['value' => '24/7', 'label' => 'Hỗ trợ tận tâm', 'icon' => 'fas fa-headset'],
+    ];
+
+    $appBenefits = [
+        ['label' => 'Ưu đãi độc quyền', 'icon' => 'fas fa-percent'],
+        ['label' => 'Đặt vé siêu nhanh', 'icon' => 'fas fa-bolt'],
+        ['label' => 'An toàn & bảo mật', 'icon' => 'fas fa-shield-alt'],
+    ];
+
+    $qrCode = 'https://object.dailyve.com/dailyve/wp-content/uploads/2025/08/QR-CODE-APP-DLV.png';
 @endphp
 
 @section('content')
@@ -315,115 +369,233 @@
         </section>
 
         <!-- Reasons Section -->
-        <section class="dailyve-section dailyve-reasons" aria-labelledby="dailyve-reasons-title">
-            <div class="dailyve-container">
-                <h2 id="dailyve-reasons-title"><span>TẠI SAO</span> nên sử dụng dịch vụ của Dailyve?</h2>
-                <div class="dailyve-reasons__grid">
+        <section class="dailyve-section dailyve-reasons bg-[#1374ed] py-14 md:py-20 relative overflow-hidden"
+            aria-labelledby="dailyve-reasons-title">
+            <!-- Decorative Background -->
+            <div class="absolute inset-0 pointer-events-none overflow-hidden flex justify-center items-center">
+                <div
+                    class="absolute w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent opacity-60">
+                </div>
+                <i class="fas fa-plane text-white/10 text-6xl absolute top-12 right-8 md:right-24 -rotate-45"></i>
+            </div>
+
+            <div class="dailyve-container relative z-10">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 id="dailyve-reasons-title"
+                        class="text-[26px] md:text-[42px] font-black text-white mb-5 flex flex-col md:flex-row flex-wrap justify-center items-center gap-x-4 gap-y-2 md:gap-y-3 !border-0 !pb-0 !after:hidden tracking-tight">
+                        <span
+                            class="bg-[#ffbe1a] text-[#0a1e40] px-6 md:px-8 py-1.5 md:py-2 rounded-[40px] shadow-[0_8px_24px_rgba(255,190,26,0.35)] leading-none uppercase mb-1 md:mb-0">TẠI
+                            SAO</span>
+                        <span class="text-center leading-snug">nên sử dụng dịch vụ của<br class="md:hidden">
+                            Dailyve?</span>
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                     @foreach ($reasons as $reason)
-                        <article>
-                            <i class="{{ esc_attr($reason['icon']) }}" aria-hidden="true"></i>
-                            <h3>{{ $reason['title'] }}</h3>
-                            <p>{{ $reason['desc'] }}</p>
+                        <article
+                            class="bg-white rounded-[20px] p-5 md:p-8 flex flex-row items-start sm:items-center gap-4 sm:gap-6 shadow-[0_12px_36px_rgba(0,0,0,0.08)] transition-transform hover:-translate-y-1">
+                            <!-- Illustration Area -->
+                            <div class="w-[70px] sm:w-[130px] flex items-center justify-center shrink-0 pt-1 sm:pt-0">
+                                <i
+                                    class="{{ esc_attr($reason['icon']) }} text-[45px] sm:text-[80px] md:text-[90px] text-[#1374ed]"></i>
+                            </div>
+
+                            <!-- Content Area -->
+                            <div class="flex-1 text-left pt-0">
+                                <div class="flex items-center justify-start gap-2.5 sm:gap-3 mb-2.5">
+                                    <span
+                                        class="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full bg-[#1374ed] text-white flex items-center justify-center font-bold text-[11px] sm:text-[13px] md:text-[14px] shrink-0">
+                                        {{ sprintf('%02d', $loop->iteration) }}
+                                    </span>
+                                    <h3
+                                        class="text-[16px] sm:text-[17px] md:text-[19px] font-bold text-[#0a1e40] leading-tight m-0">
+                                        {{ $reason['title'] }}</h3>
+                                </div>
+                                <div class="w-6 sm:w-8 h-[2px] bg-[#1374ed] mb-2 sm:mb-3 mx-0"></div>
+                                <p class="text-slate-800 text-[13px] sm:text-[14px] md:text-[15px] leading-relaxed m-0">
+                                    {{ $reason['desc'] }}
+                                </p>
+                            </div>
                         </article>
                     @endforeach
+                </div>
+
+                <div
+                    class="mt-14 flex items-center justify-center gap-2.5 text-white/95 text-[14px] md:text-[15px] font-medium border-t border-white/20 pt-6 max-w-lg mx-auto">
+                    <i class="fas fa-shield-alt text-white/90 text-[18px]"></i>
+                    <span>Dailyve - Đồng hành cùng bạn trên mọi hành trình</span>
                 </div>
             </div>
         </section>
 
         <!-- Press Section -->
-        <section class="dailyve-section dailyve-press" aria-labelledby="dailyve-press-title">
-            <div class="dailyve-container">
-                <h2 id="dailyve-press-title"><span>BÁO CHÍ</span> nói gì về Dailyve?</h2>
+        <section class="dailyve-section dailyve-press bg-[#f8f9fa] py-12 md:py-16" aria-labelledby="dailyve-press-title">
+            <div class="dailyve-container relative">
+                <div class="text-center mb-12 md:mb-16">
+                    <h2 id="dailyve-press-title"
+                        class="text-[30px] md:text-[42px] font-black text-[#0a1e40] mb-5 flex flex-wrap justify-center items-center gap-x-4 gap-y-2 !border-0 !pb-0 !after:hidden tracking-tight">
+                        <span
+                            class="bg-[#ffbe1a] text-[#0a1e40] px-6 md:px-8 py-2 rounded-[40px] shadow-[0_8px_24px_rgba(255,190,26,0.35)] leading-none uppercase">BÁO
+                            CHÍ</span>
+                        <span>nói gì về Dailyve?</span>
+                    </h2>
+                    <p class="text-[#64748b] text-[15px] md:text-[16px] max-w-2xl mx-auto leading-relaxed">
+                        Những đánh giá và tin tức nổi bật từ các cơ quan báo chí uy tín<br class="hidden md:block"> về hành
+                        trình phát triển của Dailyve.
+                    </p>
+                </div>
 
-                <div class="dailyve-press__carousel-wrapper">
-                    <button type="button" class="dailyve-press__nav dailyve-press__nav--prev" aria-label="Trước"
-                        data-press-nav-prev>
-                        <i class="fas fa-chevron-left"></i>
+                <div class="dailyve-press__carousel-wrapper relative">
+                    <button type="button"
+                        class="dailyve-press__nav dailyve-press__nav--prev absolute left-0 md:-left-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-11 md:h-11 bg-white rounded-full flex items-center justify-center shadow-[0_2px_12px_rgba(0,0,0,0.1)] text-[#0068ff] hover:bg-slate-50 transition-colors"
+                        aria-label="Trước" data-press-nav-prev>
+                        <i class="fas fa-chevron-left text-[14px]"></i>
                     </button>
-                    <div class="dailyve-press__track scrollbar-none" data-press-track>
+                    <div class="dailyve-press__track scrollbar-none flex gap-6 overflow-x-auto snap-x snap-mandatory pb-4 px-2"
+                        data-press-track>
+                        @php
+                            $bgStyles = [
+                                [
+                                    'wrapper' => 'bg-gradient-to-br from-[#fdf2f8] to-[#fce7f3]',
+                                    'shapes' =>
+                                        '<div class="absolute -left-10 -bottom-10 w-40 h-40 rounded-full border-[20px] border-white/40"></div><div class="absolute -left-20 -bottom-20 w-56 h-56 rounded-full border-[20px] border-white/20"></div>',
+                                ],
+                                [
+                                    'wrapper' => 'bg-gradient-to-br from-[#fff7ed] to-[#ffedd5]',
+                                    'shapes' =>
+                                        '<div class="absolute -right-10 -bottom-10 w-40 h-40 rounded-full border-[20px] border-white/40"></div><div class="absolute -right-20 -bottom-20 w-56 h-56 rounded-full border-[20px] border-white/20"></div>',
+                                ],
+                                [
+                                    'wrapper' => 'bg-gradient-to-br from-[#f0f9ff] to-[#e0f2fe]',
+                                    'shapes' =>
+                                        '<div class="absolute -right-10 -top-10 w-40 h-40 rounded-full border-[20px] border-white/40"></div><div class="absolute -right-20 -top-20 w-56 h-56 rounded-full border-[20px] border-white/20"></div>',
+                                ],
+                            ];
+                        @endphp
                         @foreach ($press as $item)
-                            <article class="dailyve-press-card">
-                                <img src="{{ esc_url($item['image']) }}" alt="{{ esc_attr($item['title']) }}"
-                                    loading="lazy">
-                                <div class="dailyve-press__meta">
-                                    <span class="dailyve-press__brand">{{ $item['brand'] }}</span>
-                                    <h3>{{ $item['title'] }}</h3>
-                                    <a class="dailyve-btn dailyve-btn--primary-sm" href="{{ esc_url($item['url']) }}">Xem
-                                        ngay</a>
+                            @php
+                                $bgStyle = $bgStyles[$loop->index % count($bgStyles)];
+                            @endphp
+                            <article
+                                class="dailyve-press-card flex flex-col rounded-[20px] bg-white border border-slate-100 shadow-[0_2px_15px_rgba(0,0,0,0.03)] overflow-hidden min-w-[85%] sm:min-w-[340px] lg:min-w-[calc((100%-48px)/3)] snap-start">
+                                <!-- Image container -->
+                                <div
+                                    class="h-[150px] md:h-[180px] w-full {{ $bgStyle['wrapper'] }} flex items-center justify-center p-6 relative overflow-hidden border-b border-slate-100">
+                                    {!! $bgStyle['shapes'] !!}
+                                    <img src="{{ esc_url($item['image']) }}" alt="{{ esc_attr($item['title']) }}"
+                                        class="max-h-full max-w-[75%] object-contain relative z-10 mix-blend-multiply"
+                                        loading="lazy">
+                                </div>
+
+                                <!-- Content container -->
+                                <div class="p-5 md:p-7 flex flex-col flex-1 bg-white text-left">
+                                    <!-- Label -->
+                                    <div class="flex items-center gap-1.5 mb-3">
+                                        <i class="far fa-newspaper text-[#0068ff] text-[13px]" aria-hidden="true"></i>
+                                        <span class="text-[13px] font-medium text-slate-500">Báo chí</span>
+                                    </div>
+
+                                    <!-- Title -->
+                                    <h3
+                                        class="text-[16px] md:text-[18px] font-bold text-[#0a1e40] leading-snug mb-6 line-clamp-3">
+                                        {{ $item['title'] }}
+                                    </h3>
+
+                                    <!-- Footer -->
+                                    <div
+                                        class="mt-auto flex items-center justify-between pt-4 border-t border-slate-100/80">
+                                        <a href="{{ esc_url($item['url']) }}" target="_blank" rel="noopener noreferrer"
+                                            class="inline-flex items-center justify-center bg-[#2196f3] hover:bg-[#1565c0] text-white text-[13px] font-semibold px-5 py-2.5 rounded-[10px] transition-colors">
+                                            Xem bài viết <i class="fas fa-chevron-right ml-2 text-[10px]"
+                                                aria-hidden="true"></i>
+                                        </a>
+                                        <div class="flex items-center gap-1.5 text-[12px] text-slate-400 font-medium">
+                                            <i class="far fa-calendar-alt" aria-hidden="true"></i>
+                                            <span>{{ date('d/m/Y') }}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </article>
                         @endforeach
                     </div>
-                    <button type="button" class="dailyve-press__nav dailyve-press__nav--next" aria-label="Tiếp"
-                        data-press-nav-next>
-                        <i class="fas fa-chevron-right"></i>
+                    <button type="button"
+                        class="dailyve-press__nav dailyve-press__nav--next absolute right-0 md:-right-5 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-11 md:h-11 bg-white rounded-full flex items-center justify-center shadow-[0_2px_12px_rgba(0,0,0,0.1)] text-[#0068ff] hover:bg-slate-50 transition-colors"
+                        aria-label="Tiếp" data-press-nav-next>
+                        <i class="fas fa-chevron-right text-[14px]"></i>
                     </button>
                 </div>
 
-                <div class="dailyve-press__footer">
-                    <a class="dailyve-btn dailyve-btn--accent" href="{{ esc_url(home_url('/tin-tuc/')) }}">Xem thêm</a>
+                <div class="dailyve-press__footer mt-10 md:mt-12 flex justify-center">
+                    <a class="inline-flex items-center justify-center bg-[#ffc107] text-[#0a1e40] font-bold text-[15px] px-8 py-3 rounded-full shadow-[0_4px_15px_rgba(255,193,7,0.3)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(255,193,7,0.4)] transition-all"
+                        href="{{ esc_url(home_url('/tin-tuc/')) }}">Xem thêm</a>
                 </div>
             </div>
         </section>
 
-        <!-- Merged App & Testimonials Band -->
-        <section class="dailyve-merged-band" aria-labelledby="dailyve-merged-title">
-            <div class="dailyve-container dailyve-merged-band__inner">
-                <!-- Left Column: App Downloads -->
-                <div class="dailyve-merged-band__left">
-                    <h2 id="dailyve-merged-title">
-                        <span>KHÁCH HÀNG</span> nói gì về Dailyve?
-                    </h2>
+        @include('partials.home-app-reviews')
 
-                    <div class="dailyve-merged-band__app-downloads">
-                        <div class="dailyve-app-download-item">
-                            <p class="dailyve-app-download-label">Dailyve đã cập bến tại <strong>App Store</strong></p>
-                            <a href="https://apps.apple.com/vn/app/dailyve-%C4%91%E1%BA%B7t-v%C3%A9-xe-24-7/id6748101538"
-                                class="dailyve-store-link">
-                                <img src="{{ esc_url($appStore) }}" alt="Tải trên App Store" loading="lazy">
-                            </a>
+        @if (false)
+            <!-- Merged App & Testimonials Band -->
+            <section class="dailyve-merged-band" aria-labelledby="dailyve-merged-title">
+                <div class="dailyve-container dailyve-merged-band__inner">
+                    <!-- Left Column: App Downloads -->
+                    <div class="dailyve-merged-band__left">
+                        <h2 id="dailyve-merged-title">
+                            <span>KHÁCH HÀNG</span> nói gì về Dailyve?
+                        </h2>
+
+                        <div class="dailyve-merged-band__app-downloads">
+                            <div class="dailyve-app-download-item">
+                                <p class="dailyve-app-download-label">Dailyve đã cập bến tại <strong>App Store</strong></p>
+                                <a href="https://apps.apple.com/vn/app/dailyve-%C4%91%E1%BA%B7t-v%C3%A9-xe-24-7/id6748101538"
+                                    class="dailyve-store-link">
+                                    <img src="{{ esc_url($appStore) }}" alt="Tải trên App Store" loading="lazy">
+                                </a>
+                            </div>
+
+                            <div class="dailyve-app-download-item">
+                                <p class="dailyve-app-download-label">Và tại <strong>Play Store</strong> cũng có Dailyve
+                                </p>
+                                <a href="https://play.google.com/store/apps/details?id=com.dailyve"
+                                    class="dailyve-store-link">
+                                    <img src="{{ esc_url($googlePlay) }}" alt="Tải trên Google Play" loading="lazy">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Center Column: iPhone Mockup -->
+                    <div class="dailyve-merged-band__center" aria-hidden="true">
+                        <div class="dailyve-phone-mockup">
+                            <div class="dailyve-phone-screen">
+                                <img src="{{ esc_url($screenHome) }}" alt="Dailyve App" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Chat Bubble & QR Code -->
+                    <div class="dailyve-merged-band__right">
+                        <!-- Chat Bubble -->
+                        <div class="dailyve-chat-bubble">
+                            <span class="dailyve-chat-bubble__text">Tiện lợi quá điiii!</span>
+                            <span class="dailyve-chat-bubble__subtext">Mười điểmmm!</span>
                         </div>
 
-                        <div class="dailyve-app-download-item">
-                            <p class="dailyve-app-download-label">Và tại <strong>Play Store</strong> cũng có Dailyve</p>
-                            <a href="https://play.google.com/store/apps/details?id=com.dailyve"
-                                class="dailyve-store-link">
-                                <img src="{{ esc_url($googlePlay) }}" alt="Tải trên Google Play" loading="lazy">
-                            </a>
+                        <!-- QR Code Card -->
+                        <div class="dailyve-qr-card">
+                            <div class="dailyve-qr-card__code">
+                                <img src="https://object.dailyve.com/dailyve/wp-content/uploads/2025/08/QR-CODE-APP-DLV.png"
+                                    alt="QR Code" loading="lazy">
+                            </div>
+                            <div class="dailyve-qr-card__info">
+                                <p class="dailyve-qr-card__title">Quét mã để tải app</p>
+                                <p class="dailyve-qr-card__subtitle">Hoặc tìm "Dailyve" trên App Store & Google Play</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Center Column: iPhone Mockup -->
-                <div class="dailyve-merged-band__center" aria-hidden="true">
-                    <div class="dailyve-phone-mockup">
-                        <div class="dailyve-phone-screen">
-                            <img src="{{ esc_url($screenHome) }}" alt="Dailyve App" loading="lazy">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Column: Chat Bubble & QR Code -->
-                <div class="dailyve-merged-band__right">
-                    <!-- Chat Bubble -->
-                    <div class="dailyve-chat-bubble">
-                        <span class="dailyve-chat-bubble__text">Tiện lợi quá điiii!</span>
-                        <span class="dailyve-chat-bubble__subtext">Mười điểmmm!</span>
-                    </div>
-
-                    <!-- QR Code Card -->
-                    <div class="dailyve-qr-card">
-                        <div class="dailyve-qr-card__code">
-                            <img src="https://object.dailyve.com/dailyve/wp-content/uploads/2025/08/QR-CODE-APP-DLV.png"
-                                alt="QR Code" loading="lazy">
-                        </div>
-                        <div class="dailyve-qr-card__info">
-                            <p class="dailyve-qr-card__title">Quét mã để tải app</p>
-                            <p class="dailyve-qr-card__subtitle">Hoặc tìm "Dailyve" trên App Store & Google Play</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+            </section>
+        @endif
     </article>
 @endsection

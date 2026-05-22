@@ -616,14 +616,14 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
       {/* Seat Group Selector Modal */}
       {seatGroupSelector && createPortal(
         <div className="fixed inset-0 z-[999] flex items-center justify-center p-4">
-          <div 
+          <div
             className="absolute inset-0 bg-[#0F172A]/60 transition-all duration-300 animate-in fade-in"
             onClick={() => setSeatGroupSelector(null)}
           ></div>
-          
+
           <div className="relative w-full max-w-md overflow-hidden rounded-2xl bg-white border border-[#E2E8F0] shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col">
             <div className="relative bg-[#2196F3] p-6 text-center text-white shrink-0 shadow-sm">
-              <button 
+              <button
                 onClick={() => setSeatGroupSelector(null)}
                 className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white/90 hover:bg-white/20 transition-all active:scale-95"
               >
@@ -641,7 +641,7 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
                 const originalPrice = group.fares?.original || group.originalPrice || group.fares?.original_fare || group.original_fare;
                 const hasDiscount = originalPrice && originalPrice > group.fare;
                 const discountPercent = hasDiscount ? Math.round(((originalPrice - group.fare) / originalPrice) * 100) : 0;
-                
+
                 return (
                   <button
                     key={idx}
@@ -846,8 +846,8 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
                     return (
                       <div key={point.__selectionKey || idx} className="space-y-3">
                         <label
-                          className={`group flex cursor-pointer items-start gap-3 rounded-2xl border-2 p-4 transition-all sm:gap-4 sm:p-5 ${disabled ? 'opacity-40 cursor-not-allowed bg-slate-50' :
-                              isPointSelected(selectedPickup, point) ? 'border-primary bg-primary/5' : 'border-slate-50 bg-white hover:border-primary-light'
+                          className={`group flex cursor-pointer items-start gap-3 rounded-2xl border-2 px-4 py-3 transition-all sm:gap-4 sm:p-5 ${disabled ? 'opacity-40 cursor-not-allowed bg-slate-50' :
+                            isPointSelected(selectedPickup, point) ? 'border-primary bg-primary/5' : 'border-slate-50 bg-white hover:border-primary-light'
                             }`}
                         >
                           <input
@@ -919,8 +919,8 @@ const SeatSelection = ({ trip, onCancel, onComplete, legIndex = 0 }) => {
                     return (
                       <div key={point.__selectionKey || idx} className="space-y-3">
                         <label
-                          className={`group flex cursor-pointer items-start gap-3 rounded-2xl border-2 p-4 transition-all sm:gap-4 sm:p-5 ${disabled ? 'opacity-40 cursor-not-allowed bg-slate-50' :
-                              isPointSelected(selectedDropoff, point) ? 'border-primary bg-primary/5' : 'border-slate-50 bg-white hover:border-primary-light'
+                          className={`group flex cursor-pointer items-start gap-3 rounded-2xl border-2 px-4 py-3 transition-all sm:gap-4 sm:p-5 ${disabled ? 'opacity-40 cursor-not-allowed bg-slate-50' :
+                            isPointSelected(selectedDropoff, point) ? 'border-primary bg-primary/5' : 'border-slate-50 bg-white hover:border-primary-light'
                             }`}
                         >
                           <input
