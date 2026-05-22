@@ -1738,7 +1738,7 @@ const DetailTabs = ({ trip, gallery }) => {
                           setReviewsPage(prevPage);
                           loadReviews(prevPage);
                         }}
-                        className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-50 text-slate-600 transition-all hover:bg-slate-100 disabled:pointer-events-none disabled:opacity-30"
+                        className="flex h-9 w-9 min-h-[36px] items-center justify-center rounded-xl bg-slate-50 text-slate-600 transition-all hover:bg-slate-100 disabled:pointer-events-none disabled:opacity-30"
                       >
                         <i className="fas fa-chevron-left text-[10px]"></i>
                       </button>
@@ -1763,7 +1763,7 @@ const DetailTabs = ({ trip, gallery }) => {
                               setReviewsPage(page);
                               loadReviews(page);
                             }}
-                            className={`flex h-9 w-9 items-center justify-center rounded-xl text-xs font-black transition-all ${reviewsPage === page
+                            className={`flex h-9 w-9 min-h-[36px] items-center justify-center rounded-xl text-xs font-black transition-all ${reviewsPage === page
                               ? 'bg-primary text-white shadow-md'
                               : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
                               }`}
@@ -1781,7 +1781,7 @@ const DetailTabs = ({ trip, gallery }) => {
                           setReviewsPage(nextPage);
                           loadReviews(nextPage);
                         }}
-                        className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-50 text-slate-600 transition-all hover:bg-slate-100 disabled:pointer-events-none disabled:opacity-30"
+                        className="flex h-9 w-9 min-h-[36px] items-center justify-center rounded-xl bg-slate-50 text-slate-600 transition-all hover:bg-slate-100 disabled:pointer-events-none disabled:opacity-30"
                       >
                         <i className="fas fa-chevron-right text-[10px]"></i>
                       </button>
@@ -1877,7 +1877,7 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
       <div className="grid gap-5 p-4 sm:p-5 lg:grid-cols-[140px_minmax(0,1fr)_200px] lg:items-center lg:gap-7 xl:grid-cols-[150px_minmax(0,1fr)_210px]">
         {/* Logo & Confirm */}
         <div className="relative mx-auto w-full max-w-[150px] shrink-0 sm:mx-0 lg:max-w-none">
-          <div className="aspect-[4/3] overflow-hidden rounded-xl border border-slate-100 bg-slate-100 shadow-sm">
+          <div className="aspect-[4/3] overflow-hidden rounded-lg border border-slate-100 bg-slate-100 shadow-sm">
             {primaryImage ? (
               <img
                 src={primaryImage}
@@ -1902,7 +1902,7 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
               <h3 className="truncate font-display text-[22px] font-semibold tracking-tight text-slate-900 sm:text-2xl lg:text-[24px]">{trip.company_name}</h3>
               <div className="mt-2 flex flex-wrap items-center gap-2 sm:gap-3">
                 <span className="flex max-w-full items-center truncate rounded-lg bg-slate-100 px-3 py-1.5 text-[10px] font-bold tracking-wide text-slate-600 sm:text-[11px]">
-                  <i className="fas fa-bus-alt mr-2 text-primary"></i> {trip.vehicle_type}
+                  {trip.vehicle_type}
                 </span>
                 <span className="flex items-center text-sm font-bold text-warning">
                   <i className="fas fa-star mr-1.5"></i> {trip.ratings?.overall || 0}

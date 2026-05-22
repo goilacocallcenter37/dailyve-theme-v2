@@ -1173,7 +1173,6 @@ body {
   margin: 0;
   color: #334155;
   font-size: 12px;
-  font-weight: 700;
   list-style: none;
   border-top: 0;
 }
@@ -3294,7 +3293,6 @@ body {
   align-items: center;
   gap: 6px;
   font-size: 12px;
-  font-weight: 600;
   color: #64748b;
 }
 
@@ -3305,7 +3303,6 @@ body {
 
 .rating-tab__comments-list__item-depart-date .verified {
   color: #10b981;
-  font-weight: 700;
 }
 
 /* REPLIES */
