@@ -49,8 +49,8 @@ const AuthMenu = () => {
                     onClick={handleLoginClick}
                     className="flex items-center space-x-2 text-slate-700 hover:text-blue-600 font-semibold text-sm py-2 px-4 rounded-full border border-slate-200 hover:border-blue-100 hover:bg-blue-50/20 active:scale-95 transition-all cursor-pointer"
                 >
-                    <i className="far fa-user text-xs mr-0 sm:mr-2"></i>
-                    <span>Đăng nhập / Đăng ký</span>
+                    <i className="far fa-user text-xs mr-0"></i>
+                    <span className='ml-2'>Đăng nhập / Đăng ký</span>
                 </button>
             </div>
         );

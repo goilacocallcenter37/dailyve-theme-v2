@@ -9,6 +9,7 @@ import {
   VietnameseDatePicker,
   fetchLocationsWithCache,
 } from './SearchFields';
+import tinoSearchFormUrl from '@images/tino_search_form.webp';
 
 const products = [
   { id: 'bus', label: 'Xe khách', icon: 'fas fa-bus' },
@@ -213,6 +214,15 @@ const SearchForm = ({
           Tìm vé
         </button>
       </form>
+
+      <img
+        className="dailyve-search__mascot"
+        src={tinoSearchFormUrl}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+      />
 
       <ul className="dailyve-search__benefits" aria-label="Lợi ích khi đặt vé">
         <li><i className="fas fa-ticket-alt" aria-hidden="true"></i>Đặt vé siêu nhanh</li>

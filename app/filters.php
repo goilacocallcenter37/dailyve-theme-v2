@@ -15,6 +15,81 @@ add_filter('excerpt_more', function () {
     return sprintf(' &hellip; <a href="%s">%s</a>', get_permalink(), __('Continued', 'sage'));
 });
 
+const DAILYVE_HOME_HERO_BACKGROUND_FALLBACK = 'https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/banner_web.webp';
+
+function dailyve_image_url_from_acf_value($value): string
+{
+    if (is_array($value)) {
+        $url = $value['url'] ?? $value['sizes']['full'] ?? '';
+        return is_string($url) ? esc_url_raw($url) : '';
+    }
+
+    if (is_numeric($value)) {
+        return esc_url_raw(wp_get_attachment_image_url((int) $value, 'full') ?: '');
+    }
+
+    return is_string($value) ? esc_url_raw($value) : '';
+}
+
+function dailyve_home_hero_background_url(): string
+{
+    static $background_url = null;
+
+    if ($background_url !== null) {
+        return $background_url;
+    }
+
+    $front_page_id = (int) get_option('page_on_front');
+    $post_id = $front_page_id ?: (int) get_queried_object_id();
+    $field_names = [
+        'home_hero_background',
+        'home_hero_background_image',
+        'homepage_hero_background',
+        'hero_background_image',
+        'hero_background',
+        'banner_web',
+    ];
+
+    foreach ($field_names as $field_name) {
+        $field_value = function_exists('get_field')
+            ? get_field($field_name, $post_id)
+            : get_post_meta($post_id, $field_name, true);
+
+        $url = dailyve_image_url_from_acf_value($field_value);
+        if ($url !== '') {
+            $background_url = $url;
+            return $background_url;
+        }
+    }
+
+    $background_url = DAILYVE_HOME_HERO_BACKGROUND_FALLBACK;
+    return $background_url;
+}
+
+add_action('wp_head', function () {
+    if (! is_front_page()) {
+        return;
+    }
+
+    $background_url = dailyve_home_hero_background_url();
+    if ($background_url === '') {
+        return;
+    }
+
+    $scheme = wp_parse_url($background_url, PHP_URL_SCHEME);
+    $host = wp_parse_url($background_url, PHP_URL_HOST);
+    $origin = ($scheme && $host) ? $scheme . '://' . $host : '';
+
+    if ($origin && $host !== wp_parse_url(home_url(), PHP_URL_HOST)) {
+        echo '<link rel="preconnect" href="' . esc_url($origin) . '" crossorigin>' . "\n";
+    }
+
+    $file_type = wp_check_filetype(wp_parse_url($background_url, PHP_URL_PATH) ?: '');
+    $type_attr = ! empty($file_type['type']) ? ' type="' . esc_attr($file_type['type']) . '"' : '';
+
+    echo '<link rel="preload" as="image" href="' . esc_url($background_url) . '"' . $type_attr . ' fetchpriority="high">' . "\n";
+}, 1);
+
 /**
  * Add JSON-LD Schema to head
  */

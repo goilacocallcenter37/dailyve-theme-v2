@@ -441,7 +441,7 @@ em {
 } */
 
 /* Maintain Font Awesome Icons */
-.fa,
+/* .fa,
 .fas,
 .far,
 .fal,
@@ -450,7 +450,7 @@ em {
 [class^="fa-"],
 [class*=" fa-"] {
   font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", sans-serif !important;
-}
+} */
 
 /* --- OVERRIDES FOR REVIEW STARS ENCODING BUG --- */
 .rating-tab__comments-list__item-personal__info-star .ratings {

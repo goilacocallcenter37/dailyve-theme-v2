@@ -164,8 +164,8 @@ body {
   position: relative;
   z-index: 20;
   overflow: visible;
-  padding: 56px 0 36px;
-  background: linear-gradient(180deg, #b8e8ff 0%, #dff4ff 42%, #eef9ff 72%, #ffffff 100%);
+  padding: 0;
+  background-color: #dff4ff;
   text-align: center;
 }
 
@@ -411,7 +411,7 @@ body {
   box-shadow: 0 18px 42px rgba(15, 63, 138, 0.09), 0 4px 12px rgba(15, 63, 138, 0.04);
 }
 
-.dailyve-bus-search-card > * {
+.dailyve-bus-search-card>* {
   position: relative;
   z-index: 1;
 }
@@ -438,6 +438,8 @@ body {
 }
 
 .dailyve-search {
+  --dailyve-search-mascot-space: clamp(120px, 13vw, 130px);
+  --dailyve-search-mascot-width: clamp(158px, 15vw, 160px);
   background: transparent;
   border: 0;
   border-radius: 0;
@@ -455,6 +457,29 @@ body {
   background: transparent;
   box-shadow: none;
   padding: 0;
+}
+
+.dailyve-search__mascot {
+  display: none;
+  position: absolute;
+  top: clamp(-45px, -4.8vw, -38px);
+  right: clamp(-20px, -2vw, -12px);
+  z-index: 8;
+  width: var(--dailyve-search-mascot-width);
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 16px 24px rgba(15, 63, 138, 0.16));
+}
+
+@media (min-width: 1024px) {
+  .dailyve-search:not(.dailyve-search--compact):not(.dailyve-search--results) {
+    padding-right: var(--dailyve-search-mascot-space);
+  }
+
+  .dailyve-search:not(.dailyve-search--compact):not(.dailyve-search--results) .dailyve-search__mascot {
+    display: block;
+  }
 }
 
 .dailyve-search__tabs {
@@ -599,9 +624,8 @@ body {
   display: block;
   margin-bottom: 5px;
   color: #64748b;
-  font-family: 'Be Vietnam Pro', sans-serif;
-  font-size: 10.5px;
-  font-weight: 800;
+  font-size: 11px;
+  font-weight: 700;
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: 0.2px;
@@ -642,6 +666,7 @@ body {
   appearance: none;
   cursor: pointer;
   text-align: left;
+  font-weight: 600;
 }
 
 .dailyve-search__field--combo {
@@ -688,9 +713,8 @@ body {
   display: block;
   overflow: hidden;
   color: inherit;
-  font-family: 'Be Vietnam Pro', sans-serif;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.2;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -2712,10 +2736,10 @@ body {
     height: 38px;
   }
 
-  .dailyve-hero {
+  /* .dailyve-hero {
     padding: 36px 0 22px;
     text-align: center;
-  }
+  } */
 
   .dailyve-hero__balloon,
   .dailyve-hero__clouds {
@@ -2773,6 +2797,30 @@ body {
   .dailyve-search {
     padding: 0;
   }
+
+  .dailyve-search__tabs {
+    width: 100%;
+    max-width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+    margin: 0 0 16px;
+    padding: 6px 8px;
+    border-radius: 999px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dailyve-search__tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dailyve-search__tabs button {
+    padding: 0 14px;
+    font-size: 12px;
+    min-height: 32px;
+    gap: 6px;
+  }
+
 
   .dailyve-bus-search-card {
     padding: 18px 12px;
@@ -2844,8 +2892,22 @@ body {
   }
 
   .dailyve-search__benefits {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 10px;
+    padding: 16px 0 0;
+  }
+
+  .dailyve-search__benefits li {
+    display: flex;
     justify-content: center;
-    gap: 8px 16px;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    min-height: 38px;
+    font-size: 11px;
+    line-height: 1.25;
+    text-align: center;
   }
 
   .dailyve-section__heading {
@@ -3436,4 +3498,3 @@ body {
   color: #475569;
   margin: 0;
 }
-
