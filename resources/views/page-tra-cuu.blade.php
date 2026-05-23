@@ -1,230 +1,298 @@
 @extends('layouts.app')
 
 @section('content')
-  <main class="bg-white min-h-[70vh] py-24">
-    <section class="mx-auto max-w-3xl px-4">
-      <div class="text-center mb-12">
-        <h1 class="font-display text-4xl md:text-5xl font-semibold tracking-tighter text-slate-900">Kiểm tra chuyến đi</h1>
-        <p class="mt-4 text-base text-slate-500 max-w-xl mx-auto">Theo dõi lịch trình, vị trí ghế và trạng thái thanh toán vé của bạn một cách nhanh chóng và chính xác.</p>
-      </div>
-
-      <div class="rounded-xl bg-slate-100 p-8 md:p-10">
-        {{-- Booking Lookup Form --}}
-        <form id="dailyve-ticket-lookup-form" class="space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label for="phone" class="block text-sm font-semibold text-slate-900 mb-2">Số điện thoại <span class="text-red-500 font-normal">*</span></label>
-              <input type="tel" id="phone" name="phone" required
-                     class="block w-full h-10 rounded-md border border-slate-200 bg-white px-3.5 py-2 text-sm text-slate-900 transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                     placeholder="Ví dụ: 0912345678">
+    @php
+        $breadcrumbs = [
+            ['title' => 'Trang chủ', 'url' => home_url('/')],
+            ['title' => 'Tra cứu vé', 'url' => '']
+        ];
+    @endphp
+    <main class="bg-white min-h-[70vh] py-8 md:py-12">
+        <section class="mx-auto max-w-5xl px-4">
+            <div class="mb-8">
+                <x-breadcrumb :items="$breadcrumbs" preset="default" />
             </div>
-            <div>
-              <label for="code" class="block text-sm font-semibold text-slate-900 mb-2">Mã đặt chỗ <span class="text-red-500 font-normal">*</span></label>
-              <input type="text" id="code" name="code" required
-                     class="block w-full h-10 rounded-md border border-slate-200 bg-white px-3.5 py-2 text-sm text-slate-900 uppercase transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                     placeholder="Ví dụ: VEXERE123">
+
+            <div class="text-center mb-12">
+                <h1 class="font-display text-4xl md:text-5xl font-semibold tracking-tighter text-slate-900">Kiểm tra chuyến
+                    đi</h1>
+                <p class="mt-4 text-base text-slate-500 max-w-xl mx-auto">Theo dõi lịch trình, vị trí ghế và trạng thái thanh
+                    toán vé của bạn một cách nhanh chóng và chính xác.</p>
             </div>
-          </div>
-          <div class="flex justify-center pt-4">
-            <button type="submit" id="btn-lookup-submit" class="inline-flex h-10 items-center justify-center rounded-md bg-[#2196F3] px-8 text-sm font-semibold text-white transition-all hover:bg-[#1565C0] focus:outline-none focus:ring-2 focus:ring-[#2196F3] focus:ring-offset-2">
-              Tra cứu vé
-            </button>
-          </div>
-        </form>
 
-        {{-- Loading State --}}
-        <div id="lookup-loading" class="hidden mt-10 flex flex-col items-center justify-center py-8">
-          <svg class="h-6 w-6 animate-spin text-[#2196F3]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-        </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
 
-        {{-- Error State --}}
-        <div id="lookup-error" class="hidden mt-8 rounded-lg border border-red-200 bg-red-50 p-4">
-          <div class="flex items-start">
-            <i class="fas fa-exclamation-circle mt-0.5 text-red-500 text-sm"></i>
-            <div class="ml-3">
-              <h3 class="text-sm font-semibold text-red-800">Không tìm thấy vé</h3>
-              <p id="lookup-error-message" class="mt-1 text-sm text-red-700">Vui lòng kiểm tra lại mã vé hoặc số điện thoại.</p>
+                <!-- Form Cột Trái -->
+                <div class="lg:col-span-2">
+                    <div class="rounded-xl bg-slate-100 p-8 md:p-10">
+                        {{-- Booking Lookup Form --}}
+                        <form id="dailyve-ticket-lookup-form" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="phone" class="block text-sm font-semibold text-slate-900 mb-2">Số điện
+                                        thoại <span class="text-red-500 font-normal">*</span></label>
+                                    <input type="tel" id="phone" name="phone" required
+                                        class="block w-full h-10 rounded-md border border-slate-200 bg-white px-3.5 py-2 text-sm text-slate-900 transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                        placeholder="Ví dụ: 0912345678">
+                                </div>
+                                <div>
+                                    <label for="code" class="block text-sm font-semibold text-slate-900 mb-2">Mã đặt chỗ
+                                        <span class="text-red-500 font-normal">*</span></label>
+                                    <input type="text" id="code" name="code" required
+                                        class="block w-full h-10 rounded-md border border-slate-200 bg-white px-3.5 py-2 text-sm text-slate-900 uppercase transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                        placeholder="Ví dụ: VEXERE123">
+                                </div>
+                            </div>
+                            <div class="flex justify-center pt-4">
+                                <button type="submit" id="btn-lookup-submit"
+                                    class="inline-flex h-10 items-center justify-center rounded-md bg-[#2196F3] px-8 text-sm font-semibold text-white transition-all hover:bg-[#1565C0] focus:outline-none focus:ring-2 focus:ring-[#2196F3] focus:ring-offset-2">
+                                    Tra cứu vé
+                                </button>
+                            </div>
+                        </form>
+
+                        {{-- Loading State --}}
+                        <div id="lookup-loading" class="hidden mt-10 flex flex-col items-center justify-center py-8">
+                            <svg class="h-6 w-6 animate-spin text-[#2196F3]" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                    stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                </path>
+                            </svg>
+                        </div>
+
+                        {{-- Error State --}}
+                        <div id="lookup-error" class="hidden mt-8 rounded-lg border border-red-200 bg-red-50 p-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-exclamation-circle mt-0.5 text-red-500 text-sm"></i>
+                                <div class="ml-3">
+                                    <h3 class="text-sm font-semibold text-red-800">Không tìm thấy vé</h3>
+                                    <p id="lookup-error-message" class="mt-1 text-sm text-red-700">Vui lòng kiểm tra lại mã
+                                        vé hoặc số điện thoại.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Result State --}}
+                        <div id="lookup-result" class="hidden mt-12">
+                            {{-- Will be populated by JS --}}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hướng dẫn Cột Phải -->
+                <div class="lg:col-span-1 space-y-6">
+
+                    <div class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+                        <h3 class="flex items-center gap-2 text-[17px] font-semibold text-slate-900 mb-4">
+                            <i class="fas fa-question-circle text-[#2196F3]"></i> Hướng dẫn tra cứu
+                        </h3>
+                        <ul class="space-y-4 text-sm text-slate-600">
+                            <li class="flex items-start gap-3">
+                                <span
+                                    class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-50 text-xs font-bold text-[#2196F3] mt-0.5">1</span>
+                                <span class="leading-relaxed">Kiểm tra tin nhắn SMS hoặc Email đặt vé thành công để lấy
+                                    <strong>Mã đặt chỗ</strong>.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span
+                                    class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-50 text-xs font-bold text-[#2196F3] mt-0.5">2</span>
+                                <span class="leading-relaxed">Nhập đúng Số điện thoại mà bạn đã dùng để mua vé.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span
+                                    class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-50 text-xs font-bold text-[#2196F3] mt-0.5">3</span>
+                                <span class="leading-relaxed">Bấm nút "Tra cứu vé" để xem lịch trình, vị trí ghế và thanh
+                                    toán.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="rounded-xl bg-slate-50 border border-slate-200 p-6">
+                        <h3 class="flex items-center gap-2 text-[17px] font-semibold text-slate-900 mb-3">
+                            <i class="fas fa-headset text-[#2196F3]"></i> Bạn cần hỗ trợ gấp?
+                        </h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-5">Nếu bạn không tìm thấy mã vé hoặc cần thay
+                            đổi lịch trình, vui lòng gọi ngay tổng đài để được chúng tôi hỗ trợ 24/7.</p>
+                        <a href="tel:19000375"
+                            class="inline-flex h-10 w-full items-center justify-center rounded-md bg-white border border-slate-200 text-[15px] font-semibold text-slate-900 transition-colors hover:bg-slate-50 hover:border-slate-300">
+                            Gọi Hotline: 1900 0375
+                        </a>
+                    </div>
+
+                </div>
+
             </div>
-          </div>
-        </div>
+        </section>
+    </main>
 
-        {{-- Result State --}}
-        <div id="lookup-result" class="hidden mt-12">
-           {{-- Will be populated by JS --}}
-        </div>
-      </div>
-    </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('dailyve-ticket-lookup-form');
+            const loadingEl = document.getElementById('lookup-loading');
+            const errorEl = document.getElementById('lookup-error');
+            const errorMsgEl = document.getElementById('lookup-error-message');
+            const resultEl = document.getElementById('lookup-result');
+            const btnSubmit = document.getElementById('btn-lookup-submit');
 
-    {{-- Support & Guide Section --}}
-    <section class="mx-auto max-w-5xl px-4 mt-20">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Feature 1 -->
-        <div class="rounded-xl border border-slate-200 bg-white p-8 transition-shadow hover:shadow-md">
-          <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-[#2196F3]">
-            <i class="fas fa-question-circle text-xl"></i>
-          </div>
-          <h3 class="mb-3 text-[17px] font-semibold text-slate-900">Lấy mã vé ở đâu?</h3>
-          <p class="text-sm text-slate-600 leading-relaxed">Mã đặt chỗ (Ví dụ: <strong>VEXERE123</strong>) được gửi tự động qua Email và tin nhắn SMS số điện thoại của bạn ngay sau khi thanh toán thành công.</p>
-        </div>
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
 
-        <!-- Feature 2 -->
-        <div class="rounded-xl border border-slate-200 bg-white p-8 transition-shadow hover:shadow-md">
-          <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-[#2196F3]">
-            <i class="fas fa-headset text-xl"></i>
-          </div>
-          <h3 class="mb-3 text-[17px] font-semibold text-slate-900">Hỗ trợ nhanh 24/7</h3>
-          <p class="text-sm text-slate-600 leading-relaxed">Bạn cần thay đổi lịch trình, hoàn/hủy vé hoặc khiếu nại dịch vụ? Hãy liên hệ ngay hotline <a href="tel:19001234" class="font-semibold text-[#2196F3] hover:underline">1900 1234</a> để được xử lý.</p>
-        </div>
+                // UI Reset
+                errorEl.classList.add('hidden');
+                resultEl.classList.add('hidden');
+                loadingEl.classList.remove('hidden');
+                btnSubmit.disabled = true;
+                btnSubmit.classList.add('opacity-70', 'cursor-not-allowed');
 
-        <!-- Feature 3 -->
-        <div class="rounded-xl border border-slate-200 bg-white p-8 transition-shadow hover:shadow-md">
-          <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50 text-[#2196F3]">
-            <i class="fas fa-shield-alt text-xl"></i>
-          </div>
-          <h3 class="mb-3 text-[17px] font-semibold text-slate-900">Bảo mật thông tin</h3>
-          <p class="text-sm text-slate-600 leading-relaxed">Tất cả thông tin cá nhân, lịch trình chuyến đi và dữ liệu thanh toán của bạn đều được chúng tôi mã hóa và bảo mật tuyệt đối.</p>
-        </div>
-      </div>
-    </section>
-  </main>
+                const formData = new FormData(form);
+                formData.append('action', 'kiemtrave');
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const form = document.getElementById('dailyve-ticket-lookup-form');
-      const loadingEl = document.getElementById('lookup-loading');
-      const errorEl = document.getElementById('lookup-error');
-      const errorMsgEl = document.getElementById('lookup-error-message');
-      const resultEl = document.getElementById('lookup-result');
-      const btnSubmit = document.getElementById('btn-lookup-submit');
+                fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(res => {
+                        loadingEl.classList.add('hidden');
+                        btnSubmit.disabled = false;
+                        btnSubmit.classList.remove('opacity-70', 'cursor-not-allowed');
 
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // UI Reset
-        errorEl.classList.add('hidden');
-        resultEl.classList.add('hidden');
-        loadingEl.classList.remove('hidden');
-        btnSubmit.disabled = true;
-        btnSubmit.classList.add('opacity-70', 'cursor-not-allowed');
+                        if (res.success && res.data && res.data.data) {
+                            renderTicket(res.data.data, formData.get('code'));
+                        } else {
+                            showError(res.data && res.data.message ? res.data.message :
+                                'Không tìm thấy vé xe. Vui lòng kiểm tra lại thông tin.');
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        loadingEl.classList.add('hidden');
+                        btnSubmit.disabled = false;
+                        btnSubmit.classList.remove('opacity-70', 'cursor-not-allowed');
+                        showError('Có lỗi xảy ra trong quá trình kết nối. Vui lòng thử lại sau.');
+                    });
+            });
 
-        const formData = new FormData(form);
-        formData.append('action', 'kiemtrave');
+            function showError(msg) {
+                errorMsgEl.textContent = msg;
+                errorEl.classList.remove('hidden');
+            }
 
-        fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
-          method: 'POST',
-          body: formData
-        })
-        .then(response => response.json())
-        .then(res => {
-          loadingEl.classList.add('hidden');
-          btnSubmit.disabled = false;
-          btnSubmit.classList.remove('opacity-70', 'cursor-not-allowed');
+            function formatMoney(amount) {
+                return new Intl.NumberFormat('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }).format(amount);
+            }
 
-          if (res.success && res.data && res.data.data) {
-            renderTicket(res.data.data, formData.get('code'));
-          } else {
-            showError(res.data && res.data.message ? res.data.message : 'Không tìm thấy vé xe. Vui lòng kiểm tra lại thông tin.');
-          }
-        })
-        .catch(err => {
-          console.error(err);
-          loadingEl.classList.add('hidden');
-          btnSubmit.disabled = false;
-          btnSubmit.classList.remove('opacity-70', 'cursor-not-allowed');
-          showError('Có lỗi xảy ra trong quá trình kết nối. Vui lòng thử lại sau.');
-        });
-      });
+            function renderTicket(payload, inputCode) {
+                let tickets = Array.isArray(payload.tickets) ? payload.tickets : [];
 
-      function showError(msg) {
-        errorMsgEl.textContent = msg;
-        errorEl.classList.remove('hidden');
-      }
+                let passengerName = '';
+                if (tickets.length > 0 && tickets[0].passengerName) {
+                    passengerName = tickets[0].passengerName;
+                } else {
+                    passengerName = payload.customerName || 'Không có tên';
+                }
 
-      function formatMoney(amount) {
-        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
-      }
+                const customerPhone = payload.customerPhone || form.querySelector('#phone').value;
+                const customerEmail = payload.customerEmail || 'Không có email';
+                const companyName = payload.companyName || 'Không rõ nhà xe';
+                const bookingCode = payload.bookingCode || inputCode;
 
-      function renderTicket(payload, inputCode) {
-        let tickets = Array.isArray(payload.tickets) ? payload.tickets : [];
-        
-        let passengerName = '';
-        if (tickets.length > 0 && tickets[0].passengerName) {
-            passengerName = tickets[0].passengerName;
-        } else {
-            passengerName = payload.customerName || 'Không có tên';
-        }
+                let finalAmount = parseFloat(payload.finalAmount);
+                if (isNaN(finalAmount) || finalAmount <= 0) {
+                    finalAmount = parseFloat(payload.totalAmount) || 0;
+                }
 
-        const customerPhone = payload.customerPhone || form.querySelector('#phone').value;
-        const customerEmail = payload.customerEmail || 'Không có email';
-        const companyName = payload.companyName || 'Không rõ nhà xe';
-        const bookingCode = payload.bookingCode || inputCode;
-        
-        let finalAmount = parseFloat(payload.finalAmount);
-        if (isNaN(finalAmount) || finalAmount <= 0) {
-            finalAmount = parseFloat(payload.totalAmount) || 0;
-        }
-        
-        let seatCodes = [];
-        let totalFare = 0;
-        
-        let departurePlace = payload.departurePlace || '';
-        let destinationPlace = payload.destinationPlace || '';
+                let seatCodes = [];
+                let totalFare = 0;
 
-        if (!departurePlace && tickets.length > 0) {
-           departurePlace = tickets[0].pickupPoint ? tickets[0].pickupPoint.split('|')[0] : '';
-        } else if (departurePlace) {
-           departurePlace = departurePlace.split('|')[0];
-        }
+                let departurePlace = payload.departurePlace || '';
+                let destinationPlace = payload.destinationPlace || '';
 
-        if (!destinationPlace && tickets.length > 0) {
-           destinationPlace = tickets[0].dropoffPoint ? tickets[0].dropoffPoint.split('|')[0] : '';
-        } else if (destinationPlace) {
-           destinationPlace = destinationPlace.split('|')[0];
-        }
+                if (!departurePlace && tickets.length > 0) {
+                    departurePlace = tickets[0].pickupPoint ? tickets[0].pickupPoint.split('|')[0] : '';
+                } else if (departurePlace) {
+                    departurePlace = departurePlace.split('|')[0];
+                }
 
-        tickets.forEach(t => {
-           if (t.seatCode) {
-               seatCodes.push(t.seatCode.split('|')[0]);
-           }
-           totalFare += (parseFloat(t.fare) || 0);
-        });
+                if (!destinationPlace && tickets.length > 0) {
+                    destinationPlace = tickets[0].dropoffPoint ? tickets[0].dropoffPoint.split('|')[0] : '';
+                } else if (destinationPlace) {
+                    destinationPlace = destinationPlace.split('|')[0];
+                }
 
-        const seatsStr = seatCodes.length > 0 ? seatCodes.join(', ') : '—';
-        if (finalAmount <= 0 && totalFare > 0) {
-           finalAmount = totalFare;
-        }
+                tickets.forEach(t => {
+                    if (t.seatCode) {
+                        seatCodes.push(t.seatCode.split('|')[0]);
+                    }
+                    totalFare += (parseFloat(t.fare) || 0);
+                });
 
-        let departureTime = payload.departureTime || '';
-        if (departureTime) {
-           const parts = departureTime.trim().split(' ');
-           departureTime = parts[0] + ' ' + (parts[1] || '');
-        }
+                const seatsStr = seatCodes.length > 0 ? seatCodes.join(', ') : '—';
+                if (finalAmount <= 0 && totalFare > 0) {
+                    finalAmount = totalFare;
+                }
 
-        let statusRaw = (payload.status || '').toUpperCase();
-        const statusDesc = (payload.statusDescription || '').toUpperCase();
-        
-        // Vexere edge case: status is REFUNDED but description is CANCELED -> treat as CANCELED
-        if (statusDesc === 'CANCELED' || statusDesc === 'CANCELLED') {
-            statusRaw = 'CANCELED';
-        }
+                let departureTime = payload.departureTime || '';
+                if (departureTime) {
+                    const parts = departureTime.trim().split(' ');
+                    departureTime = parts[0] + ' ' + (parts[1] || '');
+                }
 
-        const statusMap = {
-            'CONFIRMED': { text: 'Đã xác nhận', color: 'bg-emerald-100 text-emerald-700' },
-            'PAID': { text: 'Đã thanh toán', color: 'bg-emerald-100 text-emerald-700' },
-            'REFUNDED': { text: 'Đã hoàn tiền', color: 'bg-orange-100 text-orange-700' },
-            'CANCELED': { text: 'Đã hủy', color: 'bg-red-100 text-red-700' },
-            'CANCELLED': { text: 'Đã hủy', color: 'bg-red-100 text-red-700' },
-            'PENDING': { text: 'Chờ xử lý', color: 'bg-amber-100 text-amber-700' },
-            'COMPLETED': { text: 'Hoàn thành', color: 'bg-blue-100 text-blue-700' },
-            'EXPIRED': { text: 'Hết hạn', color: 'bg-slate-100 text-slate-700' }
-        };
+                let statusRaw = (payload.status || '').toUpperCase();
+                const statusDesc = (payload.statusDescription || '').toUpperCase();
 
-        const statusInfo = statusMap[statusRaw] || { text: statusRaw || 'Không xác định', color: 'bg-slate-100 text-slate-700' };
+                // Vexere edge case: status is REFUNDED but description is CANCELED -> treat as CANCELED
+                if (statusDesc === 'CANCELED' || statusDesc === 'CANCELLED') {
+                    statusRaw = 'CANCELED';
+                }
 
-        const html = `
+                const statusMap = {
+                    'CONFIRMED': {
+                        text: 'Đã xác nhận',
+                        color: 'bg-emerald-100 text-emerald-700'
+                    },
+                    'PAID': {
+                        text: 'Đã thanh toán',
+                        color: 'bg-emerald-100 text-emerald-700'
+                    },
+                    'REFUNDED': {
+                        text: 'Đã hoàn tiền',
+                        color: 'bg-orange-100 text-orange-700'
+                    },
+                    'CANCELED': {
+                        text: 'Đã hủy',
+                        color: 'bg-red-100 text-red-700'
+                    },
+                    'CANCELLED': {
+                        text: 'Đã hủy',
+                        color: 'bg-red-100 text-red-700'
+                    },
+                    'PENDING': {
+                        text: 'Chờ xử lý',
+                        color: 'bg-amber-100 text-amber-700'
+                    },
+                    'COMPLETED': {
+                        text: 'Hoàn thành',
+                        color: 'bg-blue-100 text-blue-700'
+                    },
+                    'EXPIRED': {
+                        text: 'Hết hạn',
+                        color: 'bg-slate-100 text-slate-700'
+                    }
+                };
+
+                const statusInfo = statusMap[statusRaw] || {
+                    text: statusRaw || 'Không xác định',
+                    color: 'bg-slate-100 text-slate-700'
+                };
+
+                const html = `
           <div class="relative overflow-hidden rounded-[16px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.08)] border border-slate-200">
             <!-- Header -->
             <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 p-6 md:p-8">
@@ -299,14 +367,17 @@
           </div>
         `;
 
-        resultEl.innerHTML = html;
-        resultEl.classList.remove('hidden');
-        
-        // Scroll to result slightly
-        setTimeout(() => {
-          resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }, 100);
-      }
-    });
-  </script>
+                resultEl.innerHTML = html;
+                resultEl.classList.remove('hidden');
+
+                // Scroll to result slightly
+                setTimeout(() => {
+                    resultEl.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'nearest'
+                    });
+                }, 100);
+            }
+        });
+    </script>
 @endsection
