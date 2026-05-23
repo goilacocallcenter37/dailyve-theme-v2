@@ -28,7 +28,7 @@
       max-width: 100% !important;
       box-sizing: border-box !important;
     }
-    .prose img, .e-content img, .dailyve-single img, .prose iframe, .e-content iframe {
+    .prose img, .e-content img, .dailyve-single img{
       max-width: 100% !important;
       height: auto !important;
       width: auto !important;

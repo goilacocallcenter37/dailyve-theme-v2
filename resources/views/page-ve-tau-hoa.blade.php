@@ -495,8 +495,8 @@
 
                     {{-- Left: Phone Mockup (5/12 cols) --}}
                     <div class="lg:col-span-5 flex justify-center py-4">
-                        <div
-                            class="relative h-[430px] w-[215px] rounded-[38px] border-[6px] border-slate-900 bg-slate-900 shadow-2xl shadow-blue-900/10">
+                        <div id="guide-phone-mockup"
+                            class="relative h-[430px] w-[215px] rounded-[38px] border-[6px] border-slate-900 bg-slate-900 shadow-2xl shadow-blue-900/10 touch-pan-y cursor-grab active:cursor-grabbing">
                             <!-- Dynamic Island/Notch -->
                             <div
                                 class="absolute left-1/2 top-1 z-20 h-4.5 w-18 -translate-x-1/2 rounded-full bg-slate-900">
@@ -906,6 +906,69 @@
                     setActiveStep(tabType, stepNum);
                 });
             });
+
+            // Swipe gesture handling for phone mockup
+            const phoneMockup = document.getElementById('guide-phone-mockup');
+            if (phoneMockup) {
+                let touchStartX = 0;
+                let touchEndX = 0;
+
+                phoneMockup.addEventListener('touchstart', e => {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
+
+                phoneMockup.addEventListener('touchend', e => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipe();
+                }, { passive: true });
+
+                // Also support mouse drag for desktop testing
+                let isDragging = false;
+                phoneMockup.addEventListener('mousedown', e => {
+                    isDragging = true;
+                    touchStartX = e.screenX;
+                });
+                phoneMockup.addEventListener('mouseup', e => {
+                    if (!isDragging) return;
+                    isDragging = false;
+                    touchEndX = e.screenX;
+                    handleSwipe();
+                });
+                phoneMockup.addEventListener('mouseleave', () => {
+                    isDragging = false;
+                });
+
+                function handleSwipe() {
+                    const threshold = 40; // minimum distance to register swipe
+                    if (touchEndX < touchStartX - threshold) {
+                        // Swiped left (Next step)
+                        changeStepByOffset(1);
+                    } else if (touchEndX > touchStartX + threshold) {
+                        // Swiped right (Prev step)
+                        changeStepByOffset(-1);
+                    }
+                }
+
+                function changeStepByOffset(offset) {
+                    const activeTabBtn = tabButtons.find(btn => btn.getAttribute('aria-selected') === 'true');
+                    if (!activeTabBtn) return;
+                    const activeTab = activeTabBtn.dataset.tab;
+
+                    const currentCards = stepCards.filter(card => card.dataset.tabType === activeTab);
+                    const activeCardIndex = currentCards.findIndex(card => card.classList.contains('bg-primary'));
+
+                    if (activeCardIndex !== -1) {
+                        let newIndex = activeCardIndex + offset;
+                        if (newIndex < 0) newIndex = 0;
+                        if (newIndex >= currentCards.length) newIndex = currentCards.length - 1;
+
+                        if (newIndex !== activeCardIndex) {
+                            const newStep = parseInt(currentCards[newIndex].dataset.step);
+                            setActiveStep(activeTab, newStep);
+                        }
+                    }
+                }
+            }
         }
 
         // Initial slider buttons checks

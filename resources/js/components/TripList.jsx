@@ -1575,7 +1575,7 @@ const DetailTabs = ({ trip, gallery }) => {
                       .map((item, i) => (
                         <div
                           key={i}
-                          className="flex items-center gap-2.5 rounded-full border border-slate-100 bg-slate-50/30 px-5 py-2.5 transition-all hover:bg-blue-50/30 hover:border-primary-light/20"
+                          className="flex items-center gap-2.5 rounded-lg border border-slate-100 bg-slate-50/30 px-5 py-2.5 transition-all hover:bg-blue-50/30 hover:border-primary-light/20"
                         >
                           {item.icon_url && (
                             <img src={item.icon_url} className="h-4 w-4 object-contain" alt={item.name} />

@@ -65,7 +65,6 @@ a {
   text-decoration: none;
 }
 
-/* Premium Table Styling for Gutenberg & Custom Post Content */
 .e-content table {
   width: 100%;
   border-collapse: separate;
@@ -73,8 +72,9 @@ a {
   margin: 2rem 0;
   border: 1px solid #E2E8F0;
   border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  overflow-x: auto;
+  display: block;
+  white-space: nowrap;
 }
 
 .e-content th {
@@ -163,27 +163,46 @@ a {
   font-size: 0.75rem;
 }
 
-/* Responsive Table Wrapper */
+/* Responsive Table Wrapper for both PC and Mobile */
 .e-content .wp-block-table,
 .wp-block-table {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  margin: 2rem 0;
-  border-radius: 12px;
+  width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  margin: 2rem 0 !important;
+  border-radius: 12px !important;
 }
 
 .e-content .wp-block-table table,
 .wp-block-table table {
   margin: 0 !important;
+  display: table !important;
+  width: 100% !important;
+  min-width: 980px !important;
+  /* Forces enough width to fit columns nicely on PC and mobile */
+  table-layout: auto !important;
+  border-collapse: collapse !important;
 }
 
-@media (max-width: 768px) {
-  .e-content table {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
+.e-content table th,
+.e-content table td,
+.wp-block-table table th,
+.wp-block-table table td {
+  padding: 12px 16px !important;
+  border: 1px solid #E2E8F0 !important;
+  font-size: 0.85rem !important;
+  min-width: 130px !important;
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
+}
+
+.e-content table th,
+.wp-block-table table th {
+  background: #F8FAFC !important;
+  font-weight: 700 !important;
+  color: #1E293B !important;
+  white-space: nowrap !important;
 }
 
 /* Portal Styles for Dailyve Custom Route/Bus Shortcodes */
@@ -2677,6 +2696,12 @@ body.dailyve-date-range-picker-open {
   gap: 10px;
 }
 
+@media (max-width: 767px) {
+  .ol-card__amenities-simple-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .ol-card__amenity-simple {
   display: flex;
   align-items: center;
@@ -2804,50 +2829,44 @@ body.dailyve-date-range-picker-open {
   overflow-wrap: anywhere;
 }
 
+/* Gutenberg table wrapper & Table responsive styles */
+.route-seo-article .wp-block-table {
+  width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  margin: 16px 0 !important;
+}
+
 .route-seo-article table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 16px 0;
+  display: table !important;
+  width: 100% !important;
+  min-width: 980px !important;
+  table-layout: auto !important;
+  border-collapse: collapse !important;
+  margin: 16px 0 !important;
 }
 
 .route-seo-article th,
 .route-seo-article td {
-  padding: 10px 14px;
-  border: 1px solid #E2E8F0;
-  font-size: 0.85rem;
+  padding: 12px 16px !important;
+  border: 1px solid #E2E8F0 !important;
+  font-size: 0.85rem !important;
+  min-width: 130px !important;
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: break-word !important;
 }
 
 .route-seo-article th {
-  background: #F8FAFC;
-  font-weight: 700;
-  color: #1E293B;
+  background: #F8FAFC !important;
+  font-weight: 700 !important;
+  color: #1E293B !important;
+  white-space: nowrap !important;
 }
 
 @media (max-width: 640px) {
   .route-seo-article {
     padding: 18px;
-  }
-
-  .route-seo-article table {
-    display: block;
-    width: 100% !important;
-    max-width: 100%;
-    min-width: 0;
-    table-layout: fixed;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .route-seo-article tbody,
-  .route-seo-article tr {
-    max-width: 100%;
-  }
-
-  .route-seo-article th,
-  .route-seo-article td {
-    min-width: 0;
-    overflow-wrap: anywhere;
-    word-break: break-word;
   }
 }
 
@@ -3300,7 +3319,7 @@ body.dailyve-date-range-picker-open {
 }
 
 .dailyve-single h1 {
-  font-size: clamp(32px, 5vw, 48px);
+  font-size: clamp(30px, 5vw, 40px);
   line-height: 1.1;
   letter-spacing: -0.03125em;
 }
