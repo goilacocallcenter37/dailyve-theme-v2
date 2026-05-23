@@ -471,7 +471,7 @@
                     </div>
 
                     {{-- Tabs --}}
-                    <div class="flex gap-2 bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200/50" role="tablist">
+                    <div class="flex gap-2 bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200/50 overflow-x-auto scrollbar-none flex-nowrap max-w-full" role="tablist">
                         <button type="button"
                             class="guide-tab-btn shrink-0 rounded-xl px-4 py-2 text-xs md:text-sm font-bold transition-all bg-primary text-white shadow-md shadow-primary/20"
                             data-tab="app" aria-selected="true">

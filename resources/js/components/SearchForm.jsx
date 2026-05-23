@@ -31,6 +31,7 @@ const SearchForm = ({
   className = '',
 }) => {
   const [locations, setLocations] = useState([]);
+  const [isHome, setIsHome] = useState(false);
   const [activeProduct, setActiveProduct] = useState(() => getInitialProduct(initialService));
 
   const [from, setFrom] = useState(() => {
@@ -60,6 +61,11 @@ const SearchForm = ({
 
   useEffect(() => {
     fetchLocationsWithCache(setLocations);
+    setIsHome(
+      window.location.pathname === '/' ||
+      window.location.pathname === '/dailyve/' ||
+      document.body.classList.contains('home')
+    );
   }, []);
 
   const locationMap = useMemo(() => buildLocationMap(locations), [locations]);
@@ -224,12 +230,14 @@ const SearchForm = ({
         decoding="async"
       />
 
-      <ul className="dailyve-search__benefits" aria-label="Lợi ích khi đặt vé">
-        <li><i className="fas fa-ticket-alt" aria-hidden="true"></i>Đặt vé siêu nhanh</li>
-        <li><i className="fas fa-headset" aria-hidden="true"></i>Hỗ trợ 24/7</li>
-        <li><i className="fas fa-gift" aria-hidden="true"></i>Nhiều ưu đãi hấp dẫn</li>
-        <li><i className="fas fa-shield-alt" aria-hidden="true"></i>Xuất vé điện tử tiện lợi</li>
-      </ul>
+      {isHome && (
+        <ul className="dailyve-search__benefits" aria-label="Lợi ích khi đặt vé">
+          <li><i className="fas fa-ticket-alt" aria-hidden="true"></i>Đặt vé siêu nhanh</li>
+          <li><i className="fas fa-headset" aria-hidden="true"></i>Hỗ trợ 24/7</li>
+          <li><i className="fas fa-gift" aria-hidden="true"></i>Nhiều ưu đãi hấp dẫn</li>
+          <li><i className="fas fa-shield-alt" aria-hidden="true"></i>Xuất vé điện tử tiện lợi</li>
+        </ul>
+      )}
     </div>
   );
 };
