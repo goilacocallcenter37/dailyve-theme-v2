@@ -108,7 +108,7 @@ const SeatIcon = ({ type, color, status, onClick, price, code, seatGroups }) => 
 
   return (
     <div
-      className={`relative group/seat cursor-pointer transition-transform hover:scale-105 ${status === 'sold' ? 'cursor-not-allowed opacity-50' : ''}`}
+      className={`relative group/seat cursor-pointer transition-transform hover:scale-105 hover:z-10 ${status === 'sold' ? 'cursor-not-allowed opacity-50' : ''}`}
       onClick={status !== 'sold' ? onClick : undefined}
       style={{ opacity }}
     >

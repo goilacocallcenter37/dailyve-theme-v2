@@ -391,7 +391,7 @@
                     </div>
                 </div>
 
-                <div class="route-directory__scroller -mx-4 flex snap-x gap-5 overflow-x-auto scroll-smooth px-4 pb-2 sm:mx-0 sm:px-0"
+                <div class="route-directory__scroller flex snap-x gap-5 overflow-x-auto scroll-smooth pb-2"
                     data-viewed-track></div>
 
                 <div class="rounded-xl border border-dashed border-slate-300 bg-white p-6 text-center text-sm text-slate-500"

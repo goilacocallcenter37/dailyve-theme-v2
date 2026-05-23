@@ -2435,6 +2435,7 @@ body.dailyve-date-range-picker-open {
 }
 
 .ol-card__thumbnails {
+  position: relative;
   display: flex;
   gap: 8px;
   margin: 12px auto 0;

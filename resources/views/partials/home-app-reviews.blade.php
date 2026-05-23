@@ -31,7 +31,7 @@
                 <i class="fas fa-chevron-left" aria-hidden="true"></i>
             </button>
 
-            <div class="dailyve-testimonials__track scrollbar-none -mx-4 flex snap-x gap-5 overflow-x-auto scroll-smooth px-4 pb-4">
+            <div class="dailyve-testimonials__track scrollbar-none flex snap-x gap-5 overflow-x-auto scroll-smooth pb-4">
                 @foreach ($customerReviews as $review)
                     <article class="dailyve-testimonial-card min-w-[85%] sm:min-w-[340px] lg:min-w-[calc((100%_-_60px)/4)] snap-start rounded-2xl border border-[#2ea2ff]/30 bg-[#05214a]/75 p-5 shadow-[0_20px_55px_rgba(0,0,0,0.22)] backdrop-blur transition hover:border-[#2ea2ff]/60">
                         <div class="flex items-start gap-4">

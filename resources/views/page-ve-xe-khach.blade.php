@@ -119,7 +119,7 @@
                 {{-- Right Side: Callout Support Banner (5/12) --}}
                 <div class="lg:col-span-5">
                     <div
-                        class="bg-gradient-to-br from-blue-600 to-indigo-800 rounded-3xl p-8 text-white relative overflow-hidden shadow-xl shadow-blue-100 flex flex-col justify-between h-full min-h-[380px] group border border-blue-500/20">
+                        class="bg-gradient-to-br from-[#2196f3] to-[#1565c0] rounded-3xl p-8 text-white relative overflow-hidden shadow-xl shadow-blue-100 flex flex-col justify-between h-full min-h-[380px] group border border-blue-500/20">
                         <div
                             class="absolute -right-16 -top-16 w-48 h-48 bg-white/10 rounded-full blur-xl group-hover:scale-110 transition-transform duration-500">
                         </div>
@@ -176,7 +176,7 @@
                 </button>
 
                 <div id="bus-offers-slider" onscroll="updateSliderButtons('bus-offers-slider')"
-                    class="scrollbar-none -mx-4 flex snap-x gap-5 overflow-x-auto scroll-smooth px-4 py-2 sm:mx-0 sm:px-1">
+                    class="scrollbar-none flex snap-x gap-5 overflow-x-auto scroll-smooth py-2">
                     @foreach ($bus_offers as $offer)
                         <article class="dailyve-offer-card min-h-[146px] w-[278px] shrink-0 snap-start">
                             <div class="dailyve-offer-card__body">
@@ -254,7 +254,7 @@
 
                     {{-- Container --}}
                     <div id="routes-slider" onscroll="updateSliderButtons('routes-slider')"
-                        class="flex overflow-x-auto scroll-smooth gap-5 pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 snap-x scrollbar-none">
+                        class="flex overflow-x-auto scroll-smooth gap-5 pb-4 snap-x scrollbar-none">
                         @while ($routes_query->have_posts())
                             @php
                                 $routes_query->the_post();
@@ -365,7 +365,7 @@
 
                     {{-- Container --}}
                     <div id="operators-slider" onscroll="updateSliderButtons('operators-slider')"
-                        class="flex overflow-x-auto scroll-smooth gap-5 pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 snap-x scrollbar-none">
+                        class="flex overflow-x-auto scroll-smooth gap-5 pb-4 snap-x scrollbar-none">
                         @while ($operators_query->have_posts())
                             @php $operators_query->the_post(); @endphp
                             <div
@@ -452,7 +452,7 @@
 
                     {{-- Container --}}
                     <div id="stations-slider" onscroll="updateSliderButtons('stations-slider')"
-                        class="flex overflow-x-auto scroll-smooth gap-5 pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 snap-x scrollbar-none">
+                        class="flex overflow-x-auto scroll-smooth gap-5 pb-4 snap-x scrollbar-none">
                         @while ($stations_query->have_posts())
                             @php
                                 $stations_query->the_post();
@@ -642,7 +642,7 @@
         {{-- Booking Guide Section --}}
         <section class="px-4 sm:px-6 lg:px-8 mb-16 bg-sky-50" aria-label="Hướng dẫn đặt vé xe khách"
             id="booking-guide-section">
-            <div class="max-w-7xl mx-auto relative overflow-hidden p-6 md:p-10 lg:p-12">
+            <div class="max-w-7xl mx-auto relative overflow-hidden py-6 md:p-10 lg:p-12">
                 <div
                     class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-sky-100/50 to-transparent pointer-events-none">
                 </div>

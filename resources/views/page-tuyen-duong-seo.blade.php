@@ -712,9 +712,13 @@
         thumbs.forEach(function(thumb, idx) {
           if (idx === activeIndex) {
             thumb.classList.add('active');
-            if (typeof thumb.scrollIntoView === 'function') {
-              thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            }
+            var containerWidth = thumbsContainer.offsetWidth;
+            var thumbLeft = thumb.offsetLeft;
+            var thumbWidth = thumb.offsetWidth;
+            thumbsContainer.scrollTo({
+              left: thumbLeft - (containerWidth / 2) + (thumbWidth / 2),
+              behavior: 'smooth'
+            });
           } else {
             thumb.classList.remove('active');
           }

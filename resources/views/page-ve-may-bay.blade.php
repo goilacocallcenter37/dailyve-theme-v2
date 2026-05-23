@@ -33,7 +33,8 @@
                         </h1>
                         <p class="text-slate-600 leading-relaxed mb-8 text-sm md:text-base">
                             Đặt vé máy bay trực tuyến với hàng trăm tuyến đường trên Việt Nam tại Dailyve.com.vn. Chúng tôi
-                            là đối tác tin cậy của hơn 100 hãng hàng không uy tín cung cấp đa dạng dòng xe đáp ứng nhu cầu đi lại của
+                            là đối tác tin cậy của hơn 100 hãng hàng không uy tín cung cấp đa dạng dòng xe đáp ứng nhu cầu
+                            đi lại của
                             hàng khách. Bạn có thể lựa chọn tuyến đường, ghế ngồi, khung giờ phù hợp và so sánh giá giữa các
                             hãng hàng không một cách dễ dàng trên hệ thống của chúng tôi.
                         </p>
@@ -89,7 +90,8 @@
                                 </svg>
                             </div>
                             <div>
-                                <h4 class="font-bold text-slate-900 mb-1 text-sm md:text-base">Hãng hàng không uy tín cao</h4>
+                                <h4 class="font-bold text-slate-900 mb-1 text-sm md:text-base">Hãng hàng không uy tín cao
+                                </h4>
                                 <p class="text-xs text-slate-500 leading-relaxed">Hợp tác cùng 100+ đối tác vận tải chất
                                     lượng vượt trội.</p>
                             </div>
@@ -119,7 +121,7 @@
                 {{-- Right Side: Callout Support Banner (5/12) --}}
                 <div class="lg:col-span-5">
                     <div
-                        class="bg-gradient-to-br from-blue-600 to-indigo-800 rounded-3xl p-8 text-white relative overflow-hidden shadow-xl shadow-blue-100 flex flex-col justify-between h-full min-h-[380px] group border border-blue-500/20">
+                        class="bg-gradient-to-br from-[#2196f3] to-[#1565c0] rounded-3xl p-8 text-white relative overflow-hidden shadow-xl shadow-blue-100 flex flex-col justify-between h-full min-h-[380px] group border border-blue-500/20">
                         <div
                             class="absolute -right-16 -top-16 w-48 h-48 bg-white/10 rounded-full blur-xl group-hover:scale-110 transition-transform duration-500">
                         </div>
@@ -176,7 +178,7 @@
                 </button>
 
                 <div id="flight-offers-slider" onscroll="updateSliderButtons('flight-offers-slider')"
-                    class="scrollbar-none -mx-4 flex snap-x gap-5 overflow-x-auto scroll-smooth px-4 py-2 sm:mx-0 sm:px-1">
+                    class="scrollbar-none flex snap-x gap-5 overflow-x-auto scroll-smooth py-2">
                     @foreach ($flight_offers as $offer)
                         <article class="dailyve-offer-card min-h-[146px] w-[278px] shrink-0 snap-start">
                             <div class="dailyve-offer-card__body">
@@ -254,7 +256,7 @@
 
                     {{-- Container --}}
                     <div id="routes-slider" onscroll="updateSliderButtons('routes-slider')"
-                        class="flex overflow-x-auto scroll-smooth gap-5 pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 snap-x scrollbar-none">
+                        class="flex overflow-x-auto scroll-smooth gap-5 pb-4 snap-x scrollbar-none">
                         @while ($routes_query->have_posts())
                             @php
                                 $routes_query->the_post();
@@ -453,7 +455,7 @@
         {{-- Booking Guide Section --}}
         <section class="px-4 sm:px-6 lg:px-8 mb-16 bg-sky-50" aria-label="Hướng dẫn đặt vé máy bay"
             id="booking-guide-section">
-            <div class="max-w-7xl mx-auto relative overflow-hidden p-6 md:p-10 lg:p-12">
+            <div class="max-w-7xl mx-auto relative overflow-hidden py-6 md:p-10 lg:p-12">
                 <div
                     class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-sky-100/50 to-transparent pointer-events-none">
                 </div>

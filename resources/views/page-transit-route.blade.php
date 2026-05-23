@@ -187,7 +187,7 @@
           </h3>
 
           <div class="relative group">
-            <div id="transit-related-slider" class="flex overflow-x-auto gap-6 scrollbar-none pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 scroll-smooth">
+            <div id="transit-related-slider" class="flex overflow-x-auto gap-6 scrollbar-none pb-4 scroll-smooth">
               @while ($related_posts->have_posts())
                 @php
                   $related_posts->the_post();
