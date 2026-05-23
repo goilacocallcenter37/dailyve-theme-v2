@@ -71,8 +71,13 @@ body {
 }
 
 .dailyve-site-header__nav a:hover,
-.dailyve-site-header__nav a:focus-visible {
+.dailyve-site-header__nav a:focus-visible,
+.dailyve-site-header__nav a.is-active {
   color: var(--dailyve-blue);
+}
+
+.dailyve-site-header__nav a.is-active {
+  font-weight: 700;
 }
 
 .dailyve-site-header__actions {

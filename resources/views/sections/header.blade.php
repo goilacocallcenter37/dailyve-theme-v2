@@ -3,21 +3,30 @@
         ['label' => 'Vé xe khách', 'url' => home_url('/ve-xe-khach/')],
         ['label' => 'Vé tàu hỏa', 'url' => home_url('/ve-tau-hoa/')],
         ['label' => 'Vé máy bay', 'url' => home_url('/ve-may-bay/')],
-        ['label' => 'Khách sạn', 'url' => home_url('/khach-san/')],
+        ['label' => 'Tra cứu', 'url' => home_url('/tra-cuu/')],
         ['label' => 'Tin tức', 'url' => home_url('/tin-tuc/')],
         ['label' => 'Hỗ trợ', 'url' => home_url('/ho-tro/')],
     ];
+
+    global $wp;
+    $current_url = home_url(add_query_arg([], $wp->request));
+    $current_url_clean = trailingslashit(strtok($current_url, '?'));
 @endphp
 
 <header class="dailyve-site-header">
     <div class="dailyve-container dailyve-site-header__inner">
         <a class="dailyve-site-header__logo" href="{{ esc_url(home_url('/')) }}" aria-label="Dailyve">
-            <img src="https://object.dailyve.com/dailyve/wp-content/uploads/2024/10/DailyVe-12-300x104.png" alt="Dailyve">
+            <img src="https://object.dailyve.com/dailyve/wp-content/uploads/2024/10/DailyVe-12-300x104.png"
+                alt="Dailyve">
         </a>
 
         <nav class="dailyve-site-header__nav" aria-label="Điều hướng chính">
             @foreach ($navItems as $item)
-                <a href="{{ esc_url($item['url']) }}">{{ $item['label'] }}</a>
+                @php
+                    $item_url_clean = trailingslashit(strtok($item['url'], '?'));
+                    $isActive = $current_url_clean === $item_url_clean;
+                @endphp
+                <a href="{{ esc_url($item['url']) }}" class="{{ $isActive ? 'is-active' : '' }}">{{ $item['label'] }}</a>
             @endforeach
         </nav>
 
@@ -36,9 +45,11 @@
     <div class="dailyve-mobile-drawer__content">
         <div class="dailyve-mobile-drawer__header">
             <a class="dailyve-mobile-drawer__logo" href="{{ esc_url(home_url('/')) }}">
-                <img src="https://object.dailyve.com/dailyve/wp-content/uploads/2024/10/DailyVe-12-300x104.png" alt="Dailyve">
+                <img src="https://object.dailyve.com/dailyve/wp-content/uploads/2024/10/DailyVe-12-300x104.png"
+                    alt="Dailyve">
             </a>
-            <button class="dailyve-mobile-drawer__close" id="dailyveMobileDrawerClose" type="button" aria-label="Đóng menu">
+            <button class="dailyve-mobile-drawer__close" id="dailyveMobileDrawerClose" type="button"
+                aria-label="Đóng menu">
                 <i class="fas fa-times"></i>
             </button>
         </div>
@@ -60,8 +71,11 @@
                     } elseif (strpos($item['label'], 'Hỗ trợ') !== false) {
                         $iconClass = 'fa-headset';
                     }
+                    $item_url_clean = trailingslashit(strtok($item['url'], '?'));
+                    $isActive = $current_url_clean === $item_url_clean;
                 @endphp
-                <a class="dailyve-mobile-drawer__link" href="{{ esc_url($item['url']) }}">
+                <a class="dailyve-mobile-drawer__link{{ $isActive ? ' is-active' : '' }}"
+                    href="{{ esc_url($item['url']) }}">
                     <span class="dailyve-mobile-drawer__icon">
                         <i class="fas {{ $iconClass }}" aria-hidden="true"></i>
                     </span>
@@ -73,13 +87,13 @@
 
         <div class="dailyve-mobile-drawer__footer">
             <div class="dailyve-mobile-drawer__contact">
-                <a href="tel:19005155" class="dailyve-mobile-drawer__contact-item">
+                <a href="tel:19000155" class="dailyve-mobile-drawer__contact-item">
                     <i class="fas fa-phone-alt text-emerald-500" aria-hidden="true"></i>
-                    <span>Hotline: <strong>1900 5155</strong></span>
+                    <span>Hotline: <strong>1900 0155</strong></span>
                 </a>
-                <a href="mailto:support@dailyve.com" class="dailyve-mobile-drawer__contact-item">
+                <a href="mailto:info.dailyve@gmail.com" class="dailyve-mobile-drawer__contact-item">
                     <i class="fas fa-envelope text-sky-500" aria-hidden="true"></i>
-                    <span>support@dailyve.com</span>
+                    <span>info.dailyve@gmail.com</span>
                 </a>
             </div>
             <div class="dailyve-mobile-drawer__trust">
@@ -122,4 +136,3 @@
         });
     });
 </script>
-

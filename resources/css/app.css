@@ -3956,10 +3956,22 @@ body.dailyve-date-range-picker-open {
 }
 
 .dailyve-mobile-drawer__link:hover,
-.dailyve-mobile-drawer__link:focus {
+.dailyve-mobile-drawer__link:focus,
+.dailyve-mobile-drawer__link.is-active {
   background: var(--color-surface-soft, #f8fafc);
   color: var(--color-primary, #2196F3);
-  border-color: rgba(33, 150, 243, 0.08);
+  border-color: rgba(33, 150, 243, 0.15);
+}
+
+.dailyve-mobile-drawer__link.is-active .dailyve-mobile-drawer__icon {
+  background: #2196F3;
+  color: #ffffff;
+}
+
+.dailyve-mobile-drawer__link.is-active .dailyve-mobile-drawer__arrow {
+  transform: translateX(3px);
+  color: var(--color-primary, #2196F3);
+  opacity: 1;
 }
 
 .dailyve-mobile-drawer__link:active {
