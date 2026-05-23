@@ -693,6 +693,96 @@
                                                         Toàn bộ đánh giá được tổng hợp tự động từ trải nghiệm thực tế của
                                                         khách hàng đã đi xe, đảm bảo khách quan và chân thực nhất.</p>
                                                 </div>
+
+                                                <div class="ol-card__reviews-list-wrapper"
+                                                    style="margin-top: 28px; border-top: 1px solid #f1f5f9; padding-top: 24px;">
+                                                    <h4
+                                                        style="font-size: 18px; font-weight: 600; color: #0f172a; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: -0.5px;">
+                                                        Nhận xét từ hành khách</h4>
+
+                                                    @php
+                                                        $reviews_list = $op['reviews'] ?? [];
+                                                    @endphp
+
+                                                    <div class="rating-tab__comments-list"
+                                                        id="reviews-list-{{ $operator_id }}"
+                                                        style="max-height: 520px; overflow-y: auto; padding-right: 8px; margin-bottom: 8px;">
+                                                        @if (!empty($reviews_list))
+                                                            @foreach ($reviews_list as $rev)
+                                                                @php
+                                                                    $rev_name = $rev['reviewer_name'] ?? 'Khách hàng';
+                                                                    $rev_date = isset($rev['created_at'])
+                                                                        ? date('d-m-Y', strtotime($rev['created_at']))
+                                                                        : '';
+                                                                    $rev_avatar = $rev['social_avatar'] ?? '';
+                                                                    $rev_rating = (int) ($rev['rating'] ?? 5);
+                                                                    $rev_width = ($rev_rating / 5) * 100;
+                                                                    $rev_comment = $rev['comment'] ?? '';
+                                                                @endphp
+                                                                <div class="rating-tab__comments-list__item">
+                                                                    <div
+                                                                        class="rating-tab__comments-list__item-personal__info">
+                                                                        @if (!empty($rev_avatar))
+                                                                            <div
+                                                                                class="rating-tab__comments-list__item-personal_social-avatar">
+                                                                                <img src="{{ esc_url($rev_avatar) }}"
+                                                                                    alt="{{ esc_attr($rev_name) }}">
+                                                                            </div>
+                                                                        @else
+                                                                            <div
+                                                                                class="rating-tab__comments-list__item-personal__info-avatar">
+                                                                                {{ function_exists('getInitialsNameToAvatar') ? getInitialsNameToAvatar($rev_name) : mb_substr($rev_name, 0, 2) }}
+                                                                            </div>
+                                                                        @endif
+                                                                        <div
+                                                                            class="rating-tab__comments-list__item-personal__info-name">
+                                                                            {{ $rev_name }}
+                                                                            <div
+                                                                                class="rating-tab__comments-list__item-personal__info-star">
+                                                                                <div class="ratings">
+                                                                                    <div class="empty-stars"></div>
+                                                                                    <div class="full-stars"
+                                                                                        style="width: {{ $rev_width }}%;">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="rating-tab__comments-list__item-content">
+                                                                        {!! nl2br(esc_html($rev_comment)) !!}</div>
+                                                                    @if (!empty($rev_date))
+                                                                        <div
+                                                                            class="rating-tab__comments-list__item-depart-date">
+                                                                            <p>Đi ngày {{ $rev_date }}</p>
+                                                                            <div><i class="fas fa-check-circle"></i></div>
+                                                                            <p class="verified">Đã mua vé</p>
+                                                                        </div>
+                                                                    @endif
+                                                                </div>
+                                                            @endforeach
+                                                        @else
+                                                            <div
+                                                                style="text-align: center; padding: 24px; color: #64748b; background: #f8fafc; border-radius: 12px; border: 1px dashed #e2e8f0; font-size: 13.5px;">
+                                                                Chưa có nhận xét nào từ hành khách cho chặng này.
+                                                            </div>
+                                                        @endif
+                                                    </div>
+
+                                                    @if ($review_count > count($reviews_list))
+                                                        <div class="reviews-load-more-container"
+                                                            style="text-align: center; margin-top: 20px;"
+                                                            id="load-more-container-{{ $operator_id }}">
+                                                            <button type="button" class="btn-reviews-load-more"
+                                                                data-company-id="{{ $operator_id }}" data-next-page="2"
+                                                                data-total-pages="{{ ceil($review_count / 10) }}"
+                                                                onclick="loadMoreDailyveReviews('{{ $operator_id }}')"
+                                                                style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 38px; padding: 0 24px; border: 1px solid #bfdbfe; background: #fff; color: #2196F3; border-radius: 999px; font-size: 13.5px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(33, 150, 243, 0.05);">
+                                                                <span>Xem thêm nhận xét</span>
+                                                                <i class="fas fa-chevron-down"></i>
+                                                            </button>
+                                                        </div>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -824,6 +914,64 @@
                     updateSliderUI(opIndex, activeIndex);
                 }
             }, 100);
+        }
+
+        function loadMoreDailyveReviews(operatorId) {
+            var container = document.getElementById('load-more-container-' + operatorId);
+            if (!container) return;
+
+            var button = container.querySelector('.btn-reviews-load-more');
+            if (!button) return;
+
+            var nextPage = parseInt(button.getAttribute('data-next-page'));
+            var totalPages = parseInt(button.getAttribute('data-total-pages'));
+            var listContainer = document.getElementById('reviews-list-' + operatorId);
+            if (!listContainer) return;
+
+            button.disabled = true;
+            var originalText = button.querySelector('span').textContent;
+            button.querySelector('span').textContent = 'Đang tải...';
+            var icon = button.querySelector('i');
+            if (icon) {
+                icon.className = 'fas fa-spinner fa-spin';
+            }
+
+            var ajaxUrl = '{{ admin_url('admin-ajax.php') }}';
+            var url = ajaxUrl + '?action=get_review_ajax_company&companyId=' + encodeURIComponent(operatorId) + '&page=' +
+                nextPage;
+
+            fetch(url)
+                .then(function(res) {
+                    return res.json();
+                })
+                .then(function(res) {
+                    if (res && res.html) {
+                        listContainer.insertAdjacentHTML('beforeend', res.html);
+
+                        var newNextPage = nextPage + 1;
+                        button.setAttribute('data-next-page', newNextPage);
+
+                        if (newNextPage > totalPages || !res.html.trim()) {
+                            container.remove();
+                        } else {
+                            button.disabled = false;
+                            button.querySelector('span').textContent = originalText;
+                            if (icon) {
+                                icon.className = 'fas fa-chevron-down';
+                            }
+                        }
+                    } else {
+                        container.remove();
+                    }
+                })
+                .catch(function(err) {
+                    console.error('Error loading reviews:', err);
+                    button.disabled = false;
+                    button.querySelector('span').textContent = originalText;
+                    if (icon) {
+                        icon.className = 'fas fa-chevron-down';
+                    }
+                });
         }
 
         document.addEventListener('DOMContentLoaded', function() {

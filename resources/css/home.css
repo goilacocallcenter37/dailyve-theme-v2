@@ -3268,7 +3268,8 @@ body {
 }
 
 .ratings .empty-stars::before {
-  content: "★★★★★";
+  content: "\2605\2605\2605\2605\2605";
+  font-family: Arial, sans-serif;
 }
 
 .ratings .full-stars {
@@ -3281,7 +3282,8 @@ body {
 }
 
 .ratings .full-stars::before {
-  content: "★★★★★";
+  content: "\2605\2605\2605\2605\2605";
+  font-family: Arial, sans-serif;
 }
 
 .rating-tab__comments-list__item-content {
