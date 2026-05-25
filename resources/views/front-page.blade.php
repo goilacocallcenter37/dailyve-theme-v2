@@ -527,7 +527,7 @@
                 </div>
 
                 <div class="dailyve-press__footer mt-10 md:mt-12 flex justify-center">
-                    <a class="inline-flex items-center justify-center bg-[#ffc107] text-[#0a1e40] font-bold text-[15px] px-8 py-3 rounded-full shadow-[0_4px_15px_rgba(255,193,7,0.3)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(255,193,7,0.4)] transition-all"
+                    <a class="inline-flex items-center justify-center bg-[#ffc107] text-[#0a1e40] font-semibold text-[15px] px-8 py-3 rounded-full hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(255,193,7,0.4)] transition-all"
                         href="{{ esc_url(home_url('/tin-tuc/')) }}">Xem thêm</a>
                 </div>
             </div>

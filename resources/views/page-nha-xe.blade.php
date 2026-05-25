@@ -8,7 +8,7 @@
 
         $routes_query = new \WP_Query([
             'post_type' => 'page',
-            'post_parent' => 15764, // Nha xe parent ID
+            'post_parent' => 15764,
             'posts_per_page' => $per_page,
             'paged' => $paged,
             'orderby' => 'ID',
@@ -58,6 +58,7 @@
             }
 
             @media (max-width: 767px) {
+
                 .route-directory>nav>ol,
                 .route-directory>header>div,
                 .route-directory>main {
@@ -114,12 +115,15 @@
             }
         </style>
 
-        <x-breadcrumb :items="[['title' => 'Dailyve', 'url' => home_url('/')], ['title' => 'Vé xe khách', 'url' => home_url('/ve-xe-khach/')], ['title' => 'Nhà xe', 'url' => '']]" preset="directory" />
+        <x-breadcrumb :items="[
+            ['title' => 'Dailyve', 'url' => home_url('/')],
+            ['title' => 'Vé xe khách', 'url' => home_url('/ve-xe-khach/')],
+            ['title' => 'Nhà xe', 'url' => ''],
+        ]" preset="directory" />
 
 
         <header class="bg-white">
-            <div
-                class="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:px-8 lg:py-14">
+            <div class="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:px-8 lg:py-14">
                 <div>
                     <p class="mb-4 inline-flex rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold text-blue-600">
                         Danh bạ nhà xe khách Dailyve
@@ -129,7 +133,8 @@
                         Danh sách nhà xe khách uy tín
                     </h1>
                     <p class="mt-5 max-w-3xl text-base leading-7 text-slate-600 md:text-lg">
-                        Tra cứu nhanh thông tin các hãng xe khách chất lượng cao, so sánh dịch vụ, địa chỉ văn phòng, số điện thoại liên hệ và đặt vé xe trực tuyến nhanh chóng.
+                        Tra cứu nhanh thông tin các hãng xe khách chất lượng cao, so sánh dịch vụ, địa chỉ văn phòng, số
+                        điện thoại liên hệ và đặt vé xe trực tuyến nhanh chóng.
                     </p>
                 </div>
 
@@ -190,10 +195,9 @@
                                 $route_title = get_the_title($route_id);
                                 $route_url = get_permalink($route_id);
                                 $address = function_exists('get_field')
-                                     ? get_field('company_address', $route_id)
-                                     : get_post_meta($route_id, 'company_address', true);
+                                    ? get_field('company_address', $route_id)
+                                    : get_post_meta($route_id, 'company_address', true);
                                 $thumb_id = get_post_thumbnail_id($route_id);
-                                $thumb_url = $thumb_id ? wp_get_attachment_image_url($thumb_id, 'medium') : '';
                                 $image_loading = $route_index <= 3 ? 'eager' : 'lazy';
                                 $image_attrs = [
                                     'class' =>
@@ -201,6 +205,7 @@
                                     'loading' => $image_loading,
                                     'decoding' => 'async',
                                     'sizes' => '(min-width: 1024px) 380px, (min-width: 768px) 50vw, 100vw',
+                                    'onerror' => 'this.onerror=null; this.style.display="none"; var p=this.parentElement.querySelector(".image-placeholder"); if(p) p.style.display="flex";',
                                 ];
                                 if ($route_index === 1) {
                                     $image_attrs['fetchpriority'] = 'high';
@@ -209,12 +214,15 @@
 
                             <article
                                 class="group flex min-h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md">
-                                <a href="{{ esc_url($route_url) }}" class="block aspect-[4/3] overflow-hidden bg-slate-100"
+                                <a href="{{ esc_url($route_url) }}" class="block aspect-[4/3] overflow-hidden bg-slate-100 relative"
                                     aria-label="Xem {{ esc_attr($route_title) }}">
                                     @if ($thumb_id)
                                         {!! wp_get_attachment_image($thumb_id, 'medium_large', false, $image_attrs) !!}
+                                        <div class="image-placeholder flex h-full w-full items-center justify-center text-4xl text-slate-300 absolute inset-0 bg-slate-100" style="display: none;">
+                                            <i class="fas fa-bus" aria-hidden="true"></i>
+                                        </div>
                                     @else
-                                        <div class="flex h-full w-full items-center justify-center text-4xl text-slate-300">
+                                        <div class="image-placeholder flex h-full w-full items-center justify-center text-4xl text-slate-300">
                                             <i class="fas fa-bus" aria-hidden="true"></i>
                                         </div>
                                     @endif
@@ -228,28 +236,21 @@
                                     </h3>
 
                                     @if ($address)
-                                        <p class="mt-3 flex items-start gap-2 text-xs md:text-sm text-slate-600 leading-relaxed">
-                                            <i class="fas fa-map-marker-alt text-blue-500 mt-0.5 shrink-0" aria-hidden="true"></i>
+                                        <p
+                                            class="mt-3 flex items-start gap-2 text-xs md:text-sm text-slate-600 leading-relaxed">
+                                            <i class="fas fa-map-marker-alt text-blue-500 mt-0.5 shrink-0"
+                                                aria-hidden="true"></i>
                                             <span>{{ $address }}</span>
                                         </p>
                                     @endif
-
-                                    <div class="mt-4 flex-1 text-xs md:text-sm text-slate-500 leading-relaxed line-clamp-2">
-                                        @php
-                                            $excerpt = get_the_excerpt($route_id);
-                                            if (!$excerpt) {
-                                                $excerpt = wp_trim_words(get_post_field('post_content', $route_id), 18);
-                                            }
-                                        @endphp
-                                        {{ $excerpt }}
-                                    </div>
 
                                     <div class="mt-4 flex items-center justify-between border-t border-slate-100 pt-3.5">
                                         <span class="inline-flex items-center gap-1.5 text-xs text-slate-500 font-medium">
                                             <i class="fas fa-shield-alt text-blue-500" aria-hidden="true"></i>
                                             <span>Đối tác chính thức</span>
                                         </span>
-                                        <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700">
+                                        <span
+                                            class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700">
                                             <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                                             Đã xác thực
                                         </span>

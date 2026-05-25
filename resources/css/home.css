@@ -1927,8 +1927,7 @@ body {
 
 .dailyve-services__tab.is-active {
   color: #ffffff;
-  background: #007aff;
-  box-shadow: 0 8px 20px rgba(0, 122, 255, 0.35);
+  background: var(--dailyve-blue);
 }
 
 .dailyve-services__content {

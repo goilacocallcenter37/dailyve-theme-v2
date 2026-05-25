@@ -242,6 +242,7 @@
                                     'loading' => $image_loading,
                                     'decoding' => 'async',
                                     'sizes' => '(min-width: 1024px) 380px, (min-width: 768px) 50vw, 100vw',
+                                    'onerror' => 'this.onerror=null; this.style.display="none"; var p=this.parentElement.querySelector(".image-placeholder"); if(p) p.style.display="flex";',
                                 ];
                                 if ($route_index === 1) {
                                     $image_attrs['fetchpriority'] = 'high';
@@ -259,11 +260,14 @@
 
                             <article
                                 class="group flex min-h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md">
-                                <a href="{{ esc_url($route_url) }}" class="block aspect-[4/3] overflow-hidden bg-slate-100"
+                                <a href="{{ esc_url($route_url) }}" class="block aspect-[4/3] overflow-hidden bg-slate-100 relative"
                                     aria-label="Xem {{ esc_attr($route_title) }}"
                                     data-route-record='@json($viewed_payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)'>
                                     @if ($thumb_id)
                                         {!! wp_get_attachment_image($thumb_id, 'medium_large', false, $image_attrs) !!}
+                                        <div class="image-placeholder flex h-full w-full items-center justify-center text-4xl text-slate-300 absolute inset-0 bg-slate-100" style="display: none;">
+                                            <i class="fas fa-route" aria-hidden="true"></i>
+                                        </div>
                                     @else
                                         <div class="flex h-full w-full items-center justify-center text-4xl text-slate-300">
                                             <i class="fas fa-route" aria-hidden="true"></i>
