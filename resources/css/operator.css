@@ -3,10 +3,67 @@
     letter-spacing: -0.03em;
 }
 
+.dailyve-operator-detail {
+    overflow-x: clip;
+}
+
+.dailyve-operator-detail .operator-content-layout,
+.dailyve-operator-detail .operator-content-main,
+.dailyve-operator-detail .operator-content-card,
+.dailyve-operator-detail .operator-tab-pane {
+    min-width: 0;
+}
+
+.dailyve-operator-detail .operator-content-card {
+    overflow: hidden;
+}
+
 .dailyve-operator-detail .e-content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     color: #334155;
     font-size: 15px;
     line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+.dailyve-operator-detail .e-content * {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+.dailyve-operator-detail .e-content .alignwide,
+.dailyve-operator-detail .e-content .alignfull,
+.dailyve-operator-detail .e-content .wp-caption,
+.dailyve-operator-detail .e-content img {
+    max-width: 100% !important;
+}
+
+.dailyve-operator-detail .e-content figure,
+.dailyve-operator-detail .e-content .wp-block-image {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    display: block !important;
+}
+
+.dailyve-operator-detail .e-content img {
+    width: auto !important;
+    height: auto !important;
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    border-radius: 12px;
+    object-fit: contain;
+}
+
+.dailyve-operator-detail .e-content figure img,
+.dailyve-operator-detail .e-content .wp-block-image img,
+.dailyve-operator-detail .e-content .wp-caption img {
+    width: auto !important;
+    max-width: 100% !important;
 }
 
 .dailyve-operator-detail .e-content h2,
@@ -20,6 +77,152 @@
 
 .dailyve-operator-detail .e-content p {
     margin: 0 0 1rem;
+}
+
+.dailyve-operator-detail .operator-intro-shell {
+    min-width: 0;
+}
+
+.dailyve-operator-detail .operator-intro-collapse {
+    --operator-intro-collapsed-height: 560px;
+    position: relative;
+    max-height: var(--operator-intro-collapsed-height);
+    transition: max-height 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dailyve-operator-detail .operator-intro-collapse.is-expanded {
+    max-height: none;
+}
+
+.dailyve-operator-detail .operator-intro-collapse.has-overflow:not(.is-expanded)::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 110px;
+    content: "";
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0), #ffffff 88%);
+}
+
+.dailyve-operator-detail .operator-intro-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #1d4ed8;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.dailyve-operator-detail .operator-intro-toggle:hover {
+    color: #1565c0;
+}
+
+.dailyve-operator-detail .operator-review-card {
+    color: #0f172a;
+}
+
+.dailyve-operator-detail .operator-rating-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px 18px;
+}
+
+.dailyve-operator-detail .operator-rating-detail {
+    min-width: 0;
+}
+
+.dailyve-operator-detail .operator-rating-detail__label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: #0f172a;
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+.dailyve-operator-detail .operator-rating-detail__label span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dailyve-operator-detail .operator-rating-detail__label strong {
+    flex: 0 0 auto;
+    font-weight: 700;
+}
+
+.dailyve-operator-detail .operator-rating-detail__bar {
+    display: block;
+    height: 8px;
+    margin-top: 5px;
+    overflow: hidden;
+    border-radius: 9999px;
+    background: #d9d9d9;
+}
+
+.dailyve-operator-detail .operator-rating-detail__bar span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: #24a85a;
+}
+
+.dailyve-operator-detail .operator-review-list {
+    display: grid;
+    gap: 18px;
+}
+
+.dailyve-operator-detail .operator-review-item {
+    min-width: 0;
+}
+
+.dailyve-operator-detail .operator-review-item + .operator-review-item {
+    padding-top: 18px;
+    border-top: 1px solid #f1f5f9;
+}
+
+.dailyve-operator-detail .operator-review-item.is-hidden {
+    display: none;
+}
+
+.dailyve-operator-detail .operator-review-avatar {
+    display: inline-flex;
+    height: 40px;
+    width: 40px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    background: #3b82f6;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.dailyve-operator-detail .operator-review-more {
+    display: inline-flex;
+    min-height: 38px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #0f172a;
+    font-size: 14px;
+    font-weight: 700;
+    transition: border-color 180ms ease, color 180ms ease, background-color 180ms ease;
+}
+
+.dailyve-operator-detail .operator-review-more:hover {
+    border-color: #2196f3;
+    background: #eff6ff;
+    color: #1565c0;
 }
 
 .dailyve-operator-detail .operator-tab-pane[hidden] {
@@ -229,13 +432,39 @@
     transform: translateY(-1px);
 }
 
+.dailyve-operator-detail .operator-gallery__thumbs {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 2px;
+    scroll-padding-inline: 1px;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.dailyve-operator-detail .operator-gallery__thumbs::-webkit-scrollbar {
+    display: none;
+}
+
 .dailyve-operator-detail .operator-gallery__thumb {
+    aspect-ratio: 4 / 3;
+    flex: 0 0 calc((100% - 36px) / 4);
     overflow: hidden;
     border-radius: 8px;
     border: 1px solid #e2e8f0;
     background: #f1f5f9;
     opacity: 0.72;
+    scroll-snap-align: start;
     transition: border-color 180ms ease, opacity 180ms ease, transform 180ms ease;
+}
+
+.dailyve-operator-detail .operator-gallery__thumb img {
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }
 
 .dailyve-operator-detail .operator-gallery__thumb:hover,
@@ -243,6 +472,121 @@
     border-color: #2196f3;
     opacity: 1;
     transform: translateY(-1px);
+}
+
+.dailyve-operator-detail .operator-offers-slider {
+    min-width: 0;
+}
+
+.dailyve-operator-detail .operator-offers-slider__viewport {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.dailyve-operator-detail .operator-offers-slider__viewport::-webkit-scrollbar {
+    display: none;
+}
+
+.dailyve-operator-detail .operator-offers-slider__track {
+    display: flex;
+    gap: 16px;
+}
+
+.dailyve-operator-detail .operator-offer-card {
+    display: flex;
+    min-width: 0;
+    flex: 0 0 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    scroll-snap-align: start;
+}
+
+.dailyve-operator-detail .operator-offers-slider__nav {
+    display: inline-flex;
+    height: 38px;
+    width: 38px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e2e8f0;
+    border-radius: 9999px;
+    background: #ffffff;
+    color: #0f172a;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.dailyve-operator-detail .operator-offers-slider__nav:hover {
+    border-color: #2196f3;
+    background: #2196f3;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.dailyve-operator-detail .operator-offers-slider__nav:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+    transform: none;
+}
+
+.dailyve-operator-detail .operator-offers-slider__dots {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dailyve-operator-detail .operator-offers-slider__dot {
+    height: 7px;
+    width: 22px;
+    border-radius: 9999px;
+    background: #cbd5e1;
+    transition: width 220ms ease, background-color 220ms ease;
+}
+
+.dailyve-operator-detail .operator-offers-slider__dot.is-active {
+    width: 34px;
+    background: #2196f3;
+}
+
+.dailyve-operator-detail .operator-filter-scroll {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: 2px;
+    scroll-snap-type: x proximity;
+    scrollbar-color: #93c5fd transparent;
+    scrollbar-width: thin;
+}
+
+.dailyve-operator-detail .operator-filter-scroll::-webkit-scrollbar {
+    height: 8px;
+}
+
+.dailyve-operator-detail .operator-filter-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.dailyve-operator-detail .operator-filter-scroll::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    border-radius: 9999px;
+    background: linear-gradient(90deg, #bfdbfe, #2196f3);
+    background-clip: content-box;
+}
+
+.dailyve-operator-detail .operator-filter-scroll::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, #60a5fa, #1565c0);
+    background-clip: content-box;
+}
+
+.dailyve-operator-detail .operator-filter-scroll::-webkit-scrollbar-button {
+    display: none;
+    height: 0;
+    width: 0;
+}
+
+.dailyve-operator-detail .operator-filter-btn {
+    scroll-snap-align: start;
 }
 
 .dailyve-operator-detail .operator-route-card {
@@ -290,6 +634,14 @@
 }
 
 @media (max-width: 767px) {
+    .dailyve-operator-detail .operator-intro-collapse {
+        --operator-intro-collapsed-height: 460px;
+    }
+
+    .dailyve-operator-detail .operator-rating-detail-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .dailyve-operator-detail .operator-trust-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
@@ -310,9 +662,29 @@
     .dailyve-operator-detail .operator-gallery__nav--next {
         right: 10px;
     }
+
+    .dailyve-operator-detail .operator-gallery__thumb {
+        flex-basis: calc((100% - 24px) / 3);
+    }
+}
+
+@media (min-width: 768px) {
+    .dailyve-operator-detail .operator-offer-card {
+        flex-basis: calc((100% - 16px) / 2);
+    }
+}
+
+@media (min-width: 1024px) {
+    .dailyve-operator-detail .operator-offer-card {
+        flex-basis: calc((100% - 48px) / 4);
+    }
 }
 
 @media (max-width: 479px) {
+    .dailyve-operator-detail .operator-rating-detail-grid {
+        grid-template-columns: 1fr;
+    }
+
     .dailyve-operator-detail .operator-stat-grid {
         grid-template-columns: 1fr;
     }
@@ -330,7 +702,10 @@
 @media (prefers-reduced-motion: reduce) {
     .dailyve-operator-detail .operator-gallery__track,
     .dailyve-operator-detail .operator-gallery__slide img,
+    .dailyve-operator-detail .operator-intro-collapse,
     .dailyve-operator-detail .operator-route-body,
+    .dailyve-operator-detail .operator-offers-slider__nav,
+    .dailyve-operator-detail .operator-offers-slider__dot,
     .dailyve-operator-detail [data-operator-reveal] {
         transition: none;
     }

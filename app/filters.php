@@ -125,7 +125,7 @@ add_action('wp_head', function () {
 add_action('wp_enqueue_scripts', function () {
     // wp_dequeue_style('wp-block-library');
     // wp_dequeue_style('wp-block-library-theme');
-    wp_dequeue_style('wc-block-style'); // WooCommerce blocks
+    wp_dequeue_style('wc-block-style');
 }, 100);
 
 /**
@@ -186,7 +186,7 @@ function dailyve_get_operator_detail(int $post_id)
     }
 
     $response = \call_api_v2('/operators/' . $post_id, 'GET', [
-        'site_key' => 'dailyve',
+        'siteKey' => 'dailyve',
         'includeRoutes' => 'true',
         'minimal' => 'true',
         'provinceRoutesOnly' => 'true',

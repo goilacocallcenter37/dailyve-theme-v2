@@ -41,6 +41,7 @@
             $vehicle_types = array_values(array_filter((array) ($operator['vehicle_type_summary'] ?? [])));
             $amenities = array_values(array_filter((array) ($operator['amenities'] ?? [])));
             $rating_details = array_values(array_filter((array) ($operator['rating_details'] ?? [])));
+            $reviews_list = array_values(array_filter((array) ($operator['reviews'] ?? [])));
             $routes = array_values(array_filter((array) ($operator['routes'] ?? [])));
             $media = is_array($operator['media'] ?? null) ? $operator['media'] : [];
 
@@ -361,12 +362,12 @@
                         </div>
 
                         @if (count($gallery) > 1)
-                            <div class="mt-3 grid grid-cols-4 gap-3">
-                                @foreach (array_slice($gallery, 0, 4) as $index => $image)
+                            <div class="operator-gallery__thumbs mt-3" data-gallery-thumbs>
+                                @foreach ($gallery as $index => $image)
                                     <button type="button"
                                         class="operator-gallery__thumb {{ $index === 0 ? 'is-active' : '' }}"
                                         data-gallery-thumb="{{ $index }}" aria-label="Xem ảnh {{ $index + 1 }}">
-                                        <img class="aspect-[4/3] h-full w-full object-cover"
+                                        <img class="h-full w-full object-cover"
                                             src="{{ esc_url($image['url']) }}" alt="" loading="lazy"
                                             decoding="async">
                                     </button>
@@ -377,31 +378,73 @@
                 </div>
             </section>
 
-            <section class="mx-auto max-w-7xl px-4 pb-8 sm:px-6 lg:px-8">
-                <h2 class="mb-4 text-base font-semibold text-slate-950">Ưu đãi khi đặt xe {{ $operator_name }} tại Dailyve
-                </h2>
-                <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-                    @foreach ($offers as $offer)
-                        <article class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-                            <div class="flex items-start gap-4">
-                                <span
-                                    class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-xl text-blue-600">
-                                    <i class="fas {{ $offer['icon'] }}" aria-hidden="true"></i>
-                                </span>
-                                <div class="min-w-0">
-                                    <h3 class="text-sm font-semibold text-blue-600">{{ $offer['title'] }}</h3>
-                                    <p class="mt-1 text-xs font-medium text-slate-600">{{ $offer['meta'] }}</p>
-                                    <p class="mt-1 text-[11px] text-slate-400">HSD: 31/12/{{ date('Y') }}</p>
-                                </div>
-                            </div>
-                            <button type="button"
-                                class="mt-4 h-9 w-full rounded-lg bg-blue-600 text-xs font-semibold text-white transition hover:bg-blue-700"
-                                data-copy-code="{{ esc_attr($offer['code']) }}">
-                                {{ $offer['code'] }}
+            <section class="operator-offers-slider mx-auto max-w-7xl px-4 pb-8 sm:px-6 lg:px-8"
+                data-offers-slider>
+                <div class="mb-4 flex items-center justify-between gap-3">
+                    <h2 class="text-base font-semibold text-slate-950">Ưu đãi khi đặt xe {{ $operator_name }} tại Dailyve
+                    </h2>
+                    @if (count($offers) > 1)
+                        <div class="hidden shrink-0 items-center gap-2 sm:flex">
+                            <button type="button" class="operator-offers-slider__nav" data-offers-prev
+                                aria-label="Ưu đãi trước">
+                                <i class="fas fa-chevron-left" aria-hidden="true"></i>
                             </button>
-                        </article>
-                    @endforeach
+                            <button type="button" class="operator-offers-slider__nav" data-offers-next
+                                aria-label="Ưu đãi tiếp theo">
+                                <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    @endif
                 </div>
+
+                <div class="operator-offers-slider__viewport" data-offers-viewport>
+                    <div class="operator-offers-slider__track">
+                        @foreach ($offers as $offer)
+                            <article
+                                class="operator-offer-card rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+                                data-offer-slide>
+                                <div class="flex items-start gap-4">
+                                    <span
+                                        class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-xl text-blue-600">
+                                        <i class="fas {{ $offer['icon'] }}" aria-hidden="true"></i>
+                                    </span>
+                                    <div class="min-w-0">
+                                        <h3 class="text-sm font-semibold text-blue-600">{{ $offer['title'] }}</h3>
+                                        <p class="mt-1 text-xs font-medium text-slate-600">{{ $offer['meta'] }}</p>
+                                        <p class="mt-1 text-[11px] text-slate-400">HSD: 31/12/{{ date('Y') }}</p>
+                                    </div>
+                                </div>
+                                <button type="button"
+                                    class="mt-4 h-9 w-full rounded-lg bg-blue-600 text-xs font-semibold text-white transition hover:bg-blue-700"
+                                    data-copy-code="{{ esc_attr($offer['code']) }}">
+                                    {{ $offer['code'] }}
+                                </button>
+                            </article>
+                        @endforeach
+                    </div>
+                </div>
+
+                @if (count($offers) > 1)
+                    <div class="operator-offers-slider__footer mt-4 flex items-center justify-between gap-3">
+                        <div class="operator-offers-slider__dots" aria-label="Chọn ưu đãi">
+                            @foreach ($offers as $index => $offer)
+                                <button type="button"
+                                    class="operator-offers-slider__dot {{ $index === 0 ? 'is-active' : '' }}"
+                                    data-offer-dot="{{ $index }}" aria-label="Xem ưu đãi {{ $index + 1 }}"></button>
+                            @endforeach
+                        </div>
+                        <div class="flex shrink-0 items-center gap-2 sm:hidden">
+                            <button type="button" class="operator-offers-slider__nav" data-offers-prev
+                                aria-label="Ưu đãi trước">
+                                <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="operator-offers-slider__nav" data-offers-next
+                                aria-label="Ưu đãi tiếp theo">
+                                <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                @endif
             </section>
 
             <section id="operator-routes" class="mx-auto max-w-7xl px-4 pb-8 sm:px-6 lg:px-8">
@@ -418,7 +461,7 @@
                     </div> --}}
 
                     @if ($route_filters)
-                        <div class="flex max-w-full gap-2 overflow-x-auto pb-1">
+                        <div class="operator-filter-scroll flex max-w-full gap-2 overflow-x-auto pb-2">
                             <button type="button"
                                 class="operator-filter-btn is-active h-10 shrink-0 rounded-lg bg-blue-600 px-4 text-sm font-semibold text-white"
                                 data-operator-filter="all">Tất cả</button>
@@ -560,8 +603,9 @@
                 @endif
             </section>
 
-            <section class="mx-auto grid max-w-7xl gap-6 px-4 pb-8 sm:px-6 lg:grid-cols-[300px_minmax(0,1fr)] lg:px-8">
-                <aside class="space-y-5">
+            <section
+                class="operator-content-layout mx-auto grid max-w-7xl gap-6 px-4 pb-8 sm:px-6 lg:grid-cols-[300px_minmax(0,1fr)] lg:px-8">
+                <aside class="min-w-0 space-y-5">
                     <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
                         <h2 class="text-base font-semibold text-slate-950">Lý do khách đặt vé với Dailyve</h2>
                         <ul class="mt-4 space-y-3 text-sm text-slate-600">
@@ -603,7 +647,8 @@
                     </div>
                 </aside>
 
-                <div class="rounded-xl border border-slate-200 bg-white shadow-sm">
+                <div class="operator-content-main min-w-0 space-y-5">
+                <div class="operator-content-card min-w-0 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
                     <div class="flex overflow-x-auto border-b border-slate-200 px-3">
                         @foreach ([['id' => 'intro', 'label' => 'Giới thiệu'], ['id' => 'offices', 'label' => 'Địa chỉ văn phòng & SĐT'], ['id' => 'amenities', 'label' => 'Tiện ích']] as $tab)
                             <button type="button"
@@ -616,9 +661,135 @@
 
                     <div class="p-5 md:p-6">
                         <div class="operator-tab-pane" data-operator-tab-pane="intro">
-                            <div class="e-content max-w-none">
-                                @php the_content(); @endphp
+                            <div class="operator-intro-shell">
+                                <div class="operator-intro-collapse e-content max-w-none overflow-hidden"
+                                    data-intro-collapse>
+                                    @php the_content(); @endphp
+                                </div>
+                                <button type="button" class="operator-intro-toggle mt-3" data-intro-toggle
+                                    aria-expanded="false" hidden>
+                                    Xem thêm
+                                </button>
                             </div>
+
+                            <section id="operator-reviews"
+                                class="operator-review-card mt-6 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+                                <div class="flex items-center justify-between gap-4">
+                                    <h2 class="text-lg font-semibold text-slate-950">Đánh giá nhà xe</h2>
+                                    <div class="flex shrink-0 items-center gap-2">
+                                        <strong
+                                            class="dailyve-operator-detail__display text-2xl font-semibold text-slate-950">{{ number_format((float) ($rating ?: 4.8), 1) }}</strong>
+                                        <i class="fas fa-star text-amber-400" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+
+                                @if ($rating_details)
+                                    <div class="operator-rating-detail-grid mt-5">
+                                        @foreach ($rating_details as $detail)
+                                            @php
+                                                $score = (float) ($detail['score'] ?? 0);
+                                                $width = max(0, min(100, ($score / 5) * 100));
+                                            @endphp
+                                            <div class="operator-rating-detail">
+                                                <div class="operator-rating-detail__label">
+                                                    <span>{{ $decode($detail['label'] ?? '') }}</span>
+                                                    <strong>{{ number_format($score, 1) }}</strong>
+                                                </div>
+                                                <span class="operator-rating-detail__bar">
+                                                    <span style="width: {{ $width }}%"></span>
+                                                </span>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+
+                                <div class="my-6 border-t border-slate-200"></div>
+
+                                <h3 class="text-lg font-semibold text-slate-950">Chi tiết đánh giá</h3>
+
+                                <div class="operator-review-list mt-4" data-review-list>
+                                    @if ($reviews_list)
+                                        @foreach ($reviews_list as $index => $review)
+                                            @php
+                                                $review_name = $decode($review['reviewer_name'] ?? 'Khách hàng');
+                                                $review_avatar = $normalize_image_url($review['social_avatar'] ?? '');
+                                                $review_rating = max(0, min(5, (int) ($review['rating'] ?? 5)));
+                                                $review_comment = trim($decode($review['comment'] ?? ''));
+                                                $review_date = !empty($review['created_at'])
+                                                    ? date_i18n('d/m/Y', strtotime($review['created_at']))
+                                                    : '';
+                                                $review_vehicle = $decode($review['vehicle_type'] ?? ($review['vehicle_name'] ?? ''));
+                                                $review_route = $decode($review['route_name'] ?? ($review['route'] ?? ''));
+                                            @endphp
+                                            <article
+                                                class="operator-review-item {{ $index > 0 ? 'is-hidden' : '' }}"
+                                                data-review-item>
+                                                <div class="flex items-start gap-3">
+                                                    @if ($review_avatar)
+                                                        <img class="h-10 w-10 shrink-0 rounded-full object-cover"
+                                                            src="{{ esc_url($review_avatar) }}"
+                                                            alt="{{ esc_attr($review_name) }}" loading="lazy"
+                                                            decoding="async">
+                                                    @else
+                                                        <span class="operator-review-avatar">
+                                                            {{ function_exists('getInitialsNameToAvatar') ? getInitialsNameToAvatar($review_name) : mb_substr($review_name, 0, 2) }}
+                                                        </span>
+                                                    @endif
+                                                    <div class="min-w-0">
+                                                        <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+                                                            <strong
+                                                                class="text-sm font-semibold text-slate-950">{{ $review_name }}</strong>
+                                                            @if ($review_date)
+                                                                <span
+                                                                    class="inline-flex items-center gap-1 text-xs font-medium text-emerald-600">
+                                                                    <i class="fas fa-check-circle"
+                                                                        aria-hidden="true"></i>
+                                                                    Đã đi · {{ $review_date }}
+                                                                </span>
+                                                            @endif
+                                                        </div>
+                                                        <div class="mt-1 flex text-xs text-amber-400"
+                                                            aria-label="{{ $review_rating }} sao">
+                                                            @for ($i = 0; $i < $review_rating; $i++)
+                                                                <i class="fas fa-star" aria-hidden="true"></i>
+                                                            @endfor
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                @if ($review_comment)
+                                                    <p class="mt-3 text-sm leading-6 text-slate-700">
+                                                        {!! nl2br(esc_html($review_comment)) !!}
+                                                    </p>
+                                                @endif
+
+                                                @if ($review_vehicle || $review_route)
+                                                    <div class="mt-3 space-y-1 text-xs text-slate-400">
+                                                        @if ($review_vehicle)
+                                                            <p class="m-0">Loại xe: {{ $review_vehicle }}</p>
+                                                        @endif
+                                                        @if ($review_route)
+                                                            <p class="m-0">Tuyến đường: {{ $review_route }}</p>
+                                                        @endif
+                                                    </div>
+                                                @endif
+                                            </article>
+                                        @endforeach
+                                    @else
+                                        <div class="rounded-lg border border-dashed border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-500">
+                                            Dailyve đang cập nhật nhận xét chi tiết từ hành khách. Điểm đánh giá hiện được
+                                            tổng hợp từ dữ liệu đặt vé và phản hồi đã ghi nhận.
+                                        </div>
+                                    @endif
+                                </div>
+
+                                @if ($review_count)
+                                    <button type="button" class="operator-review-more mt-4" data-review-toggle
+                                        data-total="{{ $review_count }}">
+                                        Xem tất cả {{ number_format($review_count, 0, ',', '.') }} đánh giá
+                                    </button>
+                                @endif
+                            </section>
 
                             @if ($amenities)
                                 <div class="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
@@ -753,41 +924,7 @@
                 </div>
             </section>
 
-            <section class="mx-auto grid max-w-7xl gap-5 px-4 pb-12 sm:px-6 lg:grid-cols-3 lg:px-8">
-                <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                    <h2 class="text-base font-semibold text-slate-950">Đánh giá của khách hàng</h2>
-                    <div class="mt-4 flex items-end gap-3">
-                        <strong
-                            class="dailyve-operator-detail__display text-5xl font-semibold text-slate-950">{{ $rating ?: '4.8' }}</strong>
-                        <span class="pb-2 text-amber-400">
-                            @for ($i = 0; $i < 5; $i++)
-                                <i class="fas fa-star" aria-hidden="true"></i>
-                            @endfor
-                        </span>
-                    </div>
-                    @if ($review_count)
-                        <p class="mt-2 text-sm text-slate-500">({{ number_format($review_count, 0, ',', '.') }} đánh giá)
-                        </p>
-                    @endif
-                    <div class="mt-5 space-y-3">
-                        @foreach (array_slice($rating_details, 0, 4) as $detail)
-                            @php
-                                $score = (float) ($detail['score'] ?? 0);
-                                $width = max(0, min(100, ($score / 5) * 100));
-                            @endphp
-                            <div class="grid grid-cols-[minmax(0,1fr)_42px] items-center gap-3 text-xs">
-                                <span class="font-medium text-slate-600">{{ $decode($detail['label'] ?? '') }}</span>
-                                <span
-                                    class="text-right font-semibold text-slate-700">{{ number_format($score, 1) }}</span>
-                                <span class="col-span-2 h-2 overflow-hidden rounded-full bg-slate-100">
-                                    <span class="block h-full rounded-full bg-emerald-500"
-                                        style="width: {{ $width }}%"></span>
-                                </span>
-                            </div>
-                        @endforeach
-                    </div>
-                </article>
-
+            <section class="mx-auto grid max-w-7xl gap-5 px-4 pb-12 sm:px-6 lg:grid-cols-2 lg:px-8">
                 <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
                     <h2 class="text-base font-semibold text-slate-950">Thông tin nổi bật</h2>
                     <div class="mt-4 grid gap-3 text-sm text-slate-600">
@@ -849,6 +986,73 @@
                         }, reducedMotion ? 0 : Math.min(index * 45, 360));
                     });
 
+                    root.querySelectorAll('[data-intro-collapse]').forEach(function(panel) {
+                        var shell = panel.closest('.operator-intro-shell') || panel.parentElement;
+                        var toggle = shell ? shell.querySelector('[data-intro-toggle]') : null;
+                        if (!toggle) return;
+
+                        function getCollapsedHeight() {
+                            var value = window.getComputedStyle(panel).getPropertyValue(
+                                '--operator-intro-collapsed-height');
+                            var parsed = parseFloat(value);
+                            return Number.isFinite(parsed) ? parsed : 560;
+                        }
+
+                        function syncIntroToggle() {
+                            var hasOverflow = panel.scrollHeight > getCollapsedHeight() + 8;
+                            panel.classList.toggle('has-overflow', hasOverflow);
+                            toggle.hidden = !hasOverflow;
+                        }
+
+                        toggle.addEventListener('click', function() {
+                            var expanded = !panel.classList.contains('is-expanded');
+                            panel.classList.toggle('is-expanded', expanded);
+                            toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+                            toggle.textContent = expanded ? 'Thu gọn' : 'Xem thêm';
+
+                            if (!expanded) {
+                                panel.scrollIntoView({
+                                    behavior: reducedMotion ? 'auto' : 'smooth',
+                                    block: 'start'
+                                });
+                            }
+                        });
+
+                        panel.querySelectorAll('img').forEach(function(image) {
+                            if (image.complete) return;
+                            image.addEventListener('load', syncIntroToggle, {
+                                once: true
+                            });
+                        });
+
+                        window.addEventListener('resize', syncIntroToggle);
+                        syncIntroToggle();
+                    });
+
+                    root.querySelectorAll('[data-review-toggle]').forEach(function(button) {
+                        var card = button.closest('.operator-review-card');
+                        var items = card ? Array.from(card.querySelectorAll('[data-review-item]')) : [];
+                        var total = parseInt(button.getAttribute('data-total'), 10) || items.length;
+
+                        if (items.length <= 1) {
+                            button.hidden = true;
+                            return;
+                        }
+
+                        button.addEventListener('click', function() {
+                            var expanded = button.getAttribute('data-expanded') === 'true';
+                            button.setAttribute('data-expanded', expanded ? 'false' : 'true');
+
+                            items.forEach(function(item, index) {
+                                if (index === 0) return;
+                                item.classList.toggle('is-hidden', expanded);
+                            });
+
+                            button.textContent = expanded ? 'Xem tất cả ' + total.toLocaleString('vi-VN') +
+                                ' đánh giá' : 'Thu gọn đánh giá';
+                        });
+                    });
+
                     root.querySelectorAll('[data-operator-gallery]').forEach(function(gallery) {
                         var track = gallery.querySelector('[data-gallery-track]');
                         var slides = Array.from(gallery.querySelectorAll('[data-gallery-slide]'));
@@ -857,6 +1061,7 @@
                         var next = gallery.querySelector('[data-gallery-next]');
                         var galleryShell = gallery.closest('[data-operator-reveal]') || root;
                         var thumbs = Array.from(galleryShell.querySelectorAll('[data-gallery-thumb]'));
+                        var thumbViewport = galleryShell.querySelector('[data-gallery-thumbs]');
                         var current = 0;
                         var autoplay = null;
                         var pointerStartX = null;
@@ -876,6 +1081,32 @@
                             thumbs.forEach(function(thumb, thumbIndex) {
                                 thumb.classList.toggle('is-active', thumbIndex === current);
                             });
+
+                            if (thumbViewport && thumbs[current]) {
+                                var activeThumb = thumbs[current];
+                                var thumbLeft = activeThumb.offsetLeft;
+                                var thumbRight = thumbLeft + activeThumb.offsetWidth;
+                                var viewLeft = thumbViewport.scrollLeft;
+                                var viewRight = viewLeft + thumbViewport.clientWidth;
+                                var nextScrollLeft = null;
+
+                                if (thumbLeft < viewLeft) {
+                                    nextScrollLeft = thumbLeft;
+                                } else if (thumbRight > viewRight) {
+                                    nextScrollLeft = thumbRight - thumbViewport.clientWidth;
+                                }
+
+                                if (nextScrollLeft !== null) {
+                                    if (thumbViewport.scrollTo) {
+                                        thumbViewport.scrollTo({
+                                            left: nextScrollLeft,
+                                            behavior: userAction && !reducedMotion ? 'smooth' : 'auto'
+                                        });
+                                    } else {
+                                        thumbViewport.scrollLeft = nextScrollLeft;
+                                    }
+                                }
+                            }
 
                             if (userAction) {
                                 restartAutoplay();
@@ -947,6 +1178,109 @@
 
                         setActive(0, false);
                         startAutoplay();
+                    });
+
+                    root.querySelectorAll('[data-offers-slider]').forEach(function(slider) {
+                        var viewport = slider.querySelector('[data-offers-viewport]');
+                        var slides = Array.from(slider.querySelectorAll('[data-offer-slide]'));
+                        var dots = Array.from(slider.querySelectorAll('[data-offer-dot]'));
+                        var prevButtons = Array.from(slider.querySelectorAll('[data-offers-prev]'));
+                        var nextButtons = Array.from(slider.querySelectorAll('[data-offers-next]'));
+                        var current = 0;
+                        var ticking = false;
+
+                        if (!viewport || !slides.length) return;
+
+                        function getMaxIndex() {
+                            var maxScrollLeft = Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+                            var maxIndex = 0;
+
+                            slides.forEach(function(slide, index) {
+                                if (slide.offsetLeft <= maxScrollLeft + 1) {
+                                    maxIndex = index;
+                                }
+                            });
+
+                            return Math.max(0, Math.min(maxIndex, slides.length - 1));
+                        }
+
+                        function updateState(index) {
+                            var maxIndex = getMaxIndex();
+                            current = Math.max(0, Math.min(index, maxIndex));
+
+                            dots.forEach(function(dot, dotIndex) {
+                                dot.hidden = dotIndex > maxIndex;
+                                dot.classList.toggle('is-active', dotIndex === current);
+                            });
+
+                            prevButtons.forEach(function(button) {
+                                button.disabled = current === 0;
+                            });
+                            nextButtons.forEach(function(button) {
+                                button.disabled = current === maxIndex;
+                            });
+                        }
+
+                        function scrollToSlide(index) {
+                            var nextIndex = Math.max(0, Math.min(index, getMaxIndex()));
+                            if (!slides[nextIndex]) return;
+
+                            slides[nextIndex].scrollIntoView({
+                                behavior: reducedMotion ? 'auto' : 'smooth',
+                                block: 'nearest',
+                                inline: 'start'
+                            });
+                            updateState(nextIndex);
+                        }
+
+                        function syncFromScroll() {
+                            var viewportLeft = viewport.getBoundingClientRect().left;
+                            var closestIndex = 0;
+                            var closestDistance = Infinity;
+
+                            slides.forEach(function(slide, index) {
+                                var distance = Math.abs(slide.getBoundingClientRect().left - viewportLeft);
+                                if (distance < closestDistance) {
+                                    closestDistance = distance;
+                                    closestIndex = index;
+                                }
+                            });
+
+                            updateState(closestIndex);
+                            ticking = false;
+                        }
+
+                        prevButtons.forEach(function(button) {
+                            button.addEventListener('click', function() {
+                                scrollToSlide(current - 1);
+                            });
+                        });
+
+                        nextButtons.forEach(function(button) {
+                            button.addEventListener('click', function() {
+                                scrollToSlide(current + 1);
+                            });
+                        });
+
+                        dots.forEach(function(dot) {
+                            dot.addEventListener('click', function() {
+                                scrollToSlide(parseInt(dot.getAttribute('data-offer-dot'), 10) || 0);
+                            });
+                        });
+
+                        viewport.addEventListener('scroll', function() {
+                            if (ticking) return;
+                            ticking = true;
+                            window.requestAnimationFrame(syncFromScroll);
+                        }, {
+                            passive: true
+                        });
+
+                        window.addEventListener('resize', function() {
+                            updateState(current);
+                        });
+
+                        updateState(0);
                     });
 
                     function setRouteOpen(card, open, instant) {

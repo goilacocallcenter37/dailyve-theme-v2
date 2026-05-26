@@ -884,19 +884,8 @@ function cammedia_new_rel_canonical($canonical)
 // add_filter('rank_math/frontend/canonical', 'cammedia_new_rel_canonical');
 
 
-
-include 'datatuyenduong.php';
-
 include 'datacompany.php';
-
 include 'baiviettuyenduong.php';
-
-include 'baiviettuyenduonglimousine.php';
-
-// include 'baiviettuyenduongnhaxe.php';
-
-// include 'mota_header.php';
-
 include 'kiemtrave.php';
 
 // add_action('after_setup_theme', function() {
