@@ -139,12 +139,84 @@ add_filter('page_template_hierarchy', function ($templates) {
         $parent_id = wp_get_post_parent_id($post_id);
         if ((int) $parent_id === 15738) {
             array_unshift($templates, 'page-tuyen-duong-seo.php');
+        } elseif (dailyve_is_operator_detail_post($post_id)) {
+            array_unshift($templates, 'page-operator-detail.php');
         } elseif ((int) $parent_id === 16844 || (int) $parent_id === 16846) {
             array_unshift($templates, 'page-transit-route.php');
         }
     }
     return $templates;
 }, 5);
+
+function dailyve_is_operator_detail_post($post_id = null): bool
+{
+    $post_id = $post_id ? absint($post_id) : absint(get_the_ID());
+    if (!$post_id || get_post_type($post_id) !== 'page') {
+        return false;
+    }
+
+    $operator_parent_id = 15764;
+    if ($post_id === $operator_parent_id) {
+        return false;
+    }
+
+    $parent_id = absint(wp_get_post_parent_id($post_id));
+    if ($parent_id === $operator_parent_id) {
+        return true;
+    }
+
+    return in_array($operator_parent_id, array_map('absint', get_post_ancestors($post_id)), true);
+}
+
+function dailyve_get_operator_detail(int $post_id)
+{
+    $post_id = absint($post_id);
+    if (!$post_id) {
+        return new \WP_Error('dailyve_operator_invalid_post', 'Post ID không hợp lệ.');
+    }
+
+    $cache_key = 'dv_operator_detail_' . $post_id . '_' . md5((string) get_post_modified_time('U', true, $post_id));
+    $cached = get_transient($cache_key);
+    if ($cached !== false) {
+        return $cached;
+    }
+
+    if (!function_exists('call_api_v2')) {
+        return new \WP_Error('dailyve_operator_api_missing', 'Thiếu hàm call_api_v2.');
+    }
+
+    $response = \call_api_v2('/operators/' . $post_id, 'GET', [
+        'site_key' => 'dailyve',
+        'includeRoutes' => 'true',
+        'minimal' => 'true',
+        'provinceRoutesOnly' => 'true',
+        'use_wp_post_id' => 'true',
+    ], [], 30);
+
+    if (is_wp_error($response)) {
+        return $response;
+    }
+
+    $status_code = (int) wp_remote_retrieve_response_code($response);
+    $body = wp_remote_retrieve_body($response);
+    $data = json_decode($body, true);
+
+    if ($status_code >= 400) {
+        return new \WP_Error('dailyve_operator_api_http', 'API chi tiết nhà xe trả lỗi HTTP ' . $status_code . '.');
+    }
+
+    if (isset($data['data']) && is_array($data['data'])) {
+        $data = $data['data'];
+    }
+
+    if (!is_array($data) || empty($data['name'])) {
+        return new \WP_Error('dailyve_operator_api_parse', 'Không thể phân tích dữ liệu chi tiết nhà xe.');
+    }
+
+    set_transient($cache_key, $data, DAY_IN_SECONDS);
+
+    return $data;
+}
 
 
 /**
