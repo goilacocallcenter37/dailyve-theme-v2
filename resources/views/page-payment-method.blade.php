@@ -228,9 +228,19 @@
                         </div>
 
                         <div class="bg-primary/5 p-8">
+                            @if ($paymentStatus == 1)
+                                <div class="mb-6 rounded-xl bg-white p-4 shadow-sm border border-slate-100">
+                                    <div class="mb-2 text-xs font-bold text-slate-500 uppercase tracking-widest">Mã giảm giá</div>
+                                    <div class="flex items-center gap-3">
+                                        <input type="text" id="coupon_code" name="coupon_code" class="w-full rounded-lg border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:border-primary focus:bg-white focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="Nhập mã giảm giá">
+                                        <button type="button" class="btn-add-coupon shrink-0 rounded-lg bg-primary px-5 py-2 text-sm font-bold text-white shadow-sm hover:bg-primary-dark transition-all active:scale-95">Áp dụng</button>
+                                    </div>
+                                    <div class="error-notify-lv mt-2 hidden text-xs font-bold text-danger"></div>
+                                </div>
+                            @endif
                             <div class="flex items-center justify-between">
                                 <span class="text-sm font-bold text-slate-500 uppercase tracking-widest">Tổng cộng</span>
-                                <span class="font-display text-3xl font-black text-primary-dark">
+                                <span class="total_price font-display text-3xl font-black text-primary-dark">
                                     {{ number_format($totalPrice, 0, ',', '.') }}đ
                                 </span>
                             </div>
@@ -324,6 +334,63 @@
                 })
                 .catch(err => console.error(err));
             }, 5000);
+
+            // Coupon processing
+            const btnAddCoupon = document.querySelector('.btn-add-coupon');
+            if (btnAddCoupon) {
+                btnAddCoupon.addEventListener('click', () => {
+                    const couponCode = document.getElementById('coupon_code').value.trim();
+                    const ticketCode = '{{ $journey_group_id }}';
+                    const errorNotify = document.querySelector('.error-notify-lv');
+                    const totalPriceEl = document.querySelector('.total_price');
+                    const qrImages = document.querySelectorAll('img[alt="Payment QR"]');
+
+                    if (couponCode.length <= 0) {
+                        alert("Vui lòng nhập mã giảm giá!");
+                        return;
+                    }
+
+                    const formData = new URLSearchParams();
+                    formData.append('action', 'check_add_coupon');
+                    formData.append('coupon', couponCode);
+                    formData.append('ticket_code', ticketCode);
+
+                    errorNotify.style.display = 'none';
+                    errorNotify.classList.add('hidden');
+                    btnAddCoupon.disabled = true;
+                    btnAddCoupon.innerText = 'Đang xử lý...';
+
+                    fetch('{{ admin_url("admin-ajax.php") }}', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(res => res.json())
+                    .then(response => {
+                        if (response.success) {
+                            totalPriceEl.innerText = new Intl.NumberFormat('vi-VN').format(response.data.total_price) + 'đ';
+                            
+                            // Update QR Codes
+                            const baseQrUrl = "https://img.vietqr.io/image/MB-VQRQAAVUO1996-qr_only.png";
+                            const newQrUrl = `${baseQrUrl}?amount=${response.data.total_price}&addInfo=${encodeURIComponent(response.data.payment_content)}`;
+                            qrImages.forEach(img => img.src = newQrUrl);
+
+                            alert(response.data.message);
+                        } else {
+                            errorNotify.innerText = response.data;
+                            errorNotify.classList.remove('hidden');
+                            errorNotify.style.display = 'block';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error applying coupon:', error);
+                        alert('Có lỗi xảy ra, vui lòng thử lại sau');
+                    })
+                    .finally(() => {
+                        btnAddCoupon.disabled = false;
+                        btnAddCoupon.innerText = 'Áp dụng';
+                    });
+                });
+            }
         @endif
     });
 </script>
