@@ -93,6 +93,15 @@ const SearchForm = ({
   const handleSearch = (event) => {
     event.preventDefault();
 
+    if (activeProduct !== 'bus') {
+      if (window.toastr) {
+        window.toastr.info('Tính năng đang được nâng cấp và phát triển. Vui lòng quay lại sau!', 'Thông báo');
+      } else {
+        alert('Tính năng đang được nâng cấp và phát triển. Vui lòng quay lại sau!');
+      }
+      return;
+    }
+
     const fromLocation = resolveLocationInput(locations, locationMap, from, fromQuery);
     const toLocation = resolveLocationInput(locations, locationMap, to, toQuery);
 

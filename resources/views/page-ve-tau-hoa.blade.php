@@ -282,7 +282,7 @@
                                         <h3
                                             class="font-bold text-slate-900 text-sm md:text-base leading-snug mb-2 line-clamp-1 hover:text-blue-600 transition-colors">
                                             <a class="no-underline!"
-                                                href="{{ get_permalink() }}">{{ get_the_title() }}</a>
+                                                href="{{ get_permalink() }}">{{ html_entity_decode(get_the_title(), ENT_QUOTES, 'UTF-8') }}</a>
                                         </h3>
                                         @if ($distance && $time)
                                             <p

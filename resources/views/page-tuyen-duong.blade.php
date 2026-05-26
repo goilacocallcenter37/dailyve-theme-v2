@@ -220,7 +220,7 @@
                                 $routes_query->the_post();
                                 $route_index++;
                                 $route_id = get_the_ID();
-                                $route_title = get_the_title($route_id);
+                                $route_title = html_entity_decode(get_the_title($route_id), ENT_QUOTES, 'UTF-8');
                                 $route_url = get_permalink($route_id);
                                 $route_meta = $parse_route_title($route_title);
                                 $price = function_exists('get_field')

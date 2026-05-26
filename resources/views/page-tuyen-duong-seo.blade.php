@@ -3,7 +3,7 @@
 @section('content')
     @php
         $post_id = get_the_ID();
-        $current_title = get_the_title();
+        $current_title = html_entity_decode(get_the_title(), ENT_QUOTES, 'UTF-8');
 
         // Breadcrumb data
         $breadcrumbs = [
@@ -23,7 +23,7 @@
         // 1. Try to extract names from the post title first (matches SEO terms like "Sài Gòn" instead of "Hồ Chí Minh")
         $from_name = '';
         $to_name = '';
-        $title = get_the_title($post_id);
+        $title = html_entity_decode(get_the_title($post_id), ENT_QUOTES, 'UTF-8');
         if (preg_match('/(?:từ\s+)(.+?)\s+đi\s+(.+)/iu', $title, $m)) {
             $from_name = trim($m[1]);
             $to_name = trim($m[2]);
@@ -75,20 +75,7 @@
         $total = $operators_data['total'] ?? 0;
         $totalRoutes = $operators_data['totalRoutes'] ?? 0;
 
-        $operator_media_map = [];
-        if (!empty($operators) && function_exists('ams_get_bulk_company_data')) {
-            $company_lookup_items = [];
-            foreach ($operators as $lookup_operator) {
-                $lookup_company_id = trim((string) ($lookup_operator['operator_id'] ?? ''));
-                if ($lookup_company_id !== '' && $lookup_company_id !== '0') {
-                    $company_lookup_items[] = ['company_id' => $lookup_company_id];
-                }
-            }
 
-            if (!empty($company_lookup_items)) {
-                $operator_media_map = ams_get_bulk_company_data($company_lookup_items);
-            }
-        }
     @endphp
 
     {{-- Breadcrumb --}}
@@ -148,12 +135,12 @@
                                 $amenities = $route['amenities'] ?? [];
                                 $times = $route['scheduled_departure_times'] ?? [];
                                 $operator_id = trim((string) ($op['operator_id'] ?? ''));
-                                $operator_media = $operator_media_map[$operator_id] ?? [];
-                                $operator_thumb = $operator_media['thumbnail'] ?? '';
-                                $operator_gallery = $operator_media['gallery'] ?? [];
+                                $api_media = $op['media'] ?? [];
+                                $operator_thumb = $api_media['avatar_url'] ?? '';
+                                $operator_gallery = $api_media['gallery_items'] ?? [];
                                 $operator_images = [];
 
-                                $company_url = $operator_media['url'] ?? '';
+                                $company_url = $api_media['wp_url'] ?? '';
 
                                 $normalize_company_image = function ($image) use ($op) {
                                     $url = '';
@@ -222,7 +209,7 @@
                                 }
                                 $operator_thumb_is_placeholder = empty($operator_thumb);
                                 $operator_thumb =
-                                    $operator_thumb ?: home_url('/wp-content/uploads/assets/images/logo-icon-f2.png');
+                                    $operator_thumb ?: 'https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-chat-luong-cao.webp';
 
                                 if (!empty($operator_gallery)) {
                                     foreach ($operator_gallery as $gallery_image) {
@@ -682,6 +669,29 @@
                                                         </p>
                                                     </div>
                                                 </div>
+
+                                                @php
+                                                    $rating_details = $op['rating_details'] ?? [];
+                                                @endphp
+                                                @if (!empty($rating_details))
+                                                    <div class="ol-card__rating-details" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px 32px; margin-top: 24px; padding-top: 24px; border-top: 1px solid #f1f5f9;">
+                                                        @foreach ($rating_details as $detail)
+                                                            @php
+                                                                $detail_score = (float) ($detail['score'] ?? 0);
+                                                                $detail_percent = ($detail_score / 5) * 100;
+                                                            @endphp
+                                                            <div class="rating-detail-item" style="display: flex; flex-direction: column; gap: 8px;">
+                                                                <span style="font-size: 14px; font-weight: 600; color: #475569;">{{ $detail['label'] }}</span>
+                                                                <div style="display: flex; align-items: center; gap: 12px;">
+                                                                    <div style="flex-grow: 1; height: 6px; background-color: #f1f5f9; border-radius: 9999px; overflow: hidden;">
+                                                                        <div style="width: {{ $detail_percent }}%; height: 100%; background-color: #2196F3; border-radius: 9999px;"></div>
+                                                                    </div>
+                                                                    <span style="font-size: 14px; font-weight: 700; color: #0f172a; min-width: 24px; text-align: right;">{{ number_format($detail_score, 1) }}</span>
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                @endif
 
                                                 <div class="ol-card__rating-notes"
                                                     style="margin-top: 20px; background: #f9fafb; padding: 16px; border-radius: 8px; border-left: 4px solid #10b981;">

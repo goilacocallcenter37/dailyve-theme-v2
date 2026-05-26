@@ -192,7 +192,7 @@
                                 $routes_query->the_post();
                                 $route_index++;
                                 $route_id = get_the_ID();
-                                $route_title = get_the_title($route_id);
+                                $route_title = html_entity_decode(get_the_title($route_id), ENT_QUOTES, 'UTF-8');
                                 $route_url = get_permalink($route_id);
                                 $address = function_exists('get_field')
                                     ? get_field('company_address', $route_id)

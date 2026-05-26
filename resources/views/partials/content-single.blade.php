@@ -241,7 +241,7 @@
                     @while ($related_posts->have_posts())
                         @php
                             $related_posts->the_post();
-                            $post_title = get_the_title();
+                            $post_title = html_entity_decode(get_the_title(), ENT_QUOTES, 'UTF-8');
                             $post_url = get_permalink();
                             $has_thumb = has_post_thumbnail();
 

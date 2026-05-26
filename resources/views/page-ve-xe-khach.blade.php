@@ -281,7 +281,7 @@
                                         <h3
                                             class="font-bold text-slate-900 text-sm md:text-base leading-snug mb-2 line-clamp-1 hover:text-blue-600 transition-colors">
                                             <a class="no-underline!"
-                                                href="{{ get_permalink() }}">{{ get_the_title() }}</a>
+                                                href="{{ get_permalink() }}">{{ html_entity_decode(get_the_title(), ENT_QUOTES, 'UTF-8') }}</a>
                                         </h3>
                                         @if ($distance && $time)
                                             <p
@@ -386,7 +386,7 @@
                                         <h3
                                             class="font-bold text-slate-900 text-sm md:text-base leading-snug mb-3 line-clamp-1 hover:text-blue-600 transition-colors">
                                             <a class="no-underline!"
-                                                href="{{ get_permalink() }}">{{ get_the_title() }}</a>
+                                                href="{{ get_permalink() }}">{{ html_entity_decode(get_the_title(), ENT_QUOTES, 'UTF-8') }}</a>
                                         </h3>
                                         <p class="text-xs text-slate-500 leading-relaxed line-clamp-2 mb-4">
                                             {{ get_the_excerpt() ?: wp_trim_words(get_post_field('post_content', get_the_ID()), 15) }}
@@ -477,7 +477,7 @@
                                         <h3
                                             class="font-bold text-slate-900 text-sm md:text-base leading-snug mb-2 line-clamp-1 hover:text-blue-600 transition-colors">
                                             <a class="no-underline!"
-                                                href="{{ get_permalink() }}">{{ get_the_title() }}</a>
+                                                href="{{ get_permalink() }}">{{ html_entity_decode(get_the_title(), ENT_QUOTES, 'UTF-8') }}</a>
                                         </h3>
                                         @if ($address)
                                             <p

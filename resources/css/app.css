@@ -1283,7 +1283,7 @@ em {
 .ol-card__media--placeholder img {
   box-sizing: border-box;
   object-fit: contain;
-  padding: 24px;
+  /* padding: 24px; */
 }
 
 .ol-card__instant {
@@ -1337,9 +1337,9 @@ em {
     min-height: 100px;
   }
 
-  .ol-card__media--placeholder img {
+  /* .ol-card__media--placeholder img {
     padding: 16px;
-  }
+  } */
 
   .ol-card__instant span {
     display: none;
@@ -2838,21 +2838,22 @@ body.dailyve-date-range-picker-open {
 }
 
 .route-seo-article table {
-  display: table !important;
+  display: block !important;
   width: 100% !important;
   min-width: 980px !important;
   table-layout: auto !important;
   border-collapse: collapse !important;
   margin: 16px 0 !important;
+  overflow-x: auto !important;
+  white-space: nowrap !important;
 }
 
 .route-seo-article th,
 .route-seo-article td {
-  padding: 12px 16px !important;
+  padding: 8px 10px !important;
   border: 1px solid #E2E8F0 !important;
   font-size: 0.85rem !important;
   min-width: 130px !important;
-  white-space: normal !important;
   word-break: normal !important;
   overflow-wrap: break-word !important;
 }
