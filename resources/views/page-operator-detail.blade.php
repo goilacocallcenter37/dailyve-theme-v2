@@ -641,35 +641,77 @@
 
                         <div class="operator-tab-pane" data-operator-tab-pane="offices" hidden>
                             @if ($contact_cities)
-                                <div class="grid gap-4 md:grid-cols-2">
-                                    @foreach ($contact_cities as $city_group)
-                                        @foreach ((array) ($city_group['offices'] ?? []) as $office)
-                                            <article class="rounded-xl border border-slate-200 p-4">
-                                                <p class="text-xs font-semibold text-blue-600">
-                                                    {{ $decode($city_group['city'] ?? '') }}</p>
-                                                <h3 class="mt-1 text-base font-semibold text-slate-950">
-                                                    {{ $decode($office['office_name'] ?? 'Văn phòng') }}</h3>
-                                                @if (!empty($office['address']))
-                                                    <p class="mt-2 flex items-start gap-2 text-sm text-slate-600">
-                                                        <i class="fas fa-map-marker-alt mt-1 text-blue-500"
-                                                            aria-hidden="true"></i>
-                                                        <span>{{ $decode($office['address']) }}</span>
-                                                    </p>
-                                                @endif
-                                                @if (!empty($office['phones']))
-                                                    <div class="mt-3 flex flex-wrap gap-2">
-                                                        @foreach ((array) $office['phones'] as $phone)
-                                                            <a class="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-600 hover:bg-blue-100"
-                                                                href="tel:{{ preg_replace('/\D+/', '', $phone) }}">
-                                                                {{ $phone }}
-                                                            </a>
-                                                        @endforeach
-                                                    </div>
-                                                @endif
-                                            </article>
+                                @php
+                                    $valid_cities = [];
+                                    foreach ($contact_cities as $city_group) {
+                                        $city_name = $decode($city_group['city'] ?? '');
+                                        $offices = is_array($city_group['offices'] ?? null) ? $city_group['offices'] : [];
+                                        if (!empty($offices) && $city_name !== '') {
+                                            $valid_cities[] = $city_group;
+                                        }
+                                    }
+                                @endphp
+
+                                @if (!empty($valid_cities))
+                                    <div class="flex gap-5 overflow-x-auto border-b border-slate-100 pb-3 mb-6 scrollbar-none">
+                                        @foreach ($valid_cities as $index => $city_group)
+                                            @php
+                                                $city_name = $decode($city_group['city'] ?? '');
+                                                $city_slug = sanitize_title($city_name);
+                                            @endphp
+                                            <button type="button"
+                                                class="operator-office-tab-btn shrink-0 text-sm font-bold transition {{ $index === 0 ? 'text-slate-950' : 'text-slate-400 hover:text-slate-600' }}"
+                                                data-office-tab="{{ $city_slug }}">
+                                                {{ $city_name }}
+                                            </button>
                                         @endforeach
-                                    @endforeach
-                                </div>
+                                    </div>
+
+                                    <div class="operator-office-panes">
+                                        @foreach ($valid_cities as $index => $city_group)
+                                            @php
+                                                $city_name = $decode($city_group['city'] ?? '');
+                                                $city_slug = sanitize_title($city_name);
+                                                $offices = is_array($city_group['offices'] ?? null) ? $city_group['offices'] : [];
+                                            @endphp
+                                            <div class="operator-office-pane" data-office-pane="{{ $city_slug }}" {{ $index > 0 ? 'hidden' : '' }}>
+                                                <div class="grid gap-4 md:grid-cols-2">
+                                                    @foreach ($offices as $office)
+                                                        <article
+                                                            class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-blue-300 hover:shadow-md">
+                                                            <h4 class="text-base font-semibold text-slate-950">
+                                                                {{ $decode($office['office_name'] ?? 'Văn phòng') }}
+                                                            </h4>
+                                                            @if (!empty($office['address']))
+                                                                <p
+                                                                    class="mt-2.5 flex items-start gap-2.5 text-sm text-slate-600">
+                                                                    <i class="fas fa-map-marker-alt mt-0.5 text-blue-500 shrink-0"
+                                                                        aria-hidden="true"></i>
+                                                                    <span>{{ $decode($office['address']) }}</span>
+                                                                </p>
+                                                            @endif
+                                                            @if (!empty($office['phones']))
+                                                                <div class="mt-4 flex flex-wrap gap-2">
+                                                                    @foreach ((array) $office['phones'] as $phone)
+                                                                        <a class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3.5 py-1.5 text-xs font-semibold text-blue-600 transition hover:bg-blue-100 hover:text-blue-700"
+                                                                            href="tel:{{ preg_replace('/\D+/', '', $phone) }}">
+                                                                            <i class="fas fa-phone-alt text-[10px]"
+                                                                                aria-hidden="true"></i>
+                                                                            {{ $phone }}
+                                                                        </a>
+                                                                    @endforeach
+                                                                </div>
+                                                            @endif
+                                                        </article>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <p class="text-sm text-slate-500">Dailyve đang cập nhật địa chỉ văn phòng của
+                                        {{ $operator_name }}.</p>
+                                @endif
                             @else
                                 <p class="text-sm text-slate-500">Dailyve đang cập nhật địa chỉ văn phòng của
                                     {{ $operator_name }}.</p>
@@ -932,20 +974,20 @@
                         if (open) {
                             // Open logic: start from 0px, trigger layout reflow, then set to scrollHeight
                             body.style.height = '0px';
-                            body.offsetHeight; // Force reflow/layout recalculation
+                            body.offsetHeight;
                             body.style.height = body.scrollHeight + 'px';
 
                             body.dvTimeout = window.setTimeout(function() {
                                 if (card.classList.contains('is-open')) {
                                     body.style.height = 'auto';
                                 }
-                            }, 360); // Matches the CSS duration
+                            }, 360);
                         } else {
                             // Close logic: start from current scrollHeight, trigger reflow, then transition to 0px
                             if (body.style.height === 'auto' || !body.style.height) {
                                 body.style.height = body.scrollHeight + 'px';
                             }
-                            body.offsetHeight; // Force reflow/layout recalculation
+                            body.offsetHeight;
                             body.style.height = '0px';
                         }
                     }
@@ -1094,6 +1136,23 @@
 
                             root.querySelectorAll('[data-operator-tab-pane]').forEach(function(pane) {
                                 pane.hidden = pane.getAttribute('data-operator-tab-pane') !== tab;
+                            });
+                        });
+                    });
+
+                    root.querySelectorAll('[data-office-tab]').forEach(function(button) {
+                        button.addEventListener('click', function() {
+                            var targetTab = button.getAttribute('data-office-tab');
+
+                            root.querySelectorAll('[data-office-tab]').forEach(function(btn) {
+                                btn.classList.remove('text-slate-950');
+                                btn.classList.add('text-slate-400', 'hover:text-slate-600');
+                            });
+                            button.classList.add('text-slate-950');
+                            button.classList.remove('text-slate-400', 'hover:text-slate-600');
+
+                            root.querySelectorAll('[data-office-pane]').forEach(function(pane) {
+                                pane.hidden = pane.getAttribute('data-office-pane') !== targetTab;
                             });
                         });
                     });
