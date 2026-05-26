@@ -1883,7 +1883,7 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
                 src={primaryImage}
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                 alt={trip.company_name}
-                rel='nofollow noreferrer'
+                rel="nofollow noreferrer"
               />
             ) : (
               <div className="flex h-full w-full items-center justify-center text-3xl text-slate-300">
