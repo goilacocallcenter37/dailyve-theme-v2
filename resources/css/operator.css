@@ -225,6 +225,358 @@
     color: #1565c0;
 }
 
+body.operator-review-drawer-lock {
+    overflow: hidden;
+}
+
+.dailyve-operator-detail .operator-review-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.dailyve-operator-detail .operator-review-drawer.is-open {
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.dailyve-operator-detail .operator-review-drawer__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.62);
+    opacity: 0;
+    transition: opacity 220ms ease;
+}
+
+.dailyve-operator-detail .operator-review-drawer.is-open .operator-review-drawer__backdrop {
+    opacity: 1;
+}
+
+.dailyve-operator-detail .operator-review-drawer__panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    width: min(560px, 100vw);
+    height: 100%;
+    min-width: 0;
+    flex-direction: column;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: -20px 0 40px rgba(15, 23, 42, 0.18);
+    transform: translateX(100%);
+    transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dailyve-operator-detail .operator-review-drawer.is-open .operator-review-drawer__panel {
+    transform: translateX(0);
+}
+
+.dailyve-operator-detail .operator-review-drawer__header {
+    display: flex;
+    min-height: 72px;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 16px;
+    background: #2874dc;
+    padding: 0 20px;
+    color: #ffffff;
+}
+
+.dailyve-operator-detail .operator-review-drawer__back {
+    display: inline-flex;
+    height: 40px;
+    width: 40px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    color: #ffffff;
+    transition: background-color 180ms ease;
+}
+
+.dailyve-operator-detail .operator-review-drawer__back:hover {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.dailyve-operator-detail .operator-review-drawer__header h2 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.dailyve-operator-detail .operator-review-drawer__body {
+    min-height: 0;
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 24px;
+    scrollbar-color: #94a3b8 transparent;
+    scrollbar-width: thin;
+}
+
+.dailyve-operator-detail .operator-review-drawer__body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dailyve-operator-detail .operator-review-drawer__body::-webkit-scrollbar-thumb {
+    border: 2px solid #ffffff;
+    border-radius: 9999px;
+    background: #94a3b8;
+}
+
+.dailyve-operator-detail .operator-review-drawer__summary-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.dailyve-operator-detail .operator-review-drawer__summary-heading h3,
+.dailyve-operator-detail .operator-review-drawer__section-title {
+    margin: 0;
+    color: #0f172a;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.dailyve-operator-detail .operator-review-drawer__score {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 8px;
+    color: #0f172a;
+}
+
+.dailyve-operator-detail .operator-review-drawer__score strong {
+    font-family: "Space Grotesk", "Be Vietnam Pro", sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.dailyve-operator-detail .operator-review-drawer__score i {
+    color: #fbbf24;
+}
+
+.dailyve-operator-detail .operator-review-drawer__divider {
+    height: 1px;
+    margin: 24px 0;
+    background: #e2e8f0;
+}
+
+.dailyve-operator-detail .operator-review-drawer__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+    margin-bottom: 18px;
+}
+
+.dailyve-operator-detail .operator-review-drawer__filters button {
+    display: inline-flex;
+    min-height: 42px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    border: 1px solid #dbe3ef;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #0f172a;
+    padding: 0 14px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+    transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.dailyve-operator-detail .operator-review-drawer__filters button.is-active {
+    border-color: #0f3b74;
+    background: #0f3b74;
+    color: #ffffff;
+}
+
+.dailyve-operator-detail .operator-review-drawer__filters span {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.dailyve-operator-detail .operator-review-drawer__loading,
+.dailyve-operator-detail .operator-review-drawer__empty {
+    border: 1px dashed #dbe3ef;
+    border-radius: 8px;
+    background: #f8fafc;
+    padding: 18px;
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.dailyve-operator-detail .operator-review-drawer__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.dailyve-operator-detail .operator-review-drawer__list {
+    display: grid;
+}
+
+.dailyve-operator-detail .operator-review-drawer-comment,
+.dailyve-operator-detail .operator-review-drawer .rating-tab__comments-list__item {
+    min-width: 0;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid #e5e7eb;
+    border-radius: 0;
+    background: #ffffff;
+    padding: 18px 0;
+    box-shadow: none;
+}
+
+.dailyve-operator-detail .operator-review-drawer-comment:first-child,
+.dailyve-operator-detail .operator-review-drawer .rating-tab__comments-list__item:first-child {
+    padding-top: 0;
+}
+
+.dailyve-operator-detail .operator-review-drawer-comment:hover,
+.dailyve-operator-detail .operator-review-drawer .rating-tab__comments-list__item:hover {
+    border-color: #e5e7eb;
+    box-shadow: none;
+}
+
+.dailyve-operator-detail .operator-review-drawer-comment__head {
+    display: flex;
+    min-width: 0;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.dailyve-operator-detail .operator-review-drawer-comment__avatar {
+    height: 40px;
+    width: 40px;
+    flex: 0 0 auto;
+    border-radius: 9999px;
+    object-fit: cover;
+}
+
+.dailyve-operator-detail .operator-review-drawer-comment__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 8px;
+}
+
+.dailyve-operator-detail .operator-review-drawer-comment__meta strong,
+.dailyve-operator-detail .operator-review-drawer .rating-tab__comments-list__item-personal__info-name {
+    color: #0f172a;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.dailyve-operator-detail .operator-review-drawer-comment__meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #16a34a;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.dailyve-operator-detail .operator-review-drawer-comment__stars {
+    display: flex;
+    gap: 2px;
+    margin-top: 4px;
+    color: #fbbf24;
+    font-size: 12px;
+}
+
+.dailyve-operator-detail .operator-review-drawer-comment__content,
+.dailyve-operator-detail .operator-review-drawer .rating-tab__comments-list__item-content {
+    margin: 12px 0 0;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.65;
+}
+
+.dailyve-operator-detail .operator-review-drawer-comment__trip {
+    display: grid;
+    gap: 4px;
+    margin-top: 12px;
+    color: #94a3b8;
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.dailyve-operator-detail .operator-review-drawer-comment__trip p,
+.dailyve-operator-detail .operator-review-drawer .rating-tab__comments-list__item-depart-date p {
+    margin: 0;
+}
+
+.dailyve-operator-detail .operator-review-drawer-comment__images {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.dailyve-operator-detail .operator-review-drawer-comment__images img {
+    aspect-ratio: 1;
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.dailyve-operator-detail .operator-review-drawer .rating-tab__comments-list__item-personal__info {
+    margin-bottom: 0;
+}
+
+.dailyve-operator-detail .operator-review-drawer .rating-tab__comments-list__item-depart-date {
+    margin-top: 10px;
+}
+
+.dailyve-operator-detail .operator-review-drawer__load {
+    padding-top: 18px;
+    text-align: center;
+}
+
+.dailyve-operator-detail .operator-review-drawer__load button {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid #bfdbfe;
+    border-radius: 9999px;
+    background: #ffffff;
+    color: #1565c0;
+    padding: 0 22px;
+    font-size: 13px;
+    font-weight: 700;
+    transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.dailyve-operator-detail .operator-review-drawer__load button:hover {
+    border-color: #2196f3;
+    background: #eff6ff;
+}
+
+.dailyve-operator-detail .operator-review-drawer__load button:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
 .dailyve-operator-detail .operator-tab-pane[hidden] {
     display: none;
 }
@@ -642,6 +994,26 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .dailyve-operator-detail .operator-review-drawer__panel {
+        width: 100vw;
+    }
+
+    .dailyve-operator-detail .operator-review-drawer__body {
+        padding: 22px 20px;
+    }
+
+    .dailyve-operator-detail .operator-review-drawer__filters {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .dailyve-operator-detail .operator-review-drawer__filters button {
+        min-width: 0;
+        padding: 0 8px;
+        font-size: 13px;
+    }
+
     .dailyve-operator-detail .operator-trust-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
@@ -706,6 +1078,8 @@
     .dailyve-operator-detail .operator-route-body,
     .dailyve-operator-detail .operator-offers-slider__nav,
     .dailyve-operator-detail .operator-offers-slider__dot,
+    .dailyve-operator-detail .operator-review-drawer__backdrop,
+    .dailyve-operator-detail .operator-review-drawer__panel,
     .dailyve-operator-detail [data-operator-reveal] {
         transition: none;
     }

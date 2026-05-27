@@ -75,7 +75,6 @@
         $total = $operators_data['total'] ?? 0;
         $totalRoutes = $operators_data['totalRoutes'] ?? 0;
 
-
     @endphp
 
     {{-- Breadcrumb --}}
@@ -96,7 +95,7 @@
         </div>
     </section>
 
-    {{-- Operator List (100% SSR to maximize SEO indexing and page load performance) --}}
+    {{-- Operator List --}}
     <section class="route-seo-operators">
         <div class="dailyve-container">
             @if (empty($operators))
@@ -209,7 +208,8 @@
                                 }
                                 $operator_thumb_is_placeholder = empty($operator_thumb);
                                 $operator_thumb =
-                                    $operator_thumb ?: 'https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-chat-luong-cao.webp';
+                                    $operator_thumb ?:
+                                    'https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-chat-luong-cao.webp';
 
                                 if (!empty($operator_gallery)) {
                                     foreach ($operator_gallery as $gallery_image) {
@@ -674,19 +674,27 @@
                                                     $rating_details = $op['rating_details'] ?? [];
                                                 @endphp
                                                 @if (!empty($rating_details))
-                                                    <div class="ol-card__rating-details" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px 32px; margin-top: 24px; padding-top: 24px; border-top: 1px solid #f1f5f9;">
+                                                    <div class="ol-card__rating-details"
+                                                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px 32px; margin-top: 24px; padding-top: 24px; border-top: 1px solid #f1f5f9;">
                                                         @foreach ($rating_details as $detail)
                                                             @php
                                                                 $detail_score = (float) ($detail['score'] ?? 0);
                                                                 $detail_percent = ($detail_score / 5) * 100;
                                                             @endphp
-                                                            <div class="rating-detail-item" style="display: flex; flex-direction: column; gap: 8px;">
-                                                                <span style="font-size: 14px; font-weight: 600; color: #475569;">{{ $detail['label'] }}</span>
-                                                                <div style="display: flex; align-items: center; gap: 12px;">
-                                                                    <div style="flex-grow: 1; height: 6px; background-color: #f1f5f9; border-radius: 9999px; overflow: hidden;">
-                                                                        <div style="width: {{ $detail_percent }}%; height: 100%; background-color: #2196F3; border-radius: 9999px;"></div>
+                                                            <div class="rating-detail-item"
+                                                                style="display: flex; flex-direction: column; gap: 8px;">
+                                                                <span
+                                                                    style="font-size: 14px; font-weight: 600; color: #475569;">{{ $detail['label'] }}</span>
+                                                                <div
+                                                                    style="display: flex; align-items: center; gap: 12px;">
+                                                                    <div
+                                                                        style="flex-grow: 1; height: 6px; background-color: #f1f5f9; border-radius: 9999px; overflow: hidden;">
+                                                                        <div
+                                                                            style="width: {{ $detail_percent }}%; height: 100%; background-color: #2196F3; border-radius: 9999px;">
+                                                                        </div>
                                                                     </div>
-                                                                    <span style="font-size: 14px; font-weight: 700; color: #0f172a; min-width: 24px; text-align: right;">{{ number_format($detail_score, 1) }}</span>
+                                                                    <span
+                                                                        style="font-size: 14px; font-weight: 700; color: #0f172a; min-width: 24px; text-align: right;">{{ number_format($detail_score, 1) }}</span>
                                                                 </div>
                                                             </div>
                                                         @endforeach
@@ -736,7 +744,9 @@
                                                                             <div
                                                                                 class="rating-tab__comments-list__item-personal_social-avatar">
                                                                                 <img src="{{ esc_url($rev_avatar) }}"
-                                                                                    alt="{{ esc_attr($rev_name) }}">
+                                                                                    alt="{{ esc_attr($rev_name) }}"
+                                                                                    rel="nofollow noreferrer"
+                                                                                    decoding="async" loading="lazy">
                                                                             </div>
                                                                         @else
                                                                             <div

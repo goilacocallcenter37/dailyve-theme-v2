@@ -175,7 +175,7 @@ function dailyve_get_operator_detail(int $post_id)
         return new \WP_Error('dailyve_operator_invalid_post', 'Post ID không hợp lệ.');
     }
 
-    $cache_key = 'dv_operator_detail_' . $post_id . '_' . md5((string) get_post_modified_time('U', true, $post_id));
+    $cache_key = 'dv_operator_detail_v2_' . $post_id . '_' . md5((string) get_post_modified_time('U', true, $post_id));
     $cached = get_transient($cache_key);
     if ($cached !== false) {
         return $cached;
@@ -188,6 +188,7 @@ function dailyve_get_operator_detail(int $post_id)
     $response = \call_api_v2('/operators/' . $post_id, 'GET', [
         'siteKey' => 'dailyve',
         'includeRoutes' => 'true',
+        'includeReviews' => 'true',
         'minimal' => 'true',
         'provinceRoutesOnly' => 'true',
         'use_wp_post_id' => 'true',
