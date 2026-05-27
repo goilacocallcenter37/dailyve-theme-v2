@@ -367,7 +367,8 @@
                         </div>
 
                         @if (count($gallery) > 1)
-                            <div class="operator-gallery__thumbs mt-3" data-gallery-thumbs>
+                            <div class="operator-gallery__thumbs mt-3 hidden" style="display: none !important;"
+                                data-gallery-thumbs>
                                 @foreach ($gallery as $index => $image)
                                     <button type="button"
                                         class="operator-gallery__thumb {{ $index === 0 ? 'is-active' : '' }}"
@@ -654,7 +655,7 @@
                     <div
                         class="operator-content-card min-w-0 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
                         <div class="flex overflow-x-auto border-b border-slate-200 px-3">
-                            @foreach ([['id' => 'intro', 'label' => 'Giới thiệu'], ['id' => 'offices', 'label' => 'Địa chỉ văn phòng & SĐT'], ['id' => 'amenities', 'label' => 'Tiện ích']] as $tab)
+                            @foreach ([['id' => 'intro', 'label' => 'Giới thiệu'], ['id' => 'offices', 'label' => 'Số điện thoại'], ['id' => 'amenities', 'label' => 'Tiện ích']] as $tab)
                                 <button type="button"
                                     class="operator-tab-trigger h-14 shrink-0 border-b-2 px-5 text-sm font-semibold transition {{ $loop->first ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-500 hover:text-blue-600' }}"
                                     data-operator-tab="{{ $tab['id'] }}">
