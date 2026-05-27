@@ -20,7 +20,6 @@
                     ($operator['company_id'] ?? get_post_meta($post_id, 'company_id', true))),
             );
             $display_review_total = $review_count ?: count((array) ($operator['reviews'] ?? []));
-            $route_count = (int) ($operator['route_count'] ?? 0);
             $status = (string) ($operator['status'] ?? '');
             $status_label = $status === 'active' ? 'Đang hoạt động' : ($status ? ucfirst($status) : 'Đang cập nhật');
             $contact_info = is_array($operator['contact_info'] ?? null) ? $operator['contact_info'] : [];
@@ -48,6 +47,7 @@
             $rating_details = array_values(array_filter((array) ($operator['rating_details'] ?? [])));
             $reviews_list = array_values(array_filter((array) ($operator['reviews'] ?? [])));
             $routes = array_values(array_filter((array) ($operator['routes'] ?? [])));
+            $route_count = (int) (count($routes) ?? 0);
             $media = is_array($operator['media'] ?? null) ? $operator['media'] : [];
 
             $normalize_image_url = function ($value) {
@@ -172,10 +172,16 @@
 
             // FAQ Items
             $faq_items = [
-                'Giá vé trung bình của ' . $operator_name . ' là bao nhiêu?' => 'Giá vé thay đổi theo tuyến, ngày đi và dòng xe. Bạn có thể xem giá từ trong từng tuyến phía trên.',
-                'Địa chỉ văn phòng ' . $operator_name . ' gần nhất?' => 'Xem tab Địa chỉ văn phòng & SĐT để chọn điểm liên hệ theo tỉnh/thành.',
-                'Có thể chọn ghế khi đặt vé không?' => 'Các chuyến hỗ trợ sơ đồ ghế sẽ cho phép chọn chỗ trước khi thanh toán.',
-                'Hành lý được mang theo như thế nào?' => 'Quy định hành lý phụ thuộc từng chuyến. Dailyve sẽ hỗ trợ kiểm tra trước giờ khởi hành.',
+                'Giá vé trung bình của ' .
+                $operator_name .
+                ' là bao nhiêu?' => 'Giá vé thay đổi theo tuyến, ngày đi và dòng xe. Bạn có thể xem giá từ trong từng tuyến phía trên.',
+                'Địa chỉ văn phòng ' .
+                $operator_name .
+                ' gần nhất?' => 'Xem tab Địa chỉ văn phòng & SĐT để chọn điểm liên hệ theo tỉnh/thành.',
+                'Có thể chọn ghế khi đặt vé không?' =>
+                    'Các chuyến hỗ trợ sơ đồ ghế sẽ cho phép chọn chỗ trước khi thanh toán.',
+                'Hành lý được mang theo như thế nào?' =>
+                    'Quy định hành lý phụ thuộc từng chuyến. Dailyve sẽ hỗ trợ kiểm tra trước giờ khởi hành.',
             ];
 
             // Structured Schema Markup JSON-LD (SEO Best Practice)
@@ -211,16 +217,20 @@
             $faq_schema_data = [
                 '@context' => 'https://schema.org',
                 '@type' => 'FAQPage',
-                'mainEntity' => array_map(function($q, $a) {
-                    return [
-                        '@type' => 'Question',
-                        'name' => $q,
-                        'acceptedAnswer' => [
-                            '@type' => 'Answer',
-                            'text' => $a
-                        ]
-                    ];
-                }, array_keys($faq_items), array_values($faq_items))
+                'mainEntity' => array_map(
+                    function ($q, $a) {
+                        return [
+                            '@type' => 'Question',
+                            'name' => $q,
+                            'acceptedAnswer' => [
+                                '@type' => 'Answer',
+                                'text' => $a,
+                            ],
+                        ];
+                    },
+                    array_keys($faq_items),
+                    array_values($faq_items),
+                ),
             ];
         @endphp
 
@@ -991,8 +1001,10 @@
                                 <details class="operator-faq-card__item">
                                     <summary class="operator-faq-card__question">
                                         <span>{{ $question }}</span>
-                                        <svg class="operator-faq-card__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <svg class="operator-faq-card__icon" width="16" height="16"
+                                            viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
                                         </svg>
                                     </summary>
                                     <div class="operator-faq-card__answer">
@@ -1022,7 +1034,8 @@
                         </div>
                         <div class="operator-highlights-card__item">
                             <i class="fas fa-building" aria-hidden="true"></i>
-                            <span>{{ $office_count ?: 'Nhiều' }} văn phòng/điểm liên hệ được ghi nhận trên hệ thống.</span>
+                            <span>{{ $office_count ?: 'Nhiều' }} văn phòng/điểm liên hệ được ghi nhận trên hệ
+                                thống.</span>
                         </div>
                     </div>
                 </article>

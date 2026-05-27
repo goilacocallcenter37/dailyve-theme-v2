@@ -50,6 +50,10 @@
   --grad-success: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-sans);
   background-color: var(--color-surface-soft);
