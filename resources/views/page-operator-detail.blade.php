@@ -617,7 +617,15 @@
                                                 <strong
                                                     class="mt-1 text-2xl font-semibold text-red-500">{{ $format_price($route_price) }}</strong>
                                                 <a class="mt-4 inline-flex h-10 items-center justify-center rounded-lg bg-amber-400 px-5 text-sm font-semibold text-slate-950 transition hover:bg-amber-500"
-                                                    href="{{ esc_url($booking_url($route)) }}">
+                                                    href="{{ esc_url($booking_url($route)) }}"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    data-dailyve-date-range-trigger
+                                                    data-date-range-url="{{ esc_url($booking_url($route)) }}"
+                                                    data-date-range-from-name="{{ esc_attr($from) }}"
+                                                    data-date-range-to-name="{{ esc_attr($to) }}"
+                                                    data-date-range-service="bus"
+                                                    data-date-range-min="today">
                                                     Chọn chuyến
                                                 </a>
                                             </div>
