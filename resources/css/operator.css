@@ -902,6 +902,85 @@ body.operator-review-drawer-lock {
     background: #2196f3;
 }
 
+.dailyve-operator-detail .operator-tet-ticket {
+    min-width: 0;
+}
+
+.dailyve-operator-detail .operator-tet-ticket__card {
+    position: relative;
+    min-height: 118px;
+    overflow: hidden;
+    border: 1px solid #fed7aa;
+    border-radius: 8px;
+    background-color: #fdf0cc;
+    background-position: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    box-shadow: 0 4px 14px rgba(180, 83, 9, 0.08);
+}
+
+.dailyve-operator-detail .operator-tet-ticket__card::before {
+    position: absolute;
+    inset: 0;
+    content: "";
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(255, 250, 235, 0.98) 0%, rgba(255, 250, 235, 0.9) 31%, rgba(255, 250, 235, 0.18) 62%, rgba(255, 250, 235, 0) 100%);
+}
+
+.dailyve-operator-detail .operator-tet-ticket__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    min-height: 118px;
+    width: min(560px, 62%);
+    min-width: 0;
+    flex-direction: column;
+    justify-content: center;
+    padding: 18px 22px;
+}
+
+.dailyve-operator-detail .operator-tet-ticket__content h2 {
+    margin: 0 0 5px;
+    color: #ef4444;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.22;
+    overflow-wrap: anywhere;
+}
+
+.dailyve-operator-detail .operator-tet-ticket__content p {
+    margin: 0;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.dailyve-operator-detail .operator-tet-ticket__button {
+    display: inline-flex;
+    width: fit-content;
+    min-height: 32px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+    border-radius: 6px;
+    background: #dc2626;
+    color: #ffffff;
+    padding: 0 18px;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 6px 14px rgba(220, 38, 38, 0.2);
+    transition: background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.dailyve-operator-detail .operator-tet-ticket__button:hover {
+    background: #b91c1c;
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(220, 38, 38, 0.26);
+}
+
 .dailyve-operator-detail .operator-filter-scroll {
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
@@ -1012,6 +1091,30 @@ body.operator-review-drawer-lock {
         min-width: 0;
         padding: 0 8px;
         font-size: 13px;
+    }
+
+    .dailyve-operator-detail .operator-tet-ticket__card {
+        min-height: 150px;
+        background-position: 58% center;
+    }
+
+    .dailyve-operator-detail .operator-tet-ticket__card::before {
+        background: linear-gradient(90deg, rgba(255, 250, 235, 1) 0%, rgba(255, 250, 235, 0.96) 47%, rgba(255, 250, 235, 0.62) 72%, rgba(255, 250, 235, 0.18) 100%);
+    }
+
+    .dailyve-operator-detail .operator-tet-ticket__content {
+        min-height: 150px;
+        width: 74%;
+        padding: 16px;
+    }
+
+    .dailyve-operator-detail .operator-tet-ticket__content h2 {
+        font-size: 17px;
+    }
+
+    .dailyve-operator-detail .operator-tet-ticket__content p {
+        font-size: 12px;
+        line-height: 1.45;
     }
 
     .dailyve-operator-detail .operator-trust-grid {

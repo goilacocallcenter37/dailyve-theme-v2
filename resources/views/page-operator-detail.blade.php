@@ -168,6 +168,7 @@
             $appStore = home_url('/wp-content/themes/dailyve-theme/resources/images/download-app-store.png');
             $googlePlay = home_url('/wp-content/themes/dailyve-theme/resources/images/download-gg-play.png');
             $qrCode = 'https://object.dailyve.com/dailyve/wp-content/uploads/2025/08/QR-CODE-APP-DLV.png';
+            $tetBanner = home_url('/wp-content/themes/dailyve-theme/resources/images/operator-tet-ticket-banner.webp');
 
             // Structured Schema Markup JSON-LD (SEO Best Practice)
             $schema_data = [
@@ -213,7 +214,7 @@
                 ['title' => $operator_name, 'url' => ''],
             ]" preset="directory" />
 
-            <section class="border-b border-slate-200 bg-white">
+            <section class="border-b border-slate-200 bg-white relative z-20">
                 <div class="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
                     <div
                         class="dailyve-bus-search-card relative overflow-visible rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
@@ -451,6 +452,23 @@
                 @endif
             </section>
 
+            @php
+                $tet_ticket_url = !empty($routes[0]) ? $booking_url($routes[0]) : '#operator-routes';
+            @endphp
+            <section class="operator-tet-ticket mx-auto max-w-7xl px-4 pb-8 sm:px-6 lg:px-8">
+                <article class="operator-tet-ticket__card" style="background-image: url('{{ esc_url($tetBanner) }}');">
+                    <div class="operator-tet-ticket__content">
+                        <h2>Vé xe Tết cùng {{ $operator_name }}</h2>
+                        <p>Đặt vé sớm - Giá tốt - Chọn chỗ ưng ý</p>
+                        <p>Hỗ trợ đổi trả linh hoạt, an tâm về quê đón Tết!</p>
+                        <a href="{{ esc_url($tet_ticket_url) }}" class="operator-tet-ticket__button">
+                            <span>Xem vé Tết ngay</span>
+                            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </article>
+            </section>
+
             <section id="operator-routes" class="mx-auto max-w-7xl px-4 pb-8 sm:px-6 lg:px-8">
                 <div class="mb-5 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                     {{-- <div>
@@ -501,7 +519,7 @@
                                     ),
                                 );
                                 $is_route_open = $loop->index < 2;
-                                $should_hide_initially = $loop->index >= 10;
+                                $should_hide_initially = $loop->index >= 6;
                             @endphp
                             <article
                                 class="operator-route-card {{ $is_route_open ? 'is-open' : '' }} {{ $should_hide_initially ? 'is-hidden-by-limit' : '' }} overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm"
@@ -584,9 +602,9 @@
                         @endforeach
                     </div>
 
-                    @if (count($routes) > 10)
+                    @if (count($routes) > 6)
                         @php
-                            $remaining_routes_count = count($routes) - 10;
+                            $remaining_routes_count = count($routes) - 6;
                         @endphp
                         <div class="mt-6 text-center" data-routes-toggle-container>
                             <button type="button"
@@ -609,7 +627,7 @@
 
             <section
                 class="operator-content-layout mx-auto grid max-w-7xl gap-6 px-4 pb-8 sm:px-6 lg:grid-cols-[300px_minmax(0,1fr)] lg:px-8">
-                <aside class="min-w-0 space-y-5">
+                <aside class="min-w-0 space-y-5 order-last lg:order-none">
                     <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
                         <h2 class="text-base font-semibold text-slate-950">Lý do khách đặt vé với Dailyve</h2>
                         <ul class="mt-4 space-y-3 text-sm text-slate-600">
@@ -1843,11 +1861,13 @@
                     root.querySelectorAll('[data-operator-filter]').forEach(function(button) {
                         button.addEventListener('click', function() {
                             root.querySelectorAll('[data-operator-filter]').forEach(function(item) {
-                                item.classList.remove('is-active', 'bg-blue-600', 'text-white');
+                                item.classList.remove('is-active', 'bg-blue-600', 'text-white',
+                                    'hover:text-white');
                                 item.classList.add('border', 'border-slate-200', 'bg-white',
                                     'text-slate-600');
                             });
-                            button.classList.add('is-active', 'bg-blue-600', 'text-white');
+                            button.classList.add('is-active', 'bg-blue-600', 'text-white',
+                                'hover:text-white');
                             button.classList.remove('border', 'border-slate-200', 'bg-white',
                                 'text-slate-600');
 
