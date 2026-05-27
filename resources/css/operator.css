@@ -1197,3 +1197,170 @@ body.operator-review-drawer-lock {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+/* ── Highlights Card ─────────────────────────────────────────── */
+.dailyve-operator-detail .operator-highlights-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #ffffff;
+    padding: 20px 24px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+.dailyve-operator-detail .operator-highlights-card__title {
+    margin: 0 0 16px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.4;
+}
+
+.dailyve-operator-detail .operator-highlights-card__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+@media (min-width: 640px) {
+    .dailyve-operator-detail .operator-highlights-card__grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+    }
+}
+
+.dailyve-operator-detail .operator-highlights-card__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: #f8fafc;
+    border: 1px solid #f1f5f9;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #475569;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.dailyve-operator-detail .operator-highlights-card__item:hover {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+}
+
+.dailyve-operator-detail .operator-highlights-card__item i {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: #ffffff;
+    font-size: 12px;
+    margin-top: 1px;
+}
+
+.dailyve-operator-detail .operator-highlights-card__item span {
+    min-width: 0;
+}
+
+/* ── FAQ Card ────────────────────────────────────────────────── */
+.dailyve-operator-detail .operator-faq-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #ffffff;
+    padding: 20px 24px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    overflow: hidden;
+}
+
+.dailyve-operator-detail .operator-faq-card__title {
+    margin: 0 0 8px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.4;
+}
+
+.dailyve-operator-detail .operator-faq-card__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+}
+
+.dailyve-operator-detail .operator-faq-card__item {
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.dailyve-operator-detail .operator-faq-card__item:last-child {
+    border-bottom: 0;
+}
+
+.dailyve-operator-detail .operator-faq-card__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 0;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.45;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.18s ease;
+}
+
+.dailyve-operator-detail .operator-faq-card__question::-webkit-details-marker {
+    display: none;
+}
+
+.dailyve-operator-detail .operator-faq-card__question::marker {
+    display: none;
+    content: "";
+}
+
+.dailyve-operator-detail .operator-faq-card__question:hover {
+    color: #2563eb;
+}
+
+.dailyve-operator-detail .operator-faq-card__question span {
+    min-width: 0;
+}
+
+.dailyve-operator-detail .operator-faq-card__icon {
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+    color: #94a3b8;
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), color 0.18s ease;
+}
+
+.dailyve-operator-detail .operator-faq-card__item[open] .operator-faq-card__icon {
+    transform: rotate(180deg);
+    color: #2563eb;
+}
+
+.dailyve-operator-detail .operator-faq-card__answer {
+    padding: 0 0 14px;
+    animation: faqSlideDown 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dailyve-operator-detail .operator-faq-card__answer p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #64748b;
+}
+
+@keyframes faqSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

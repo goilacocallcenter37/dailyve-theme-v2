@@ -170,6 +170,14 @@
             $qrCode = 'https://object.dailyve.com/dailyve/wp-content/uploads/2025/08/QR-CODE-APP-DLV.png';
             $tetBanner = home_url('/wp-content/themes/dailyve-theme/resources/images/operator-tet-ticket-banner.webp');
 
+            // FAQ Items
+            $faq_items = [
+                'Giá vé trung bình của ' . $operator_name . ' là bao nhiêu?' => 'Giá vé thay đổi theo tuyến, ngày đi và dòng xe. Bạn có thể xem giá từ trong từng tuyến phía trên.',
+                'Địa chỉ văn phòng ' . $operator_name . ' gần nhất?' => 'Xem tab Địa chỉ văn phòng & SĐT để chọn điểm liên hệ theo tỉnh/thành.',
+                'Có thể chọn ghế khi đặt vé không?' => 'Các chuyến hỗ trợ sơ đồ ghế sẽ cho phép chọn chỗ trước khi thanh toán.',
+                'Hành lý được mang theo như thế nào?' => 'Quy định hành lý phụ thuộc từng chuyến. Dailyve sẽ hỗ trợ kiểm tra trước giờ khởi hành.',
+            ];
+
             // Structured Schema Markup JSON-LD (SEO Best Practice)
             $schema_data = [
                 '@context' => 'https://schema.org',
@@ -199,10 +207,28 @@
                     'worstRating' => '1',
                 ];
             }
+
+            $faq_schema_data = [
+                '@context' => 'https://schema.org',
+                '@type' => 'FAQPage',
+                'mainEntity' => array_map(function($q, $a) {
+                    return [
+                        '@type' => 'Question',
+                        'name' => $q,
+                        'acceptedAnswer' => [
+                            '@type' => 'Answer',
+                            'text' => $a
+                        ]
+                    ];
+                }, array_keys($faq_items), array_values($faq_items))
+            ];
         @endphp
 
         <script type="application/ld+json">
             {!! wp_json_encode($schema_data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}
+        </script>
+        <script type="application/ld+json">
+            {!! wp_json_encode($faq_schema_data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}
         </script>
 
         <div class="dailyve-operator-detail bg-slate-50 text-slate-700" data-operator-detail>
@@ -957,53 +983,52 @@
                             </button>
                         @endif
                     </section>
+
+                    <article class="operator-faq-card">
+                        <h2 class="operator-faq-card__title">Câu hỏi thường gặp về {{ $operator_name }}</h2>
+                        <div class="operator-faq-card__list">
+                            @foreach ($faq_items as $question => $answer)
+                                <details class="operator-faq-card__item">
+                                    <summary class="operator-faq-card__question">
+                                        <span>{{ $question }}</span>
+                                        <svg class="operator-faq-card__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </summary>
+                                    <div class="operator-faq-card__answer">
+                                        <p>{{ $answer }}</p>
+                                    </div>
+                                </details>
+                            @endforeach
+                        </div>
+                    </article>
                 </div>
             </section>
 
-            <section class="mx-auto grid max-w-7xl gap-5 px-4 pb-12 sm:px-6 lg:grid-cols-2 lg:px-8">
-                <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                    <h2 class="text-base font-semibold text-slate-950">Thông tin nổi bật</h2>
-                    <div class="mt-4 grid gap-3 text-sm text-slate-600">
-                        <p class="m-0 flex items-start gap-3">
-                            <i class="fas fa-route mt-1 text-blue-600" aria-hidden="true"></i>
+            <section class="mx-auto max-w-7xl px-4 pb-6 sm:px-6 lg:px-8">
+                <article class="operator-highlights-card">
+                    <h2 class="operator-highlights-card__title">Thông tin nổi bật</h2>
+                    <div class="operator-highlights-card__grid">
+                        <div class="operator-highlights-card__item">
+                            <i class="fas fa-route" aria-hidden="true"></i>
                             <span>{{ $operator_name }} hiện có
                                 {{ $route_count ? number_format($route_count, 0, ',', '.') : count($routes) }} tuyến đường
                                 được Dailyve cập nhật.</span>
-                        </p>
-                        <p class="m-0 flex items-start gap-3">
-                            <i class="fas fa-bus mt-1 text-blue-600" aria-hidden="true"></i>
+                        </div>
+                        <div class="operator-highlights-card__item">
+                            <i class="fas fa-bus" aria-hidden="true"></i>
                             <span>Dòng xe:
                                 {{ $vehicle_types ? implode(', ', array_slice(array_map(fn($item) => $decode($item['name'] ?? ''), $vehicle_types), 0, 3)) : 'đang cập nhật' }}.</span>
-                        </p>
-                        <p class="m-0 flex items-start gap-3">
-                            <i class="fas fa-building mt-1 text-blue-600" aria-hidden="true"></i>
+                        </div>
+                        <div class="operator-highlights-card__item">
+                            <i class="fas fa-building" aria-hidden="true"></i>
                             <span>{{ $office_count ?: 'Nhiều' }} văn phòng/điểm liên hệ được ghi nhận trên hệ thống.</span>
-                        </p>
-                    </div>
-                </article>
-
-                <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-                    <h2 class="text-base font-semibold text-slate-950">Câu hỏi thường gặp</h2>
-                    <div class="mt-4 divide-y divide-slate-100">
-                        @foreach ([
-            'Giá vé trung bình của ' . $operator_name . ' là bao nhiêu?' => 'Giá vé thay đổi theo tuyến, ngày đi và dòng xe. Bạn có thể xem giá từ trong từng tuyến phía trên.',
-            'Địa chỉ văn phòng ' . $operator_name . ' gần nhất?' => 'Xem tab Địa chỉ văn phòng & SĐT để chọn điểm liên hệ theo tỉnh/thành.',
-            'Có thể chọn ghế khi đặt vé không?' => 'Các chuyến hỗ trợ sơ đồ ghế sẽ cho phép chọn chỗ trước khi thanh toán.',
-            'Hành lý được mang theo như thế nào?' => 'Quy định hành lý phụ thuộc từng chuyến. Dailyve sẽ hỗ trợ kiểm tra trước giờ khởi hành.',
-        ] as $question => $answer)
-                            <details class="group py-3">
-                                <summary
-                                    class="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-semibold text-slate-800">
-                                    <span>{{ $question }}</span>
-                                    <i class="fas fa-chevron-down text-xs text-slate-400 transition group-open:rotate-180"
-                                        aria-hidden="true"></i>
-                                </summary>
-                                <p class="mt-2 text-sm leading-6 text-slate-500">{{ $answer }}</p>
-                            </details>
-                        @endforeach
+                        </div>
                     </div>
                 </article>
             </section>
+
+
 
             <div id="operator-reviews-drawer" class="operator-review-drawer" data-operator-reviews-drawer
                 data-company-id="{{ esc_attr($operator_id) }}"
@@ -1779,12 +1804,12 @@
 
                             // Matches filter
                             if (filter === 'all') {
-                                if (matchingCount >= 10 && !isExpanded) {
+                                if (matchingCount >= 6 && !isExpanded) {
                                     card.classList.add('is-hidden-by-limit');
                                     card.classList.remove('is-expanded-by-btn');
                                 } else {
                                     card.classList.remove('is-hidden-by-limit');
-                                    if (matchingCount >= 10) {
+                                    if (matchingCount >= 6) {
                                         card.classList.add('is-expanded-by-btn');
                                     } else {
                                         card.classList.remove('is-expanded-by-btn');
@@ -1807,9 +1832,9 @@
                         });
 
                         if (routesToggleContainer && routesToggleBtn) {
-                            if (filter === 'all' && totalMatching > 10) {
+                            if (filter === 'all' && totalMatching > 6) {
                                 routesToggleContainer.style.display = 'block';
-                                var remainingCount = totalMatching - 10;
+                                var remainingCount = totalMatching - 6;
                                 var span = routesToggleBtn.querySelector('span');
                                 var icon = routesToggleBtn.querySelector('i');
                                 if (isExpanded) {
