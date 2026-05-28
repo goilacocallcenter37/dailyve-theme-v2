@@ -2261,8 +2261,8 @@ const TripList = () => {
             <p className="inline-block rounded-full bg-blue-50 px-4 py-1.5 text-xs font-black uppercase tracking-widest text-blue-600">
               <i className="fas fa-route mr-2"></i> Hệ thống đặt vé Dailyve
             </p>
-            <h1 className="mt-4 font-display text-2xl font-black leading-snug tracking-tight text-slate-900 sm:text-3xl md:text-5xl">
-              Khám phá <span className="text-blue-600">Hành trình</span> của bạn
+            <h1 className="mt-4 font-display text-2xl text-center font-black leading-snug tracking-tight text-slate-900 sm:text-3xl md:text-5xl">
+              Khám phá <span className="text-blue-600">hành trình</span> của bạn
             </h1>
           </div>
 
