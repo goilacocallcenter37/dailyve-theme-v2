@@ -314,7 +314,7 @@ foreach ($items as $item) {
                                 {{ $station_name }}
                             </h1>
 
-                            <div class="mt-5 space-y-4 text-sm text-slate-600 be-vietnam">
+                            <div class="mt-5 space-y-4 text-sm text-slate-600">
                                 <p class="flex items-start gap-3">
                                     <span
                                         class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-blue-600">
@@ -351,7 +351,7 @@ foreach ($items as $item) {
                         </div>
 
                         {{-- Action Cluster Buttons --}}
-                        <div class="mt-6 pt-5 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-4 gap-3 be-vietnam">
+                        <div class="mt-6 pt-5 border-t border-slate-100 grid grid-cols-2 sm:grid-cols-4 gap-3">
                             <a href="https://www.google.com/maps/search/?api=1&query={{ $map_query }}" target="_blank"
                                 rel="noopener noreferrer"
                                 class="no-underline! flex h-11 items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-3 text-xs font-bold text-slate-700 transition hover:border-blue-300 hover:text-blue-600">
@@ -390,13 +390,13 @@ foreach ($items as $item) {
                             <h2 id="route-list-title" class="display-grotesk text-2xl font-semibold text-slate-950">
                                 Các tuyến đường đến & đi từ bến xe
                             </h2>
-                            <p class="mt-1.5 text-xs text-slate-500 be-vietnam">
+                            <p class="mt-1.5 text-xs text-slate-500">
                                 Tìm kiếm vé xe khách tiện lợi, nhanh chóng của 100+ nhà xe hoạt động trực tiếp tại đây.
                             </p>
                         </div>
 
                         {{-- Inbound/Outbound Switcher --}}
-                        <div class="flex bg-slate-100 p-1 rounded-2xl border border-slate-200 shrink-0 select-none be-vietnam"
+                        <div class="flex bg-slate-100 p-1 rounded-2xl border border-slate-200 shrink-0 select-none"
                             role="tablist">
                             <button type="button" onclick="switchDirection('from')" data-dir="from"
                                 class="direction-tab-btn no-underline! rounded-xl px-4 py-2 text-xs font-bold transition-all {{ $direction === 'from' ? 'direction-tab-active' : 'text-slate-600 hover:text-blue-600' }}">
@@ -411,7 +411,7 @@ foreach ($items as $item) {
 
                     @if ($api_error)
                         <div
-                            class="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-800 be-vietnam flex items-start gap-3">
+                            class="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-800 flex items-start gap-3">
                             <i class="fas fa-exclamation-triangle mt-0.5 shrink-0 text-amber-600"></i>
                             <div>
                                 <strong class="block font-semibold mb-1">Không thể tải danh sách chuyến xe từ API</strong>
@@ -422,7 +422,7 @@ foreach ($items as $item) {
 
                     @if (empty($items) && !$api_error)
                         <div
-                            class="mt-8 rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 py-12 text-center be-vietnam">
+                            class="mt-8 rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 py-12 text-center">
                             <div class="flex justify-center text-5xl text-slate-300 mb-4">
                                 <i class="fas fa-route"></i>
                             </div>
@@ -436,8 +436,7 @@ foreach ($items as $item) {
                         {{-- Province Filters badge pills list --}}
                         <div class="mt-6 flex items-center justify-between gap-3">
                             <div id="provinces-filter-container"
-                                class="flex max-w-full gap-2 overflow-x-auto pb-2 custom-scrollbar be-vietnam"
-                                role="tablist">
+                                class="flex max-w-full gap-2 overflow-x-auto pb-2 custom-scrollbar" role="tablist">
                                 <button type="button"
                                     class="province-pill shrink-0 rounded-xl bg-slate-100 hover:bg-slate-200 px-4 py-2 text-xs font-bold text-slate-700 transition-all duration-200 province-pill-active"
                                     onclick="filterByProvince('all')">
@@ -453,13 +452,13 @@ foreach ($items as $item) {
                             </div>
 
                             <span id="total-routes-count"
-                                class="hidden md:inline-flex bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1.5 rounded-lg shrink-0 be-vietnam">
+                                class="hidden md:inline-flex bg-slate-100 text-slate-600 text-xs font-bold px-3 py-1.5 rounded-lg shrink-0">
                                 Tổng cộng: {{ number_format($total_items, 0, ',', '.') }} tuyến
                             </span>
                         </div>
 
                         {{-- Route Group Cards Grid --}}
-                        <div id="routes-grid" class="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3 be-vietnam">
+                        <div id="routes-grid" class="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-2">
                             @foreach ($items as $item)
                                 @php
                                     $from_name = $item['from']['name'] ?? '';
@@ -470,7 +469,7 @@ foreach ($items as $item) {
                                             : $item['from']['province_name'] ?? '';
 
                                     $opp_name = $direction === 'from' ? $to_name : $from_name;
-                                    $top_operators = array_slice($item['operators'] ?? [], 0, 3);
+                                    $operators = $item['operators'] ?? [];
 
                                     $search_query_url = add_query_arg(
                                         [
@@ -523,15 +522,15 @@ foreach ($items as $item) {
                                         </div>
 
                                         {{-- Top Operators List --}}
-                                        @if (!empty($top_operators))
+                                        @if (!empty($operators))
                                             <div class="mt-4">
                                                 <p
                                                     class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2.5 flex items-center gap-2">
                                                     Nhà xe nổi bật
                                                     <span class="h-px bg-slate-100 flex-1"></span>
                                                 </p>
-                                                <div class="space-y-2">
-                                                    @foreach ($top_operators as $idx => $op)
+                                                <div class="space-y-2 operators-container">
+                                                    @foreach ($operators as $idx => $op)
                                                         @php
                                                             $op_avatar =
                                                                 $op['media']['avatar_url'] ?? ($op['image_url'] ?? '');
@@ -546,9 +545,10 @@ foreach ($items as $item) {
                                                                     : ($idx === 1
                                                                         ? 'bg-slate-100 text-slate-600'
                                                                         : 'bg-orange-50 text-orange-600');
+                                                            $is_hidden = $idx >= 6;
                                                         @endphp
                                                         <div
-                                                            class="flex items-center gap-3 bg-slate-50/50 hover:bg-slate-50 p-2.5 rounded-xl transition-colors border border-transparent hover:border-slate-100">
+                                                            class="operator-item flex items-center gap-3 bg-slate-50/50 hover:bg-slate-50 p-2.5 rounded-xl transition-colors border border-transparent hover:border-slate-100 {{ $is_hidden ? 'js-hidden-operator hidden' : '' }}">
                                                             <div class="relative shrink-0">
                                                                 @if ($op_avatar)
                                                                     <img class="h-9 w-9 rounded-full object-cover border-2 border-white shadow-sm"
@@ -570,12 +570,12 @@ foreach ($items as $item) {
                                                                 <div class="flex justify-between items-start mb-0.5">
                                                                     @if ($op_post_url)
                                                                         <a href="{{ esc_url($op_post_url) }}"
-                                                                            class="text-xs font-bold text-slate-800 hover:text-blue-600 truncate max-w-[120px] no-underline!">
+                                                                            class="text-xs font-bold text-slate-800 hover:text-blue-600 truncate no-underline!">
                                                                             {{ $op_name }}
                                                                         </a>
                                                                     @else
                                                                         <span
-                                                                            class="text-xs font-bold text-slate-800 truncate max-w-[120px]">
+                                                                            class="text-xs font-bold text-slate-800 truncate">
                                                                             {{ $op_name }}
                                                                         </span>
                                                                     @endif
@@ -595,6 +595,13 @@ foreach ($items as $item) {
                                                         </div>
                                                     @endforeach
                                                 </div>
+                                                @if (count($operators) > 6)
+                                                    <button type="button" onclick="toggleOperators(this)"
+                                                        class="mt-2.5 text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors flex items-center gap-1">
+                                                        <span>Xem thêm {{ count($operators) - 6 }} nhà xe</span> <i
+                                                            class="fas fa-chevron-down text-[10px]"></i>
+                                                    </button>
+                                                @endif
                                             </div>
                                         @endif
                                     </div>
@@ -617,7 +624,7 @@ foreach ($items as $item) {
                         {{-- Pagination Row --}}
                         <div id="routes-pagination">
                             @if ($total_pages > 1)
-                                <nav class="mt-10 flex flex-wrap items-center justify-center gap-2 be-vietnam"
+                                <nav class="mt-10 flex flex-wrap items-center justify-center gap-2"
                                     aria-label="Phân trang tuyến đường bến xe">
                                     {{-- Prev Page Button --}}
                                     @if ($paged > 1)
@@ -655,7 +662,7 @@ foreach ($items as $item) {
 
             {{-- Dynamic Info Tabs and Highlights Section --}}
             <section class="mx-auto max-w-7xl px-4 mt-8 sm:px-6 lg:px-8">
-                <div class="grid gap-6 lg:grid-cols-[280px_1fr_320px] items-start be-vietnam">
+                <div class="grid gap-6 lg:grid-cols-[280px_1fr_320px] items-start">
 
                     {{-- Left tabs menu list selector --}}
                     <aside class="w-full bg-white border border-slate-200 rounded-3xl p-4 ben-xe-detail-shadow space-y-1">
@@ -922,6 +929,31 @@ foreach ($items as $item) {
 
     {{-- Frontend JS Logic for Routes & Pagination --}}
     <script>
+        function toggleOperators(btn) {
+            const container = btn.parentNode.querySelector('.operators-container');
+            if (!container) return;
+            const hiddenItems = container.querySelectorAll('.js-hidden-operator');
+            const isExpanded = btn.getAttribute('data-expanded') === 'true';
+
+            hiddenItems.forEach(item => {
+                if (isExpanded) {
+                    item.classList.add('hidden');
+                } else {
+                    item.classList.remove('hidden');
+                }
+            });
+
+            if (isExpanded) {
+                btn.setAttribute('data-expanded', 'false');
+                btn.querySelector('span').innerText = 'Xem thêm ' + hiddenItems.length + ' nhà xe';
+                btn.querySelector('i').className = 'fas fa-chevron-down text-[10px]';
+            } else {
+                btn.setAttribute('data-expanded', 'true');
+                btn.querySelector('span').innerText = 'Thu gọn';
+                btn.querySelector('i').className = 'fas fa-chevron-up text-[10px]';
+            }
+        }
+
         function switchDirection(dir) {
             if (window.stationDirection === dir) return;
             window.stationDirection = dir;
@@ -1019,7 +1051,7 @@ foreach ($items as $item) {
             const grid = document.getElementById('routes-grid');
             if (grid) {
                 if (items.length === 0) {
-                    grid.innerHTML = `<div class="col-span-full mt-8 rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 py-12 text-center be-vietnam">
+                    grid.innerHTML = `<div class="col-span-full mt-8 rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 py-12 text-center">
                     <div class="flex justify-center text-5xl text-slate-300 mb-4"><i class="fas fa-route"></i></div>
                     <h3 class="text-base font-bold text-slate-900">Không tìm thấy chuyến xe nào</h3>
                 </div>`;
@@ -1030,7 +1062,7 @@ foreach ($items as $item) {
                         const toName = item.to?.name || '';
                         const provName = window.stationDirection === 'from' ? (item.to?.province_name || '') : (item
                             .from?.province_name || '');
-                        const topOperators = (item.operators || []).slice(0, 3);
+                        const operators = item.operators || [];
                         const minPrice = item.min_price || 0;
                         const opCount = item.operator_count || 0;
                         const tripCount = item.trip_count || 0;
@@ -1044,10 +1076,10 @@ foreach ($items as $item) {
                             fromName) + '&nameTo=' + encodeURIComponent(toName) + '&date=' + dateStr;
 
                         let opsHtml = '';
-                        if (topOperators.length > 0) {
+                        if (operators.length > 0) {
                             opsHtml +=
-                                `<div class="mt-4"><p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2.5 flex items-center gap-2">Nhà xe nổi bật<span class="h-px bg-slate-100 flex-1"></span></p><div class="space-y-2">`;
-                            topOperators.forEach((op, idx) => {
+                                `<div class="mt-4"><p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2.5 flex items-center gap-2">Nhà xe nổi bật<span class="h-px bg-slate-100 flex-1"></span></p><div class="space-y-2 operators-container">`;
+                            operators.forEach((op, idx) => {
                                 const opAvatar = op.media?.avatar_url || op.image_url || '';
                                 const opName = op.name || '';
                                 const opRating = op.display_rating || op.rating || '4.8';
@@ -1055,15 +1087,17 @@ foreach ($items as $item) {
                                 const opPostUrl = op.media?.wp_url || '';
                                 const badgeColor = idx === 0 ? 'bg-amber-100 text-amber-600' : (idx === 1 ?
                                     'bg-slate-100 text-slate-600' : 'bg-orange-50 text-orange-600');
+                                const isHidden = idx >= 6;
+                                const hiddenClass = isHidden ? 'js-hidden-operator hidden' : '';
 
-                                opsHtml += `<div class="flex items-center gap-3 bg-slate-50/50 hover:bg-slate-50 p-2.5 rounded-xl transition-colors border border-transparent hover:border-slate-100">
+                                opsHtml += `<div class="operator-item flex items-center gap-3 bg-slate-50/50 hover:bg-slate-50 p-2.5 rounded-xl transition-colors border border-transparent hover:border-slate-100 ${hiddenClass}">
                                 <div class="relative shrink-0">
                                     ${opAvatar ? `<img class="h-9 w-9 rounded-full object-cover border-2 border-white shadow-sm" src="${opAvatar}" alt="${opName}" loading="lazy">` : `<span class="flex h-9 w-9 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 text-[10px] font-bold text-blue-700 items-center justify-center border-2 border-white shadow-sm">${getInitials(opName)}</span>`}
                                     <span class="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full ${badgeColor} text-[8px] font-black border-2 border-white shadow-sm z-10">${idx + 1}</span>
                                 </div>
                                 <div class="flex-1 min-w-0">
                                     <div class="flex justify-between items-start mb-0.5">
-                                        ${opPostUrl ? `<a href="${opPostUrl}" class="text-xs font-bold text-slate-800 hover:text-blue-600 truncate max-w-[120px] no-underline!">${opName}</a>` : `<span class="text-xs font-bold text-slate-800 truncate max-w-[120px]">${opName}</span>`}
+                                        ${opPostUrl ? `<a href="${opPostUrl}" class="text-xs font-bold text-slate-800 hover:text-blue-600 truncate max-w-[120px] no-underline!">${opName}</a>` : `<span class="text-xs font-bold text-slate-800 truncate">${opName}</span>`}
                                         <span class="text-[11px] font-bold text-slate-700">${formatPrice(opPrice)}</span>
                                     </div>
                                     <div class="flex items-center gap-2 text-[10px] text-slate-500 font-medium">
@@ -1073,7 +1107,12 @@ foreach ($items as $item) {
                                 </div>
                             </div>`;
                             });
-                            opsHtml += `</div></div>`;
+                            opsHtml += `</div>`;
+                            if (operators.length > 6) {
+                                opsHtml +=
+                                    `<button type="button" onclick="toggleOperators(this)" class="mt-2.5 text-xs font-bold text-blue-600 hover:text-blue-800 transition-colors flex items-center gap-1"><span>Xem thêm ${operators.length - 6} nhà xe</span> <i class="fas fa-chevron-down text-[10px]"></i></button>`;
+                            }
+                            opsHtml += `</div>`;
                         }
 
                         html += `<article class="route-group-card group relative flex flex-col justify-between rounded-2xl bg-white p-5 shadow-[0_2px_12px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_24px_rgba(33,150,243,0.12)] border border-slate-100 hover:border-blue-200 transition-all duration-300" data-province="${provName}">
@@ -1113,7 +1152,7 @@ foreach ($items as $item) {
             if (paginationContainer) {
                 if (totalPages > 1) {
                     let html =
-                        `<nav class="mt-10 flex flex-wrap items-center justify-center gap-2 be-vietnam" aria-label="Phân trang tuyến đường bến xe">`;
+                        `<nav class="mt-10 flex flex-wrap items-center justify-center gap-2" aria-label="Phân trang tuyến đường bến xe">`;
                     if (page > 1) {
                         html +=
                             `<button type="button" onclick="fetchRoutesPage(${page - 1})" class="no-underline! inline-flex min-w-[40px] h-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:border-blue-500 hover:text-blue-600 transition-colors"><i class="fas fa-chevron-left text-xs"></i></button>`;
