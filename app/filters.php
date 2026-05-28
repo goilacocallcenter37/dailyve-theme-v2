@@ -143,6 +143,8 @@ add_filter('page_template_hierarchy', function ($templates) {
             array_unshift($templates, 'page-operator-detail.php');
         } elseif ((int) $parent_id === 16844 || (int) $parent_id === 16846) {
             array_unshift($templates, 'page-transit-route.php');
+        } elseif ((int) $parent_id === 15896) {
+            array_unshift($templates, 'page-ben-xe-detail.php');
         }
     }
     return $templates;
@@ -432,3 +434,69 @@ add_action('wp_head', function () {
 
     echo '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>' . "\n";
 }, 20);
+
+/**
+ * Fetch route groups for a specific station from API v2.
+ * Uses transient caching to improve loading speeds and optimize performance.
+ */
+function dailyve_get_station_routes(string $location_id, string $direction = 'from', int $paged = 1)
+{
+    $location_id = sanitize_text_field($location_id);
+    $direction = $direction === 'to' ? 'to' : 'from';
+    $paged = max(1, (int) $paged);
+    $page_size = 6;
+
+    if (empty($location_id)) {
+        return new \WP_Error('dailyve_station_invalid_id', 'Thiếu Location ID của bến xe.');
+    }
+
+    // Cache transient for 1 hour to reduce production API pressure
+    $cache_key = 'dv_station_routes_' . md5($location_id . '_' . $direction . '_' . $paged);
+    $cached = get_transient($cache_key);
+    if ($cached !== false) {
+        return $cached;
+    }
+
+    if (!function_exists('call_api_v2')) {
+        return new \WP_Error('dailyve_station_api_missing', 'Thiếu hàm call_api_v2 từ hệ thống.');
+    }
+
+    $params = [
+        'siteKey' => 'dailyve',
+        'includeSubLocations' => 'true',
+        'page' => $paged,
+        'pageSize' => $page_size,
+        'operatorLimit' => 20,
+        'includeRoutes' => 'false',
+        'groupByProvince' => 'true',
+    ];
+
+    if ($direction === 'from') {
+        $params['fromId'] = $location_id;
+    } else {
+        $params['told'] = $location_id;
+    }
+
+    $response = \call_api_v2('/route/operators', 'GET', $params, [], 30);
+
+    if (is_wp_error($response)) {
+        return $response;
+    }
+
+    $status_code = (int) wp_remote_retrieve_response_code($response);
+    $body = wp_remote_retrieve_body($response);
+    $data = json_decode($body, true);
+
+    if ($status_code >= 400) {
+        return new \WP_Error('dailyve_station_api_http', 'API bến xe trả lỗi HTTP ' . $status_code . '.');
+    }
+
+    if (!is_array($data)) {
+        return new \WP_Error('dailyve_station_api_parse', 'Không thể phân tích phản hồi từ máy chủ API.');
+    }
+
+    // Cache results for 1 hour
+    set_transient($cache_key, $data, HOUR_IN_SECONDS);
+
+    return $data;
+}

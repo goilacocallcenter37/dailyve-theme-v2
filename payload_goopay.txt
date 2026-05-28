@@ -1,0 +1,2420 @@
+{
+  "direction": "from",
+  "location_id": "69e71ed15139c113eb3d3b89",
+  "from_id": "69e71ed15139c113eb3d3b89",
+  "to_id": "",
+  "items": [
+    {
+      "group_id": "69a0151655136e9fa17e756d",
+      "from": {
+        "id": "69a0151655136e9fa17e7575",
+        "name": "Hồ Chí Minh",
+        "province_id": "69a0151655136e9fa17e7575",
+        "province_name": "Hồ Chí Minh"
+      },
+      "to": {
+        "id": "69a0151655136e9fa17e756d",
+        "name": "Đắk Lắk",
+        "province_id": "69a0151655136e9fa17e756d",
+        "province_name": "Đắk Lắk"
+      },
+      "operator_count": 97,
+      "trip_count": 4076,
+      "displayed_operator_count": 20,
+      "remaining_operator_count": 77,
+      "min_price": 200000,
+      "operators": [
+        {
+          "id": "6a07f41ba3e5e987be2ea129",
+          "name": "Quý Thảo (Đắk Lắk)",
+          "operator_id": 25959,
+          "rating": "4.3",
+          "review_count": 1709,
+          "route_review_rating": "4.3",
+          "route_review_count": 1709,
+          "display_rating": "4.3",
+          "trip_count": 466,
+          "matched_route_count": 83,
+          "min_price": 350000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea115",
+          "name": "Phương Trang",
+          "operator_id": 11071,
+          "rating": "4.8",
+          "review_count": 2541,
+          "route_review_rating": "4.8",
+          "route_review_count": 2577,
+          "display_rating": "4.8",
+          "trip_count": 447,
+          "matched_route_count": 80,
+          "min_price": 255000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/04/nha-xe-phuong-trang.webp",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/04/nha-xe-phuong-trang.webp",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/phuong-trang/",
+            "wp_post_id": 27995,
+            "wp_title": "Nhà xe Phương Trang"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea071",
+          "name": "Hải Luân",
+          "operator_id": 36137,
+          "rating": "4.8",
+          "review_count": 1150,
+          "route_review_rating": "4.8",
+          "route_review_count": 1150,
+          "display_rating": "4.8",
+          "trip_count": 318,
+          "matched_route_count": 73,
+          "min_price": 250000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/01/nha-xe-hai-luan.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/01/nha-xe-hai-luan.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/hai-luan/",
+            "wp_post_id": 18064,
+            "wp_title": "Nhà xe Hải Luân"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0ec",
+          "name": "Nguyên Dịu",
+          "operator_id": 32502,
+          "rating": "4.8",
+          "review_count": 721,
+          "route_review_rating": "4.8",
+          "route_review_count": 721,
+          "display_rating": "4.8",
+          "trip_count": 274,
+          "matched_route_count": 80,
+          "min_price": 300000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/04/nha-xe-nguyen-diu.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/04/nha-xe-nguyen-diu.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/nguyen-diu/",
+            "wp_post_id": 19044,
+            "wp_title": "Nhà xe Nguyên Dịu"
+          }
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea17b",
+          "name": "Tiến Oanh",
+          "operator_id": 2,
+          "rating": "4.8",
+          "review_count": 14820,
+          "route_review_rating": "4.8",
+          "route_review_count": 14825,
+          "display_rating": "4.8",
+          "trip_count": 254,
+          "matched_route_count": 29,
+          "min_price": 380000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/11/nha-xe-tien-oanh.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/11/nha-xe-tien-oanh.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/tien-oanh/",
+            "wp_post_id": 17785,
+            "wp_title": "Nhà xe Tiến Oanh"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea079",
+          "name": "Hiếu Khanh",
+          "operator_id": 43187,
+          "rating": "4.5",
+          "review_count": 115,
+          "route_review_rating": "4.6",
+          "route_review_count": 113,
+          "display_rating": "4.6",
+          "trip_count": 203,
+          "matched_route_count": 84,
+          "min_price": 300000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-hieu-khanh-dich-vu-chu-dao-nhat.png",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-hieu-khanh-dich-vu-chu-dao-nhat.png",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/hieu-khanh/",
+            "wp_post_id": 35942,
+            "wp_title": "Nhà xe Hiếu Khanh"
+          }
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea198",
+          "name": "Tư Trang",
+          "operator_id": 13145,
+          "rating": "4.8",
+          "review_count": 83,
+          "route_review_rating": "4.8",
+          "route_review_count": 83,
+          "display_rating": "4.8",
+          "trip_count": 168,
+          "matched_route_count": 87,
+          "min_price": 433000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea03f",
+          "name": "Cường Ny",
+          "operator_id": 1150,
+          "rating": "4.8",
+          "review_count": 1014,
+          "route_review_rating": "4.8",
+          "route_review_count": 1014,
+          "display_rating": "4.8",
+          "trip_count": 114,
+          "matched_route_count": 35,
+          "min_price": 300000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-cuong-ny.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-cuong-ny.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/cuong-ny/",
+            "wp_post_id": 18726,
+            "wp_title": "Nhà xe Cường Ny"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0bf",
+          "name": "Loan Sáng",
+          "operator_id": 16088,
+          "rating": "4.7",
+          "review_count": 1279,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.7",
+          "trip_count": 114,
+          "matched_route_count": 32,
+          "min_price": 350000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/03/nha-xe-loan-sang-tuyen-sai-gon-di-dak-mil.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/02/nha-xe-loan-sang-tuyen-sai-gon-di-gia-nghia.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/loan-sang/",
+            "wp_post_id": 19249,
+            "wp_title": "Nhà xe Loan Sáng"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea01f",
+          "name": "Anh Thư (Buôn Hồ)",
+          "operator_id": 25622,
+          "rating": "4",
+          "review_count": 197,
+          "route_review_rating": "4.0",
+          "route_review_count": 197,
+          "display_rating": "4.0",
+          "trip_count": 113,
+          "matched_route_count": 39,
+          "min_price": 250000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea091",
+          "name": "Hoàng Thuỷ",
+          "operator_id": 32690,
+          "rating": "4.8",
+          "review_count": 4287,
+          "route_review_rating": "4.8",
+          "route_review_count": 4278,
+          "display_rating": "4.8",
+          "trip_count": 109,
+          "matched_route_count": 46,
+          "min_price": 350000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-hoang-thuy.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-hoang-thuy.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/hoang-thuy/",
+            "wp_post_id": 18326,
+            "wp_title": "Nhà xe Hoàng Thủy"
+          }
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea161",
+          "name": "Thảo Lan",
+          "operator_id": 11762,
+          "rating": "4.7",
+          "review_count": 410,
+          "route_review_rating": "4.7",
+          "route_review_count": 411,
+          "display_rating": "4.7",
+          "trip_count": 104,
+          "matched_route_count": 31,
+          "min_price": 280000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/03/nha-xe-thao-lan-tuyen-sai-gon-di-dak-mil.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/03/nha-xe-thao-lan-tuyen-sai-gon-di-dak-mil.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/thao-lan/",
+            "wp_post_id": 20114,
+            "wp_title": "Nhà xe Thảo Lan"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea111",
+          "name": "Phương Hồng Linh",
+          "operator_id": 30537,
+          "rating": "4.2",
+          "review_count": 633,
+          "route_review_rating": "4.2",
+          "route_review_count": 632,
+          "display_rating": "4.2",
+          "trip_count": 102,
+          "matched_route_count": 52,
+          "min_price": 250000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-phuong-hong-linh.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-phuong-hong-linh.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/phuong-hong-linh/",
+            "wp_post_id": 19638,
+            "wp_title": "Nhà xe Phương Hồng Linh"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea04d",
+          "name": "Điều Hòa",
+          "operator_id": 13000,
+          "rating": "4.7",
+          "review_count": 606,
+          "route_review_rating": "4.7",
+          "route_review_count": 601,
+          "display_rating": "4.7",
+          "trip_count": 101,
+          "matched_route_count": 53,
+          "min_price": 379000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/11/nha-xe-dieu-hoa.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/11/nha-xe-dieu-hoa.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/dieu-hoa/",
+            "wp_post_id": 56627,
+            "wp_title": "Nhà xe Điều Hòa"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0af",
+          "name": "Kim Anh",
+          "operator_id": 11860,
+          "rating": "4.5",
+          "review_count": 3783,
+          "route_review_rating": "4.5",
+          "route_review_count": 3778,
+          "display_rating": "4.5",
+          "trip_count": 83,
+          "matched_route_count": 24,
+          "min_price": 360000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea193",
+          "name": "Tuấn Trung",
+          "operator_id": 13181,
+          "rating": "4.6",
+          "review_count": 1162,
+          "route_review_rating": "4.6",
+          "route_review_count": 1163,
+          "display_rating": "4.6",
+          "trip_count": 67,
+          "matched_route_count": 39,
+          "min_price": 350000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-tuan-trung.jpeg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-tuan-trung.jpeg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/tuan-trung/",
+            "wp_post_id": 20417,
+            "wp_title": "Nhà xe Tuấn Trung"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0c1",
+          "name": "Lục Mão",
+          "operator_id": 32571,
+          "rating": "4.7",
+          "review_count": 10,
+          "route_review_rating": "4.8",
+          "route_review_count": 8,
+          "display_rating": "4.8",
+          "trip_count": 66,
+          "matched_route_count": 34,
+          "min_price": 270000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/03/nha-xe-luc-mao-dak-lak-di-sai-gon-chat-luong-cao.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/03/nha-xe-luc-mao-dak-lak-di-sai-gon-chat-luong-cao.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/luc-mao/",
+            "wp_post_id": 19270,
+            "wp_title": "Nhà xe Lục Mão"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea11b",
+          "name": "Quang Đông (Đắk Lắk)",
+          "operator_id": 43346,
+          "rating": "3.8",
+          "review_count": 66,
+          "route_review_rating": "3.8",
+          "route_review_count": 66,
+          "display_rating": "3.8",
+          "trip_count": 62,
+          "matched_route_count": 43,
+          "min_price": 400000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0b6",
+          "name": "Kumho Samco",
+          "operator_id": 11194,
+          "rating": "4.6",
+          "review_count": 2767,
+          "route_review_rating": "4.6",
+          "route_review_count": 2779,
+          "display_rating": "4.6",
+          "trip_count": 60,
+          "matched_route_count": 17,
+          "min_price": 325000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea03a",
+          "name": "Cô Hai",
+          "operator_id": 824,
+          "rating": "4.5",
+          "review_count": 263,
+          "route_review_rating": "4.6",
+          "route_review_count": 261,
+          "display_rating": "4.6",
+          "trip_count": 60,
+          "matched_route_count": 30,
+          "min_price": 400000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-co-hai.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-co-hai.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/co-hai/",
+            "wp_post_id": 18584,
+            "wp_title": "Nhà xe Cô Hai"
+          }
+        }
+      ]
+    },
+    {
+      "group_id": "69a0151655136e9fa17e7566",
+      "from": {
+        "id": "69e6f8db5139c113eb3d1e42",
+        "name": "Hồ Chí Minh",
+        "province_id": "69e6f8db5139c113eb3d1e42",
+        "province_name": "Hồ Chí Minh"
+      },
+      "to": {
+        "id": "69a0151655136e9fa17e7566",
+        "name": "Bình Định",
+        "province_id": "69a0151655136e9fa17e7566",
+        "province_name": "Bình Định"
+      },
+      "operator_count": 91,
+      "trip_count": 3787,
+      "displayed_operator_count": 20,
+      "remaining_operator_count": 71,
+      "min_price": 250000,
+      "operators": [
+        {
+          "id": "6a07f41ca3e5e987be2ea185",
+          "name": "Trọng Thủy Limousine",
+          "operator_id": 41055,
+          "rating": "4.8",
+          "review_count": 1614,
+          "route_review_rating": "4.8",
+          "route_review_count": 1612,
+          "display_rating": "4.8",
+          "trip_count": 578,
+          "matched_route_count": 130,
+          "min_price": 520000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-trong-thuy-limousine.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-trong-thuy-limousine.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/trong-thuy-limousine/",
+            "wp_post_id": 33021,
+            "wp_title": "Nhà xe Trọng Thủy Limousine"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea115",
+          "name": "Phương Trang",
+          "operator_id": 11071,
+          "rating": "4.8",
+          "review_count": 2541,
+          "route_review_rating": "4.8",
+          "route_review_count": 2555,
+          "display_rating": "4.8",
+          "trip_count": 539,
+          "matched_route_count": 87,
+          "min_price": 285000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/04/nha-xe-phuong-trang.webp",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/04/nha-xe-phuong-trang.webp",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/phuong-trang/",
+            "wp_post_id": 27995,
+            "wp_title": "Nhà xe Phương Trang"
+          }
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea195",
+          "name": "Tuấn Tú Express",
+          "operator_id": 1289,
+          "rating": "4.5",
+          "review_count": 1804,
+          "route_review_rating": "4.5",
+          "route_review_count": 1805,
+          "display_rating": "4.5",
+          "trip_count": 227,
+          "matched_route_count": 39,
+          "min_price": 450000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-tuan-tu-express-1.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-tuan-tu-express-1.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/tuan-tu-express/",
+            "wp_post_id": 56375,
+            "wp_title": "Nhà xe Tuấn Tú Express"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0c4",
+          "name": "Mạnh Hùng",
+          "operator_id": 11188,
+          "rating": "3.1",
+          "review_count": 361,
+          "route_review_rating": "3.1",
+          "route_review_count": 361,
+          "display_rating": "3.1",
+          "trip_count": 223,
+          "matched_route_count": 27,
+          "min_price": 460000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0e2",
+          "name": "Ngàn Hà (Bình Định)",
+          "operator_id": 35142,
+          "rating": "3.8",
+          "review_count": 81,
+          "route_review_rating": "3.8",
+          "route_review_count": 81,
+          "display_rating": "3.8",
+          "trip_count": 216,
+          "matched_route_count": 114,
+          "min_price": 700000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0c5",
+          "name": "Mạnh Hùng (Bình Định)",
+          "operator_id": 44543,
+          "rating": "3",
+          "review_count": 351,
+          "route_review_rating": "3.0",
+          "route_review_count": 351,
+          "display_rating": "3.0",
+          "trip_count": 197,
+          "matched_route_count": 40,
+          "min_price": 280000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/02/nha-xe-manh-hung.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/01/nha-xe-manh-hung-tuyen-quy-nhon-binh-dinh-di-sai-gon.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/manh-hung-binh-dinh/",
+            "wp_post_id": 19328,
+            "wp_title": "Nhà xe Mạnh Hùng (Bình Định)"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea137",
+          "name": "Tài Phát Limousine",
+          "operator_id": 47150,
+          "rating": "5",
+          "review_count": 1672,
+          "route_review_rating": "5.0",
+          "route_review_count": 1676,
+          "display_rating": "5.0",
+          "trip_count": 196,
+          "matched_route_count": 71,
+          "min_price": 500000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-tai-phat-limousine.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-tai-phat-limousine.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/tai-phat-limousine/",
+            "wp_post_id": 34828,
+            "wp_title": "Nhà xe Tài Phát Limousine"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0a9",
+          "name": "Khang Thịnh",
+          "operator_id": 41553,
+          "rating": "4.3",
+          "review_count": 2175,
+          "route_review_rating": "4.3",
+          "route_review_count": 2175,
+          "display_rating": "4.3",
+          "trip_count": 191,
+          "matched_route_count": 51,
+          "min_price": 495000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-khang-thinh-tuyen-xe-sai-gon-di-quang-ngai-gia-tot.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-khang-thinh-tuyen-xe-sai-gon-di-quang-ngai-gia-tot.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/khang-thinh/",
+            "wp_post_id": 35219,
+            "wp_title": "Nhà xe Khang Thịnh"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea12c",
+          "name": "Rạng Đông Buslines",
+          "operator_id": 30301,
+          "rating": "4.4",
+          "review_count": 1732,
+          "route_review_rating": "4.4",
+          "route_review_count": 1731,
+          "display_rating": "4.4",
+          "trip_count": 170,
+          "matched_route_count": 36,
+          "min_price": 450000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/11/nha-xe-rang-dong-buslines-1.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/11/nha-xe-rang-dong-buslines-1.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/rang-dong-buslines/",
+            "wp_post_id": 31302,
+            "wp_title": "Nhà xe Rạng Đông Buslines"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea083",
+          "name": "Hoàng Gia 77",
+          "operator_id": 20202,
+          "rating": "4.7",
+          "review_count": 43,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.7",
+          "trip_count": 110,
+          "matched_route_count": 62,
+          "min_price": 400000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/01/nha-xe-hoang-gia-77.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/01/nha-xe-hoang-gia-77.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/hoang-gia-77/",
+            "wp_post_id": 18128,
+            "wp_title": "Nhà xe Hoàng Gia 77"
+          }
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea17c",
+          "name": "Tín Phát Limousine",
+          "operator_id": 52875,
+          "rating": "5",
+          "review_count": 100,
+          "route_review_rating": "5.0",
+          "route_review_count": 99,
+          "display_rating": "5.0",
+          "trip_count": 100,
+          "matched_route_count": 100,
+          "min_price": 595000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0aa",
+          "name": "Khang Vy Limousine",
+          "operator_id": 44203,
+          "rating": "4.3",
+          "review_count": 92,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.3",
+          "trip_count": 75,
+          "matched_route_count": 43,
+          "min_price": 550000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-khang-vy-limousine.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-khang-vy-limousine.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/khang-vy-limousine/",
+            "wp_post_id": 34175,
+            "wp_title": "Nhà xe Khang Vy Limousine"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea046",
+          "name": "Dũng Thuỷ Express",
+          "operator_id": 12575,
+          "rating": "4.6",
+          "review_count": 288,
+          "route_review_rating": "4.7",
+          "route_review_count": 288,
+          "display_rating": "4.7",
+          "trip_count": 71,
+          "matched_route_count": 49,
+          "min_price": 700000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-dung-thuy-express.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-dung-thuy-express.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/dung-thuy-express/",
+            "wp_post_id": 35183,
+            "wp_title": "Nhà xe Dũng Thủy Express"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea080",
+          "name": "Hoa Nho Limousine",
+          "operator_id": 539,
+          "rating": "3.8",
+          "review_count": 109,
+          "route_review_rating": "3.8",
+          "route_review_count": 109,
+          "display_rating": "3.8",
+          "trip_count": 69,
+          "matched_route_count": 39,
+          "min_price": 700000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-hoa-nho.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-hoa-nho.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/hoa-nho/",
+            "wp_post_id": 18755,
+            "wp_title": "Nhà xe Hoa Nho"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0d4",
+          "name": "Mười Phương Express",
+          "operator_id": 17656,
+          "rating": "4.1",
+          "review_count": 267,
+          "route_review_rating": "4.1",
+          "route_review_count": 266,
+          "display_rating": "4.1",
+          "trip_count": 60,
+          "matched_route_count": 11,
+          "min_price": 450000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-muoi-phuong-quang-ngai-sai-gon.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-muoi-phuong-quang-ngai-sai-gon.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/muoi-phuong/",
+            "wp_post_id": 19438,
+            "wp_title": "Nhà xe Mười Phương"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea038",
+          "name": "Cẩm Vân",
+          "operator_id": 11108,
+          "rating": "3.5",
+          "review_count": 2,
+          "route_review_rating": "3.5",
+          "route_review_count": 2,
+          "display_rating": "3.5",
+          "trip_count": 58,
+          "matched_route_count": 20,
+          "min_price": 850000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-cam-van.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-cam-van.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/cam-van/",
+            "wp_post_id": 18175,
+            "wp_title": "Nhà xe Cẩm Vân"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea04e",
+          "name": "Đình Nhân",
+          "operator_id": 11192,
+          "rating": "3.9",
+          "review_count": 824,
+          "route_review_rating": "3.9",
+          "route_review_count": 824,
+          "display_rating": "3.9",
+          "trip_count": 56,
+          "matched_route_count": 9,
+          "min_price": 400000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-dinh-nhan.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-dinh-nhan.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/dinh-nhan/",
+            "wp_post_id": 18841,
+            "wp_title": "Nhà xe Đình Nhân"
+          }
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea189",
+          "name": "Trung Thành",
+          "operator_id": 45160,
+          "rating": "4.9",
+          "review_count": 26,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.9",
+          "trip_count": 55,
+          "matched_route_count": 52,
+          "min_price": 500000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/02/nha-xe-trung-thanh-sai-gon-di-binh-dinh.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/02/nha-xe-trung-thanh-sai-gon-di-binh-dinh.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/trung-thanh/",
+            "wp_post_id": 20249,
+            "wp_title": "Nhà xe Trung Thành"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea086",
+          "name": "Hoàng Huy",
+          "operator_id": 12806,
+          "rating": "3",
+          "review_count": 7,
+          "route_review_rating": "3.0",
+          "route_review_count": 7,
+          "display_rating": "3.0",
+          "trip_count": 40,
+          "matched_route_count": 15,
+          "min_price": 400000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-huy-hoang-ha-noi-ha-tinh.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-huy-hoang-ha-noi-ha-tinh.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/huy-hoang/",
+            "wp_post_id": 18431,
+            "wp_title": "Nhà xe Huy Hoàng"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea140",
+          "name": "Tân Quang Dũng",
+          "operator_id": 44817,
+          "rating": "3.7",
+          "review_count": 2781,
+          "route_review_rating": "3.7",
+          "route_review_count": 2783,
+          "display_rating": "3.7",
+          "trip_count": 39,
+          "matched_route_count": 10,
+          "min_price": 600000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-tan-quang-dung-quang-tri.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-tan-quang-dung-quang-tri.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/tan-quang-dung/",
+            "wp_post_id": 56045,
+            "wp_title": "Nhà xe Tân Quang Dũng"
+          }
+        }
+      ]
+    },
+    {
+      "group_id": "69a0151655136e9fa17e7568",
+      "from": {
+        "id": "69a0151655136e9fa17e7575",
+        "name": "Hồ Chí Minh",
+        "province_id": "69a0151655136e9fa17e7575",
+        "province_name": "Hồ Chí Minh"
+      },
+      "to": {
+        "id": "69a0151655136e9fa17e7568",
+        "name": "Khánh Hòa",
+        "province_id": "69a0151655136e9fa17e7568",
+        "province_name": "Khánh Hòa"
+      },
+      "operator_count": 84,
+      "trip_count": 6661,
+      "displayed_operator_count": 20,
+      "remaining_operator_count": 64,
+      "min_price": 450,
+      "operators": [
+        {
+          "id": "6a07f41ba3e5e987be2ea115",
+          "name": "Phương Trang",
+          "operator_id": 11071,
+          "rating": "4.8",
+          "review_count": 2541,
+          "route_review_rating": "4.8",
+          "route_review_count": 2524,
+          "display_rating": "4.8",
+          "trip_count": 810,
+          "matched_route_count": 117,
+          "min_price": 260000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/04/nha-xe-phuong-trang.webp",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/04/nha-xe-phuong-trang.webp",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/phuong-trang/",
+            "wp_post_id": 27995,
+            "wp_title": "Nhà xe Phương Trang"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0f4",
+          "name": "Như Ý 78 (Phú Yên)",
+          "operator_id": 47350,
+          "rating": "4.5",
+          "review_count": 240,
+          "route_review_rating": "4.6",
+          "route_review_count": 242,
+          "display_rating": "4.6",
+          "trip_count": 575,
+          "matched_route_count": 97,
+          "min_price": 350000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-nhu-y-78.jpeg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-nhu-y-78.jpeg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/nhu-y-78/",
+            "wp_post_id": 33643,
+            "wp_title": "Nhà xe Như Ý 78"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0c4",
+          "name": "Mạnh Hùng",
+          "operator_id": 11188,
+          "rating": "3.1",
+          "review_count": 361,
+          "route_review_rating": "3.1",
+          "route_review_count": 361,
+          "display_rating": "3.1",
+          "trip_count": 437,
+          "matched_route_count": 53,
+          "min_price": 420000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0bd",
+          "name": "Liên Hưng",
+          "operator_id": 808,
+          "rating": "4.1",
+          "review_count": 14158,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.1",
+          "trip_count": 428,
+          "matched_route_count": 73,
+          "min_price": 270000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-lien-hung-sai-gon-nha-trang.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/xe-khach-lien-hung-limousine.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/lien-hung/",
+            "wp_post_id": 17581,
+            "wp_title": "Nhà xe Liên Hưng"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea03b",
+          "name": "Cúc Tùng",
+          "operator_id": 11230,
+          "rating": "3.8",
+          "review_count": 3486,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "3.8",
+          "trip_count": 299,
+          "matched_route_count": 60,
+          "min_price": 231000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/11/nha-xe-cuc-tung-sai-gon-nha-trang.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/11/nha-xe-cuc-tung-sai-gon-nha-trang.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/cuc-tung/",
+            "wp_post_id": 17699,
+            "wp_title": "Nhà xe Cúc Tùng"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0a0",
+          "name": "Huỳnh Gia",
+          "operator_id": 542,
+          "rating": "4.7",
+          "review_count": 9634,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.7",
+          "trip_count": 240,
+          "matched_route_count": 40,
+          "min_price": 280000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/11/nha-xe-huynh-gia.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/11/nha-xe-huynh-gia-sai-gon-nha-trang.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/huynh-gia/",
+            "wp_post_id": 17766,
+            "wp_title": "Nhà xe Huỳnh Gia"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea137",
+          "name": "Tài Phát Limousine",
+          "operator_id": 47150,
+          "rating": "5",
+          "review_count": 1672,
+          "route_review_rating": "5.0",
+          "route_review_count": 1679,
+          "display_rating": "5.0",
+          "trip_count": 236,
+          "matched_route_count": 84,
+          "min_price": 500000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-tai-phat-limousine.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-tai-phat-limousine.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/tai-phat-limousine/",
+            "wp_post_id": 34828,
+            "wp_title": "Nhà xe Tài Phát Limousine"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0ac",
+          "name": "Khanh Phong",
+          "operator_id": 12496,
+          "rating": "4.8",
+          "review_count": 19878,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.8",
+          "trip_count": 226,
+          "matched_route_count": 24,
+          "min_price": 450,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-khanh-phong.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-khanh-phong.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/khanh-phong/",
+            "wp_post_id": 18025,
+            "wp_title": "Nhà xe Khanh Phong"
+          }
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea185",
+          "name": "Trọng Thủy Limousine",
+          "operator_id": 41055,
+          "rating": "4.8",
+          "review_count": 1614,
+          "route_review_rating": "4.8",
+          "route_review_count": 1616,
+          "display_rating": "4.8",
+          "trip_count": 211,
+          "matched_route_count": 50,
+          "min_price": 520000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-trong-thuy-limousine.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-trong-thuy-limousine.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/trong-thuy-limousine/",
+            "wp_post_id": 33021,
+            "wp_title": "Nhà xe Trọng Thủy Limousine"
+          }
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea1a9",
+          "name": "Xe Nhà",
+          "operator_id": 15853,
+          "rating": "4.5",
+          "review_count": 3456,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.5",
+          "trip_count": 194,
+          "matched_route_count": 31,
+          "min_price": 230000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/11/nha-xe-xe-nha-xe-giuong-nam-limousine-cao-cap.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/11/nha-xe-xe-nha.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/xe-nha/",
+            "wp_post_id": 17683,
+            "wp_title": "Nhà xe Xe Nhà"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea11d",
+          "name": "Quang Hạnh (NT)",
+          "operator_id": 46177,
+          "rating": "3.4",
+          "review_count": 420,
+          "route_review_rating": "3.4",
+          "route_review_count": 420,
+          "display_rating": "3.4",
+          "trip_count": 189,
+          "matched_route_count": 44,
+          "min_price": 420000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0c5",
+          "name": "Mạnh Hùng (Bình Định)",
+          "operator_id": 44543,
+          "rating": "3",
+          "review_count": 351,
+          "route_review_rating": "3.0",
+          "route_review_count": 351,
+          "display_rating": "3.0",
+          "trip_count": 171,
+          "matched_route_count": 39,
+          "min_price": 410000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/02/nha-xe-manh-hung.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/01/nha-xe-manh-hung-tuyen-quy-nhon-binh-dinh-di-sai-gon.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/manh-hung-binh-dinh/",
+            "wp_post_id": 19328,
+            "wp_title": "Nhà xe Mạnh Hùng (Bình Định)"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea062",
+          "name": "Hà Linh",
+          "operator_id": 582,
+          "rating": "4.2",
+          "review_count": 1408,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.2",
+          "trip_count": 170,
+          "matched_route_count": 66,
+          "min_price": 300000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-ha-linh-nha-trang.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-ha-linh-nha-trang.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/ha-linh/",
+            "wp_post_id": 18594,
+            "wp_title": "Nhà xe Hà Linh"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0d4",
+          "name": "Mười Phương Express",
+          "operator_id": 17656,
+          "rating": "4.1",
+          "review_count": 267,
+          "route_review_rating": "4.1",
+          "route_review_count": 267,
+          "display_rating": "4.1",
+          "trip_count": 168,
+          "matched_route_count": 29,
+          "min_price": 405000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-muoi-phuong-quang-ngai-sai-gon.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-muoi-phuong-quang-ngai-sai-gon.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/muoi-phuong/",
+            "wp_post_id": 19438,
+            "wp_title": "Nhà xe Mười Phương"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0f1",
+          "name": "Nhật Dương - Bình Minh Bus",
+          "operator_id": 39221,
+          "rating": "4.9",
+          "review_count": 7378,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.9",
+          "trip_count": 168,
+          "matched_route_count": 23,
+          "min_price": 400000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea030",
+          "name": "Bình Minh Tải",
+          "operator_id": 32151,
+          "rating": "4.7",
+          "review_count": 5196,
+          "route_review_rating": "4.7",
+          "route_review_count": 5202,
+          "display_rating": "4.7",
+          "trip_count": 145,
+          "matched_route_count": 24,
+          "min_price": 300000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea106",
+          "name": "Phúc An Express",
+          "operator_id": 22807,
+          "rating": "4.8",
+          "review_count": 3698,
+          "route_review_rating": "4.8",
+          "route_review_count": 3698,
+          "display_rating": "4.8",
+          "trip_count": 126,
+          "matched_route_count": 21,
+          "min_price": 270000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/Nha-xe-phuc-an-express.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/Nha-xe-phuc-an-express.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/phuc-an-express/",
+            "wp_post_id": 33206,
+            "wp_title": "Nhà xe Phúc An Express"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea097",
+          "name": "Hồng Sơn (Phú Yên)",
+          "operator_id": 17743,
+          "rating": "4.3",
+          "review_count": 1682,
+          "route_review_rating": "4.4",
+          "route_review_count": 1684,
+          "display_rating": "4.4",
+          "trip_count": 124,
+          "matched_route_count": 32,
+          "min_price": 350000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-hong-son.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-hong-son-sai-gon-phu-yen.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/hong-son/",
+            "wp_post_id": 18457,
+            "wp_title": "Nhà xe Hồng Sơn"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea00f",
+          "name": "An Anh Limousine",
+          "operator_id": 105,
+          "rating": "4.7",
+          "review_count": 9905,
+          "route_review_rating": "4.7",
+          "route_review_count": 9922,
+          "display_rating": "4.7",
+          "trip_count": 119,
+          "matched_route_count": 23,
+          "min_price": 349000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/04/nha-xe-an-anh-limousine.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/04/nha-xe-an-anh-limousine.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/an-anh-limousine/",
+            "wp_post_id": 17892,
+            "wp_title": "Nhà xe An Anh Limousine"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0e2",
+          "name": "Ngàn Hà (Bình Định)",
+          "operator_id": 35142,
+          "rating": "3.8",
+          "review_count": 81,
+          "route_review_rating": "3.8",
+          "route_review_count": 81,
+          "display_rating": "3.8",
+          "trip_count": 106,
+          "matched_route_count": 56,
+          "min_price": 700000,
+          "image_url": "",
+          "media": null
+        }
+      ]
+    },
+    {
+      "group_id": "69a0151655136e9fa17e756a",
+      "from": {
+        "id": "69e6f8db5139c113eb3d1e42",
+        "name": "Hồ Chí Minh",
+        "province_id": "69e6f8db5139c113eb3d1e42",
+        "province_name": "Hồ Chí Minh"
+      },
+      "to": {
+        "id": "69a0151655136e9fa17e756a",
+        "name": "Bình Thuận",
+        "province_id": "69a0151655136e9fa17e756a",
+        "province_name": "Bình Thuận"
+      },
+      "operator_count": 79,
+      "trip_count": 4986,
+      "displayed_operator_count": 20,
+      "remaining_operator_count": 59,
+      "min_price": 100000,
+      "operators": [
+        {
+          "id": "6a07f41ba3e5e987be2ea115",
+          "name": "Phương Trang",
+          "operator_id": 11071,
+          "rating": "4.8",
+          "review_count": 2541,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.8",
+          "trip_count": 573,
+          "matched_route_count": 63,
+          "min_price": 170000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/04/nha-xe-phuong-trang.webp",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/04/nha-xe-phuong-trang.webp",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/phuong-trang/",
+            "wp_post_id": 27995,
+            "wp_title": "Nhà xe Phương Trang"
+          }
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea19e",
+          "name": "Vie Limousine",
+          "operator_id": 31741,
+          "rating": "4.6",
+          "review_count": 5235,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.6",
+          "trip_count": 370,
+          "matched_route_count": 37,
+          "min_price": 360000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/03/nha-xe-vie-limousine-chat-luong-cao.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/03/nha-xe-vie-limousine-chat-luong-cao.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/vie-limousine/",
+            "wp_post_id": 32356,
+            "wp_title": "Nhà xe Vie Limousine"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0cc",
+          "name": "Minh Nghĩa",
+          "operator_id": 18286,
+          "rating": "4.6",
+          "review_count": 1646,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.6",
+          "trip_count": 282,
+          "matched_route_count": 33,
+          "min_price": 180000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-minh-nghia-sai-gon-binh-thuan.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-minh-nghia-sai-gon-binh-thuan.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/minh-nghia/",
+            "wp_post_id": 19386,
+            "wp_title": "Nhà xe Minh Nghĩa"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea035",
+          "name": "Cao Lâm Limousine",
+          "operator_id": 10824,
+          "rating": "4.5",
+          "review_count": 5136,
+          "route_review_rating": "4.5",
+          "route_review_count": 5140,
+          "display_rating": "4.5",
+          "trip_count": 277,
+          "matched_route_count": 34,
+          "min_price": 200000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-cao-lam.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-cao-lam.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/cao-lam/",
+            "wp_post_id": 18305,
+            "wp_title": "Nhà xe Cao Lâm"
+          }
+        },
+        {
+          "id": "6a07f42f5aa57f91fa5bdadd",
+          "name": "Thiên Kim Limousine",
+          "operator_id": 39870,
+          "rating": "4.8",
+          "review_count": 659,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.8",
+          "trip_count": 257,
+          "matched_route_count": 35,
+          "min_price": 370000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-thien-kim-limousine.webp",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-thien-kim-limousine.webp",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/thien-kim-limousine/",
+            "wp_post_id": 32192,
+            "wp_title": "Nhà xe Thiên Kim Limousine"
+          }
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea175",
+          "name": "Thủy Hà Linh",
+          "operator_id": 29120,
+          "rating": "3.8",
+          "review_count": 113,
+          "route_review_rating": "3.8",
+          "route_review_count": 112,
+          "display_rating": "3.8",
+          "trip_count": 242,
+          "matched_route_count": 46,
+          "min_price": 220000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/11/nha-xe-thuy-ha-linh.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/11/nha-xe-thuy-ha-linh.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/thuy-ha-linh/",
+            "wp_post_id": 30457,
+            "wp_title": "Nhà xe Thủy Hà Linh"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0b6",
+          "name": "Kumho Samco",
+          "operator_id": 11194,
+          "rating": "4.6",
+          "review_count": 2767,
+          "route_review_rating": "4.6",
+          "route_review_count": 2767,
+          "display_rating": "4.6",
+          "trip_count": 233,
+          "matched_route_count": 25,
+          "min_price": 220000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea185",
+          "name": "Trọng Thủy Limousine",
+          "operator_id": 41055,
+          "rating": "4.8",
+          "review_count": 1614,
+          "route_review_rating": "4.8",
+          "route_review_count": 1612,
+          "display_rating": "4.8",
+          "trip_count": 159,
+          "matched_route_count": 57,
+          "min_price": 520000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-trong-thuy-limousine.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-trong-thuy-limousine.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/trong-thuy-limousine/",
+            "wp_post_id": 33021,
+            "wp_title": "Nhà xe Trọng Thủy Limousine"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0c5",
+          "name": "Mạnh Hùng (Bình Định)",
+          "operator_id": 44543,
+          "rating": "3",
+          "review_count": 351,
+          "route_review_rating": "3.0",
+          "route_review_count": 351,
+          "display_rating": "3.0",
+          "trip_count": 159,
+          "matched_route_count": 36,
+          "min_price": 410000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/02/nha-xe-manh-hung.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/01/nha-xe-manh-hung-tuyen-quy-nhon-binh-dinh-di-sai-gon.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/manh-hung-binh-dinh/",
+            "wp_post_id": 19328,
+            "wp_title": "Nhà xe Mạnh Hùng (Bình Định)"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0d6",
+          "name": "Mỹ Loan",
+          "operator_id": 16901,
+          "rating": "4.8",
+          "review_count": 225,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.8",
+          "trip_count": 137,
+          "matched_route_count": 14,
+          "min_price": 100000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/01/nha-xe-my-loan.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/01/nha-xe-my-loan.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/my-loan/",
+            "wp_post_id": 19450,
+            "wp_title": "Nhà xe Mỹ Loan"
+          }
+        },
+        {
+          "id": "6a07f4451c07bca5fb760724",
+          "name": "G5Car Limousine",
+          "operator_id": 29125,
+          "rating": "4.9",
+          "review_count": 514,
+          "route_review_rating": "4.9",
+          "route_review_count": 513,
+          "display_rating": "4.9",
+          "trip_count": 132,
+          "matched_route_count": 21,
+          "min_price": 360000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f4451c07bca5fb76071f",
+          "name": "ADT Limousine",
+          "operator_id": 29028,
+          "rating": "4.7",
+          "review_count": 857,
+          "route_review_rating": "4.7",
+          "route_review_count": 858,
+          "display_rating": "4.7",
+          "trip_count": 127,
+          "matched_route_count": 27,
+          "min_price": 340000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/03/nha-xe-adt-limousine-tuyen-xe-sai-gon-di-binh-thuan-chat-luong-cao.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/03/nha-xe-adt-limousine-tuyen-xe-sai-gon-di-binh-thuan-chat-luong-cao.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/adt-limousine/",
+            "wp_post_id": 31426,
+            "wp_title": "Nhà xe ADT Limousine"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0bd",
+          "name": "Liên Hưng",
+          "operator_id": 808,
+          "rating": "4.1",
+          "review_count": 14158,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.1",
+          "trip_count": 126,
+          "matched_route_count": 23,
+          "min_price": 270000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-lien-hung-sai-gon-nha-trang.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/xe-khach-lien-hung-limousine.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/lien-hung/",
+            "wp_post_id": 17581,
+            "wp_title": "Nhà xe Liên Hưng"
+          }
+        },
+        {
+          "id": "6a07f42f5aa57f91fa5bdaba",
+          "name": "Kim Hùng",
+          "operator_id": 13062,
+          "rating": "4.5",
+          "review_count": 22,
+          "route_review_rating": "4.5",
+          "route_review_count": 22,
+          "display_rating": "4.5",
+          "trip_count": 120,
+          "matched_route_count": 12,
+          "min_price": 230000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/02/nha-xe-kim-hung.png",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/02/nha-xe-kim-hung.png",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/kim-hung/",
+            "wp_post_id": 18313,
+            "wp_title": "Nhà xe Kim Hùng"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea03b",
+          "name": "Cúc Tùng",
+          "operator_id": 11230,
+          "rating": "3.8",
+          "review_count": 3486,
+          "route_review_rating": "3.8",
+          "route_review_count": 3481,
+          "display_rating": "3.8",
+          "trip_count": 120,
+          "matched_route_count": 39,
+          "min_price": 310000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/11/nha-xe-cuc-tung-sai-gon-nha-trang.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/11/nha-xe-cuc-tung-sai-gon-nha-trang.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/cuc-tung/",
+            "wp_post_id": 17699,
+            "wp_title": "Nhà xe Cúc Tùng"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0d4",
+          "name": "Mười Phương Express",
+          "operator_id": 17656,
+          "rating": "4.1",
+          "review_count": 267,
+          "route_review_rating": "4.1",
+          "route_review_count": 267,
+          "display_rating": "4.1",
+          "trip_count": 116,
+          "matched_route_count": 19,
+          "min_price": 315000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-muoi-phuong-quang-ngai-sai-gon.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-muoi-phuong-quang-ngai-sai-gon.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/muoi-phuong/",
+            "wp_post_id": 19438,
+            "wp_title": "Nhà xe Mười Phương"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea13c",
+          "name": "Tân Hoàng Anh",
+          "operator_id": 1490,
+          "rating": "4.4",
+          "review_count": 1653,
+          "route_review_rating": "4.4",
+          "route_review_count": 1652,
+          "display_rating": "4.4",
+          "trip_count": 103,
+          "matched_route_count": 20,
+          "min_price": 200000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-tan-hoang-anh-sai-gon-di-phan-rang.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-tan-hoang-anh-sai-gon-di-phan-rang.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/tan-hoang-anh/",
+            "wp_post_id": 20033,
+            "wp_title": "Nhà xe Tân Hoàng Anh"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea075",
+          "name": "Hạnh Cafe - Hà Phương Limousine",
+          "operator_id": 537,
+          "rating": "4.5",
+          "review_count": 8627,
+          "route_review_rating": "4.5",
+          "route_review_count": 8629,
+          "display_rating": "4.5",
+          "trip_count": 99,
+          "matched_route_count": 12,
+          "min_price": 200000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-hanh-cafe-sai-gon-nha-trang.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-hanh-cafe.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/hanh-cafe/",
+            "wp_post_id": 18198,
+            "wp_title": "Nhà xe Hạnh Cafe"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea045",
+          "name": "Dũng Huyền Limousine",
+          "operator_id": 50093,
+          "rating": "4.9",
+          "review_count": 74,
+          "route_review_rating": "4.9",
+          "route_review_count": 74,
+          "display_rating": "4.9",
+          "trip_count": 97,
+          "matched_route_count": 13,
+          "min_price": 210000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/11/nha-xe-dung-huyen-limousine.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/11/nha-xe-dung-huyen-limousine.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/dung-huyen-limousine/",
+            "wp_post_id": 56395,
+            "wp_title": "Nhà xe Dũng Huyền Limousine"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0db",
+          "name": "Nam Hải Limousine",
+          "operator_id": 43342,
+          "rating": "4.8",
+          "review_count": 4688,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.8",
+          "trip_count": 96,
+          "matched_route_count": 11,
+          "min_price": 190000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/11/nha-xe-nam-hai-limousine-2.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/11/nha-xe-nam-hai-limousine-2.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/nam-hai-limousine/",
+            "wp_post_id": 30559,
+            "wp_title": "Nhà xe Nam Hải Limousine"
+          }
+        }
+      ]
+    },
+    {
+      "group_id": "69a0151655136e9fa17e7567",
+      "from": {
+        "id": "69a0151655136e9fa17e7575",
+        "name": "Hồ Chí Minh",
+        "province_id": "69a0151655136e9fa17e7575",
+        "province_name": "Hồ Chí Minh"
+      },
+      "to": {
+        "id": "69a0151655136e9fa17e7567",
+        "name": "Phú Yên",
+        "province_id": "69a0151655136e9fa17e7567",
+        "province_name": "Phú Yên"
+      },
+      "operator_count": 72,
+      "trip_count": 4092,
+      "displayed_operator_count": 20,
+      "remaining_operator_count": 52,
+      "min_price": 200000,
+      "operators": [
+        {
+          "id": "6a07f41ba3e5e987be2ea115",
+          "name": "Phương Trang",
+          "operator_id": 11071,
+          "rating": "4.8",
+          "review_count": 2541,
+          "route_review_rating": "4.8",
+          "route_review_count": 2583,
+          "display_rating": "4.8",
+          "trip_count": 551,
+          "matched_route_count": 87,
+          "min_price": 255000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/04/nha-xe-phuong-trang.webp",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/04/nha-xe-phuong-trang.webp",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/phuong-trang/",
+            "wp_post_id": 27995,
+            "wp_title": "Nhà xe Phương Trang"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0f4",
+          "name": "Như Ý 78 (Phú Yên)",
+          "operator_id": 47350,
+          "rating": "4.5",
+          "review_count": 240,
+          "route_review_rating": "4.6",
+          "route_review_count": 241,
+          "display_rating": "4.6",
+          "trip_count": 459,
+          "matched_route_count": 77,
+          "min_price": 350000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-nhu-y-78.jpeg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-nhu-y-78.jpeg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/nhu-y-78/",
+            "wp_post_id": 33643,
+            "wp_title": "Nhà xe Như Ý 78"
+          }
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea185",
+          "name": "Trọng Thủy Limousine",
+          "operator_id": 41055,
+          "rating": "4.8",
+          "review_count": 1614,
+          "route_review_rating": "4.8",
+          "route_review_count": 1618,
+          "display_rating": "4.8",
+          "trip_count": 322,
+          "matched_route_count": 84,
+          "min_price": 640000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-trong-thuy-limousine.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-trong-thuy-limousine.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/trong-thuy-limousine/",
+            "wp_post_id": 33021,
+            "wp_title": "Nhà xe Trọng Thủy Limousine"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea097",
+          "name": "Hồng Sơn (Phú Yên)",
+          "operator_id": 17743,
+          "rating": "4.3",
+          "review_count": 1682,
+          "route_review_rating": "4.4",
+          "route_review_count": 1684,
+          "display_rating": "4.4",
+          "trip_count": 319,
+          "matched_route_count": 79,
+          "min_price": 350000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-hong-son.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-hong-son-sai-gon-phu-yen.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/hong-son/",
+            "wp_post_id": 18457,
+            "wp_title": "Nhà xe Hồng Sơn"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0c4",
+          "name": "Mạnh Hùng",
+          "operator_id": 11188,
+          "rating": "3.1",
+          "review_count": 361,
+          "route_review_rating": "3.1",
+          "route_review_count": 361,
+          "display_rating": "3.1",
+          "trip_count": 269,
+          "matched_route_count": 34,
+          "min_price": 420000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea137",
+          "name": "Tài Phát Limousine",
+          "operator_id": 47150,
+          "rating": "5",
+          "review_count": 1672,
+          "route_review_rating": "5.0",
+          "route_review_count": 1679,
+          "display_rating": "5.0",
+          "trip_count": 171,
+          "matched_route_count": 59,
+          "min_price": 500000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-tai-phat-limousine.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-tai-phat-limousine.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/tai-phat-limousine/",
+            "wp_post_id": 34828,
+            "wp_title": "Nhà xe Tài Phát Limousine"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0c5",
+          "name": "Mạnh Hùng (Bình Định)",
+          "operator_id": 44543,
+          "rating": "3",
+          "review_count": 351,
+          "route_review_rating": "3.0",
+          "route_review_count": 351,
+          "display_rating": "3.0",
+          "trip_count": 148,
+          "matched_route_count": 32,
+          "min_price": 410000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/02/nha-xe-manh-hung.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/01/nha-xe-manh-hung-tuyen-quy-nhon-binh-dinh-di-sai-gon.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/manh-hung-binh-dinh/",
+            "wp_post_id": 19328,
+            "wp_title": "Nhà xe Mạnh Hùng (Bình Định)"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0d3",
+          "name": "Mộc Thảo",
+          "operator_id": 985,
+          "rating": "4.7",
+          "review_count": 1905,
+          "route_review_rating": "4.7",
+          "route_review_count": 1909,
+          "display_rating": "4.7",
+          "trip_count": 121,
+          "matched_route_count": 40,
+          "min_price": 350000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-phuc-thuan-thao.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-phuc-thuan-thao.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/phuc-thuan-thao/",
+            "wp_post_id": 19575,
+            "wp_title": "Nhà xe Phúc Thuận Thảo"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea140",
+          "name": "Tân Quang Dũng",
+          "operator_id": 44817,
+          "rating": "3.7",
+          "review_count": 2781,
+          "route_review_rating": "3.7",
+          "route_review_count": 2792,
+          "display_rating": "3.7",
+          "trip_count": 93,
+          "matched_route_count": 25,
+          "min_price": 550000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-tan-quang-dung-quang-tri.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-tan-quang-dung-quang-tri.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/tan-quang-dung/",
+            "wp_post_id": 56045,
+            "wp_title": "Nhà xe Tân Quang Dũng"
+          }
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea188",
+          "name": "Trung Nguyên",
+          "operator_id": 55033,
+          "rating": "4.4",
+          "review_count": 7,
+          "route_review_rating": "4.4",
+          "route_review_count": 7,
+          "display_rating": "4.4",
+          "trip_count": 86,
+          "matched_route_count": 48,
+          "min_price": 350000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0d4",
+          "name": "Mười Phương Express",
+          "operator_id": 17656,
+          "rating": "4.1",
+          "review_count": 267,
+          "route_review_rating": "4.1",
+          "route_review_count": 268,
+          "display_rating": "4.1",
+          "trip_count": 86,
+          "matched_route_count": 14,
+          "min_price": 405000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-muoi-phuong-quang-ngai-sai-gon.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-muoi-phuong-quang-ngai-sai-gon.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/muoi-phuong/",
+            "wp_post_id": 19438,
+            "wp_title": "Nhà xe Mười Phương"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea10a",
+          "name": "Phúc Yên",
+          "operator_id": 32241,
+          "rating": "4.7",
+          "review_count": 822,
+          "route_review_rating": "4.7",
+          "route_review_count": 822,
+          "display_rating": "4.7",
+          "trip_count": 84,
+          "matched_route_count": 31,
+          "min_price": 270000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/01/nha-xe-phuc-yen-78-tuyen-ben-xe-phuc-lam-di-ha-noi.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/01/nha-xe-phuc-yen-78-tuyen-ben-xe-phuc-lam-di-ha-noi.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/phuc-yen/",
+            "wp_post_id": 19597,
+            "wp_title": "Nhà xe Phúc Yên"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea10e",
+          "name": "Phương Anh (Phú Yên)",
+          "operator_id": 40634,
+          "rating": "4.9",
+          "review_count": 44,
+          "route_review_rating": "4.9",
+          "route_review_count": 44,
+          "display_rating": "4.9",
+          "trip_count": 80,
+          "matched_route_count": 30,
+          "min_price": 350000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/01/nha-xe-phuong-anh.jpg",
+          "media": {
+            "avatar_url": "",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/camel-travel/",
+            "wp_post_id": 18223,
+            "wp_title": "Nhà xe Camel Travel"
+          }
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea17c",
+          "name": "Tín Phát Limousine",
+          "operator_id": 52875,
+          "rating": "5",
+          "review_count": 100,
+          "route_review_rating": "5.0",
+          "route_review_count": 100,
+          "display_rating": "5.0",
+          "trip_count": 72,
+          "matched_route_count": 72,
+          "min_price": 595000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0e2",
+          "name": "Ngàn Hà (Bình Định)",
+          "operator_id": 35142,
+          "rating": "3.8",
+          "review_count": 81,
+          "route_review_rating": "3.8",
+          "route_review_count": 81,
+          "display_rating": "3.8",
+          "trip_count": 72,
+          "matched_route_count": 38,
+          "min_price": 700000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea083",
+          "name": "Hoàng Gia 77",
+          "operator_id": 20202,
+          "rating": "4.7",
+          "review_count": 43,
+          "route_review_rating": "4.7",
+          "route_review_count": 43,
+          "display_rating": "4.7",
+          "trip_count": 71,
+          "matched_route_count": 41,
+          "min_price": 450000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/01/nha-xe-hoang-gia-77.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/01/nha-xe-hoang-gia-77.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/hoang-gia-77/",
+            "wp_post_id": 18128,
+            "wp_title": "Nhà xe Hoàng Gia 77"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea129",
+          "name": "Quý Thảo (Đắk Lắk)",
+          "operator_id": 25959,
+          "rating": "4.3",
+          "review_count": 1709,
+          "route_review_rating": "4.3",
+          "route_review_count": 1709,
+          "display_rating": "4.3",
+          "trip_count": 71,
+          "matched_route_count": 21,
+          "min_price": 360000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea158",
+          "name": "Thanh Thuỷ - Quảng Ngãi",
+          "operator_id": 29228,
+          "rating": "4.7",
+          "review_count": 1024,
+          "route_review_rating": "4.7",
+          "route_review_count": 1027,
+          "display_rating": "4.7",
+          "trip_count": 68,
+          "matched_route_count": 24,
+          "min_price": 500000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/01/nha-xe-thanh-thuy-tuyen-sai-gon-di-quang-ngai-1.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-thanh-thuy-sai-gon-binh-dinh.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/thanh-thuy/",
+            "wp_post_id": 19943,
+            "wp_title": "Nhà xe Thanh Thủy"
+          }
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea195",
+          "name": "Tuấn Tú Express",
+          "operator_id": 1289,
+          "rating": "4.5",
+          "review_count": 1804,
+          "route_review_rating": "4.5",
+          "route_review_count": 1805,
+          "display_rating": "4.5",
+          "trip_count": 64,
+          "matched_route_count": 12,
+          "min_price": 450000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-tuan-tu-express-1.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-tuan-tu-express-1.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/tuan-tu-express/",
+            "wp_post_id": 56375,
+            "wp_title": "Nhà xe Tuấn Tú Express"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0aa",
+          "name": "Khang Vy Limousine",
+          "operator_id": 44203,
+          "rating": "4.3",
+          "review_count": 92,
+          "route_review_rating": "4.3",
+          "route_review_count": 92,
+          "display_rating": "4.3",
+          "trip_count": 60,
+          "matched_route_count": 34,
+          "min_price": 500000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-khang-vy-limousine.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/12/nha-xe-khang-vy-limousine.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/khang-vy-limousine/",
+            "wp_post_id": 34175,
+            "wp_title": "Nhà xe Khang Vy Limousine"
+          }
+        }
+      ]
+    },
+    {
+      "group_id": "69a0151655136e9fa17e756f",
+      "from": {
+        "id": "69a0151655136e9fa17e7575",
+        "name": "Hồ Chí Minh",
+        "province_id": "69a0151655136e9fa17e7575",
+        "province_name": "Hồ Chí Minh"
+      },
+      "to": {
+        "id": "69a0151655136e9fa17e756f",
+        "name": "Lâm Đồng",
+        "province_id": "69a0151655136e9fa17e756f",
+        "province_name": "Lâm Đồng"
+      },
+      "operator_count": 65,
+      "trip_count": 7982,
+      "displayed_operator_count": 20,
+      "remaining_operator_count": 45,
+      "min_price": 290,
+      "operators": [
+        {
+          "id": "6a07f41ba3e5e987be2ea04c",
+          "name": "Điền Linh Limousine",
+          "operator_id": 19133,
+          "rating": "4.2",
+          "review_count": 6055,
+          "route_review_rating": "4.2",
+          "route_review_count": 6054,
+          "display_rating": "4.2",
+          "trip_count": 1597,
+          "matched_route_count": 177,
+          "min_price": 230000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/03/nha-xe-dien-linh.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/03/nha-xe-dien-linh.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/dien-linh-limousine/",
+            "wp_post_id": 18829,
+            "wp_title": "Nhà xe Điền Linh Limousine"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea140",
+          "name": "Tân Quang Dũng",
+          "operator_id": 44817,
+          "rating": "3.7",
+          "review_count": 2781,
+          "route_review_rating": "3.7",
+          "route_review_count": 2783,
+          "display_rating": "3.7",
+          "trip_count": 868,
+          "matched_route_count": 95,
+          "min_price": 300000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-tan-quang-dung-quang-tri.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-tan-quang-dung-quang-tri.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/tan-quang-dung/",
+            "wp_post_id": 56045,
+            "wp_title": "Nhà xe Tân Quang Dũng"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea115",
+          "name": "Phương Trang",
+          "operator_id": 11071,
+          "rating": "4.8",
+          "review_count": 2541,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.8",
+          "trip_count": 741,
+          "matched_route_count": 95,
+          "min_price": 290,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/04/nha-xe-phuong-trang.webp",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/04/nha-xe-phuong-trang.webp",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/phuong-trang/",
+            "wp_post_id": 27995,
+            "wp_title": "Nhà xe Phương Trang"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0bc",
+          "name": "LH Minh Trí Limousine",
+          "operator_id": 18773,
+          "rating": "4.4",
+          "review_count": 1936,
+          "route_review_rating": "4.4",
+          "route_review_count": 1938,
+          "display_rating": "4.4",
+          "trip_count": 521,
+          "matched_route_count": 98,
+          "min_price": 400000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea150",
+          "name": "Thành Liên Buslines",
+          "operator_id": 55343,
+          "rating": "4.6",
+          "review_count": 35,
+          "route_review_rating": "4.6",
+          "route_review_count": 35,
+          "display_rating": "4.6",
+          "trip_count": 443,
+          "matched_route_count": 63,
+          "min_price": 253300,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0f2",
+          "name": "Nhật Đoan Limousine",
+          "operator_id": 16413,
+          "rating": "4.6",
+          "review_count": 624,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.6",
+          "trip_count": 418,
+          "matched_route_count": 56,
+          "min_price": 200000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-nhat-doan-limousine-sai-gon-bao-loc.jpeg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-nhat-doan-limousine-sai-gon-bao-loc.jpeg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/nhat-doan-limousine/",
+            "wp_post_id": 19514,
+            "wp_title": "Nhà xe Nhật Đoan Limousine"
+          }
+        },
+        {
+          "id": "6a07f42f5aa57f91fa5bdae0",
+          "name": "Thịnh Thái Limousine",
+          "operator_id": 19356,
+          "rating": "4.3",
+          "review_count": 453,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.3",
+          "trip_count": 377,
+          "matched_route_count": 38,
+          "min_price": 250000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-thinh-thai-limousine-tuyen-sai-gon-di-dong-nai.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-thinh-thai-limousine-tuyen-sai-gon-di-dong-nai.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/thinh-thai-limousine/",
+            "wp_post_id": 20155,
+            "wp_title": "Nhà xe Thịnh Thái Limousine"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea00f",
+          "name": "An Anh Limousine",
+          "operator_id": 105,
+          "rating": "4.7",
+          "review_count": 9905,
+          "route_review_rating": "4.8",
+          "route_review_count": 9890,
+          "display_rating": "4.8",
+          "trip_count": 365,
+          "matched_route_count": 64,
+          "min_price": 249000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/04/nha-xe-an-anh-limousine.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/04/nha-xe-an-anh-limousine.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/an-anh-limousine/",
+            "wp_post_id": 17892,
+            "wp_title": "Nhà xe An Anh Limousine"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea102",
+          "name": "Phong Phú",
+          "operator_id": 27278,
+          "rating": "4.5",
+          "review_count": 9278,
+          "route_review_rating": "4.5",
+          "route_review_count": 9265,
+          "display_rating": "4.5",
+          "trip_count": 358,
+          "matched_route_count": 70,
+          "min_price": 249000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/03/nha-xe-phong-phu-limousine-da-lat-di-sai-gon.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/03/nha-xe-phong-phu-limousine-da-lat-di-sai-gon.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/phong-phu-limousine/",
+            "wp_post_id": 19599,
+            "wp_title": "Nhà xe Phong Phú Limousine"
+          }
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea184",
+          "name": "Trọng Minh",
+          "operator_id": 30353,
+          "rating": "4.8",
+          "review_count": 2449,
+          "route_review_rating": "4.8",
+          "route_review_count": 2439,
+          "display_rating": "4.8",
+          "trip_count": 304,
+          "matched_route_count": 44,
+          "min_price": 300000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-trong-minh-sai-gon-da-lat.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-trong-minh-sai-gon-da-lat.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/trong-minh/",
+            "wp_post_id": 20222,
+            "wp_title": "Nhà xe Trọng Minh"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea030",
+          "name": "Bình Minh Tải",
+          "operator_id": 32151,
+          "rating": "4.7",
+          "review_count": 5196,
+          "route_review_rating": "4.7",
+          "route_review_count": 5199,
+          "display_rating": "4.7",
+          "trip_count": 228,
+          "matched_route_count": 39,
+          "min_price": 340000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea0c0",
+          "name": "Long Vân Limousine",
+          "operator_id": 25958,
+          "rating": "4.6",
+          "review_count": 7500,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.6",
+          "trip_count": 168,
+          "matched_route_count": 29,
+          "min_price": 450000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/11/nha-xe-long-van-limousine-tuyen-sai-gon-di-nha-trang-khanh-hoa.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/01/nha-xe-long-van-limousine-dak-lak-sai-gon.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/long-van-limousine/",
+            "wp_post_id": 19267,
+            "wp_title": "Nhà xe Long Vân Limousine"
+          }
+        },
+        {
+          "id": "6a07f45d28d280287748a93d",
+          "name": "Bảo Lộc Limousine",
+          "operator_id": 45970,
+          "rating": "0",
+          "review_count": 0,
+          "route_review_rating": "0.0",
+          "route_review_count": 0,
+          "display_rating": "0.0",
+          "trip_count": 166,
+          "matched_route_count": 21,
+          "min_price": 320000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-bao-loc-limousine.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-bao-loc-limousine.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/bao-loc-limousine/",
+            "wp_post_id": 56611,
+            "wp_title": "Nhà xe Bảo Lộc Limousine"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea092",
+          "name": "Hoàng Thủy",
+          "operator_id": 32690,
+          "rating": "4.8",
+          "review_count": 4287,
+          "route_review_rating": "4.8",
+          "route_review_count": 4287,
+          "display_rating": "4.8",
+          "trip_count": 164,
+          "matched_route_count": 49,
+          "min_price": 300000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-hoang-thuy.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-hoang-thuy.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/hoang-thuy/",
+            "wp_post_id": 18326,
+            "wp_title": "Nhà xe Hoàng Thủy"
+          }
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea195",
+          "name": "Tuấn Tú Express",
+          "operator_id": 1289,
+          "rating": "4.5",
+          "review_count": 1804,
+          "route_review_rating": "4.5",
+          "route_review_count": 1804,
+          "display_rating": "4.5",
+          "trip_count": 164,
+          "matched_route_count": 55,
+          "min_price": 350000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-tuan-tu-express-1.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-tuan-tu-express-1.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/tuan-tu-express/",
+            "wp_post_id": 56375,
+            "wp_title": "Nhà xe Tuấn Tú Express"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea13f",
+          "name": "Tân Niên",
+          "operator_id": 12462,
+          "rating": "4.5",
+          "review_count": 2171,
+          "route_review_rating": "4.5",
+          "route_review_count": 2169,
+          "display_rating": "4.5",
+          "trip_count": 148,
+          "matched_route_count": 46,
+          "min_price": 292500,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/11/nha-xe-tan-nien-vung-tau-dak-lak.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/11/nha-xe-tan-nien.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/tan-nien/",
+            "wp_post_id": 17599,
+            "wp_title": "Nhà xe Tân Niên"
+          }
+        },
+        {
+          "id": "6a07f41ba3e5e987be2ea04d",
+          "name": "Điều Hòa",
+          "operator_id": 13000,
+          "rating": "4.7",
+          "review_count": 606,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "4.7",
+          "trip_count": 128,
+          "matched_route_count": 55,
+          "min_price": 249000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/11/nha-xe-dieu-hoa.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/11/nha-xe-dieu-hoa.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/dieu-hoa/",
+            "wp_post_id": 56627,
+            "wp_title": "Nhà xe Điều Hòa"
+          }
+        },
+        {
+          "id": "6a07f4f1f3d96876f07279d7",
+          "name": "ĐiềN Linh",
+          "operator_id": 0,
+          "rating": "",
+          "review_count": 0,
+          "route_review_rating": "",
+          "route_review_count": 0,
+          "display_rating": "",
+          "trip_count": 108,
+          "matched_route_count": 5,
+          "min_price": 250000,
+          "image_url": "",
+          "media": null
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea14a",
+          "name": "Thanh Bình Xanh",
+          "operator_id": 18145,
+          "rating": "4.2",
+          "review_count": 2647,
+          "route_review_rating": "4.2",
+          "route_review_count": 2647,
+          "display_rating": "4.2",
+          "trip_count": 95,
+          "matched_route_count": 15,
+          "min_price": 180000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2025/02/nha-xe-thanh-binh-xanh-tuyen-binh-duong-di-da-lat-lam-dong.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/12/nha-xe-thanh-binh-xanh.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/thanh-binh-xanh/",
+            "wp_post_id": 19838,
+            "wp_title": "Nhà xe Thanh Bình Xanh"
+          }
+        },
+        {
+          "id": "6a07f41ca3e5e987be2ea17b",
+          "name": "Tiến Oanh",
+          "operator_id": 2,
+          "rating": "4.8",
+          "review_count": 14820,
+          "route_review_rating": "4.8",
+          "route_review_count": 14822,
+          "display_rating": "4.8",
+          "trip_count": 78,
+          "matched_route_count": 21,
+          "min_price": 400000,
+          "image_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/11/nha-xe-tien-oanh.jpg",
+          "media": {
+            "avatar_url": "https://object.dailyve.com/dailyve/wp-content/uploads/2024/11/nha-xe-tien-oanh.jpg",
+            "wp_url": "https://dailyve.com.vn/ve-xe-khach/nha-xe/tien-oanh/",
+            "wp_post_id": 17785,
+            "wp_title": "Nhà xe Tiến Oanh"
+          }
+        }
+      ]
+    }
+  ],
+  "total": 61,
+  "page": 1,
+  "pageSize": 6,
+  "operatorLimit": 20,
+  "totalPages": 11
+}
