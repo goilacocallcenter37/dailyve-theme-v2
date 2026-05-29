@@ -978,7 +978,7 @@
 
                         {{-- Quick Info Card --}}
                         <div class="bx-card p-5">
-                            <h3 class="bx-display text-sm text-slate-900 pb-3 border-b border-slate-100 mb-4">Thông tin
+                            <h3 class="bx-display text-base text-slate-900 pb-3 border-b border-slate-100 mb-4">Thông tin
                                 nhanh</h3>
                             <div class="space-y-3 text-xs">
                                 <div class="flex items-start gap-2.5 text-slate-600">
@@ -1042,30 +1042,34 @@
                         </div>
 
                         {{-- App Download Card --}}
-                        <div class="bx-card p-5 bg-gradient-to-br from-blue-600 to-blue-700 border-blue-600 text-white">
-                            <div class="mb-3">
-                                <span class="text-white/80 text-[10px] font-semibold uppercase tracking-wider">Tải app
-                                    Dailyve</span>
-                                <p class="text-sm font-bold mt-1 leading-tight">Đặt vé nhanh chóng & nhận ưu đãi mỗi ngày
-                                </p>
-                            </div>
-                            <div class="flex flex-col gap-2">
-                                <a href="https://apps.apple.com" target="_blank" rel="noopener noreferrer"
-                                    class="flex items-center gap-2 bg-white/15 hover:bg-white/25 border border-white/30 rounded-xl px-3 py-2 no-underline! transition-all">
-                                    <i class="fab fa-apple text-white text-lg"></i>
-                                    <div>
-                                        <span class="block text-white/75 text-[9px] font-semibold">Tải trên</span>
-                                        <span class="block text-white text-xs font-bold leading-tight">App Store</span>
-                                    </div>
-                                </a>
-                                <a href="https://play.google.com" target="_blank" rel="noopener noreferrer"
-                                    class="flex items-center gap-2 bg-white/15 hover:bg-white/25 border border-white/30 rounded-xl px-3 py-2 no-underline! transition-all">
-                                    <i class="fab fa-google-play text-white text-base"></i>
-                                    <div>
-                                        <span class="block text-white/75 text-[9px] font-semibold">Tải trên</span>
-                                        <span class="block text-white text-xs font-bold leading-tight">Google Play</span>
-                                    </div>
-                                </a>
+                        @php
+                            $appStore = home_url(
+                                '/wp-content/themes/dailyve-theme/resources/images/download-app-store.png',
+                            );
+                            $googlePlay = home_url(
+                                '/wp-content/themes/dailyve-theme/resources/images/download-gg-play.png',
+                            );
+                            $qrCode =
+                                'https://object.dailyve.com/dailyve/wp-content/uploads/2025/08/QR-CODE-APP-DLV.png';
+                        @endphp
+                        <div class="rounded-xl bg-blue-600 p-5 text-white shadow-sm">
+                            <h2 class="text-base font-semibold">Tải ứng dụng Dailyve</h2>
+                            <p class="mt-1 text-xs text-blue-100">Đặt vé nhanh chóng, ưu đãi mỗi ngày</p>
+                            <div class="mt-4 grid grid-cols-[88px_minmax(0,1fr)] gap-3">
+                                <img class="h-[88px] w-[88px] rounded-lg bg-white p-1" src="{{ esc_url($qrCode) }}"
+                                    alt="QR tải ứng dụng Dailyve" loading="lazy" decoding="async">
+                                <div class="grid content-center gap-2">
+                                    <a href="https://apps.apple.com" target="_blank" rel="noopener noreferrer">
+                                        <img class="h-9 w-auto rounded-md transition-transform hover:scale-105"
+                                            src="{{ esc_url($appStore) }}" alt="App Store" loading="lazy"
+                                            decoding="async">
+                                    </a>
+                                    <a href="https://play.google.com" target="_blank" rel="noopener noreferrer">
+                                        <img class="h-9 w-auto rounded-md transition-transform hover:scale-105"
+                                            src="{{ esc_url($googlePlay) }}" alt="Google Play" loading="lazy"
+                                            decoding="async">
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </aside>
@@ -1080,7 +1084,7 @@
                             <div class="bx-card p-6 mb-5">
                                 <h2 class="bx-display text-xl text-slate-950 mb-4">Giới thiệu bến xe {{ $station_name }}
                                 </h2>
-                                <div class="grid sm:grid-cols-[1fr_180px] gap-5 items-start">
+                                <div>
                                     <div class="text-sm text-slate-600 leading-relaxed space-y-3">
                                         @if ($post_content)
                                             {!! apply_filters('the_content', $post_content) !!}
@@ -1091,12 +1095,6 @@
                                             <p>Với quy mô hiện đại, hạ tầng thông dịch vụ đa dạng và vị trí thuận tiện ngay
                                                 trên Quốc lộ 22, bến xe mang đến trải nghiệm đi lại an toàn, nhanh chóng và
                                                 thoải mái cho hành khách.</p>
-                                        @endif
-                                    </div>
-                                    <div class="shrink-0">
-                                        @if (!empty($gallery[0]))
-                                            <img src="{{ esc_url($gallery[0]) }}" alt="{{ esc_attr($station_name) }}"
-                                                class="w-full h-28 sm:h-32 object-cover rounded-2xl border border-slate-100 shadow-sm">
                                         @endif
                                     </div>
                                 </div>
