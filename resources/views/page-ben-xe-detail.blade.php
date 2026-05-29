@@ -630,7 +630,7 @@
                         </div>
 
                         {{-- Cards grid --}}
-                        <div id="routes-grid" class="grid gap-4 md:grid-cols-2">
+                        <div id="routes-grid" class="grid gap-4 md:grid-cols-2 items-start">
                             @foreach ($items as $item)
                                 @php
                                     $from_name = $item['from']['name'] ?? '';
@@ -774,13 +774,37 @@
                                                                         </span>
                                                                         @if ($op_reviews > 0)
                                                                             <span
-                                                                                class="text-[10px] text-slate-400 font-medium">{{ $op_reviews }}
+                                                                                class="text-[10px] text-slate-400 font-medium hidden sm:block">{{ $op_reviews }}
                                                                                 đánh giá</span>
                                                                         @endif
                                                                     </div>
-                                                                    <a href="{{ esc_url($op_post_url ?: $search_query_url) }}"
+                                                                    @php
+                                                                        $op_trip_count = $op['trip_count'] ?? 0;
+                                                                        $btn_text = $op_trip_count > 0 ? "Xem {$op_trip_count}+ chuyến" : "Xem chuyến";
+                                                                        
+                                                                        $from_prov_id = $item['from_province_id'] ?? ($item['from']['province_id'] ?? ($item['from']['id'] ?? ''));
+                                                                        $to_prov_id = $item['to_province_id'] ?? ($item['to']['province_id'] ?? ($item['to']['id'] ?? ''));
+                                                                        
+                                                                        $card_booking_url = add_query_arg(
+                                                                            [
+                                                                                'from' => $from_prov_id,
+                                                                                'to' => $to_prov_id,
+                                                                                'nameFrom' => $from_name,
+                                                                                'nameTo' => $to_name,
+                                                                                'operator_id' => $op['operator_id'] ?? ($op['id'] ?? '')
+                                                                            ],
+                                                                            home_url('/dat-ve-truc-tuyen/')
+                                                                        );
+                                                                    @endphp
+                                                                    <a href="{{ esc_url($card_booking_url) }}"
+                                                                        data-dailyve-date-range-trigger
+                                                                        data-date-range-url="{{ esc_url($card_booking_url) }}"
+                                                                        data-date-range-from-name="{{ esc_attr($from_name) }}"
+                                                                        data-date-range-to-name="{{ esc_attr($to_name) }}"
+                                                                        data-date-range-service="bus" 
+                                                                        data-date-range-min="today"
                                                                         class="shrink-0 inline-flex items-center justify-center bg-blue-50 hover:bg-blue-600 text-blue-600 hover:text-white transition-all text-[12px] font-semibold px-2.5 py-1 rounded-lg no-underline! border border-blue-100 hover:border-blue-600">
-                                                                        Xem chuyến
+                                                                        {{ $btn_text }}
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -1173,7 +1197,7 @@
                     if (!locationId) return;
 
                     fetch('/wp-admin/admin-ajax.php?action=dailyve_get_station_routes&location_id=' + locationId +
-                            '&page=' + page + '&page_size=30')
+                            '&page=' + page + '&page_size=10')
                         .then(res => res.json())
                         .then(res => {
                             if (res.success) {

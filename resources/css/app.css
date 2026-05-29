@@ -3401,8 +3401,8 @@ body.dailyve-date-range-picker-open {
   letter-spacing: 0 !important;
 }
 
-.dailyve-trip-list input,
-.dailyve-trip-list select,
+/* .dailyve-trip-list input, */
+/* .dailyve-trip-list select,
 .dailyve-trip-list textarea,
 .dailyve-seat-selection input,
 .dailyve-seat-selection select,
@@ -3418,10 +3418,10 @@ body.dailyve-date-range-picker-open {
   border-radius: var(--dv-radius-md) !important;
   color: var(--dv-ink);
   font-weight: 400 !important;
-}
+} */
 
-.dailyve-trip-list input:focus,
-.dailyve-trip-list select:focus,
+/* .dailyve-trip-list input:focus, */
+/* .dailyve-trip-list select:focus,
 .dailyve-trip-list textarea:focus,
 .dailyve-seat-selection input:focus,
 .dailyve-seat-selection select:focus,
@@ -3435,7 +3435,7 @@ body.dailyve-date-range-picker-open {
 .dailyve-account-card textarea:focus {
   border-color: var(--dv-primary) !important;
   box-shadow: var(--dv-shadow-focus) !important;
-}
+} */
 
 .dailyve-trip-list :where(.shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl, .shadow-premium),
 .dailyve-seat-selection :where(.shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl, .shadow-premium),
@@ -3584,7 +3584,7 @@ body.dailyve-date-range-picker-open {
   z-index: 40;
 }
 
-.dailyve-trip-list input,
+/* .dailyve-trip-list input, */
 .dailyve-trip-list select,
 .dailyve-trip-list textarea,
 .dailyve-seat-selection input,
@@ -3603,7 +3603,7 @@ body.dailyve-date-range-picker-open {
   font-weight: 400 !important;
 }
 
-.dailyve-trip-list input:focus,
+/* .dailyve-trip-list input:focus, */
 .dailyve-trip-list select:focus,
 .dailyve-trip-list textarea:focus,
 .dailyve-seat-selection input:focus,

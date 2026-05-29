@@ -314,14 +314,19 @@ const TimeRangeSlider = ({ value, onChange }) => {
           .dailyve-time-input::-webkit-calendar-picker-indicator {
             display: none;
           }
+          .dailyve-time-input::-webkit-inner-spin-button,
+          .dailyve-time-input::-webkit-clear-button {
+            display: none;
+            appearance: none;
+          }
         `}} />
       </div>
       <div className="flex items-center justify-between gap-3">
-        <div className="flex-1 rounded-lg border border-slate-200 p-2 text-center focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 transition-all bg-white">
+        <div className="flex-1 rounded-lg border border-slate-200 p-2 text-center bg-white">
           <div className="text-[10px] text-slate-400 font-semibold mb-0.5">Từ</div>
-          <input 
-            type="time" 
-            className="dailyve-time-input w-full text-center text-sm font-bold text-slate-900 bg-transparent outline-none appearance-none" 
+          <input
+            type="time"
+            className="dailyve-time-input w-full text-center p-0 m-0 text-sm font-bold text-slate-900 bg-transparent outline-none appearance-none border-none ring-0 focus:outline-none focus:ring-0 shadow-none"
             value={formatTimeStr(minVal)}
             onChange={(e) => {
               const val = parseTime(e.target.value);
@@ -336,11 +341,11 @@ const TimeRangeSlider = ({ value, onChange }) => {
           />
         </div>
         <div className="text-slate-300 font-bold">-</div>
-        <div className="flex-1 rounded-lg border border-slate-200 p-2 text-center focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 transition-all bg-white">
+        <div className="flex-1 rounded-lg border border-slate-200 p-2 text-center bg-white">
           <div className="text-[10px] text-slate-400 font-semibold mb-0.5">Đến</div>
-          <input 
-            type="time" 
-            className="dailyve-time-input w-full text-center text-sm font-bold text-slate-900 bg-transparent outline-none appearance-none" 
+          <input
+            type="time"
+            className="dailyve-time-input w-full text-center p-0 m-0 text-sm font-bold text-slate-900 bg-transparent outline-none appearance-none border-none ring-0 focus:outline-none focus:ring-0 shadow-none"
             value={maxVal === 1440 ? '23:59' : formatTimeStr(maxVal)}
             onChange={(e) => {
               const val = parseTime(e.target.value);
