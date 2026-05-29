@@ -58,100 +58,15 @@
     @endphp
 
     <div class="route-directory overflow-x-hidden bg-slate-50 text-slate-700">
-        <style>
-            .route-directory__display {
-                font-family: "Space Grotesk", "Be Vietnam Pro", sans-serif;
-                letter-spacing: -0.03em;
-            }
-
-            .route-directory,
-            .route-directory * {
-                min-width: 0;
-            }
-
-            .route-directory {
-                width: 100%;
-                max-width: 100%;
-            }
-
-            .route-directory nav,
-            .route-directory header,
-            .route-directory main {
-                max-width: 100%;
-                overflow-x: hidden;
-            }
-
-            .route-directory h1,
-            .route-directory h2,
-            .route-directory h3,
-            .route-directory p {
-                overflow-wrap: anywhere;
-            }
-
-            @media (max-width: 767px) {
-
-                .route-directory>nav>ol,
-                .route-directory>header>div,
-                .route-directory>main {
-                    box-sizing: border-box;
-                    width: 100% !important;
-                    max-width: 100% !important;
-                    margin-left: 0 !important;
-                    margin-right: 0 !important;
-                    padding-left: 16px !important;
-                    padding-right: 16px !important;
-                }
-
-                .route-directory>header>div {
-                    grid-template-columns: minmax(0, 1fr) !important;
-                }
-            }
-
-            .route-directory__scroller {
-                scrollbar-width: none;
-            }
-
-            .route-directory__scroller::-webkit-scrollbar {
-                display: none;
-            }
-
-            .route-directory-pagination .page-numbers {
-                display: inline-flex;
-                min-width: 40px;
-                height: 40px;
-                align-items: center;
-                justify-content: center;
-                border: 1px solid #e2e8f0;
-                border-radius: 8px;
-                background: #ffffff;
-                color: #334155;
-                font-size: 14px;
-                font-weight: 600;
-                text-decoration: none;
-            }
-
-            .route-directory-pagination .page-numbers.current {
-                border-color: #2196f3;
-                background: #2196f3;
-                color: #ffffff;
-            }
-
-            .route-directory-pagination .page-numbers:hover {
-                border-color: #2196f3;
-                color: #2196f3;
-            }
-
-            .route-directory-pagination .page-numbers.current:hover {
-                color: #ffffff;
-            }
-        </style>
-
-        <x-breadcrumb :items="[['title' => 'Dailyve', 'url' => home_url('/')], ['title' => 'Vé xe khách', 'url' => home_url('/ve-xe-khach/')], ['title' => 'Tuyến đường', 'url' => '']]" preset="directory" />
+        <x-breadcrumb :items="[
+            ['title' => 'Dailyve', 'url' => home_url('/')],
+            ['title' => 'Vé xe khách', 'url' => home_url('/ve-xe-khach/')],
+            ['title' => 'Tuyến đường', 'url' => ''],
+        ]" preset="directory" />
 
 
         <header class="bg-white">
-            <div
-                class="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:px-8 lg:py-14">
+            <div class="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:px-8 lg:py-14">
                 <div>
                     <p class="mb-4 inline-flex rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold text-blue-600">
                         Danh bạ tuyến xe khách Dailyve
@@ -242,7 +157,8 @@
                                     'loading' => $image_loading,
                                     'decoding' => 'async',
                                     'sizes' => '(min-width: 1024px) 380px, (min-width: 768px) 50vw, 100vw',
-                                    'onerror' => 'this.onerror=null; this.style.display="none"; var p=this.parentElement.querySelector(".image-placeholder"); if(p) p.style.display="flex";',
+                                    'onerror' =>
+                                        'this.onerror=null; this.style.display="none"; var p=this.parentElement.querySelector(".image-placeholder"); if(p) p.style.display="flex";',
                                 ];
                                 if ($route_index === 1) {
                                     $image_attrs['fetchpriority'] = 'high';
@@ -260,12 +176,14 @@
 
                             <article
                                 class="group flex min-h-full flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md">
-                                <a href="{{ esc_url($route_url) }}" class="block aspect-[4/3] overflow-hidden bg-slate-100 relative"
+                                <a href="{{ esc_url($route_url) }}"
+                                    class="block aspect-[4/3] overflow-hidden bg-slate-100 relative"
                                     aria-label="Xem {{ esc_attr($route_title) }}"
                                     data-route-record='@json($viewed_payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)'>
                                     @if ($thumb_id)
                                         {!! wp_get_attachment_image($thumb_id, 'medium_large', false, $image_attrs) !!}
-                                        <div class="image-placeholder flex h-full w-full items-center justify-center text-4xl text-slate-300 absolute inset-0 bg-slate-100" style="display: none;">
+                                        <div class="image-placeholder flex h-full w-full items-center justify-center text-4xl text-slate-300 absolute inset-0 bg-slate-100"
+                                            style="display: none;">
                                             <i class="fas fa-route" aria-hidden="true"></i>
                                         </div>
                                     @else

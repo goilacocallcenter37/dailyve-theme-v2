@@ -1265,6 +1265,91 @@ body.operator-review-drawer-lock {
     min-width: 0;
 }
 
+.route-directory__display {
+    letter-spacing: -0.03em;
+}
+
+.route-directory,
+.route-directory * {
+    min-width: 0;
+}
+
+.route-directory {
+    width: 100%;
+    max-width: 100%;
+}
+
+.route-directory nav,
+.route-directory header,
+.route-directory main {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.route-directory h1,
+.route-directory h2,
+.route-directory h3,
+.route-directory p {
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 767px) {
+
+    .route-directory>nav>ol,
+    .route-directory>header>div,
+    .route-directory>main {
+        box-sizing: border-box;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+
+    .route-directory>header>div {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+}
+
+.route-directory__scroller {
+    scrollbar-width: none;
+}
+
+.route-directory__scroller::-webkit-scrollbar {
+    display: none;
+}
+
+.route-directory-pagination .page-numbers {
+    display: inline-flex;
+    min-width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #334155;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.route-directory-pagination .page-numbers.current {
+    border-color: #2196f3;
+    background: #2196f3;
+    color: #ffffff;
+}
+
+.route-directory-pagination .page-numbers:hover {
+    border-color: #2196f3;
+    color: #2196f3;
+}
+
+.route-directory-pagination .page-numbers.current:hover {
+    color: #ffffff;
+}
+
 /* ── FAQ Card ────────────────────────────────────────────────── */
 .dailyve-operator-detail .operator-faq-card {
     border: 1px solid #e2e8f0;
