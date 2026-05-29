@@ -1018,26 +1018,6 @@
                                         <span class="font-semibold text-xs">Lưu bến xe</span>
                                     </button>
                                 </div>
-                                <div class="border-t border-slate-100 pt-3 space-y-2">
-                                    <a href="#"
-                                        class="flex items-center justify-between text-slate-600 hover:text-blue-600 transition-colors no-underline! group">
-                                        <span class="font-semibold">Giờ hành lý</span>
-                                        <i
-                                            class="fas fa-chevron-right text-[10px] text-slate-400 group-hover:text-blue-500"></i>
-                                    </a>
-                                    <a href="#routes-grid"
-                                        class="flex items-center justify-between text-slate-600 hover:text-blue-600 transition-colors no-underline! group">
-                                        <span class="font-semibold">Tìm tuyến xe</span>
-                                        <i
-                                            class="fas fa-chevron-right text-[10px] text-slate-400 group-hover:text-blue-500"></i>
-                                    </a>
-                                    <a href="#"
-                                        class="flex items-center justify-between text-slate-600 hover:text-blue-600 transition-colors no-underline! group">
-                                        <span class="font-semibold">Đánh giá bến xe</span>
-                                        <i
-                                            class="fas fa-chevron-right text-[10px] text-slate-400 group-hover:text-blue-500"></i>
-                                    </a>
-                                </div>
                             </div>
                         </div>
 
@@ -1084,19 +1064,18 @@
                             <div class="bx-card p-6 mb-5">
                                 <h2 class="bx-display text-xl text-slate-950 mb-4">Giới thiệu bến xe {{ $station_name }}
                                 </h2>
-                                <div>
-                                    <div class="text-sm text-slate-600 leading-relaxed space-y-3">
-                                        @if ($post_content)
-                                            {!! apply_filters('the_content', $post_content) !!}
-                                        @else
-                                            <p>{{ $station_name }} là một trong những bến xe lớn và quan trọng nhất tại TP.
-                                                Hồ Chí Minh, đóng vai trò kết nối khu vực Tây Bắc với trung tâm thành phố và
-                                                các tỉnh thành trên khắp cả nước.</p>
-                                            <p>Với quy mô hiện đại, hạ tầng thông dịch vụ đa dạng và vị trí thuận tiện ngay
-                                                trên Quốc lộ 22, bến xe mang đến trải nghiệm đi lại an toàn, nhanh chóng và
-                                                thoải mái cho hành khách.</p>
-                                        @endif
-                                    </div>
+
+                                <div class="text-sm text-slate-600 leading-relaxed space-y-3">
+                                    @if ($post_content)
+                                        {!! apply_filters('the_content', $post_content) !!}
+                                    @else
+                                        <p>{{ $station_name }} là một trong những bến xe lớn và quan trọng nhất tại TP.
+                                            Hồ Chí Minh, đóng vai trò kết nối khu vực Tây Bắc với trung tâm thành phố và
+                                            các tỉnh thành trên khắp cả nước.</p>
+                                        <p>Với quy mô hiện đại, hạ tầng thông dịch vụ đa dạng và vị trí thuận tiện ngay
+                                            trên Quốc lộ 22, bến xe mang đến trải nghiệm đi lại an toàn, nhanh chóng và
+                                            thoải mái cho hành khách.</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
