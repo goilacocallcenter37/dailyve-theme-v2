@@ -639,17 +639,33 @@
                                         $direction === 'from'
                                             ? $item['to']['province_name'] ?? ''
                                             : $item['from']['province_name'] ?? '';
-                                    $operators = $item['operators'] ?? [];
+                                    $raw_operators = $item['operators'] ?? [];
+                                    $operators = [];
+                                    $seen_operator_ids = [];
+                                    foreach ($raw_operators as $op) {
+                                        $op_id = trim((string) ($op['operator_id'] ?? ($op['id'] ?? '')));
+
+                                        if ($op_id) {
+                                            if (!isset($seen_operator_ids[$op_id])) {
+                                                $seen_operator_ids[$op_id] = true;
+                                                $operators[] = $op;
+                                            }
+                                        } else {
+                                            $operators[] = $op;
+                                        }
+                                    }
+
                                     $op_count = $item['operator_count'] ?? 0;
                                     $trip_count = $item['trip_count'] ?? 0;
                                     $min_price = $item['min_price'] ?? 0;
 
                                     $search_query_url = add_query_arg(
                                         [
-                                            'from' => $item['from']['id'] ?? '',
-                                            'to' => $item['to']['id'] ?? '',
+                                            'from' => $item['from']['province_id'] ?? '',
+                                            'to' => $item['to']['province_id'] ?? '',
                                             'nameFrom' => $from_name,
                                             'nameTo' => $to_name,
+                                            'operator_id' => $op_id,
                                             'date' => date('Y-m-d', strtotime('+1 day', current_time('timestamp'))),
                                         ],
                                         home_url('/dat-ve-truc-tuyen/'),
@@ -780,28 +796,42 @@
                                                                     </div>
                                                                     @php
                                                                         $op_trip_count = $op['trip_count'] ?? 0;
-                                                                        $btn_text = $op_trip_count > 0 ? "Xem {$op_trip_count}+ chuyến" : "Xem chuyến";
-                                                                        
-                                                                        $from_prov_id = $item['from_province_id'] ?? ($item['from']['province_id'] ?? ($item['from']['id'] ?? ''));
-                                                                        $to_prov_id = $item['to_province_id'] ?? ($item['to']['province_id'] ?? ($item['to']['id'] ?? ''));
-                                                                        
+                                                                        if ($op_trip_count > 10) {
+                                                                            $btn_text = 'Xem 10+ chuyến';
+                                                                        } elseif ($op_trip_count > 0) {
+                                                                            $btn_text = "Xem {$op_trip_count} chuyến";
+                                                                        } else {
+                                                                            $btn_text = 'Xem chuyến';
+                                                                        }
+
+                                                                        $from_prov_id =
+                                                                            $item['from_province_id'] ??
+                                                                            ($item['from']['province_id'] ??
+                                                                                ($item['from']['id'] ?? ''));
+                                                                        $to_prov_id =
+                                                                            $item['to_province_id'] ??
+                                                                            ($item['to']['province_id'] ??
+                                                                                ($item['to']['id'] ?? ''));
+
                                                                         $card_booking_url = add_query_arg(
                                                                             [
                                                                                 'from' => $from_prov_id,
                                                                                 'to' => $to_prov_id,
                                                                                 'nameFrom' => $from_name,
                                                                                 'nameTo' => $to_name,
-                                                                                'operator_id' => $op['operator_id'] ?? ($op['id'] ?? '')
+                                                                                'operator_id' =>
+                                                                                    $op['operator_id'] ??
+                                                                                    ($op['id'] ?? ''),
                                                                             ],
-                                                                            home_url('/dat-ve-truc-tuyen/')
+                                                                            home_url('/dat-ve-truc-tuyen/'),
                                                                         );
                                                                     @endphp
-                                                                    <a href="{{ esc_url($card_booking_url) }}"
+                                                                    <a href="{!! esc_url($card_booking_url) !!}"
                                                                         data-dailyve-date-range-trigger
-                                                                        data-date-range-url="{{ esc_url($card_booking_url) }}"
+                                                                        data-date-range-url="{!! esc_url($card_booking_url) !!}"
                                                                         data-date-range-from-name="{{ esc_attr($from_name) }}"
                                                                         data-date-range-to-name="{{ esc_attr($to_name) }}"
-                                                                        data-date-range-service="bus" 
+                                                                        data-date-range-service="bus"
                                                                         data-date-range-min="today"
                                                                         class="shrink-0 inline-flex items-center justify-center bg-blue-50 hover:bg-blue-600 text-blue-600 hover:text-white transition-all text-[12px] font-semibold px-2.5 py-1 rounded-lg no-underline! border border-blue-100 hover:border-blue-600">
                                                                         {{ $btn_text }}
