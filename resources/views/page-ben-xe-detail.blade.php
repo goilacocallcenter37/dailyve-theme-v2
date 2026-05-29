@@ -475,7 +475,7 @@
                             {{-- Badges --}}
                             <div class="flex items-center gap-2 flex-wrap mb-4">
                                 <span
-                                    class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-100 px-3 py-1 text-[12px] font-bold text-blue-600">
+                                    class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-100 px-3 py-1 text-[12px] font-bold text-[#2196f3]">
                                     <i class="fas fa-shield-alt"></i> Bến xe đối tác
                                 </span>
                                 <span
@@ -500,7 +500,7 @@
 
                                 <div class="grid grid-cols-2 gap-3">
                                     <a href="tel:{{ preg_replace('/\D+/', '', $hotline) }}"
-                                        class="flex items-center gap-2.5 no-underline! text-slate-700 hover:text-blue-600 transition-colors group">
+                                        class="flex items-center gap-2.5 no-underline! text-slate-700 hover:text-[#2196f3] transition-colors group">
                                         <span
                                             class="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-500 group-hover:bg-blue-100 transition-colors">
                                             <i class="fas fa-phone-alt text-xs"></i>
@@ -530,13 +530,13 @@
                             {{-- Stats row --}}
                             <div class="flex flex-wrap gap-2 mt-5">
                                 <span class="stat-chip"><i class="fas fa-bus text-blue-500"></i>
-                                    {{ number_format($total_items, 0, ',', '.') }}+ tuyến xe</span>
-                                <span class="stat-chip"><i class="fas fa-star text-amber-400"></i> 4.8 đánh giá</span>
+                                    {{ number_format($total_items, 0, ',', '.') }} tuyến xe</span>
+                                <span class="stat-chip"><i class="fas fa-star text-amber-400"></i> 3.9 đánh giá</span>
                                 <span class="stat-chip"><i class="fas fa-ticket-alt text-rose-500"></i> Đặt vé online</span>
                             </div>
 
                             {{-- Action buttons --}}
-                            <div class="mt-auto pt-5 border-t border-slate-100 mt-5 grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            <div class="pt-5 border-t border-slate-100 mt-5 grid grid-cols-2 sm:grid-cols-4 gap-2">
                                 <a href="https://www.google.com/maps/search/?api=1&query={{ $map_query }}"
                                     target="_blank" rel="noopener noreferrer" class="action-btn">
                                     <i class="fas fa-directions text-blue-500"></i> Chỉ đường
@@ -701,7 +701,7 @@
                                                 data-route-toggle>
                                                 <div class="min-w-0 flex-1">
                                                     <h3
-                                                        class="text-sm font-extrabold text-slate-900 leading-tight line-clamp-2 group-hover:text-blue-600">
+                                                        class="text-sm font-extrabold text-slate-900 leading-tight line-clamp-2 group-hover:text-[#2196f3]">
                                                         {{ $from_name }}
                                                         <span
                                                             class="inline-flex items-center justify-center w-5 h-5 mx-0.5 rounded-full bg-blue-50 text-blue-400 text-[9px] align-middle shrink-0">
@@ -800,7 +800,7 @@
                                                                             class="flex justify-between items-center gap-1">
                                                                             @if ($op_post_url)
                                                                                 <a href="{{ esc_url($op_post_url) }}"
-                                                                                    class="text-[12px] font-bold text-slate-800 hover:text-blue-600 truncate no-underline! leading-tight">{{ $op_name }}</a>
+                                                                                    class="text-[12px] font-bold text-slate-800 hover:text-[#2196f3] truncate no-underline! leading-tight">{{ $op_name }}</a>
                                                                             @else
                                                                                 <span
                                                                                     class="text-[12px] font-bold text-slate-800 truncate leading-tight">{{ $op_name }}</span>
@@ -861,7 +861,7 @@
                                                                                 data-date-range-to-name="{{ esc_attr($to_name) }}"
                                                                                 data-date-range-service="bus"
                                                                                 data-date-range-min="today"
-                                                                                class="shrink-0 inline-flex items-center justify-center bg-blue-50 hover:bg-blue-600 text-blue-600 hover:text-white transition-all text-[12px] font-semibold px-2.5 py-1 rounded-lg no-underline! border border-blue-100 hover:border-blue-600">
+                                                                                class="shrink-0 inline-flex items-center justify-center bg-blue-50 hover:bg-[#2196f3] text-[#2196f3] hover:text-white transition-all text-[12px] font-semibold px-2.5 py-1 rounded-lg no-underline! border border-blue-100 hover:border-[#2196f3]">
                                                                                 {{ $btn_text }}
                                                                             </a>
                                                                         </div>
@@ -872,7 +872,7 @@
 
                                                         @if (count($operators) > 5)
                                                             <button type="button" onclick="toggleOperators(this)"
-                                                                class="mt-2 w-full flex items-center justify-center gap-1.5 text-[12px] font-bold text-blue-600 hover:text-blue-800 transition-colors py-1.5 rounded-xl hover:bg-blue-50">
+                                                                class="mt-2 w-full flex items-center justify-center gap-1.5 text-[12px] font-bold text-[#2196f3] hover:text-blue-800 transition-colors py-1.5 rounded-xl hover:bg-blue-50">
                                                                 <span class="toggle-label">Xem thêm
                                                                     {{ count($operators) - 5 }}
                                                                     nhà
@@ -889,7 +889,7 @@
                                                             nhà
                                                             xe</span>
                                                         <a href="{{ esc_url($search_query_url) }}"
-                                                            class="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-xl no-underline! transition-colors">
+                                                            class="inline-flex items-center gap-1.5 bg-[#2196f3] hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-xl no-underline! transition-colors">
                                                             <i class="fas fa-search text-[10px]"></i> Tìm chuyến
                                                         </a>
                                                     </div>
@@ -911,14 +911,14 @@
                                             @if ($current_paged > 1)
                                                 <button type="button"
                                                     onclick="fetchRoutesPage({{ $current_paged - 1 }})"
-                                                    class="inline-flex h-10 min-w-[40px] items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:border-blue-400 hover:text-blue-600 transition-colors px-3">
+                                                    class="inline-flex h-10 min-w-[40px] items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:border-blue-400 hover:text-[#2196f3] transition-colors px-3">
                                                     <i class="fas fa-chevron-left text-xs"></i>
                                                 </button>
                                             @endif
                                             @for ($i = 1; $i <= $dir_total_pages; $i++)
                                                 @if ($i == 1 || $i == $dir_total_pages || ($i >= $current_paged - 1 && $i <= $current_paged + 1))
                                                     <button type="button" onclick="fetchRoutesPage({{ $i }})"
-                                                        class="inline-flex h-10 min-w-[40px] items-center justify-center rounded-xl border text-sm font-bold transition-all {{ $i === $current_paged ? 'bg-blue-600 border-blue-600 text-white shadow-md shadow-blue-200' : 'bg-white border-slate-200 text-slate-700 hover:border-blue-400 hover:text-blue-600' }}">
+                                                        class="inline-flex h-10 min-w-[40px] items-center justify-center rounded-xl border text-sm font-bold transition-all {{ $i === $current_paged ? 'bg-[#2196f3] border-[#2196f3] text-white shadow-md shadow-blue-200' : 'bg-white border-slate-200 text-slate-700 hover:border-blue-400 hover:text-[#2196f3]' }}">
                                                         {{ $i }}
                                                     </button>
                                                 @elseif ($i == 2 || $i == $dir_total_pages - 1)
@@ -928,7 +928,7 @@
                                             @if ($current_paged < $dir_total_pages)
                                                 <button type="button"
                                                     onclick="fetchRoutesPage({{ $current_paged + 1 }})"
-                                                    class="inline-flex h-10 min-w-[40px] items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:border-blue-400 hover:text-blue-600 transition-colors px-3">
+                                                    class="inline-flex h-10 min-w-[40px] items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:border-blue-400 hover:text-[#2196f3] transition-colors px-3">
                                                     <i class="fas fa-chevron-right text-xs"></i>
                                                 </button>
                                             @endif
@@ -962,7 +962,7 @@
                         @foreach ($info_tabs as $idx => $tab)
                             <button type="button" onclick="switchInfoTab('{{ $tab['id'] }}')"
                                 data-tab-id="{{ $tab['id'] }}"
-                                class="info-htab shrink-0 flex items-center gap-2 px-5 py-4 text-xs font-bold transition-all border-b-2 whitespace-nowrap {{ $idx === 0 ? 'border-blue-600 text-blue-600 bg-blue-50/60' : 'border-transparent text-slate-500 hover:text-blue-600 hover:bg-slate-50' }}">
+                                class="info-htab shrink-0 flex items-center gap-2 px-5 py-4 text-xs font-bold transition-all border-b-2 whitespace-nowrap {{ $idx === 0 ? 'border-[#2196f3] text-[#2196f3] bg-blue-50/60' : 'border-transparent text-slate-500 hover:text-[#2196f3] hover:bg-slate-50' }}">
                                 <i class="{{ $tab['icon'] }} text-[11px]"></i>
                                 {{ $tab['label'] }}
                             </button>
@@ -988,7 +988,7 @@
                                 <div class="flex items-center gap-2.5 text-slate-600">
                                     <i class="fas fa-phone-alt text-blue-500 shrink-0"></i>
                                     <a href="tel:{{ preg_replace('/\D+/', '', $hotline) }}"
-                                        class="font-bold text-slate-800 hover:text-blue-600 transition-colors no-underline!">{{ $hotline }}</a>
+                                        class="font-bold text-slate-800 hover:text-[#2196f3] transition-colors no-underline!">{{ $hotline }}</a>
                                 </div>
                                 <div class="flex items-center gap-2.5 text-slate-600">
                                     <i class="fas fa-clock text-blue-500 shrink-0"></i>
@@ -997,26 +997,15 @@
                                 <div class="border-t border-slate-100 pt-3 space-y-2">
                                     <a href="https://www.google.com/maps/search/?api=1&query={{ $map_query }}"
                                         target="_blank" rel="noopener noreferrer"
-                                        class="flex items-center gap-2 text-slate-600 hover:text-blue-600 transition-colors no-underline!">
+                                        class="flex items-center gap-2 text-slate-600 hover:text-[#2196f3] transition-colors no-underline!">
                                         <i class="fas fa-directions text-blue-500 w-4 text-center shrink-0"></i>
                                         <span class="font-semibold">Chỉ đường</span>
                                     </a>
                                     <a href="tel:{{ preg_replace('/\D+/', '', $hotline) }}"
-                                        class="flex items-center gap-2 text-slate-600 hover:text-blue-600 transition-colors no-underline!">
+                                        class="flex items-center gap-2 text-slate-600 hover:text-[#2196f3] transition-colors no-underline!">
                                         <i class="fas fa-phone text-emerald-500 w-4 text-center shrink-0"></i>
                                         <span class="font-semibold">Gọi điện</span>
                                     </a>
-                                    <a href="{{ esc_url($website) }}" target="_blank" rel="noopener noreferrer"
-                                        class="flex items-center gap-2 text-slate-600 hover:text-blue-600 transition-colors no-underline!">
-                                        <i class="fas fa-globe text-indigo-500 w-4 text-center shrink-0"></i>
-                                        <span class="font-semibold">Website</span>
-                                    </a>
-                                    <button type="button"
-                                        onclick="alert('Đã lưu bến xe {{ $station_name }} vào mục yêu thích!')"
-                                        class="flex items-center gap-2 text-slate-600 hover:text-blue-600 transition-colors w-full text-left">
-                                        <i class="far fa-bookmark text-amber-500 w-4 text-center shrink-0"></i>
-                                        <span class="font-semibold text-xs">Lưu bến xe</span>
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -1032,7 +1021,7 @@
                             $qrCode =
                                 'https://object.dailyve.com/dailyve/wp-content/uploads/2025/08/QR-CODE-APP-DLV.png';
                         @endphp
-                        <div class="rounded-xl bg-blue-600 p-5 text-white shadow-sm">
+                        <div class="rounded-xl bg-[#2196f3] p-5 text-white shadow-sm">
                             <h2 class="text-base font-semibold">Tải ứng dụng Dailyve</h2>
                             <p class="mt-1 text-xs text-blue-100">Đặt vé nhanh chóng, ưu đãi mỗi ngày</p>
                             <div class="mt-4 grid grid-cols-[88px_minmax(0,1fr)] gap-3">
@@ -1087,7 +1076,7 @@
                                 <div class="space-y-4">
                                     <div class="flex items-center gap-4 p-4 bg-blue-50 rounded-2xl border border-blue-100">
                                         <span
-                                            class="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 text-white shrink-0">
+                                            class="flex h-12 w-12 items-center justify-center rounded-xl bg-[#2196f3] text-white shrink-0">
                                             <i class="fas fa-phone-alt text-lg"></i>
                                         </span>
                                         <div>
@@ -1095,7 +1084,7 @@
                                                 class="block text-[10px] font-bold text-blue-500 uppercase tracking-wide">Hotline
                                                 bến xe</span>
                                             <a href="tel:{{ preg_replace('/\D+/', '', $hotline) }}"
-                                                class="text-xl font-black text-slate-900 hover:text-blue-600 transition-colors no-underline!">{{ $hotline }}</a>
+                                                class="text-xl font-black text-slate-900 hover:text-[#2196f3] transition-colors no-underline!">{{ $hotline }}</a>
                                         </div>
                                     </div>
                                     <div
@@ -1108,9 +1097,9 @@
                                             <span
                                                 class="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Tổng
                                                 đài Dailyve</span>
-                                            <a href="tel:19003155"
-                                                class="text-xl font-black text-slate-900 hover:text-blue-600 transition-colors no-underline!">1900
-                                                3155</a>
+                                            <a href="tel:19000155"
+                                                class="text-xl font-black text-slate-900 hover:text-[#2196f3] transition-colors no-underline!">1900
+                                                0155</a>
                                             <span class="block text-[11px] text-slate-400 mt-0.5">07:00 – 24:00 (7
                                                 ngày/tuần)</span>
                                         </div>
@@ -1128,7 +1117,7 @@
                                         <div
                                             class="flex items-start gap-3 p-4 bg-slate-50 hover:bg-blue-50 rounded-2xl transition-colors border border-slate-100 hover:border-blue-100">
                                             <span
-                                                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
+                                                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-100 text-[#2196f3]">
                                                 <i class="{{ $hl['icon'] }} text-base"></i>
                                             </span>
                                             <div>
@@ -1200,7 +1189,7 @@
                                     <div
                                         class="flex flex-col items-start gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-100">
                                         <span
-                                            class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
+                                            class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-[#2196f3]">
                                             <i class="fas fa-motorcycle text-base"></i>
                                         </span>
                                         <div>
@@ -1288,6 +1277,37 @@
 
             <script>
                 (function() {
+                    /* ── Carousel Slider ── */
+                    window.stationCurrentSlide = 0;
+                    window.moveStationSlide = function(direction) {
+                        const track = document.getElementById('station-slides-track');
+                        if (!track) return;
+
+                        // Count slides based on the number of image children
+                        const totalSlides = track.children.length;
+                        if (totalSlides <= 1) return;
+
+                        window.stationCurrentSlide += direction;
+                        if (window.stationCurrentSlide < 0) window.stationCurrentSlide = totalSlides - 1;
+                        if (window.stationCurrentSlide >= totalSlides) window.stationCurrentSlide = 0;
+
+                        track.style.display = 'flex';
+                        track.style.transition = 'transform 0.4s ease-in-out';
+                        track.style.transform = `translateX(-${window.stationCurrentSlide * (100 / totalSlides)}%)`;
+
+                        const num = document.getElementById('slide-num');
+                        if (num) num.textContent = window.stationCurrentSlide + 1;
+
+                        const dots = document.querySelectorAll('.slide-dot');
+                        dots.forEach((dot, idx) => {
+                            if (idx === window.stationCurrentSlide) {
+                                dot.className = 'slide-dot w-4 h-1.5 rounded-full transition-all bg-white';
+                            } else {
+                                dot.className = 'slide-dot w-1.5 h-1.5 rounded-full transition-all bg-white/50';
+                            }
+                        });
+                    };
+
                     /* ── Direction switcher ── */
                     window.stationCurrentPages = {
                         from: window.stationDirection === 'from' ? window.stationCurrentPage : 1,
@@ -1337,8 +1357,8 @@
                     window.switchInfoTab = function(tabId) {
                         document.querySelectorAll('.info-htab').forEach(btn => {
                             const isActive = btn.dataset.tabId === tabId;
-                            btn.classList.toggle('border-blue-600', isActive);
-                            btn.classList.toggle('text-blue-600', isActive);
+                            btn.classList.toggle('border-[#2196f3]', isActive);
+                            btn.classList.toggle('text-[#2196f3]', isActive);
                             btn.classList.toggle('border-transparent', !isActive);
                             btn.classList.toggle('text-slate-500', !isActive);
                         });
@@ -1629,7 +1649,7 @@
                                                         </div>
                                                         <div class="flex-1 min-w-0">
                                                             <div class="flex justify-between items-center gap-1">
-                                                                ${opPostUrl ? `<a href="${opPostUrl}" class="text-[12px] font-bold text-slate-800 hover:text-blue-600 truncate no-underline! leading-tight">${opName}</a>` : `<span class="text-[12px] font-bold text-slate-800 truncate leading-tight">${opName}</span>`}
+                                                                ${opPostUrl ? `<a href="${opPostUrl}" class="text-[12px] font-bold text-slate-800 hover:text-[#2196f3] truncate no-underline! leading-tight">${opName}</a>` : `<span class="text-[12px] font-bold text-slate-800 truncate leading-tight">${opName}</span>`}
                                                                 <span class="text-[12px] font-bold text-slate-800 shrink-0">${formatPrice(opPrice)}</span>
                                                             </div>
                                                             <div class="flex items-center justify-between mt-1 gap-2">
@@ -1637,14 +1657,14 @@
                                                                     <span class="flex items-center gap-0.5 bg-amber-50 text-amber-600 border border-amber-100 px-1.5 py-0.5 rounded-md text-[9px] font-bold"><i class="fas fa-star text-[8px]"></i> ${opRating}</span>
                                                                     ${opReviews > 0 ? `<span class="text-[10px] text-slate-400 font-medium hidden sm:block">${opReviews} đánh giá</span>` : ''}
                                                                 </div>
-                                                                <a href="${cardBookingUrl}" data-dailyve-date-range-trigger data-date-range-url="${cardBookingUrl}" data-date-range-from-name="${fromName}" data-date-range-to-name="${toName}" data-date-range-service="bus" data-date-range-min="today" class="shrink-0 inline-flex items-center justify-center bg-blue-50 hover:bg-blue-600 text-blue-600 hover:text-white transition-all text-[12px] font-semibold px-2.5 py-1 rounded-lg no-underline! border border-blue-100 hover:border-blue-600">${btnText}</a>
+                                                                <a href="${cardBookingUrl}" data-dailyve-date-range-trigger data-date-range-url="${cardBookingUrl}" data-date-range-from-name="${fromName}" data-date-range-to-name="${toName}" data-date-range-service="bus" data-date-range-min="today" class="shrink-0 inline-flex items-center justify-center bg-blue-50 hover:bg-[#2196f3] text-[#2196f3] hover:text-white transition-all text-[12px] font-semibold px-2.5 py-1 rounded-lg no-underline! border border-blue-100 hover:border-[#2196f3]">${btnText}</a>
                                                             </div>
                                                         </div>
                                                     </div>`;
                                         });
                                         opsHtml += `</div>`;
                                         if (operators.length > 5) {
-                                            opsHtml += `<button type="button" onclick="toggleOperators(this)" class="mt-2 w-full flex items-center justify-center gap-1.5 text-[12px] font-bold text-blue-600 hover:text-blue-800 transition-colors py-1.5 rounded-xl hover:bg-blue-50">
+                                            opsHtml += `<button type="button" onclick="toggleOperators(this)" class="mt-2 w-full flex items-center justify-center gap-1.5 text-[12px] font-bold text-[#2196f3] hover:text-blue-800 transition-colors py-1.5 rounded-xl hover:bg-blue-50">
                                                         <span class="toggle-label">Xem thêm ${operators.length - 5} nhà xe</span>
                                                         <i class="fas fa-chevron-down text-[10px] toggle-icon transition-transform"></i>
                                                     </button>`;
@@ -1653,7 +1673,7 @@
                                     } else {
                                         opsHtml += `<div class="px-4 pb-4 pt-3 flex-1 flex items-center justify-between">
                                                     <span class="text-xs text-slate-400 font-medium">Chưa có thông tin nhà xe</span>
-                                                    <a href="${searchQueryUrl}" class="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-xl no-underline! transition-colors">
+                                                    <a href="${searchQueryUrl}" class="inline-flex items-center gap-1.5 bg-[#2196f3] hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-xl no-underline! transition-colors">
                                                         <i class="fas fa-search text-[10px]"></i> Tìm chuyến
                                                     </a>
                                                 </div>`;
@@ -1662,7 +1682,7 @@
                                     html += `<article class="route-card overflow-hidden" data-route-card data-route-open="${isRouteOpen ? 'true' : 'false'}" data-province="${provName}">
                                             <div class="flex items-start justify-between gap-3 p-4 pb-3 border-b border-slate-100 cursor-pointer select-none" data-route-toggle>
                                                 <div class="min-w-0 flex-1">
-                                                    <h3 class="text-sm font-extrabold text-slate-900 leading-tight line-clamp-2 group-hover:text-blue-600">
+                                                    <h3 class="text-sm font-extrabold text-slate-900 leading-tight line-clamp-2 group-hover:text-[#2196f3]">
                                                         ${fromName} <span class="inline-flex items-center justify-center w-5 h-5 mx-0.5 rounded-full bg-blue-50 text-blue-400 text-[9px] align-middle shrink-0"><i class="fas fa-arrow-right"></i></span> ${toName}
                                                     </h3>
                                                     <div class="flex items-center gap-2 mt-1.5 text-[12px] text-slate-500 font-medium flex-wrap">
@@ -1697,19 +1717,19 @@
                                     `<nav class="mt-8 flex flex-wrap items-center justify-center gap-2" aria-label="Phân trang">`;
                                 if (page > 1) {
                                     html +=
-                                        `<button type="button" onclick="fetchRoutesPage(${page - 1})" class="inline-flex h-10 min-w-[40px] items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:border-blue-400 hover:text-blue-600 transition-colors px-3"><i class="fas fa-chevron-left text-xs"></i></button>`;
+                                        `<button type="button" onclick="fetchRoutesPage(${page - 1})" class="inline-flex h-10 min-w-[40px] items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:border-blue-400 hover:text-[#2196f3] transition-colors px-3"><i class="fas fa-chevron-left text-xs"></i></button>`;
                                 }
                                 for (let i = 1; i <= totalPages; i++) {
                                     if (i === 1 || i === totalPages || (i >= page - 1 && i <= page + 1)) {
                                         html +=
-                                            `<button type="button" onclick="fetchRoutesPage(${i})" class="inline-flex h-10 min-w-[40px] items-center justify-center rounded-xl border text-sm font-bold transition-all ${i === page ? 'bg-blue-600 border-blue-600 text-white shadow-md shadow-blue-200' : 'bg-white border-slate-200 text-slate-700 hover:border-blue-400 hover:text-blue-600'}">${i}</button>`;
+                                            `<button type="button" onclick="fetchRoutesPage(${i})" class="inline-flex h-10 min-w-[40px] items-center justify-center rounded-xl border text-sm font-bold transition-all ${i === page ? 'bg-[#2196f3] border-[#2196f3] text-white shadow-md shadow-blue-200' : 'bg-white border-slate-200 text-slate-700 hover:border-blue-400 hover:text-[#2196f3]'}">${i}</button>`;
                                     } else if (i === 2 || i === totalPages - 1) {
                                         html += `<span class="text-slate-400 font-bold px-1">…</span>`;
                                     }
                                 }
                                 if (page < totalPages) {
                                     html +=
-                                        `<button type="button" onclick="fetchRoutesPage(${page + 1})" class="inline-flex h-10 min-w-[40px] items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:border-blue-400 hover:text-blue-600 transition-colors px-3"><i class="fas fa-chevron-right text-xs"></i></button>`;
+                                        `<button type="button" onclick="fetchRoutesPage(${page + 1})" class="inline-flex h-10 min-w-[40px] items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:border-blue-400 hover:text-[#2196f3] transition-colors px-3"><i class="fas fa-chevron-right text-xs"></i></button>`;
                                 }
                                 html += `</nav>`;
                                 paginationContainer.innerHTML = html;

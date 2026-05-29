@@ -264,7 +264,7 @@
                         data-operator-reveal>
                         <div class="flex flex-wrap gap-2">
                             <span
-                                class="inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-600">
+                                class="inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-[#2196f3]">
                                 <i class="fas fa-check-circle" aria-hidden="true"></i>
                                 Đối tác uy tín
                             </span>
@@ -297,10 +297,10 @@
 
                         <div class="mt-5 grid gap-3 text-sm text-slate-600">
                             @if ($primary_phone)
-                                <a class="inline-flex items-center gap-3 font-semibold text-slate-900 hover:text-blue-600"
+                                <a class="inline-flex items-center gap-3 font-semibold text-slate-900 hover:text-[#2196f3]"
                                     href="tel:{{ preg_replace('/\D+/', '', '19000155') }}">
                                     <span
-                                        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+                                        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[#2196f3]">
                                         <i class="fas fa-phone-alt" aria-hidden="true"></i>
                                     </span>
                                     {{ $primary_phone }}
@@ -310,7 +310,7 @@
                             @if ($primary_address)
                                 <p class="m-0 flex items-center gap-3">
                                     <span
-                                        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+                                        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[#2196f3]">
                                         <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
                                     </span>
                                     <span>{{ $primary_address }}</span>
@@ -336,7 +336,7 @@
                                 <i class="fas fa-arrow-right" aria-hidden="true"></i>
                             </a>
                             <button type="button" data-save-operator="{{ esc_attr($post_id) }}"
-                                class="inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-700 transition hover:border-blue-300 hover:text-blue-600">
+                                class="inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-700 transition hover:border-blue-300 hover:text-[#2196f3]">
                                 Lưu nhà xe
                                 <i class="far fa-heart" aria-hidden="true"></i>
                             </button>
@@ -435,17 +435,17 @@
                                 data-offer-slide>
                                 <div class="flex items-start gap-4">
                                     <span
-                                        class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-xl text-blue-600">
+                                        class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-xl text-[#2196f3]">
                                         <i class="fas {{ $offer['icon'] }}" aria-hidden="true"></i>
                                     </span>
                                     <div class="min-w-0">
-                                        <h3 class="text-sm font-semibold text-blue-600">{{ $offer['title'] }}</h3>
+                                        <h3 class="text-sm font-semibold text-[#2196f3]">{{ $offer['title'] }}</h3>
                                         <p class="mt-1 text-xs font-medium text-slate-600">{{ $offer['meta'] }}</p>
                                         <p class="mt-1 text-[11px] text-slate-400">HSD: 31/12/{{ date('Y') }}</p>
                                     </div>
                                 </div>
                                 <button type="button"
-                                    class="mt-4 h-9 w-full rounded-lg bg-blue-600 text-xs font-semibold text-white transition hover:bg-blue-700"
+                                    class="mt-4 h-9 w-full rounded-lg bg-[#2196f3] text-xs font-semibold text-white transition hover:bg-blue-700"
                                     data-copy-code="{{ esc_attr($offer['code']) }}">
                                     {{ $offer['code'] }}
                                 </button>
@@ -511,11 +511,11 @@
                     @if ($route_filters)
                         <div class="operator-filter-scroll flex max-w-full gap-2 overflow-x-auto pb-2">
                             <button type="button"
-                                class="operator-filter-btn is-active h-10 shrink-0 rounded-lg bg-blue-600 px-4 text-sm font-semibold text-white"
+                                class="operator-filter-btn is-active h-10 shrink-0 rounded-lg bg-[#2196f3] px-4 text-sm font-semibold text-white"
                                 data-operator-filter="all">Tất cả</button>
                             @foreach ($route_filters as $key => $label)
                                 <button type="button"
-                                    class="operator-filter-btn h-10 shrink-0 rounded-lg border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-600 transition hover:border-blue-300 hover:text-blue-600"
+                                    class="operator-filter-btn h-10 shrink-0 rounded-lg border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-600 transition hover:border-blue-300 hover:text-[#2196f3]"
                                     data-operator-filter="{{ esc_attr($key) }}">{{ $label }}</button>
                             @endforeach
                         </div>
@@ -552,7 +552,7 @@
                                 data-route-card data-route-open="{{ $is_route_open ? 'true' : 'false' }}"
                                 data-route-from="{{ esc_attr($route_filter_key($route)) }}" data-operator-reveal>
                                 <button type="button"
-                                    class="operator-route-toggle flex w-full items-center justify-between gap-4 bg-blue-600 px-5 py-3 text-left text-white"
+                                    class="operator-route-toggle flex w-full items-center justify-between gap-4 bg-[#2196f3] px-5 py-3 text-left text-white"
                                     data-route-toggle aria-expanded="{{ $is_route_open ? 'true' : 'false' }}">
                                     <span class="min-w-0">
                                         <span class="block truncate text-base font-semibold">{{ $from }} →
@@ -565,7 +565,7 @@
                                         </span>
                                     </span>
                                     <span
-                                        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-blue-600 shadow-sm">
+                                        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-[#2196f3] shadow-sm">
                                         <i class="fas fa-chevron-down text-xs" aria-hidden="true"></i>
                                     </span>
                                 </button>
@@ -639,7 +639,7 @@
                         @endphp
                         <div class="mt-6 text-center" data-routes-toggle-container>
                             <button type="button"
-                                class="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 text-sm font-semibold text-white transition hover:bg-blue-700 shadow-md hover:shadow-lg"
+                                class="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-[#2196f3] px-6 text-sm font-semibold text-white transition hover:bg-blue-700 shadow-md hover:shadow-lg"
                                 data-routes-toggle-btn data-state="collapsed"
                                 data-remaining="{{ $remaining_routes_count }}">
                                 <span>Xem thêm {{ $remaining_routes_count }} tuyến</span>
@@ -664,7 +664,7 @@
                         <ul class="mt-4 space-y-3 text-sm text-slate-600">
                             @foreach (['Giá vé cạnh tranh, nhiều ưu đãi', 'Hỗ trợ 24/7, tư vấn tận tâm', 'Không cần thanh toán trước', 'Chọn chỗ ngồi theo ý muốn', 'Hoàn vé dễ dàng, nhanh chóng'] as $reason)
                                 <li class="flex items-start gap-2">
-                                    <i class="fas fa-check-circle mt-0.5 text-blue-600" aria-hidden="true"></i>
+                                    <i class="fas fa-check-circle mt-0.5 text-[#2196f3]" aria-hidden="true"></i>
                                     <span>{{ $reason }}</span>
                                 </li>
                             @endforeach
@@ -677,14 +677,14 @@
                             @foreach (['Chọn tuyến đường, giờ chạy phù hợp', 'Chọn ghế & kiểm tra thông tin', 'Nhập thông tin hành khách', 'Thanh toán và nhận vé điện tử'] as $index => $step)
                                 <li class="flex items-start gap-3">
                                     <span
-                                        class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-semibold text-white">{{ $index + 1 }}</span>
+                                        class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#2196f3] text-xs font-semibold text-white">{{ $index + 1 }}</span>
                                     <span>{{ $step }}</span>
                                 </li>
                             @endforeach
                         </ol>
                     </div>
 
-                    <div class="rounded-xl bg-blue-600 p-5 text-white shadow-sm">
+                    <div class="rounded-xl bg-[#2196f3] p-5 text-white shadow-sm">
                         <h2 class="text-base font-semibold">Tải ứng dụng Dailyve</h2>
                         <p class="mt-1 text-xs text-blue-100">Đặt vé nhanh chóng, ưu đãi mỗi ngày</p>
                         <div class="mt-4 grid grid-cols-[88px_minmax(0,1fr)] gap-3">
@@ -706,7 +706,7 @@
                         <div class="flex overflow-x-auto border-b border-slate-200 px-3">
                             @foreach ([['id' => 'intro', 'label' => 'Giới thiệu'], ['id' => 'offices', 'label' => 'Số điện thoại'], ['id' => 'amenities', 'label' => 'Tiện ích']] as $tab)
                                 <button type="button"
-                                    class="operator-tab-trigger h-14 shrink-0 border-b-2 px-5 text-sm font-semibold transition {{ $loop->first ? 'border-blue-600 text-blue-600' : 'border-transparent text-slate-500 hover:text-blue-600' }}"
+                                    class="operator-tab-trigger h-14 shrink-0 border-b-2 px-5 text-sm font-semibold transition {{ $loop->first ? 'border-[#2196f3] text-[#2196f3]' : 'border-transparent text-slate-500 hover:text-[#2196f3]' }}"
                                     data-operator-tab="{{ $tab['id'] }}">
                                     {{ $tab['label'] }}
                                 </button>
@@ -736,7 +736,7 @@
                                                 <img class="h-5 w-5 object-contain" src="{{ esc_url($amenity_icon) }}"
                                                     alt="" loading="lazy" decoding="async">
                                             @else
-                                                <i class="fas fa-check text-blue-600" aria-hidden="true"></i>
+                                                <i class="fas fa-check text-[#2196f3]" aria-hidden="true"></i>
                                             @endif
                                             <span>{{ $decode($amenity['title'] ?? '') }}</span>
                                         </div>
@@ -805,7 +805,7 @@
                                                                 @if (!empty($office['phones']))
                                                                     <div class="mt-4 flex flex-wrap gap-2">
                                                                         @foreach ((array) $office['phones'] as $phone)
-                                                                            <a class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3.5 py-1.5 text-xs font-semibold text-blue-600 transition hover:bg-blue-100 hover:text-blue-700"
+                                                                            <a class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3.5 py-1.5 text-xs font-semibold text-[#2196f3] transition hover:bg-blue-100 hover:text-blue-700"
                                                                                 href="tel:{{ preg_replace('/\D+/', '', $phone) }}">
                                                                                 <i class="fas fa-phone-alt text-[10px]"
                                                                                     aria-hidden="true"></i>
@@ -837,7 +837,7 @@
                                             @php $amenity_icon = $normalize_image_url($amenity['image'] ?? ''); @endphp
                                             <article class="flex gap-4 rounded-xl border border-slate-200 p-4">
                                                 <span
-                                                    class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+                                                    class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-[#2196f3]">
                                                     @if ($amenity_icon)
                                                         <img class="h-6 w-6 object-contain"
                                                             src="{{ esc_url($amenity_icon) }}" alt=""
@@ -1894,12 +1894,12 @@
                     root.querySelectorAll('[data-operator-filter]').forEach(function(button) {
                         button.addEventListener('click', function() {
                             root.querySelectorAll('[data-operator-filter]').forEach(function(item) {
-                                item.classList.remove('is-active', 'bg-blue-600', 'text-white',
+                                item.classList.remove('is-active', 'bg-[#2196f3]', 'text-white',
                                     'hover:text-white');
                                 item.classList.add('border', 'border-slate-200', 'bg-white',
                                     'text-slate-600');
                             });
-                            button.classList.add('is-active', 'bg-blue-600', 'text-white',
+                            button.classList.add('is-active', 'bg-[#2196f3]', 'text-white',
                                 'hover:text-white');
                             button.classList.remove('border', 'border-slate-200', 'bg-white',
                                 'text-slate-600');
@@ -1916,10 +1916,10 @@
                             var tab = button.getAttribute('data-operator-tab');
 
                             root.querySelectorAll('[data-operator-tab]').forEach(function(item) {
-                                item.classList.remove('border-blue-600', 'text-blue-600');
+                                item.classList.remove('border-[#2196f3]', 'text-[#2196f3]');
                                 item.classList.add('border-transparent', 'text-slate-500');
                             });
-                            button.classList.add('border-blue-600', 'text-blue-600');
+                            button.classList.add('border-[#2196f3]', 'text-[#2196f3]');
                             button.classList.remove('border-transparent', 'text-slate-500');
 
                             root.querySelectorAll('[data-operator-tab-pane]').forEach(function(pane) {
