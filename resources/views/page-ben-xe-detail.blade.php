@@ -675,6 +675,31 @@
                                             $trip_count = $item['trip_count'] ?? 0;
                                             $min_price = $item['min_price'] ?? 0;
 
+                                            $totalOperators = intval($op_count ?: count($operators));
+                                            $remainingOperators = max($totalOperators - 5, 0);
+
+                                            $fromName = trim($item['from']['name'] ?? $station_name ?? '');
+                                            $toName = trim($item['to']['name'] ?? $item['to']['province_name'] ?? '');
+
+                                            $from_prov_id = $item['from_province_id'] ?? ($item['from']['province_id'] ?? ($item['from']['id'] ?? ''));
+                                            $to_prov_id = $item['to_province_id'] ?? ($item['to']['province_id'] ?? ($item['to']['id'] ?? ''));
+
+                                            $routeSeoUrl = function_exists('\App\dailyve_get_route_seo_url') ? \App\dailyve_get_route_seo_url($fromName, $toName, $station_name ?? '')
+                                                : '';
+
+                                            $bookingUrl = add_query_arg([
+                                                'from' => $from_prov_id,
+                                                'to' => $to_prov_id,
+                                                'nameFrom' => $fromName,
+                                                'nameTo' => $toName,
+                                            ], home_url('/dat-ve-truc-tuyen/'));
+
+                                            $moreOperatorsUrl = !empty($routeSeoUrl)
+                                                ? $routeSeoUrl
+                                                : $bookingUrl;
+
+                                            $hasRouteSeoUrl = !empty($routeSeoUrl);
+
                                             $search_query_url = add_query_arg(
                                                 [
                                                     'from' => $item['from']['province_id'] ?? '',
@@ -755,6 +780,12 @@
                                                         <div class="ops-container space-y-1.5">
                                                             @foreach ($operators as $idx => $op)
                                                                 @php
+                                                                    if ($idx >= 5 && $totalOperators > 10) {
+                                                                        continue;
+                                                                    }
+                                                                    if ($idx >= 10) {
+                                                                        continue;
+                                                                    }
                                                                     $op_avatar =
                                                                         $op['image_url'] ??
                                                                         'https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-chat-luong-cao.webp';
@@ -870,13 +901,21 @@
                                                             @endforeach
                                                         </div>
 
-                                                        @if (count($operators) > 5)
+                                                        @if ($totalOperators > 10)
+                                                            <a href="{{ esc_url($moreOperatorsUrl) }}"
+                                                                class="mt-2 inline-flex w-full items-center justify-center rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-100 no-underline!">
+                                                                @if ($hasRouteSeoUrl)
+                                                                    Xem tất cả {{ $totalOperators }} nhà xe
+                                                                @else
+                                                                    Xem và đặt vé {{ $fromName }} đi {{ $toName }}
+                                                                @endif
+                                                            </a>
+                                                        @elseif ($remainingOperators > 0)
                                                             <button type="button" onclick="toggleOperators(this)"
-                                                                class="mt-2 w-full flex items-center justify-center gap-1.5 text-[12px] font-bold text-[#2196f3] hover:text-blue-800 transition-colors py-1.5 rounded-xl hover:bg-blue-50">
-                                                                <span class="toggle-label">Xem thêm
-                                                                    {{ count($operators) - 5 }}
-                                                                    nhà
-                                                                    xe</span>
+                                                                class="mt-2 inline-flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50">
+                                                                <span class="toggle-label">
+                                                                    Xem thêm {{ $remainingOperators }} nhà xe
+                                                                </span>
                                                                 <i
                                                                     class="fas fa-chevron-down text-[10px] toggle-icon transition-transform"></i>
                                                             </button>
@@ -1466,7 +1505,7 @@
                         const locationId = window.route_data?.to_id;
                         if (!locationId) return;
                         fetch('/wp-admin/admin-ajax.php?action=dailyve_get_station_routes&location_id=' + locationId +
-                                '&page=' + page + '&page_size=10')
+                                '&page=' + page + '&page_size=10&station_name=' + encodeURIComponent(window.route_data?.to_name || ''))
                             .then(res => res.json())
                             .then(res => {
                                 if (res.success) {
@@ -1607,10 +1646,16 @@
                                         '&date=' + dateStr;
                                     let opsHtml = '';
                                     if (operators.length > 0) {
+                                        const totalOperators = parseInt(item.operator_count || operators.length, 10);
+                                        const remainingOperators = Math.max(totalOperators - 5, 0);
+
                                         opsHtml += `<div class="px-4 pt-3 pb-4 flex-1">
                                                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">Nhà xe nổi bật<span class="h-px bg-slate-100 flex-1"></span></p>
                                                     <div class="ops-container space-y-1.5">`;
                                         operators.forEach((op, opIdx) => {
+                                            if (opIdx >= 5 && totalOperators > 10) return;
+                                            if (opIdx >= 10) return;
+
                                             const opAvatar = op.image_url ||
                                                 'https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-chat-luong-cao.webp';
                                             const opName = op.name || '';
@@ -1663,11 +1708,21 @@
                                                     </div>`;
                                         });
                                         opsHtml += `</div>`;
-                                        if (operators.length > 5) {
-                                            opsHtml += `<button type="button" onclick="toggleOperators(this)" class="mt-2 w-full flex items-center justify-center gap-1.5 text-[12px] font-bold text-[#2196f3] hover:text-blue-800 transition-colors py-1.5 rounded-xl hover:bg-blue-50">
-                                                        <span class="toggle-label">Xem thêm ${operators.length - 5} nhà xe</span>
-                                                        <i class="fas fa-chevron-down text-[10px] toggle-icon transition-transform"></i>
-                                                    </button>`;
+
+                                        const seoUrl = item.seo_url || '';
+                                        const bookingUrl = window.location.origin + '/dat-ve-truc-tuyen/?from=' + fromProvId + '&to=' + toProvId + '&nameFrom=' + encodeURIComponent(fromName) + '&nameTo=' + encodeURIComponent(toName);
+                                        const moreOperatorsUrl = seoUrl || bookingUrl;
+                                        const hasSeoUrl = !!seoUrl;
+
+                                        if (totalOperators > 10) {
+                                            opsHtml += `<a href="${moreOperatorsUrl}" class="mt-2 inline-flex w-full items-center justify-center rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-100 no-underline!">
+                                                ${hasSeoUrl ? `Xem tất cả ${totalOperators} nhà xe` : `Xem và đặt vé ${fromName} đi ${toName}`}
+                                            </a>`;
+                                        } else if (remainingOperators > 0) {
+                                            opsHtml += `<button type="button" onclick="toggleOperators(this)" class="mt-2 inline-flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50">
+                                                <span class="toggle-label">Xem thêm ${remainingOperators} nhà xe</span>
+                                                <i class="fas fa-chevron-down text-[10px] toggle-icon transition-transform ml-1.5"></i>
+                                            </button>`;
                                         }
                                         opsHtml += `</div>`;
                                     } else {

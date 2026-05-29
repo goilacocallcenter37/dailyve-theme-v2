@@ -573,20 +573,110 @@ add_action('wp_ajax_dailyve_get_station_routes', function() {
     $location_id = sanitize_text_field($_GET['location_id'] ?? '');
     $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     $page_size = isset($_GET['page_size']) ? (int) $_GET['page_size'] : 30;
+    $station_name = sanitize_text_field($_GET['station_name'] ?? '');
+
     $data = \App\dailyve_get_station_routes($location_id, $page, $page_size);
     if (is_wp_error($data)) {
         wp_send_json_error(['message' => $data->get_error_message()]);
     }
+
+    if (is_array($data)) {
+        if (isset($data['departing']['items']) && is_array($data['departing']['items'])) {
+            foreach ($data['departing']['items'] as &$item) {
+                $from_name = $item['from']['name'] ?? '';
+                $to_name = $item['to']['name'] ?? '';
+                $item['seo_url'] = function_exists('\App\dailyve_get_route_seo_url')
+                    ? \App\dailyve_get_route_seo_url($from_name, $to_name, $station_name)
+                    : '';
+            }
+            unset($item);
+        }
+        if (isset($data['arriving']['items']) && is_array($data['arriving']['items'])) {
+            foreach ($data['arriving']['items'] as &$item) {
+                $from_name = $item['from']['name'] ?? '';
+                $to_name = $item['to']['name'] ?? '';
+                $item['seo_url'] = function_exists('\App\dailyve_get_route_seo_url')
+                    ? \App\dailyve_get_route_seo_url($from_name, $to_name, $station_name)
+                    : '';
+            }
+            unset($item);
+        }
+    }
+
     wp_send_json_success($data);
 });
 add_action('wp_ajax_nopriv_dailyve_get_station_routes', function() {
     $location_id = sanitize_text_field($_GET['location_id'] ?? '');
     $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     $page_size = isset($_GET['page_size']) ? (int) $_GET['page_size'] : 30;
+    $station_name = sanitize_text_field($_GET['station_name'] ?? '');
+
     $data = \App\dailyve_get_station_routes($location_id, $page, $page_size);
     if (is_wp_error($data)) {
         wp_send_json_error(['message' => $data->get_error_message()]);
     }
+
+    if (is_array($data)) {
+        if (isset($data['departing']['items']) && is_array($data['departing']['items'])) {
+            foreach ($data['departing']['items'] as &$item) {
+                $from_name = $item['from']['name'] ?? '';
+                $to_name = $item['to']['name'] ?? '';
+                $item['seo_url'] = function_exists('\App\dailyve_get_route_seo_url')
+                    ? \App\dailyve_get_route_seo_url($from_name, $to_name, $station_name)
+                    : '';
+            }
+            unset($item);
+        }
+        if (isset($data['arriving']['items']) && is_array($data['arriving']['items'])) {
+            foreach ($data['arriving']['items'] as &$item) {
+                $from_name = $item['from']['name'] ?? '';
+                $to_name = $item['to']['name'] ?? '';
+                $item['seo_url'] = function_exists('\App\dailyve_get_route_seo_url')
+                    ? \App\dailyve_get_route_seo_url($from_name, $to_name, $station_name)
+                    : '';
+            }
+            unset($item);
+        }
+    }
+
     wp_send_json_success($data);
 });
+
+if (!function_exists('App\dailyve_get_route_seo_url')) {
+    function dailyve_get_route_seo_url($from_name, $to_name, $fallback_from_name = '')
+    {
+        $from_name = trim((string) $from_name);
+        $to_name = trim((string) $to_name);
+        $fallback_from_name = trim((string) $fallback_from_name);
+
+        if ($to_name === '') {
+            return '';
+        }
+
+        $from_candidates = array_filter(array_unique([
+            $from_name,
+            $fallback_from_name,
+        ]));
+
+        foreach ($from_candidates as $candidate_from_name) {
+            if ($candidate_from_name === '') {
+                continue;
+            }
+
+            $route_slug = sanitize_title($candidate_from_name) . '-di-' . sanitize_title($to_name);
+
+            $page = get_page_by_path(
+                've-xe-khach/tuyen-duong/' . $route_slug,
+                OBJECT,
+                'page'
+            );
+
+            if ($page && $page->post_status === 'publish') {
+                return get_permalink($page->ID);
+            }
+        }
+
+        return '';
+    }
+}
 
