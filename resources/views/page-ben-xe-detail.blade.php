@@ -622,7 +622,6 @@
                             @elseif (!empty($dir_items))
                                 {{-- Province filter bar --}}
                                 <div class="flex items-center gap-3 mb-5">
-                                    {{-- Pills wrapper: scroll on mobile, full-width on desktop --}}
                                     <div class="pills-scroll flex-1 min-w-0"
                                         id="provinces-filter-container-{{ $dir_key }}" role="tablist">
                                         <button type="button"
@@ -1102,131 +1101,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            {{-- Amenities card --}}
-                            <div class="bx-card p-6 mb-5">
-                                <h2 class="bx-display text-xl text-slate-950 mb-5">Tiện ích tại bến xe</h2>
-                                <div class="grid grid-cols-3 sm:grid-cols-5 gap-4 text-center">
-                                    @foreach ($highlights as $hl)
-                                        <div class="flex flex-col items-center gap-2">
-                                            <span
-                                                class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-500 mx-auto">
-                                                <i class="{{ $hl['icon'] }} text-lg"></i>
-                                            </span>
-                                            <span
-                                                class="text-[11px] font-semibold text-slate-700 leading-tight">{{ $hl['label'] }}</span>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-
-                            {{-- Map card --}}
-                            <div class="bx-card p-6 mb-5">
-                                <div class="flex items-center justify-between mb-4">
-                                    <h2 class="bx-display text-xl text-slate-950">Vị trí bến xe {{ $station_name }}</h2>
-                                    <a href="https://www.google.com/maps/search/?api=1&query={{ $map_query }}"
-                                        target="_blank" rel="noopener noreferrer" class="action-btn text-xs">
-                                        <i class="fas fa-directions text-blue-500"></i> Chỉ đường
-                                    </a>
-                                </div>
-                                <p class="text-xs text-slate-500 mb-4">{{ $address }}</p>
-                                <div class="overflow-hidden rounded-2xl border border-slate-200 aspect-video relative">
-                                    <iframe class="absolute inset-0 w-full h-full border-0"
-                                        src="{{ esc_url($map_embed_url) }}" allowfullscreen="" loading="lazy"
-                                        referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                </div>
-                            </div>
-
-                            {{-- Transit card --}}
-                            <div class="bx-card p-6 mb-5">
-                                <h2 class="bx-display text-xl text-slate-950 mb-5">Hướng dẫn di chuyển đến bến xe</h2>
-                                <div class="grid sm:grid-cols-3 gap-4">
-                                    <div
-                                        class="flex flex-col items-start gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                                        <span
-                                            class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-600">
-                                            <i class="fas fa-motorcycle text-base"></i>
-                                        </span>
-                                        <div>
-                                            <h4 class="text-xs font-bold text-slate-900 mb-1">Đi bằng xe máy</h4>
-                                            <p class="text-[12px] text-slate-500 leading-relaxed">Từ trung tâm TPHCM đi
-                                                theo Quốc lộ 22 hướng Tây Ninh, bến xe nằm bên phải sau khoảng 20km.</p>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="flex flex-col items-start gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                                        <span
-                                            class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600">
-                                            <i class="fas fa-car text-base"></i>
-                                        </span>
-                                        <div>
-                                            <h4 class="text-xs font-bold text-slate-900 mb-1">Đi bằng ô tô</h4>
-                                            <p class="text-[12px] text-slate-500 leading-relaxed">Di chuyển trên Quốc lộ
-                                                22, đường rộng rãi, thuận tiện cho ô tô. Có bãi đỗ xe rộng rãi.</p>
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="flex flex-col items-start gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                                        <span
-                                            class="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-600">
-                                            <i class="fas fa-bus text-base"></i>
-                                        </span>
-                                        <div>
-                                            <h4 class="text-xs font-bold text-slate-900 mb-1">Đi bằng buýt</h4>
-                                            <p class="text-[12px] text-slate-500 leading-relaxed">Tuyến bus 13, 65, 74, 94
-                                                dừng bến {{ $station_name }}, thuận tiện di chuyển.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- FAQ card --}}
-                            <div class="bx-card p-6">
-                                <h2 class="bx-display text-xl text-slate-950 mb-5">Câu hỏi thường gặp</h2>
-                                @php
-                                    $faqs = [
-                                        [
-                                            'q' => $station_name . ' hoạt động vào khung giờ nào?',
-                                            'a' =>
-                                                'Bến xe hoạt động từ ' .
-                                                $hours .
-                                                ' hàng ngày kể cả ngày lễ và cuối tuần.',
-                                        ],
-                                        [
-                                            'q' => 'Có giữ xe qua đêm tại bến xe không?',
-                                            'a' =>
-                                                'Bến xe có bãi giữ xe ô tô và xe máy phục vụ 24/7. Hành khách có thể gửi xe qua đêm với mức phí theo quy định của ban quản lý bến xe.',
-                                        ],
-                                        [
-                                            'q' => 'Có thể mua vé trực tuyến cho các tuyến đi từ bến xe không?',
-                                            'a' =>
-                                                'Có. Bạn có thể đặt vé trực tuyến qua Dailyve.com hoặc ứng dụng di động Dailyve. Vé sẽ được xác nhận ngay sau khi thanh toán thành công.',
-                                        ],
-                                        [
-                                            'q' => $station_name . ' có dịch vụ gửi hàng không?',
-                                            'a' =>
-                                                'Có. Bến xe cung cấp dịch vụ gửi nhận hàng hóa qua các nhà xe hoạt động tại bến. Hành khách liên hệ trực tiếp quầy vé hoặc hotline để biết thêm chi tiết.',
-                                        ],
-                                    ];
-                                @endphp
-                                <div class="space-y-2" id="faq-list">
-                                    @foreach ($faqs as $faq_idx => $faq)
-                                        <div class="faq-item border border-slate-100 rounded-2xl overflow-hidden">
-                                            <button type="button"
-                                                class="faq-toggle w-full flex items-center justify-between gap-3 px-5 py-4 text-left text-sm font-semibold text-slate-900 hover:bg-slate-50 transition-colors"
-                                                onclick="toggleFaq(this)">
-                                                <span>{{ $faq['q'] }}</span>
-                                                <i
-                                                    class="fas fa-chevron-down text-xs text-slate-400 shrink-0 transition-transform duration-200 faq-icon"></i>
-                                            </button>
-                                            <div class="faq-body overflow-hidden" style="height:0;">
-                                                <p class="px-5 pb-5 pt-1 text-sm text-slate-600 leading-relaxed">
-                                                    {{ $faq['a'] }}</p>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
                         </div>
 
                         {{-- ── Số điện thoại pane ── --}}
@@ -1378,329 +1252,400 @@
                                         </span>
                                         <div>
                                             <h4 class="text-xs font-bold text-slate-900 mb-1">Đi bằng xe buýt</h4>
-                                            <p class="text-[12px] text-slate-500 leading-relaxed">Có nhiều tuyến xe buýt đi qua hoặc có trạm dừng gần bến xe (Tuyến 04, 13, 27, 33...)</p>
+                                            <p class="text-[12px] text-slate-500 leading-relaxed">Có nhiều tuyến xe buýt đi
+                                                qua hoặc có trạm dừng gần bến xe (Tuyến 04, 13, 27, 33...)</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
+                        {{-- FAQ card --}}
+                        <div class="bx-card p-6">
+                            <h2 class="bx-display text-xl text-slate-950 mb-5">Câu hỏi thường gặp</h2>
+                            @php
+                                $faqs = [
+                                    [
+                                        'q' => $station_name . ' hoạt động vào khung giờ nào?',
+                                        'a' =>
+                                            'Bến xe hoạt động từ ' . $hours . ' hàng ngày kể cả ngày lễ và cuối tuần.',
+                                    ],
+                                    [
+                                        'q' => 'Có giữ xe qua đêm tại bến xe không?',
+                                        'a' =>
+                                            'Bến xe có bãi giữ xe ô tô và xe máy phục vụ 24/7. Hành khách có thể gửi xe qua đêm với mức phí theo quy định của ban quản lý bến xe.',
+                                    ],
+                                    [
+                                        'q' => 'Có thể mua vé trực tuyến cho các tuyến đi từ bến xe không?',
+                                        'a' =>
+                                            'Có. Bạn có thể đặt vé trực tuyến qua Dailyve.com hoặc ứng dụng di động Dailyve. Vé sẽ được xác nhận ngay sau khi thanh toán thành công.',
+                                    ],
+                                    [
+                                        'q' => $station_name . ' có dịch vụ gửi hàng không?',
+                                        'a' =>
+                                            'Có. Bến xe cung cấp dịch vụ gửi nhận hàng hóa qua các nhà xe hoạt động tại bến. Hành khách liên hệ trực tiếp quầy vé hoặc hotline để biết thêm chi tiết.',
+                                    ],
+                                ];
+                            @endphp
+                            <div class="space-y-2" id="faq-list">
+                                @foreach ($faqs as $faq_idx => $faq)
+                                    <div class="faq-item border border-slate-100 rounded-2xl overflow-hidden">
+                                        <button type="button"
+                                            class="faq-toggle w-full flex items-center justify-between gap-3 px-5 py-4 text-left text-sm font-semibold text-slate-900 hover:bg-slate-50 transition-colors"
+                                            onclick="toggleFaq(this)">
+                                            <span>{{ $faq['q'] }}</span>
+                                            <i
+                                                class="fas fa-chevron-down text-xs text-slate-400 shrink-0 transition-transform duration-200 faq-icon"></i>
+                                        </button>
+                                        <div class="faq-body overflow-hidden" style="height:0;">
+                                            <p class="px-5 pb-5 pt-1 text-sm text-slate-600 leading-relaxed">
+                                                {{ $faq['a'] }}</p>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
-        </main>
+            </main>
 
-        <script>
-            (function() {
-                /* ── Direction switcher ── */
-                window.stationCurrentPages = {
-                    from: window.stationDirection === 'from' ? window.stationCurrentPage : 1,
-                    to: window.stationDirection === 'to' ? window.stationCurrentPage : 1
-                };
+            <script>
+                (function() {
+                    /* ── Direction switcher ── */
+                    window.stationCurrentPages = {
+                        from: window.stationDirection === 'from' ? window.stationCurrentPage : 1,
+                        to: window.stationDirection === 'to' ? window.stationCurrentPage : 1
+                    };
 
-                /* ── Province filter ── */
-                window.filterByProvince = function(prov, btnEl) {
-                    const activeWrapper = document.getElementById('route-dir-' + window.stationDirection);
-                    if (!activeWrapper) return;
-                    activeWrapper.querySelectorAll('.prov-pill').forEach(btn => {
-                        btn.classList.remove('prov-pill-active');
-                        btn.classList.add('bg-slate-100', 'text-slate-700');
-                    });
-                    const clicked = btnEl || window.event?.currentTarget;
-                    if (clicked) {
-                        clicked.classList.add('prov-pill-active');
-                        clicked.classList.remove('bg-slate-100', 'text-slate-700');
-                    } else {
-                        const pills = activeWrapper.querySelectorAll('.prov-pill');
-                        pills.forEach(btn => {
-                            const attr = btn.getAttribute('onclick') || '';
-                            if ((prov === 'all' && attr.includes("'all'")) || (prov !== 'all' && attr.includes("'" + prov + "'"))) {
-                                btn.classList.add('prov-pill-active');
-                                btn.classList.remove('bg-slate-100', 'text-slate-700');
+                    /* ── Province filter ── */
+                    window.filterByProvince = function(prov, btnEl) {
+                        const activeWrapper = document.getElementById('route-dir-' + window.stationDirection);
+                        if (!activeWrapper) return;
+                        activeWrapper.querySelectorAll('.prov-pill').forEach(btn => {
+                            btn.classList.remove('prov-pill-active');
+                            btn.classList.add('bg-slate-100', 'text-slate-700');
+                        });
+                        const clicked = btnEl || window.event?.currentTarget;
+                        if (clicked) {
+                            clicked.classList.add('prov-pill-active');
+                            clicked.classList.remove('bg-slate-100', 'text-slate-700');
+                        } else {
+                            const pills = activeWrapper.querySelectorAll('.prov-pill');
+                            pills.forEach(btn => {
+                                const attr = btn.getAttribute('onclick') || '';
+                                if ((prov === 'all' && attr.includes("'all'")) || (prov !== 'all' && attr.includes(
+                                        "'" + prov + "'"))) {
+                                    btn.classList.add('prov-pill-active');
+                                    btn.classList.remove('bg-slate-100', 'text-slate-700');
+                                }
+                            });
+                        }
+                        const routeCards = activeWrapper.querySelectorAll('[data-route-card]');
+                        let visibleCount = 0;
+                        routeCards.forEach(card => {
+                            const matchesFilter = (prov === 'all' || card.dataset.province === prov);
+                            if (!matchesFilter) {
+                                card.style.display = 'none';
+                                setRouteOpen(card, false, true);
+                                return;
+                            }
+                            card.style.display = 'flex';
+                            const shouldBeOpen = visibleCount < 2;
+                            setRouteOpen(card, shouldBeOpen, true);
+                            visibleCount++;
+                        });
+                    };
+
+                    /* ── Info tab switcher ── */
+                    window.switchInfoTab = function(tabId) {
+                        document.querySelectorAll('.info-htab').forEach(btn => {
+                            const isActive = btn.dataset.tabId === tabId;
+                            btn.classList.toggle('border-blue-600', isActive);
+                            btn.classList.toggle('text-blue-600', isActive);
+                            btn.classList.toggle('border-transparent', !isActive);
+                            btn.classList.toggle('text-slate-500', !isActive);
+                        });
+                        document.querySelectorAll('.info-tab-pane').forEach(pane => {
+                            pane.classList.toggle('hidden', pane.id !== 'pane-' + tabId);
+                        });
+                    };
+
+                    /* ── FAQ accordion ── */
+                    window.toggleFaq = function(btn) {
+                        const body = btn.nextElementSibling;
+                        const icon = btn.querySelector('.faq-icon');
+                        const isOpen = body.style.height !== '0px' && body.style.height !== '';
+                        if (isOpen) {
+                            body.style.height = body.scrollHeight + 'px';
+                            body.offsetHeight;
+                            body.style.transition = 'height 0.25s ease';
+                            body.style.height = '0px';
+                            if (icon) icon.style.transform = '';
+                        } else {
+                            body.style.height = '0px';
+                            body.style.transition = 'height 0.25s ease';
+                            body.offsetHeight;
+                            body.style.height = body.scrollHeight + 'px';
+                            if (icon) icon.style.transform = 'rotate(180deg)';
+                            setTimeout(function() {
+                                body.style.height = 'auto';
+                            }, 260);
+                        }
+                    };
+
+                    window.switchDirection = function(dir) {
+                        if (window.stationDirection === dir) return;
+                        window.stationDirection = dir;
+                        document.querySelectorAll('.dir-tab-btn').forEach(btn => {
+                            btn.classList.toggle('dir-tab-active', btn.dataset.dir === dir);
+                            if (btn.dataset.dir !== dir) {
+                                btn.classList.remove('dir-tab-active');
+                                btn.classList.add('text-slate-600');
                             }
                         });
-                    }
-                    const routeCards = activeWrapper.querySelectorAll('[data-route-card]');
-                    let visibleCount = 0;
-                    routeCards.forEach(card => {
-                        const matchesFilter = (prov === 'all' || card.dataset.province === prov);
-                        if (!matchesFilter) {
-                            card.style.display = 'none';
-                            setRouteOpen(card, false, true);
-                            return;
+                        document.querySelectorAll('.route-dir-wrapper').forEach(wrapper => {
+                            if (wrapper.id === 'route-dir-' + dir) {
+                                wrapper.classList.remove('hidden');
+                            } else {
+                                wrapper.classList.add('hidden');
+                            }
+                        });
+                        const titleEl = document.getElementById('route-list-title');
+                        if (titleEl) {
+                            const yOffset = -120;
+                            const rect = titleEl.getBoundingClientRect();
+                            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                            const y = rect.top + scrollTop + yOffset;
+                            window.scrollTo({
+                                top: y,
+                                behavior: 'auto'
+                            });
                         }
-                        card.style.display = 'flex';
-                        const shouldBeOpen = visibleCount < 2;
-                        setRouteOpen(card, shouldBeOpen, true);
-                        visibleCount++;
-                    });
-                };
+                        const url = new URL(window.location);
+                        url.searchParams.set('direction', dir);
+                        url.searchParams.set('page_num', window.stationCurrentPages[dir] || 1);
+                        window.history.replaceState({}, '', url);
+                    };
 
-                /* ── Info tab switcher ── */
-                window.switchInfoTab = function(tabId) {
-                    document.querySelectorAll('.info-htab').forEach(btn => {
-                        const isActive = btn.dataset.tabId === tabId;
-                        btn.classList.toggle('border-blue-600', isActive);
-                        btn.classList.toggle('text-blue-600', isActive);
-                        btn.classList.toggle('border-transparent', !isActive);
-                        btn.classList.toggle('text-slate-500', !isActive);
-                    });
-                    document.querySelectorAll('.info-tab-pane').forEach(pane => {
-                        pane.classList.toggle('hidden', pane.id !== 'pane-' + tabId);
-                    });
-                };
+                    /* ── Toggle operators ── */
+                    window.toggleOperators = function(btn) {
+                        const container = btn.closest('.px-4, [class*="px-4"]')?.querySelector('.ops-container');
+                        if (!container) return;
+                        const hiddenOps = container.querySelectorAll('.js-hidden-op');
+                        const isExpanded = btn.dataset.expanded === 'true';
+                        hiddenOps.forEach(op => op.classList.toggle('hidden', isExpanded));
+                        btn.dataset.expanded = isExpanded ? '' : 'true';
+                        const label = btn.querySelector('.toggle-label');
+                        const icon = btn.querySelector('.toggle-icon');
+                        if (label) label.textContent = isExpanded ? `Xem thêm ${hiddenOps.length} nhà xe` : 'Thu gọn';
+                        if (icon) icon.style.transform = isExpanded ? '' : 'rotate(180deg)';
+                    };
 
-                /* ── FAQ accordion ── */
-                window.toggleFaq = function(btn) {
-                    const body = btn.nextElementSibling;
-                    const icon = btn.querySelector('.faq-icon');
-                    const isOpen = body.style.height !== '0px' && body.style.height !== '';
-                    if (isOpen) {
-                        body.style.height = body.scrollHeight + 'px';
-                        body.offsetHeight;
-                        body.style.transition = 'height 0.25s ease';
-                        body.style.height = '0px';
-                        if (icon) icon.style.transform = '';
-                    } else {
-                        body.style.height = '0px';
-                        body.style.transition = 'height 0.25s ease';
-                        body.offsetHeight;
-                        body.style.height = body.scrollHeight + 'px';
-                        if (icon) icon.style.transform = 'rotate(180deg)';
-                        setTimeout(function() {
-                            body.style.height = 'auto';
-                        }, 260);
-                    }
-                };
-
-                window.switchDirection = function(dir) {
-                    if (window.stationDirection === dir) return;
-                    window.stationDirection = dir;
-                    document.querySelectorAll('.dir-tab-btn').forEach(btn => {
-                        btn.classList.toggle('dir-tab-active', btn.dataset.dir === dir);
-                        if (btn.dataset.dir !== dir) {
-                            btn.classList.remove('dir-tab-active');
-                            btn.classList.add('text-slate-600');
+                    /* ── Fetch routes (AJAX pagination) ── */
+                    window.fetchRoutesPage = function(page, force) {
+                        const currentDir = window.stationDirection;
+                        if (!force && page === (window.stationCurrentPages[currentDir] || 1)) return;
+                        const grid = document.getElementById('routes-grid-' + currentDir);
+                        if (!grid) return;
+                        const titleEl = document.getElementById('route-list-title');
+                        if (titleEl) {
+                            const yOffset = -120;
+                            const rect = titleEl.getBoundingClientRect();
+                            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                            const y = rect.top + scrollTop + yOffset;
+                            window.scrollTo({
+                                top: y,
+                                behavior: 'auto'
+                            });
                         }
-                    });
-                    document.querySelectorAll('.route-dir-wrapper').forEach(wrapper => {
-                        if (wrapper.id === 'route-dir-' + dir) {
-                            wrapper.classList.remove('hidden');
-                        } else {
-                            wrapper.classList.add('hidden');
-                        }
-                    });
-                    const titleEl = document.getElementById('route-list-title');
-                    if (titleEl) {
-                        const yOffset = -120;
-                        const rect = titleEl.getBoundingClientRect();
-                        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                        const y = rect.top + scrollTop + yOffset;
-                        window.scrollTo({ top: y, behavior: 'auto' });
-                    }
-                    const url = new URL(window.location);
-                    url.searchParams.set('direction', dir);
-                    url.searchParams.set('page_num', window.stationCurrentPages[dir] || 1);
-                    window.history.replaceState({}, '', url);
-                };
-
-                /* ── Toggle operators ── */
-                window.toggleOperators = function(btn) {
-                    const container = btn.closest('.px-4, [class*="px-4"]')?.querySelector('.ops-container');
-                    if (!container) return;
-                    const hiddenOps = container.querySelectorAll('.js-hidden-op');
-                    const isExpanded = btn.dataset.expanded === 'true';
-                    hiddenOps.forEach(op => op.classList.toggle('hidden', isExpanded));
-                    btn.dataset.expanded = isExpanded ? '' : 'true';
-                    const label = btn.querySelector('.toggle-label');
-                    const icon = btn.querySelector('.toggle-icon');
-                    if (label) label.textContent = isExpanded ? `Xem thêm ${hiddenOps.length} nhà xe` : 'Thu gọn';
-                    if (icon) icon.style.transform = isExpanded ? '' : 'rotate(180deg)';
-                };
-
-                /* ── Fetch routes (AJAX pagination) ── */
-                window.fetchRoutesPage = function(page, force) {
-                    const currentDir = window.stationDirection;
-                    if (!force && page === (window.stationCurrentPages[currentDir] || 1)) return;
-                    const grid = document.getElementById('routes-grid-' + currentDir);
-                    if (!grid) return;
-                    const titleEl = document.getElementById('route-list-title');
-                    if (titleEl) {
-                        const yOffset = -120;
-                        const rect = titleEl.getBoundingClientRect();
-                        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                        const y = rect.top + scrollTop + yOffset;
-                        window.scrollTo({ top: y, behavior: 'auto' });
-                    }
-                    grid.innerHTML = Array(4).fill('').map(() =>
-                        `<div class="route-card p-4 space-y-3">
+                        grid.innerHTML = Array(4).fill('').map(() =>
+                            `<div class="route-card p-4 space-y-3">
                             <div class="bx-skeleton h-4 w-3/4 rounded-lg"></div>
                             <div class="bx-skeleton h-3 w-1/2 rounded-lg"></div>
                             <div class="bx-skeleton h-20 rounded-xl"></div>
                             <div class="bx-skeleton h-9 rounded-xl mt-2"></div>
                         </div>`
-                    ).join('');
-                    const locationId = window.route_data?.to_id;
-                    if (!locationId) return;
-                    fetch('/wp-admin/admin-ajax.php?action=dailyve_get_station_routes&location_id=' + locationId + '&page=' + page + '&page_size=10')
-                        .then(res => res.json())
-                        .then(res => {
-                            if (res.success) {
-                                window.stationRoutesSummary = res.data;
-                                window.stationCurrentPages[currentDir] = page;
-                                renderRoutesAndPagination(window.stationRoutesSummary, page, currentDir);
-                                const url = new URL(window.location);
-                                url.searchParams.set('direction', currentDir);
-                                url.searchParams.set('page_num', page);
-                                window.history.replaceState({}, '', url);
-                            } else {
-                                alert(res.data?.message || 'Có lỗi xảy ra khi tải dữ liệu.');
-                            }
-                        })
-                        .catch(e => {
-                            console.error(e);
-                            alert('Lỗi kết nối mạng.');
-                        });
-                };
+                        ).join('');
+                        const locationId = window.route_data?.to_id;
+                        if (!locationId) return;
+                        fetch('/wp-admin/admin-ajax.php?action=dailyve_get_station_routes&location_id=' + locationId +
+                                '&page=' + page + '&page_size=10')
+                            .then(res => res.json())
+                            .then(res => {
+                                if (res.success) {
+                                    window.stationRoutesSummary = res.data;
+                                    window.stationCurrentPages[currentDir] = page;
+                                    renderRoutesAndPagination(window.stationRoutesSummary, page, currentDir);
+                                    const url = new URL(window.location);
+                                    url.searchParams.set('direction', currentDir);
+                                    url.searchParams.set('page_num', page);
+                                    window.history.replaceState({}, '', url);
+                                } else {
+                                    alert(res.data?.message || 'Có lỗi xảy ra khi tải dữ liệu.');
+                                }
+                            })
+                            .catch(e => {
+                                console.error(e);
+                                alert('Lỗi kết nối mạng.');
+                            });
+                    };
 
-                function formatPrice(p) {
-                    if (!p) return '—';
-                    return new Intl.NumberFormat('vi-VN').format(p) + 'đ';
-                }
+                    function formatPrice(p) {
+                        if (!p) return '—';
+                        return new Intl.NumberFormat('vi-VN').format(p) + 'đ';
+                    }
 
-                function getInitials(name) {
-                    if (!name) return 'DLV';
-                    const parts = name.trim().split(/\s+/);
-                    return parts.length >= 2 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : name.slice(0, 2).toUpperCase();
-                }
+                    function getInitials(name) {
+                        if (!name) return 'DLV';
+                        const parts = name.trim().split(/\s+/);
+                        return parts.length >= 2 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : name.slice(0, 2)
+                            .toUpperCase();
+                    }
 
-                function setRouteOpen(card, open, instant) {
-                    const body = card.querySelector('[data-route-body]');
-                    if (!body) return;
-                    card.classList.toggle('is-open', open);
-                    card.setAttribute('data-route-open', open ? 'true' : 'false');
-                    const toggle = card.querySelector('[data-route-toggle]');
-                    if (toggle) {
-                        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-                    }
-                    if (body.dvTimeout) {
-                        window.clearTimeout(body.dvTimeout);
-                        body.dvTimeout = null;
-                    }
-                    if (instant) {
-                        body.style.height = open ? 'auto' : '0px';
-                        return;
-                    }
-                    if (open) {
-                        body.style.height = '0px';
-                        body.offsetHeight;
-                        body.style.height = body.scrollHeight + 'px';
-                        body.dvTimeout = window.setTimeout(function() {
-                            if (card.classList.contains('is-open')) {
-                                body.style.height = 'auto';
-                            }
-                        }, 300);
-                    } else {
-                        if (body.style.height === 'auto' || !body.style.height) {
-                            body.style.height = body.scrollHeight + 'px';
-                        }
-                        body.offsetHeight;
-                        body.style.height = '0px';
-                    }
-                }
-
-                function initRouteCardAccordions() {
-                    document.querySelectorAll('[data-route-card]').forEach(function(card) {
-                        if (card.dataset.accordionInit) return;
-                        card.dataset.accordionInit = 'true';
-                        const isOpen = card.getAttribute('data-route-open') === 'true';
-                        setRouteOpen(card, isOpen, true);
+                    function setRouteOpen(card, open, instant) {
+                        const body = card.querySelector('[data-route-body]');
+                        if (!body) return;
+                        card.classList.toggle('is-open', open);
+                        card.setAttribute('data-route-open', open ? 'true' : 'false');
                         const toggle = card.querySelector('[data-route-toggle]');
                         if (toggle) {
-                            toggle.addEventListener('click', function() {
-                                const currentlyOpen = card.classList.contains('is-open');
-                                setRouteOpen(card, !currentlyOpen, false);
-                            });
+                            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
                         }
-                    });
-                }
+                        if (body.dvTimeout) {
+                            window.clearTimeout(body.dvTimeout);
+                            body.dvTimeout = null;
+                        }
+                        if (instant) {
+                            body.style.height = open ? 'auto' : '0px';
+                            return;
+                        }
+                        if (open) {
+                            body.style.height = '0px';
+                            body.offsetHeight;
+                            body.style.height = body.scrollHeight + 'px';
+                            body.dvTimeout = window.setTimeout(function() {
+                                if (card.classList.contains('is-open')) {
+                                    body.style.height = 'auto';
+                                }
+                            }, 300);
+                        } else {
+                            if (body.style.height === 'auto' || !body.style.height) {
+                                body.style.height = body.scrollHeight + 'px';
+                            }
+                            body.offsetHeight;
+                            body.style.height = '0px';
+                        }
+                    }
 
-                function renderRoutesAndPagination(data, page, currentDir) {
-                    page = parseInt(page, 10) || 1;
-                    const dirKey = currentDir === 'from' ? 'departing' : 'arriving';
-                    const dirData = data[dirKey] || {};
-                    const items = dirData.items || [];
-                    const totalItems = dirData.total || items.length;
-                    const totalPages = dirData.totalPages || 1;
-                    const totalCountEl = document.getElementById('total-routes-count-' + currentDir);
-                    if (totalCountEl) {
-                        totalCountEl.innerHTML = `<i class="fas fa-route text-blue-400"></i> ${new Intl.NumberFormat('vi-VN').format(totalItems)} tuyến`;
-                    }
-                    const provincesList = [];
-                    items.forEach(item => {
-                        const opp = currentDir === 'from' ? (item.to || {}) : (item.from || {});
-                        const provName = opp.province_name || '';
-                        if (provName && !provincesList.includes(provName)) {
-                            provincesList.push(provName);
-                        }
-                    });
-                    const provincesContainer = document.getElementById('provinces-filter-container-' + currentDir);
-                    if (provincesContainer) {
-                        let html = `<button type="button" class="prov-pill prov-pill-active shrink-0 rounded-xl bg-slate-100 hover:bg-slate-200 px-4 py-2 text-xs font-bold text-slate-700" onclick="filterByProvince('all', this)">Tất cả</button>`;
-                        provincesList.forEach(prov => {
-                            html += `<button type="button" class="prov-pill shrink-0 rounded-xl bg-slate-100 hover:bg-slate-200 px-4 py-2 text-xs font-bold text-slate-700" onclick="filterByProvince('${prov}', this)">${prov}</button>`;
+                    function initRouteCardAccordions() {
+                        document.querySelectorAll('[data-route-card]').forEach(function(card) {
+                            if (card.dataset.accordionInit) return;
+                            card.dataset.accordionInit = 'true';
+                            const isOpen = card.getAttribute('data-route-open') === 'true';
+                            setRouteOpen(card, isOpen, true);
+                            const toggle = card.querySelector('[data-route-toggle]');
+                            if (toggle) {
+                                toggle.addEventListener('click', function() {
+                                    const currentlyOpen = card.classList.contains('is-open');
+                                    setRouteOpen(card, !currentlyOpen, false);
+                                });
+                            }
                         });
-                        provincesContainer.innerHTML = html;
                     }
-                    const grid = document.getElementById('routes-grid-' + currentDir);
-                    if (grid) {
-                        if (items.length === 0) {
-                            grid.innerHTML = `<div class="col-span-full rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 py-16 text-center">
+
+                    function renderRoutesAndPagination(data, page, currentDir) {
+                        page = parseInt(page, 10) || 1;
+                        const dirKey = currentDir === 'from' ? 'departing' : 'arriving';
+                        const dirData = data[dirKey] || {};
+                        const items = dirData.items || [];
+                        const totalItems = dirData.total || items.length;
+                        const totalPages = dirData.totalPages || 1;
+                        const totalCountEl = document.getElementById('total-routes-count-' + currentDir);
+                        if (totalCountEl) {
+                            totalCountEl.innerHTML =
+                                `<i class="fas fa-route text-blue-400"></i> ${new Intl.NumberFormat('vi-VN').format(totalItems)} tuyến`;
+                        }
+                        const provincesList = [];
+                        items.forEach(item => {
+                            const opp = currentDir === 'from' ? (item.to || {}) : (item.from || {});
+                            const provName = opp.province_name || '';
+                            if (provName && !provincesList.includes(provName)) {
+                                provincesList.push(provName);
+                            }
+                        });
+                        const provincesContainer = document.getElementById('provinces-filter-container-' + currentDir);
+                        if (provincesContainer) {
+                            let html =
+                                `<button type="button" class="prov-pill prov-pill-active shrink-0 rounded-xl bg-slate-100 hover:bg-slate-200 px-4 py-2 text-xs font-bold text-slate-700" onclick="filterByProvince('all', this)">Tất cả</button>`;
+                            provincesList.forEach(prov => {
+                                html +=
+                                    `<button type="button" class="prov-pill shrink-0 rounded-xl bg-slate-100 hover:bg-slate-200 px-4 py-2 text-xs font-bold text-slate-700" onclick="filterByProvince('${prov}', this)">${prov}</button>`;
+                            });
+                            provincesContainer.innerHTML = html;
+                        }
+                        const grid = document.getElementById('routes-grid-' + currentDir);
+                        if (grid) {
+                            if (items.length === 0) {
+                                grid.innerHTML = `<div class="col-span-full rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 py-16 text-center">
                                                 <i class="fas fa-route text-5xl text-slate-200 mb-4 block"></i>
                                                 <h3 class="text-base font-bold text-slate-900">Không tìm thấy chuyến xe nào</h3>
                                             </div>`;
-                        } else {
-                            let html = '';
-                            items.forEach((item, idx) => {
-                                const fromName = item.from?.name || '';
-                                const toName = item.to?.name || '';
-                                const provName = currentDir === 'from' ? (item.to?.province_name || '') : (item.from?.province_name || '');
-                                const operators = item.operators || [];
-                                const opCount = item.operator_count || 0;
-                                const tripCount = item.trip_count || 0;
-                                const minPrice = item.min_price || 0;
-                                const tomorrow = new Date();
-                                tomorrow.setDate(tomorrow.getDate() + 1);
-                                const dateStr = tomorrow.toISOString().split('T')[0];
-                                const searchQueryUrl = window.location.origin + '/dat-ve-truc-tuyen/?from=' + (item.from?.id || '') + '&to=' + (item.to?.id || '') + '&nameFrom=' + encodeURIComponent(fromName) + '&nameTo=' + encodeURIComponent(toName) + '&date=' + dateStr;
-                                let opsHtml = '';
-                                if (operators.length > 0) {
-                                    opsHtml += `<div class="px-4 pt-3 pb-4 flex-1">
+                            } else {
+                                let html = '';
+                                items.forEach((item, idx) => {
+                                    const fromName = item.from?.name || '';
+                                    const toName = item.to?.name || '';
+                                    const provName = currentDir === 'from' ? (item.to?.province_name || '') : (item.from
+                                        ?.province_name || '');
+                                    const operators = item.operators || [];
+                                    const opCount = item.operator_count || 0;
+                                    const tripCount = item.trip_count || 0;
+                                    const minPrice = item.min_price || 0;
+                                    const tomorrow = new Date();
+                                    tomorrow.setDate(tomorrow.getDate() + 1);
+                                    const dateStr = tomorrow.toISOString().split('T')[0];
+                                    const searchQueryUrl = window.location.origin + '/dat-ve-truc-tuyen/?from=' + (item
+                                            .from?.id || '') + '&to=' + (item.to?.id || '') + '&nameFrom=' +
+                                        encodeURIComponent(fromName) + '&nameTo=' + encodeURIComponent(toName) +
+                                        '&date=' + dateStr;
+                                    let opsHtml = '';
+                                    if (operators.length > 0) {
+                                        opsHtml += `<div class="px-4 pt-3 pb-4 flex-1">
                                                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">Nhà xe nổi bật<span class="h-px bg-slate-100 flex-1"></span></p>
                                                     <div class="ops-container space-y-1.5">`;
-                                    operators.forEach((op, opIdx) => {
-                                        const opAvatar = op.image_url || 'https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-chat-luong-cao.webp';
-                                        const opName = op.name || '';
-                                        const opRating = op.display_rating || op.rating || '4.8';
-                                        const opPrice = op.min_price || 0;
-                                        const opPostUrl = op.media?.wp_url || '';
-                                        const opReviews = op.review_count || 0;
-                                        const badgeColors = ['bg-amber-100 text-amber-700', 'bg-slate-100 text-slate-600', 'bg-orange-50 text-orange-600'];
-                                        const badgeColor = badgeColors[Math.min(opIdx, 2)];
-                                        const isHidden = opIdx >= 5;
-                                        const hiddenClass = isHidden ? 'js-hidden-op hidden' : '';
-                                        const opTripCount = op.trip_count || 0;
-                                        let btnText = 'Xem chuyến';
-                                        if (opTripCount > 10) {
-                                            btnText = 'Xem 10+ chuyến';
-                                        } else if (opTripCount > 0) {
-                                            btnText = `Xem ${opTripCount} chuyến`;
-                                        }
-                                        const fromProvId = item.from_province_id || item.from?.province_id || item.from?.id || '';
-                                        const toProvId = item.to_province_id || item.to?.province_id || item.to?.id || '';
-                                        const opId = op.operator_id || op.id || '';
-                                        const cardBookingUrl = window.location.origin + '/dat-ve-truc-tuyen/?from=' + fromProvId + '&to=' + toProvId + '&nameFrom=' + encodeURIComponent(fromName) + '&nameTo=' + encodeURIComponent(toName) + '&operator_id=' + opId + '&date=' + dateStr;
-                                        opsHtml += `<div class="op-item flex items-center gap-2.5 rounded-xl p-2 hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100 ${hiddenClass}">
+                                        operators.forEach((op, opIdx) => {
+                                            const opAvatar = op.image_url ||
+                                                'https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-chat-luong-cao.webp';
+                                            const opName = op.name || '';
+                                            const opRating = op.display_rating || op.rating || '4.8';
+                                            const opPrice = op.min_price || 0;
+                                            const opPostUrl = op.media?.wp_url || '';
+                                            const opReviews = op.review_count || 0;
+                                            const badgeColors = ['bg-amber-100 text-amber-700',
+                                                'bg-slate-100 text-slate-600',
+                                                'bg-orange-50 text-orange-600'
+                                            ];
+                                            const badgeColor = badgeColors[Math.min(opIdx, 2)];
+                                            const isHidden = opIdx >= 5;
+                                            const hiddenClass = isHidden ? 'js-hidden-op hidden' : '';
+                                            const opTripCount = op.trip_count || 0;
+                                            let btnText = 'Xem chuyến';
+                                            if (opTripCount > 10) {
+                                                btnText = 'Xem 10+ chuyến';
+                                            } else if (opTripCount > 0) {
+                                                btnText = `Xem ${opTripCount} chuyến`;
+                                            }
+                                            const fromProvId = item.from_province_id || item.from
+                                                ?.province_id || item.from?.id || '';
+                                            const toProvId = item.to_province_id || item.to?.province_id || item
+                                                .to?.id || '';
+                                            const opId = op.operator_id || op.id || '';
+                                            const cardBookingUrl = window.location.origin +
+                                                '/dat-ve-truc-tuyen/?from=' + fromProvId + '&to=' + toProvId +
+                                                '&nameFrom=' + encodeURIComponent(fromName) + '&nameTo=' +
+                                                encodeURIComponent(toName) + '&operator_id=' + opId + '&date=' +
+                                                dateStr;
+                                            opsHtml += `<div class="op-item flex items-center gap-2.5 rounded-xl p-2 hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100 ${hiddenClass}">
                                                         <div class="relative shrink-0">
                                                             ${opAvatar ? `<img class="h-10 w-10 rounded-full object-cover ring-2 ring-white shadow" src="${opAvatar}" alt="${opName}" loading="lazy">` : `<span class="flex h-9 w-9 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 text-[10px] font-black text-blue-700 items-center justify-center ring-2 ring-white shadow">${getInitials(opName)}</span>`}
                                                             <span class="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full ${badgeColor} text-[8px] font-black ring-2 ring-white">${opIdx + 1}</span>
@@ -1719,25 +1664,25 @@
                                                             </div>
                                                         </div>
                                                     </div>`;
-                                    });
-                                    opsHtml += `</div>`;
-                                    if (operators.length > 5) {
-                                        opsHtml += `<button type="button" onclick="toggleOperators(this)" class="mt-2 w-full flex items-center justify-center gap-1.5 text-[12px] font-bold text-blue-600 hover:text-blue-800 transition-colors py-1.5 rounded-xl hover:bg-blue-50">
+                                        });
+                                        opsHtml += `</div>`;
+                                        if (operators.length > 5) {
+                                            opsHtml += `<button type="button" onclick="toggleOperators(this)" class="mt-2 w-full flex items-center justify-center gap-1.5 text-[12px] font-bold text-blue-600 hover:text-blue-800 transition-colors py-1.5 rounded-xl hover:bg-blue-50">
                                                         <span class="toggle-label">Xem thêm ${operators.length - 5} nhà xe</span>
                                                         <i class="fas fa-chevron-down text-[10px] toggle-icon transition-transform"></i>
                                                     </button>`;
-                                    }
-                                    opsHtml += `</div>`;
-                                } else {
-                                    opsHtml += `<div class="px-4 pb-4 pt-3 flex-1 flex items-center justify-between">
+                                        }
+                                        opsHtml += `</div>`;
+                                    } else {
+                                        opsHtml += `<div class="px-4 pb-4 pt-3 flex-1 flex items-center justify-between">
                                                     <span class="text-xs text-slate-400 font-medium">Chưa có thông tin nhà xe</span>
                                                     <a href="${searchQueryUrl}" class="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2 rounded-xl no-underline! transition-colors">
                                                         <i class="fas fa-search text-[10px]"></i> Tìm chuyến
                                                     </a>
                                                 </div>`;
-                                }
-                                const isRouteOpen = idx < 2;
-                                html += `<article class="route-card overflow-hidden" data-route-card data-route-open="${isRouteOpen ? 'true' : 'false'}" data-province="${provName}">
+                                    }
+                                    const isRouteOpen = idx < 2;
+                                    html += `<article class="route-card overflow-hidden" data-route-card data-route-open="${isRouteOpen ? 'true' : 'false'}" data-province="${provName}">
                                             <div class="flex items-start justify-between gap-3 p-4 pb-3 border-b border-slate-100 cursor-pointer select-none" data-route-toggle>
                                                 <div class="min-w-0 flex-1">
                                                     <h3 class="text-sm font-extrabold text-slate-900 leading-tight line-clamp-2 group-hover:text-blue-600">
@@ -1763,41 +1708,45 @@
                                                 ${opsHtml}
                                             </div>
                                         </article>`;
-                            });
-                            grid.innerHTML = html;
-                        }
-                    }
-
-                    const paginationContainer = document.getElementById('routes-pagination-' + currentDir);
-                    if (paginationContainer) {
-                        if (totalPages > 1) {
-                            let html = `<nav class="mt-8 flex flex-wrap items-center justify-center gap-2" aria-label="Phân trang">`;
-                            if (page > 1) {
-                                html += `<button type="button" onclick="fetchRoutesPage(${page - 1})" class="inline-flex h-10 min-w-[40px] items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:border-blue-400 hover:text-blue-600 transition-colors px-3"><i class="fas fa-chevron-left text-xs"></i></button>`;
+                                });
+                                grid.innerHTML = html;
                             }
-                            for (let i = 1; i <= totalPages; i++) {
-                                if (i === 1 || i === totalPages || (i >= page - 1 && i <= page + 1)) {
-                                    html += `<button type="button" onclick="fetchRoutesPage(${i})" class="inline-flex h-10 min-w-[40px] items-center justify-center rounded-xl border text-sm font-bold transition-all ${i === page ? 'bg-blue-600 border-blue-600 text-white shadow-md shadow-blue-200' : 'bg-white border-slate-200 text-slate-700 hover:border-blue-400 hover:text-blue-600'}">${i}</button>`;
-                                } else if (i === 2 || i === totalPages - 1) {
-                                    html += `<span class="text-slate-400 font-bold px-1">…</span>`;
+                        }
+
+                        const paginationContainer = document.getElementById('routes-pagination-' + currentDir);
+                        if (paginationContainer) {
+                            if (totalPages > 1) {
+                                let html =
+                                    `<nav class="mt-8 flex flex-wrap items-center justify-center gap-2" aria-label="Phân trang">`;
+                                if (page > 1) {
+                                    html +=
+                                        `<button type="button" onclick="fetchRoutesPage(${page - 1})" class="inline-flex h-10 min-w-[40px] items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:border-blue-400 hover:text-blue-600 transition-colors px-3"><i class="fas fa-chevron-left text-xs"></i></button>`;
                                 }
+                                for (let i = 1; i <= totalPages; i++) {
+                                    if (i === 1 || i === totalPages || (i >= page - 1 && i <= page + 1)) {
+                                        html +=
+                                            `<button type="button" onclick="fetchRoutesPage(${i})" class="inline-flex h-10 min-w-[40px] items-center justify-center rounded-xl border text-sm font-bold transition-all ${i === page ? 'bg-blue-600 border-blue-600 text-white shadow-md shadow-blue-200' : 'bg-white border-slate-200 text-slate-700 hover:border-blue-400 hover:text-blue-600'}">${i}</button>`;
+                                    } else if (i === 2 || i === totalPages - 1) {
+                                        html += `<span class="text-slate-400 font-bold px-1">…</span>`;
+                                    }
+                                }
+                                if (page < totalPages) {
+                                    html +=
+                                        `<button type="button" onclick="fetchRoutesPage(${page + 1})" class="inline-flex h-10 min-w-[40px] items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:border-blue-400 hover:text-blue-600 transition-colors px-3"><i class="fas fa-chevron-right text-xs"></i></button>`;
+                                }
+                                html += `</nav>`;
+                                paginationContainer.innerHTML = html;
+                            } else {
+                                paginationContainer.innerHTML = '';
                             }
-                            if (page < totalPages) {
-                                html += `<button type="button" onclick="fetchRoutesPage(${page + 1})" class="inline-flex h-10 min-w-[40px] items-center justify-center rounded-xl border border-slate-200 bg-white text-sm font-semibold text-slate-700 hover:border-blue-400 hover:text-blue-600 transition-colors px-3"><i class="fas fa-chevron-right text-xs"></i></button>`;
-                            }
-                            html += `</nav>`;
-                            paginationContainer.innerHTML = html;
-                        } else {
-                            paginationContainer.innerHTML = '';
                         }
+                        initRouteCardAccordions();
                     }
-                    initRouteCardAccordions();
-                }
 
-                document.addEventListener('DOMContentLoaded', function() {
-                    initRouteCardAccordions();
-                });
-            })();
-        </script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        initRouteCardAccordions();
+                    });
+                })();
+            </script>
     @endwhile
 @endsection
