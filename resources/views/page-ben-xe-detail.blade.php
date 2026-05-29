@@ -676,7 +676,7 @@
                                             $min_price = $item['min_price'] ?? 0;
 
                                             $totalOperators = intval($op_count ?: count($operators));
-                                            $remainingOperators = max($totalOperators - 5, 0);
+                                            $remainingOperators = max($totalOperators - 8, 0);
 
                                             $fromName = trim($item['from']['name'] ?? $station_name ?? '');
                                             $toName = trim($item['to']['name'] ?? $item['to']['province_name'] ?? '');
@@ -767,7 +767,7 @@
                                             </div>
 
                                             {{-- Collapsible Body --}}
-                                            <div class="route-card-body overflow-hidden transition-all duration-300"
+                            <div class="route-card-body overflow-hidden transition-all duration-300"
                                                 data-route-body style="height: {{ $is_route_open ? 'auto' : '0px' }};">
                                                 {{-- Operators list --}}
                                                 @if (!empty($operators))
@@ -780,10 +780,7 @@
                                                         <div class="ops-container space-y-1.5">
                                                             @foreach ($operators as $idx => $op)
                                                                 @php
-                                                                    if ($idx >= 5 && $totalOperators > 10) {
-                                                                        continue;
-                                                                    }
-                                                                    if ($idx >= 10) {
+                                                                    if ($idx >= 8) {
                                                                         continue;
                                                                     }
                                                                     $op_avatar =
@@ -802,7 +799,7 @@
                                                                         'bg-orange-50 text-orange-600',
                                                                     ];
                                                                     $badge_color = $badge_colors[min($idx, 2)];
-                                                                    $is_hidden = $idx >= 5;
+                                                                    $is_hidden = $idx >= 8;
                                                                 @endphp
                                                                 <div
                                                                     class="op-item flex items-center gap-2.5 rounded-xl p-2 hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100 {{ $is_hidden ? 'js-hidden-op hidden' : '' }}">
@@ -1502,10 +1499,11 @@
                             <div class="bx-skeleton h-9 rounded-xl mt-2"></div>
                         </div>`
                         ).join('');
-                        const locationId = window.route_data?.to_id;
+                        const locationId = '{!! esc_js($location_id) !!}';
+                        const stationName = '{!! esc_js($station_name) !!}';
                         if (!locationId) return;
-                        fetch('/wp-admin/admin-ajax.php?action=dailyve_get_station_routes&location_id=' + locationId +
-                                '&page=' + page + '&page_size=10&station_name=' + encodeURIComponent(window.route_data?.to_name || ''))
+                        fetch('{!! esc_url(admin_url('admin-ajax.php')) !!}?action=dailyve_get_station_routes&location_id=' + locationId +
+                                '&page=' + page + '&page_size=10&station_name=' + encodeURIComponent(stationName))
                             .then(res => res.json())
                             .then(res => {
                                 if (res.success) {
@@ -1647,14 +1645,13 @@
                                     let opsHtml = '';
                                     if (operators.length > 0) {
                                         const totalOperators = parseInt(item.operator_count || operators.length, 10);
-                                        const remainingOperators = Math.max(totalOperators - 5, 0);
+                                        const remainingOperators = Math.max(totalOperators - 8, 0);
 
                                         opsHtml += `<div class="px-4 pt-3 pb-4 flex-1">
                                                     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-2">Nhà xe nổi bật<span class="h-px bg-slate-100 flex-1"></span></p>
                                                     <div class="ops-container space-y-1.5">`;
                                         operators.forEach((op, opIdx) => {
-                                            if (opIdx >= 5 && totalOperators > 10) return;
-                                            if (opIdx >= 10) return;
+                                            if (opIdx >= 8) return;
 
                                             const opAvatar = op.image_url ||
                                                 'https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-chat-luong-cao.webp';
@@ -1668,7 +1665,7 @@
                                                 'bg-orange-50 text-orange-600'
                                             ];
                                             const badgeColor = badgeColors[Math.min(opIdx, 2)];
-                                            const isHidden = opIdx >= 5;
+                                            const isHidden = opIdx >= 8;
                                             const hiddenClass = isHidden ? 'js-hidden-op hidden' : '';
                                             const opTripCount = op.trip_count || 0;
                                             let btnText = 'Xem chuyến';

@@ -32,6 +32,11 @@
             $to_name = trim($m[2]);
         }
 
+        echo $from_name;
+        echo $to_name;
+        echo $from_id;
+        echo $to_id;
+
         // Clean up title suffixes if any (e.g. "|Top 07 nhà xe tốt nhất")
         if (!empty($to_name)) {
             if (strpos($to_name, '|') !== false) {

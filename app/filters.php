@@ -560,7 +560,7 @@ function dailyve_get_station_routes(string $location_id, int $paged = 1, int $pa
     }
 
     if (!is_array($data)) {
-        return new \WP_Error('dailyve_station_api_parse', 'Không thể phân tích phản hồi từ máy chủ API.');
+        return new \WP_Error('dailyve_station_api_parse', 'Không thể phân tích phản hồi từ máy chủ.');
     }
 
     // Cache results for 1 hour
