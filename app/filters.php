@@ -150,6 +150,81 @@ add_filter('page_template_hierarchy', function ($templates) {
     return $templates;
 }, 5);
 
+/**
+ * Get centralized mock data for discount codes / coupons.
+ *
+ * @return array
+ */
+function dailyve_get_mock_coupons(): array
+{
+    return [
+        [
+            'code'     => 'DLVNEW10',
+            'discount' => '10%',
+            'title'    => 'Giảm 10%',
+            'label'    => 'Cho Người Mới',
+            'meta'     => 'Cho khách mới',
+            'icon'     => 'fa-percent'
+        ],
+        [
+            'code'     => 'DAILY50',
+            'discount' => '50K',
+            'title'    => 'Giảm 50K',
+            'label'    => 'Vé xe khách',
+            'meta'     => 'Vé xe khách',
+            'icon'     => 'fa-ticket-alt'
+        ],
+        [
+            'code'     => 'CASHBACK10',
+            'discount' => '10%',
+            'title'    => 'Cashback 10%',
+            'label'    => 'Qua ví Dailyve',
+            'meta'     => 'Qua ví Dailyve',
+            'icon'     => 'fa-wallet'
+        ],
+        [
+            'code'     => 'TAU30',
+            'discount' => '30K',
+            'title'    => 'Giảm 30K',
+            'label'    => 'Vé tàu hỏa',
+            'meta'     => 'Vé tàu hỏa',
+            'icon'     => 'fa-train'
+        ],
+        [
+            'code'     => 'MAYBAY100',
+            'discount' => '100K',
+            'title'    => 'Giảm 100K',
+            'label'    => 'Vé máy bay',
+            'meta'     => 'Vé máy bay',
+            'icon'     => 'fa-plane'
+        ],
+        [
+            'code'     => 'KS15',
+            'discount' => '15%',
+            'title'    => 'Giảm 15%',
+            'label'    => 'Khách sạn',
+            'meta'     => 'Khách sạn',
+            'icon'     => 'fa-hotel'
+        ],
+        [
+            'code'     => 'DLV20',
+            'discount' => '20K',
+            'title'    => 'Giảm 20K',
+            'label'    => 'Đơn từ 200K',
+            'meta'     => 'Đơn từ 200K',
+            'icon'     => 'fa-money-bill-wave'
+        ],
+        [
+            'code'     => 'SVWEEKEND',
+            'discount' => '15K',
+            'title'    => 'Ưu đãi sinh viên',
+            'label'    => 'Cuối tuần',
+            'meta'     => 'Cuối tuần',
+            'icon'     => 'fa-graduation-cap'
+        ],
+    ];
+}
+
 function dailyve_is_operator_detail_post($post_id = null): bool
 {
     $post_id = $post_id ? absint($post_id) : absint(get_the_ID());

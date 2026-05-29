@@ -733,7 +733,8 @@
                                                     @foreach ($operators as $idx => $op)
                                                         @php
                                                             $op_avatar =
-                                                                $op['media']['avatar_url'] ?? ($op['image_url'] ?? '');
+                                                                $op['image_url'] ??
+                                                                'https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-chat-luong-cao.webp';
                                                             $op_name = $op['name'] ?? '';
                                                             $op_rating =
                                                                 $op['display_rating'] ?? ($op['rating'] ?? '4.8');
@@ -753,7 +754,7 @@
                                                             {{-- Avatar --}}
                                                             <div class="relative shrink-0">
                                                                 @if ($op_avatar)
-                                                                    <img class="h-9 w-9 rounded-full object-cover ring-2 ring-white shadow"
+                                                                    <img class="h-10 w-10 rounded-full object-cover ring-2 ring-white shadow"
                                                                         src="{{ esc_url($op_avatar) }}"
                                                                         alt="{{ esc_attr($op_name) }}" loading="lazy">
                                                                 @else
@@ -1387,7 +1388,8 @@
                                 <div class="ops-container space-y-1.5">`;
 
                                     operators.forEach((op, opIdx) => {
-                                        const opAvatar = op.media?.avatar_url || op.image_url || '';
+                                        const opAvatar = op.image_url ||
+                                            'https://object.dailyve.com/dailyve/wp-content/uploads/2026/05/nha-xe-chat-luong-cao.webp';
                                         const opName = op.name || '';
                                         const opRating = op.display_rating || op.rating || '4.8';
                                         const opPrice = op.min_price || 0;
@@ -1403,9 +1405,29 @@
                                         const isHidden = opIdx >= 5;
                                         const hiddenClass = isHidden ? 'js-hidden-op hidden' : '';
 
+                                        const opTripCount = op.trip_count || 0;
+                                        let btnText = 'Xem chuyến';
+                                        if (opTripCount > 10) {
+                                            btnText = 'Xem 10+ chuyến';
+                                        } else if (opTripCount > 0) {
+                                            btnText = `Xem ${opTripCount} chuyến`;
+                                        }
+
+                                        const fromProvId = item.from_province_id || item.from
+                                            ?.province_id || item.from?.id || '';
+                                        const toProvId = item.to_province_id || item.to?.province_id || item
+                                            .to?.id || '';
+                                        const opId = op.operator_id || op.id || '';
+
+                                        const cardBookingUrl = window.location.origin +
+                                            '/dat-ve-truc-tuyen/?from=' + fromProvId + '&to=' + toProvId +
+                                            '&nameFrom=' + encodeURIComponent(fromName) + '&nameTo=' +
+                                            encodeURIComponent(toName) + '&operator_id=' + opId + '&date=' +
+                                            dateStr;
+
                                         opsHtml += `<div class="op-item flex items-center gap-2.5 rounded-xl p-2 hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100 ${hiddenClass}">
                                     <div class="relative shrink-0">
-                                        ${opAvatar ? `<img class="h-9 w-9 rounded-full object-cover ring-2 ring-white shadow" src="${opAvatar}" alt="${opName}" loading="lazy">` : `<span class="flex h-9 w-9 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 text-[10px] font-black text-blue-700 items-center justify-center ring-2 ring-white shadow">${getInitials(opName)}</span>`}
+                                        ${opAvatar ? `<img class="h-10 w-10 rounded-full object-cover ring-2 ring-white shadow" src="${opAvatar}" alt="${opName}" loading="lazy">` : `<span class="flex h-9 w-9 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 text-[10px] font-black text-blue-700 items-center justify-center ring-2 ring-white shadow">${getInitials(opName)}</span>`}
                                         <span class="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full ${badgeColor} text-[8px] font-black ring-2 ring-white">${opIdx + 1}</span>
                                     </div>
                                     <div class="flex-1 min-w-0">
@@ -1418,7 +1440,14 @@
                                                 <span class="flex items-center gap-0.5 bg-amber-50 text-amber-600 border border-amber-100 px-1.5 py-0.5 rounded-md text-[9px] font-bold"><i class="fas fa-star text-[8px]"></i> ${opRating}</span>
                                                 ${opReviews > 0 ? `<span class="text-[10px] text-slate-400 font-medium">${opReviews} đánh giá</span>` : ''}
                                             </div>
-                                            <a href="${opPostUrl || searchQueryUrl}" class="shrink-0 inline-flex items-center justify-center bg-blue-50 hover:bg-blue-600 text-blue-600 hover:text-white transition-all text-[12px] font-semibold px-2.5 py-1 rounded-lg no-underline! border border-blue-100 hover:border-blue-600">Xem chuyến</a>
+                                            <a href="${cardBookingUrl}" 
+                                                data-dailyve-date-range-trigger 
+                                                data-date-range-url="${cardBookingUrl}" 
+                                                data-date-range-from-name="${fromName}" 
+                                                data-date-range-to-name="${toName}" 
+                                                data-date-range-service="bus" 
+                                                data-date-range-min="today" 
+                                                class="shrink-0 inline-flex items-center justify-center bg-blue-50 hover:bg-blue-600 text-blue-600 hover:text-white transition-all text-[12px] font-semibold px-2.5 py-1 rounded-lg no-underline! border border-blue-100 hover:border-blue-600">${btnText}</a>
                                         </div>
                                     </div>
                                 </div>`;

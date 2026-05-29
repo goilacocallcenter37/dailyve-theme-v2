@@ -145,17 +145,7 @@
                 return add_query_arg(array_filter($params), home_url('/dat-ve-truc-tuyen/'));
             };
 
-            $offers = [
-                ['icon' => 'fa-percent', 'title' => 'Giảm 10%', 'meta' => 'Cho khách mới', 'code' => 'DAILYVE10'],
-                ['icon' => 'fa-ticket-alt', 'title' => 'Giảm 50K', 'meta' => 'Vé xe khách', 'code' => 'XEKH50K'],
-                ['icon' => 'fa-wallet', 'title' => 'Cashback 10%', 'meta' => 'Qua ví Dailyve', 'code' => 'CASHBACK10'],
-                [
-                    'icon' => 'fa-graduation-cap',
-                    'title' => 'Ưu đãi sinh viên',
-                    'meta' => 'Cuối tuần',
-                    'code' => 'SVWEEKEND',
-                ],
-            ];
+            $offers = array_slice(\App\dailyve_get_mock_coupons(), 0, 4);
 
             $trust_items = [
                 ['icon' => 'fa-shield-alt', 'label' => 'Chắc chắn có chỗ'],

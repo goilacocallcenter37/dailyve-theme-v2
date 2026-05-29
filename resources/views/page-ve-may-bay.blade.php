@@ -157,14 +157,7 @@
 
         {{-- Offers Section ("Ưu đãi Dailyve.com.vn") --}}
         @php
-            $flight_offers = [
-                ['discount' => '10%', 'label' => 'Cho Người Mới', 'code' => 'DLVNEW10'],
-                ['discount' => '50K', 'label' => 'Vé máy bay', 'code' => 'DAILY50'],
-                ['discount' => '30K', 'label' => 'Vé tàu hỏa', 'code' => 'TAU30'],
-                ['discount' => '100K', 'label' => 'Vé máy bay', 'code' => 'MAYBAY100'],
-                ['discount' => '15%', 'label' => 'Khách sạn', 'code' => 'KS15'],
-                ['discount' => '20K', 'label' => 'Đơn từ 200K', 'code' => 'DLV20'],
-            ];
+            $flight_offers = array_slice(\App\dailyve_get_mock_coupons(), 0, 6);
         @endphp
         <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16" aria-label="Ưu đãi vé máy bay">
             <div class="relative group">

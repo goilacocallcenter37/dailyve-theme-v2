@@ -10,14 +10,7 @@
         ? sprintf('--dailyve-hero-bg-image: url("%s");', esc_url($hero_background_url))
         : '';
 
-    $offers = [
-        ['discount' => '10%', 'label' => 'Cho Người Mới', 'code' => 'DLVNEW10'],
-        ['discount' => '50K', 'label' => 'Vé xe khách', 'code' => 'DAILY50'],
-        ['discount' => '30K', 'label' => 'Vé tàu hỏa', 'code' => 'TAU30'],
-        ['discount' => '100K', 'label' => 'Vé máy bay', 'code' => 'MAYBAY100'],
-        ['discount' => '15%', 'label' => 'Khách sạn', 'code' => 'KS15'],
-        ['discount' => '20K', 'label' => 'Đơn từ 200K', 'code' => 'DLV20'],
-    ];
+    $offers = array_slice(\App\dailyve_get_mock_coupons(), 0, 6);
 
     $serviceTypes = [
         [
