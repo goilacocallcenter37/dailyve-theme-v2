@@ -21,13 +21,7 @@ const SORT_OPTIONS = [
   { value: 'fare:desc', label: 'Giá giảm dần' },
 ];
 
-const TIME_OPTIONS = [
-  { value: '00:00-23:59', label: 'Cả ngày' },
-  { value: '00:00-06:00', label: 'Đêm khuya' },
-  { value: '06:00-12:00', label: 'Buổi sáng' },
-  { value: '12:00-18:00', label: 'Buổi chiều' },
-  { value: '18:00-23:59', label: 'Buổi tối' },
-];
+
 
 const PRICE_OPTIONS = [
   { value: 'all', label: 'Tất cả giá' },
@@ -38,7 +32,7 @@ const PRICE_OPTIONS = [
 
 const DEFAULT_FILTER_PATCH = {
   companies: '',
-  time: '00:00-23:59',
+  time: '00:00-24:00',
   sort: 'time:asc',
   islimousine: '',
   fa: '',
@@ -227,6 +221,142 @@ const priceMatches = (trip, priceRange) => {
   if (priceRange === '200-400') return fare >= 200000 && fare <= 400000;
   if (priceRange === 'over-400') return fare > 400000;
   return true;
+};
+
+const TimeRangeSlider = ({ value, onChange }) => {
+  const [minStr, maxStr] = (value || "00:00-24:00").split('-');
+  const parseTime = (timeStr) => {
+    if (!timeStr) return 0;
+    const [h, m] = timeStr.split(':');
+    return parseInt(h) * 60 + parseInt(m);
+  };
+  const formatTimeStr = (minutes) => {
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+  };
+
+  const [minVal, setMinVal] = useState(() => parseTime(minStr));
+  const [maxVal, setMaxVal] = useState(() => parseTime(maxStr === '23:59' || maxStr === '24:00' ? '24:00' : maxStr));
+
+  useEffect(() => {
+    const [newMin, newMax] = (value || "00:00-24:00").split('-');
+    setMinVal(parseTime(newMin));
+    setMaxVal(parseTime(newMax === '23:59' || newMax === '24:00' ? '24:00' : newMax));
+  }, [value]);
+
+  const handleMinChange = (e) => {
+    const newMin = Math.min(Number(e.target.value), maxVal - 60);
+    setMinVal(newMin);
+  };
+
+  const handleMaxChange = (e) => {
+    const newMax = Math.max(Number(e.target.value), minVal + 60);
+    setMaxVal(newMax);
+  };
+
+  const handleMouseUp = () => {
+    onChange(`${formatTimeStr(minVal)}-${maxVal === 1440 ? '24:00' : formatTimeStr(maxVal)}`);
+  };
+
+  return (
+    <div className="py-2">
+      <div className="relative h-1.5 rounded-full bg-slate-200 mb-6 mx-2">
+        <div
+          className="absolute h-full rounded-full bg-blue-600 pointer-events-none"
+          style={{
+            left: `${(minVal / 1440) * 100}%`,
+            right: `${100 - (maxVal / 1440) * 100}%`
+          }}
+        ></div>
+        <input
+          type="range"
+          min="0" max="1440" step="30"
+          value={minVal}
+          onChange={handleMinChange}
+          onMouseUp={handleMouseUp}
+          onTouchEnd={handleMouseUp}
+          className="dailyve-time-slider absolute w-full -top-2.5 h-6 appearance-none bg-transparent pointer-events-none"
+          style={{ zIndex: minVal > 1440 - 100 ? 5 : 3 }}
+        />
+        <input
+          type="range"
+          min="0" max="1440" step="30"
+          value={maxVal}
+          onChange={handleMaxChange}
+          onMouseUp={handleMouseUp}
+          onTouchEnd={handleMouseUp}
+          className="dailyve-time-slider absolute w-full -top-2.5 h-6 appearance-none bg-transparent pointer-events-none"
+          style={{ zIndex: 4 }}
+        />
+        <style dangerouslySetInnerHTML={{
+          __html: `
+          .dailyve-time-slider::-webkit-slider-thumb {
+            pointer-events: auto;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #eff6ff;
+            border: 2px solid #2563eb;
+            cursor: pointer;
+          }
+          .dailyve-time-slider::-moz-range-thumb {
+            pointer-events: auto;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #eff6ff;
+            border: 2px solid #2563eb;
+            cursor: pointer;
+          }
+          .dailyve-time-input::-webkit-calendar-picker-indicator {
+            display: none;
+          }
+        `}} />
+      </div>
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex-1 rounded-lg border border-slate-200 p-2 text-center focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 transition-all bg-white">
+          <div className="text-[10px] text-slate-400 font-semibold mb-0.5">Từ</div>
+          <input 
+            type="time" 
+            className="dailyve-time-input w-full text-center text-sm font-bold text-slate-900 bg-transparent outline-none appearance-none" 
+            value={formatTimeStr(minVal)}
+            onChange={(e) => {
+              const val = parseTime(e.target.value);
+              if (val !== null && !isNaN(val)) {
+                const newMin = Math.min(val, maxVal - 60);
+                setMinVal(newMin);
+              }
+            }}
+            onBlur={() => {
+              onChange(`${formatTimeStr(minVal)}-${maxVal === 1440 ? '24:00' : formatTimeStr(maxVal)}`);
+            }}
+          />
+        </div>
+        <div className="text-slate-300 font-bold">-</div>
+        <div className="flex-1 rounded-lg border border-slate-200 p-2 text-center focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500 transition-all bg-white">
+          <div className="text-[10px] text-slate-400 font-semibold mb-0.5">Đến</div>
+          <input 
+            type="time" 
+            className="dailyve-time-input w-full text-center text-sm font-bold text-slate-900 bg-transparent outline-none appearance-none" 
+            value={maxVal === 1440 ? '23:59' : formatTimeStr(maxVal)}
+            onChange={(e) => {
+              const val = parseTime(e.target.value);
+              if (val !== null && !isNaN(val)) {
+                const newMax = Math.max(val, minVal + 60);
+                setMaxVal(newMax);
+              }
+            }}
+            onBlur={() => {
+              onChange(`${formatTimeStr(minVal)}-${maxVal === 1440 ? '24:00' : formatTimeStr(maxVal)}`);
+            }}
+          />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 const SearchPanel = ({ filters, onSubmit }) => {
@@ -457,7 +587,6 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
   const [pickupsExpanded, setPickupsExpanded] = useState(() => !!filters.fa);
   const [dropoffsExpanded, setDropoffsExpanded] = useState(() => !!filters.ta);
 
-  const selectedTimeLabel = TIME_OPTIONS.find((option) => option.value === filters.time)?.label || 'Cả ngày';
   const selectedPriceLabel = PRICE_OPTIONS.find((option) => option.value === priceRange)?.label || 'Tất cả giá';
   const activeOptionCache = optionCache.key === cacheKey ? optionCache : EMPTY_FILTER_OPTIONS;
   const cachedCompanyList = mergeOptionList(activeOptionCache.companies, incomingCompanies, 'id');
@@ -494,7 +623,7 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
   ));
   const resultButtonLabel = Number.isFinite(resultCount) ? `Xem ${resultCount} chuyến` : 'Xem chuyến';
   const activeFilterCount = [
-    filters.time && filters.time !== '00:00-23:59',
+    filters.time && filters.time !== '00:00-24:00' && filters.time !== '00:00-23:59',
     priceRange !== 'all',
     selectedCompanies.length > 0,
     selectedPickups.length > 0,
@@ -645,23 +774,8 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
         <section className="bg-white px-5 py-4">
           <div className="mb-3 flex items-center justify-between">
             <h3 className="text-sm font-semibold text-slate-950">Giờ đi</h3>
-            <span className="text-sm font-bold text-slate-950">{selectedTimeLabel}</span>
           </div>
-          <div className="grid grid-cols-2 gap-2">
-            {TIME_OPTIONS.map((option) => (
-              <button
-                key={option.value}
-                type="button"
-                className={`min-h-11 rounded-lg border px-3 text-sm ${filters.time === option.value
-                  ? 'border-blue-600 bg-blue-50 text-blue-700'
-                  : 'border-slate-200 bg-white text-slate-700'
-                  }`}
-                onClick={() => onChange({ time: option.value })}
-              >
-                {option.label}
-              </button>
-            ))}
-          </div>
+          <TimeRangeSlider value={filters.time} onChange={(val) => onChange({ time: val })} />
         </section>
 
         <div className="bg-white">
@@ -882,7 +996,13 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
     }
 
     if (activeSheet === 'time') {
-      return renderRadioSheet('Giờ đi', TIME_OPTIONS, filters.time, (value) => onChange({ time: value }));
+      return (
+        <MobileFilterSheet title="Giờ đi" onClose={closeSheet}>
+          <div className="px-5 py-4">
+            <TimeRangeSlider value={filters.time} onChange={(val) => onChange({ time: val })} />
+          </div>
+        </MobileFilterSheet>
+      );
     }
 
     if (activeSheet === 'filter') return renderFilterSheet();
@@ -952,22 +1072,8 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
             </section>
 
             <section className="space-y-3">
-              <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Khung giờ đi</h3>
-              <div className="grid grid-cols-2 gap-2">
-                {TIME_OPTIONS.map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => onChange({ time: option.value })}
-                    className={`rounded-lg border-2 py-2.5 text-[12px] font-semibold transition-all ${filters.time === option.value
-                      ? 'border-blue-600 bg-blue-600 text-white shadow-lg shadow-blue-200'
-                      : 'border-slate-50 bg-slate-50 text-slate-600 hover:border-slate-200'
-                      }`}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </div>
+              <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Giờ đi</h3>
+              <TimeRangeSlider value={filters.time} onChange={(val) => onChange({ time: val })} />
             </section>
 
             <section className="space-y-3">

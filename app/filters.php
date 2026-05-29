@@ -439,16 +439,17 @@ add_action('wp_head', function () {
  * Fetch route groups for a specific station from API v2.
  * Uses transient caching to improve loading speeds and optimize performance.
  */
-function dailyve_get_station_routes(string $location_id, int $paged = 1)
+function dailyve_get_station_routes(string $location_id, int $paged = 1, int $page_size = 6)
 {
     $location_id = sanitize_text_field($location_id);
     $paged = max(1, (int) $paged);
+    $page_size = max(1, (int) $page_size);
 
     if (empty($location_id)) {
         return new \WP_Error('dailyve_station_invalid_id', 'Thiếu Location ID của bến xe.');
     }
 
-    $cache_key = 'dv_station_routes_sum_' . md5($location_id . '_' . $paged);
+    $cache_key = 'dv_station_routes_sum_' . md5($location_id . '_' . $paged . '_' . $page_size);
     $cached = get_transient($cache_key);
     if ($cached !== false) {
         return $cached;
@@ -462,7 +463,7 @@ function dailyve_get_station_routes(string $location_id, int $paged = 1)
         'siteKey' => 'dailyve',
         'includeSubLocations' => 'true',
         'page' => $paged,
-        'pageSize' => 6,
+        'pageSize' => $page_size,
         'operatorLimit' => 10,
         'includeRoutes' => 'false',
         'groupByProvince' => 'true',
@@ -496,7 +497,8 @@ function dailyve_get_station_routes(string $location_id, int $paged = 1)
 add_action('wp_ajax_dailyve_get_station_routes', function() {
     $location_id = sanitize_text_field($_GET['location_id'] ?? '');
     $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-    $data = \App\dailyve_get_station_routes($location_id, $page);
+    $page_size = isset($_GET['page_size']) ? (int) $_GET['page_size'] : 30;
+    $data = \App\dailyve_get_station_routes($location_id, $page, $page_size);
     if (is_wp_error($data)) {
         wp_send_json_error(['message' => $data->get_error_message()]);
     }
@@ -505,9 +507,11 @@ add_action('wp_ajax_dailyve_get_station_routes', function() {
 add_action('wp_ajax_nopriv_dailyve_get_station_routes', function() {
     $location_id = sanitize_text_field($_GET['location_id'] ?? '');
     $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-    $data = \App\dailyve_get_station_routes($location_id, $page);
+    $page_size = isset($_GET['page_size']) ? (int) $_GET['page_size'] : 30;
+    $data = \App\dailyve_get_station_routes($location_id, $page, $page_size);
     if (is_wp_error($data)) {
         wp_send_json_error(['message' => $data->get_error_message()]);
     }
     wp_send_json_success($data);
 });
+
