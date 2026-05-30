@@ -558,7 +558,7 @@ body {
 .dailyve-search__tabs button.is-active {
   color: #ffffff;
   background: var(--dailyve-blue);
-  box-shadow: 0 8px 18px rgba(33, 150, 243, 0.24);
+  /* box-shadow: 0 8px 18px rgba(33, 150, 243, 0.24); */
 }
 
 .dailyve-search__form {
@@ -2833,6 +2833,7 @@ body {
     font-size: 12px;
     min-height: 32px;
     gap: 6px;
+    width: 100%;
   }
 
 

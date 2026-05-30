@@ -93,7 +93,7 @@ const MobileFilterSheet = ({ title, children, footer, variant = 'compact', onClo
   const isFull = variant === 'full';
 
   return (
-    <div className="fixed inset-0 z-[1000] lg:hidden" role="dialog" aria-modal="true" aria-label={title}>
+    <div className="fixed inset-0 z-1000 lg:hidden" role="dialog" aria-modal="true" aria-label={title}>
       <button
         type="button"
         className="dailyve-mobile-sheet__backdrop absolute inset-0 h-full w-full bg-slate-950/50"

@@ -200,7 +200,6 @@
             <style>
                 /* ── Typography ── */
                 .bx-display {
-                    font-family: 'Be Vietnam Pro', 'Segoe UI', sans-serif;
                     font-weight: 700;
                     letter-spacing: -0.02em;
                 }
@@ -250,7 +249,6 @@
                     padding-bottom: 4px;
                     scrollbar-width: thin;
                     scrollbar-color: #cbd5e1 transparent;
-                    /* Fix: ensure pills don't wrap and scroll properly */
                     flex-wrap: nowrap;
                 }
 
@@ -559,9 +557,7 @@
                 </div>
             </div>
 
-            {{-- ═══════════════════════════════════════════════════════════════
-                 ROUTES SECTION
-            ═══════════════════════════════════════════════════════════════ --}}
+            {{-- ROUTES SECTION --}}
             <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <section class="bx-card-lg p-5 sm:p-7" aria-labelledby="route-list-title">
 
@@ -732,46 +728,46 @@
                                             data-province="{{ esc_attr($prov_name) }}">
 
                                             {{-- Card header acts as toggle --}}
-                                            <div class="flex items-start justify-between gap-3 p-4 pb-3 border-b border-slate-100 cursor-pointer select-none"
+                                            <div class="flex items-start justify-between gap-2 sm:gap-3 p-3 sm:p-4 pb-2.5 sm:pb-3 border-b border-slate-100 cursor-pointer select-none"
                                                 data-route-toggle>
                                                 <div class="min-w-0 flex-1">
                                                     <h3
-                                                        class="text-sm font-extrabold text-slate-900 leading-tight line-clamp-2 group-hover:text-[#2196f3]">
+                                                        class="text-sm sm:text-base font-extrabold text-slate-900 leading-tight line-clamp-2 group-hover:text-[#2196f3]">
                                                         {{ $from_name }}
                                                         <span
-                                                            class="inline-flex items-center justify-center w-5 h-5 mx-0.5 rounded-full bg-blue-50 text-blue-400 text-[9px] align-middle shrink-0">
+                                                            class="inline-flex items-center justify-center w-4 h-4 sm:w-5 sm:h-5 mx-0.5 rounded-full bg-blue-50 text-blue-400 text-[8px] sm:text-[9px] align-middle shrink-0">
                                                             <i class="fas fa-arrow-right"></i>
                                                         </span>
                                                         {{ $to_name }}
                                                     </h3>
                                                     <div
-                                                        class="flex items-center gap-2 mt-1.5 text-[12px] text-slate-500 font-medium flex-wrap">
-                                                        <span class="flex items-center gap-1">
+                                                        class="flex items-center gap-1.5 sm:gap-2 mt-1.5 text-[11px] sm:text-[12px] text-slate-500 font-medium flex-wrap">
+                                                        <span class="flex items-center gap-1 whitespace-nowrap">
                                                             <i
                                                                 class="fas fa-bus-alt text-blue-400"></i>{{ $op_count }}
                                                             nhà xe
                                                         </span>
                                                         <span class="w-1 h-1 rounded-full bg-slate-200 shrink-0"></span>
-                                                        <span class="flex items-center gap-1">
+                                                        <span class="flex items-center gap-1 whitespace-nowrap">
                                                             <i
                                                                 class="fas fa-route text-emerald-400"></i>{{ $trip_count }}
                                                             chuyến/ngày
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <div class="shrink-0 flex items-center gap-3">
-                                                    <div class="text-right">
+                                                <div class="shrink-0 flex items-center gap-2 sm:gap-3">
+                                                    <div class="text-right flex flex-col items-end">
                                                         <span
-                                                            class="block text-[10px] text-slate-400 font-semibold mb-0.5">Giá
+                                                            class="block text-[9px] sm:text-[10px] text-slate-400 font-semibold mb-0.5">Giá
                                                             từ</span>
                                                         <span
-                                                            class="text-sm font-black text-rose-500 bg-rose-50 border border-rose-100 px-2.5 py-1 rounded-lg block">
+                                                            class="text-xs sm:text-sm font-black text-rose-500 bg-rose-50 border border-rose-100 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-lg block whitespace-nowrap">
                                                             {{ $format_price($min_price) }}
                                                         </span>
                                                     </div>
                                                     <span
-                                                        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-50 text-slate-400 transition-transform duration-200 route-chevron">
-                                                        <i class="fas fa-chevron-down text-xs"></i>
+                                                        class="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-full bg-slate-50 text-slate-400 transition-transform duration-200 route-chevron">
+                                                        <i class="fas fa-chevron-down text-[10px] sm:text-xs"></i>
                                                     </span>
                                                 </div>
                                             </div>
@@ -812,22 +808,22 @@
                                                                     $is_hidden = $idx >= 8;
                                                                 @endphp
                                                                 <div
-                                                                    class="op-item flex items-center gap-2.5 rounded-xl p-2 hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100 {{ $is_hidden ? 'js-hidden-op hidden' : '' }}">
+                                                                    class="op-item flex items-center gap-2.5 sm:gap-3 rounded-xl p-2 hover:bg-slate-50 transition-colors border border-transparent hover:border-slate-100 {{ $is_hidden ? 'js-hidden-op hidden' : '' }}">
                                                                     {{-- Avatar --}}
                                                                     <div class="relative shrink-0">
                                                                         @if ($op_avatar)
-                                                                            <img class="h-10 w-10 rounded-full object-cover ring-2 ring-white shadow"
+                                                                            <img class="h-10 w-10 sm:h-11 sm:w-11 rounded-full object-cover ring-2 ring-white shadow"
                                                                                 src="{{ esc_url($op_avatar) }}"
                                                                                 alt="{{ esc_attr($op_name) }}"
                                                                                 loading="lazy">
                                                                         @else
                                                                             <span
-                                                                                class="flex h-9 w-9 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 text-[10px] font-black text-blue-700 items-center justify-center ring-2 ring-white shadow">
+                                                                                class="flex h-10 w-10 sm:h-11 sm:w-11 rounded-full bg-gradient-to-br from-blue-100 to-blue-50 text-[10px] font-black text-blue-700 items-center justify-center ring-2 ring-white shadow">
                                                                                 {{ $get_initials($op_name) }}
                                                                             </span>
                                                                         @endif
                                                                         <span
-                                                                            class="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full {{ $badge_color }} text-[8px] font-black ring-2 ring-white">
+                                                                            class="absolute -bottom-0.5 -right-0.5 flex h-4 w-4 sm:h-4.5 sm:w-4.5 items-center justify-center rounded-full {{ $badge_color }} text-[8px] font-black ring-2 ring-white shadow-sm">
                                                                             {{ $idx + 1 }}
                                                                         </span>
                                                                     </div>
@@ -835,28 +831,28 @@
                                                                     {{-- Info --}}
                                                                     <div class="flex-1 min-w-0">
                                                                         <div
-                                                                            class="flex justify-between items-center gap-1">
+                                                                            class="flex justify-between items-center gap-2 mb-1">
                                                                             @if ($op_post_url)
                                                                                 <a href="{{ esc_url($op_post_url) }}"
-                                                                                    class="text-[12px] font-bold text-slate-800 hover:text-[#2196f3] truncate no-underline! leading-tight">{{ $op_name }}</a>
+                                                                                    class="text-[13px] sm:text-[14px] font-bold text-slate-800 hover:text-[#2196f3] truncate no-underline! leading-tight">{{ $op_name }}</a>
                                                                             @else
                                                                                 <span
-                                                                                    class="text-[12px] font-bold text-slate-800 truncate leading-tight">{{ $op_name }}</span>
+                                                                                    class="text-[13px] sm:text-[14px] font-bold text-slate-800 truncate leading-tight">{{ $op_name }}</span>
                                                                             @endif
                                                                             <span
-                                                                                class="text-[12px] font-bold text-slate-800 shrink-0">{{ $format_price($op_price) }}</span>
+                                                                                class="text-[12px] sm:text-[13px] font-bold text-slate-800 shrink-0">{{ $format_price($op_price) }}</span>
                                                                         </div>
                                                                         <div
-                                                                            class="flex items-center justify-between mt-1 gap-2">
+                                                                            class="flex items-center justify-between gap-2">
                                                                             <div class="flex items-center gap-1.5">
                                                                                 <span
-                                                                                    class="flex items-center gap-0.5 bg-amber-50 text-amber-600 border border-amber-100 px-1.5 py-0.5 rounded-md text-[9px] font-bold">
+                                                                                    class="flex items-center gap-0.5 bg-amber-50 text-amber-600 border border-amber-100 px-1.5 py-0.5 rounded text-[10px] font-bold">
                                                                                     <i class="fas fa-star text-[8px]"></i>
                                                                                     {{ $op_rating }}
                                                                                 </span>
                                                                                 @if ($op_reviews > 0)
                                                                                     <span
-                                                                                        class="text-[10px] text-slate-400 font-medium">{{ $op_reviews }}
+                                                                                        class="text-[10px] text-slate-400 font-medium hidden sm:block">{{ $op_reviews }}
                                                                                         đánh giá</span>
                                                                                 @endif
                                                                             </div>
@@ -871,13 +867,9 @@
                                                                                 }
 
                                                                                 $from_prov_id =
-                                                                                    $item['from_province_id'] ??
-                                                                                    ($item['from']['province_id'] ??
-                                                                                        ($item['from']['id'] ?? ''));
+                                                                                    $item['from_province_id'] ?? '';
                                                                                 $to_prov_id =
-                                                                                    $item['to_province_id'] ??
-                                                                                    ($item['to']['province_id'] ??
-                                                                                        ($item['to']['id'] ?? ''));
+                                                                                    $item['to_province_id'] ?? '';
 
                                                                                 $card_booking_url = add_query_arg(
                                                                                     [
@@ -886,8 +878,7 @@
                                                                                         'nameFrom' => $from_name,
                                                                                         'nameTo' => $to_name,
                                                                                         'operator_id' =>
-                                                                                            $op['operator_id'] ??
-                                                                                            ($op['id'] ?? ''),
+                                                                                            $op['operator_id'] ?? '',
                                                                                     ],
                                                                                     home_url('/dat-ve-truc-tuyen/'),
                                                                                 );
@@ -899,7 +890,7 @@
                                                                                 data-date-range-to-name="{{ esc_attr($to_name) }}"
                                                                                 data-date-range-service="bus"
                                                                                 data-date-range-min="today"
-                                                                                class="shrink-0 inline-flex items-center justify-center bg-blue-50 hover:bg-[#2196f3] text-[#2196f3] hover:text-white transition-all text-[12px] font-semibold px-2.5 py-1 rounded-lg no-underline! border border-blue-100 hover:border-[#2196f3]">
+                                                                                class="shrink-0 inline-flex items-center justify-center bg-blue-50 text-blue-600 hover:bg-blue-100 px-2.5 py-1 rounded-full text-[10px] font-bold transition-colors whitespace-nowrap no-underline! border border-blue-100">
                                                                                 {{ $btn_text }}
                                                                             </a>
                                                                         </div>
@@ -909,7 +900,7 @@
                                                         </div>
 
                                                         @if ($totalOperators > 10)
-                                                            <a href="{{ esc_url($moreOperatorsUrl) }}"
+                                                            <a href="{!! esc_url($moreOperatorsUrl) !!}"
                                                                 class="mt-2 inline-flex w-full items-center justify-center rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-100 no-underline!">
                                                                 @if ($hasRouteSeoUrl)
                                                                     Xem tất cả {{ $totalOperators }} nhà xe
@@ -1021,7 +1012,7 @@
                 <div class="grid gap-5 lg:grid-cols-[260px_1fr] items-start">
 
                     {{-- Left Sidebar --}}
-                    <aside class="space-y-4">
+                    <aside class="space-y-4 order-2 lg:order-1">
 
                         {{-- Quick Info Card --}}
                         <div class="bx-card p-5">
@@ -1091,7 +1082,7 @@
                     </aside>
 
                     {{-- Main Content --}}
-                    <div class="space-y-5">
+                    <div class="space-y-5 order-1 lg:order-2">
 
                         {{-- ── Giới thiệu pane ── --}}
                         <div class="info-tab-pane" id="pane-intro">
@@ -1718,7 +1709,7 @@
                                         const seoUrl = item.seo_url || '';
                                         const bookingUrl = window.location.origin + '/dat-ve-truc-tuyen/?from=' +
                                             fromProvId + '&to=' + toProvId + '&nameFrom=' + encodeURIComponent(
-                                            fromName) + '&nameTo=' + encodeURIComponent(toName);
+                                                fromName) + '&nameTo=' + encodeURIComponent(toName);
                                         const moreOperatorsUrl = seoUrl || bookingUrl;
                                         const hasSeoUrl = !!seoUrl;
 

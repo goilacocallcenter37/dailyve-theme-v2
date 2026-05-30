@@ -329,6 +329,8 @@ add_action('wp_head', function () {
         $from_name = trim($m[1]);
         $to_name   = trim($m[2]);
     }
+    
+    $from_name = preg_replace('/^vé\s+xe\s+khách\s+/iu', '', $from_name);
 
     // Clean up title suffixes if any (e.g. "|Top 07 nhà xe tốt nhất")
     if (!empty($to_name)) {

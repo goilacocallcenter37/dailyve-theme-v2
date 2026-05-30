@@ -1103,8 +1103,8 @@ em {
 
 .route-seo-header__title {
   font-size: 1.5rem;
-  font-weight: 800;
-  color: #1E293B;
+  font-weight: 600;
+  color: var(--dv-ink);
   margin: 0;
   line-height: 1.4;
   overflow-wrap: anywhere;
@@ -1412,6 +1412,12 @@ em {
   font-size: 0.8rem;
 }
 
+@media (max-width: 640px) {
+  .ol-card__stars i:not(:first-child) {
+    display: none;
+  }
+}
+
 .ol-card__reviews {
   font-size: 0.75rem;
   color: #64748B;
@@ -1668,6 +1674,7 @@ em {
 
   .ol-stats {
     align-items: flex-start;
+    flex-direction: column;
   }
 
   .ol-stats__text {
@@ -3208,11 +3215,6 @@ body.dailyve-date-range-picker-open {
 .route-seo-article a,
 .dailyve-single a {
   color: var(--dv-primary);
-}
-
-.route-seo-header__title {
-  color: var(--dv-ink);
-  font-weight: 600;
 }
 
 .ol-card {

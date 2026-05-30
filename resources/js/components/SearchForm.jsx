@@ -15,7 +15,7 @@ const products = [
   { id: 'bus', label: 'Xe khách', icon: 'fas fa-bus' },
   { id: 'train', label: 'Tàu hỏa', icon: 'fas fa-train' },
   { id: 'flight', label: 'Máy bay', icon: 'fas fa-plane' },
-  { id: 'hotel', label: 'Khách sạn', icon: 'fas fa-hotel' },
+  // { id: 'hotel', label: 'Khách sạn', icon: 'fas fa-hotel' },
 ];
 
 const getInitialProduct = (fallback = 'bus') => {
