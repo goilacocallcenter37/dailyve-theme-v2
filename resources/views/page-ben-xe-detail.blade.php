@@ -678,25 +678,35 @@
                                             $totalOperators = intval($op_count ?: count($operators));
                                             $remainingOperators = max($totalOperators - 8, 0);
 
-                                            $fromName = trim($item['from']['name'] ?? $station_name ?? '');
-                                            $toName = trim($item['to']['name'] ?? $item['to']['province_name'] ?? '');
+                                            $fromName = trim($item['from']['name'] ?? ($station_name ?? ''));
+                                            $toName = trim($item['to']['name'] ?? ($item['to']['province_name'] ?? ''));
 
-                                            $from_prov_id = $item['from_province_id'] ?? ($item['from']['province_id'] ?? ($item['from']['id'] ?? ''));
-                                            $to_prov_id = $item['to_province_id'] ?? ($item['to']['province_id'] ?? ($item['to']['id'] ?? ''));
+                                            $from_prov_id =
+                                                $item['from_province_id'] ??
+                                                ($item['from']['province_id'] ?? ($item['from']['id'] ?? ''));
+                                            $to_prov_id =
+                                                $item['to_province_id'] ??
+                                                ($item['to']['province_id'] ?? ($item['to']['id'] ?? ''));
 
-                                            $routeSeoUrl = function_exists('\App\dailyve_get_route_seo_url') ? \App\dailyve_get_route_seo_url($fromName, $toName, $station_name ?? '')
+                                            $routeSeoUrl = function_exists('\App\dailyve_get_route_seo_url')
+                                                ? \App\dailyve_get_route_seo_url(
+                                                    $fromName,
+                                                    $toName,
+                                                    $station_name ?? '',
+                                                )
                                                 : '';
 
-                                            $bookingUrl = add_query_arg([
-                                                'from' => $from_prov_id,
-                                                'to' => $to_prov_id,
-                                                'nameFrom' => $fromName,
-                                                'nameTo' => $toName,
-                                            ], home_url('/dat-ve-truc-tuyen/'));
+                                            $bookingUrl = add_query_arg(
+                                                [
+                                                    'from' => $from_prov_id,
+                                                    'to' => $to_prov_id,
+                                                    'nameFrom' => $fromName,
+                                                    'nameTo' => $toName,
+                                                ],
+                                                home_url('/dat-ve-truc-tuyen/'),
+                                            );
 
-                                            $moreOperatorsUrl = !empty($routeSeoUrl)
-                                                ? $routeSeoUrl
-                                                : $bookingUrl;
+                                            $moreOperatorsUrl = !empty($routeSeoUrl) ? $routeSeoUrl : $bookingUrl;
 
                                             $hasRouteSeoUrl = !empty($routeSeoUrl);
 
@@ -767,7 +777,7 @@
                                             </div>
 
                                             {{-- Collapsible Body --}}
-                            <div class="route-card-body overflow-hidden transition-all duration-300"
+                                            <div class="route-card-body overflow-hidden transition-all duration-300"
                                                 data-route-body style="height: {{ $is_route_open ? 'auto' : '0px' }};">
                                                 {{-- Operators list --}}
                                                 @if (!empty($operators))
@@ -904,7 +914,8 @@
                                                                 @if ($hasRouteSeoUrl)
                                                                     Xem tất cả {{ $totalOperators }} nhà xe
                                                                 @else
-                                                                    Xem và đặt vé {{ $fromName }} đi {{ $toName }}
+                                                                    Xem và đặt vé {{ $fromName }} đi
+                                                                    {{ $toName }}
                                                                 @endif
                                                             </a>
                                                         @elseif ($remainingOperators > 0)
@@ -1638,8 +1649,10 @@
                                     const tomorrow = new Date();
                                     tomorrow.setDate(tomorrow.getDate() + 1);
                                     const dateStr = tomorrow.toISOString().split('T')[0];
-                                    const searchQueryUrl = window.location.origin + '/dat-ve-truc-tuyen/?from=' + (item
-                                            .from?.id || '') + '&to=' + (item.to?.id || '') + '&nameFrom=' +
+                                    const fromProvId = item.from_province_id || '';
+                                    const toProvId = item.to_province_id || '';
+                                    const searchQueryUrl = window.location.origin + '/dat-ve-truc-tuyen/?from=' +
+                                        fromProvId + '&to=' + toProvId + '&nameFrom=' +
                                         encodeURIComponent(fromName) + '&nameTo=' + encodeURIComponent(toName) +
                                         '&date=' + dateStr;
                                     let opsHtml = '';
@@ -1674,10 +1687,6 @@
                                             } else if (opTripCount > 0) {
                                                 btnText = `Xem ${opTripCount} chuyến`;
                                             }
-                                            const fromProvId = item.from_province_id || item.from
-                                                ?.province_id || item.from?.id || '';
-                                            const toProvId = item.to_province_id || item.to?.province_id || item
-                                                .to?.id || '';
                                             const opId = op.operator_id || op.id || '';
                                             const cardBookingUrl = window.location.origin +
                                                 '/dat-ve-truc-tuyen/?from=' + fromProvId + '&to=' + toProvId +
@@ -1707,7 +1716,9 @@
                                         opsHtml += `</div>`;
 
                                         const seoUrl = item.seo_url || '';
-                                        const bookingUrl = window.location.origin + '/dat-ve-truc-tuyen/?from=' + fromProvId + '&to=' + toProvId + '&nameFrom=' + encodeURIComponent(fromName) + '&nameTo=' + encodeURIComponent(toName);
+                                        const bookingUrl = window.location.origin + '/dat-ve-truc-tuyen/?from=' +
+                                            fromProvId + '&to=' + toProvId + '&nameFrom=' + encodeURIComponent(
+                                            fromName) + '&nameTo=' + encodeURIComponent(toName);
                                         const moreOperatorsUrl = seoUrl || bookingUrl;
                                         const hasSeoUrl = !!seoUrl;
 
