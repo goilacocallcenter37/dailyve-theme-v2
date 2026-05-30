@@ -67,11 +67,11 @@
     <!-- Categories Filter Carousel Header -->
     <div
         class="dailyve-archive-filter border-b border-slate-100 shadow-sm py-4 sticky z-40 backdrop-blur-md bg-white/95 dailyve-sticky-filter">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center space-x-2 overflow-x-auto scrollbar-none py-1">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative group/filter">
+            <div id="archiveCategoryScroll" class="flex items-center space-x-2 overflow-x-auto scrollbar-none py-1 scroll-smooth">
                 <!-- Home Button -->
                 <a href="{{ home_url('/') }}"
-                    class="inline-flex items-center justify-center p-2 rounded-xl text-slate-500 hover:text-primary hover:bg-slate-50 transition duration-200 border border-slate-100 shadow-sm">
+                    class="inline-flex items-center justify-center p-2 rounded-xl text-slate-500 hover:text-primary hover:bg-slate-50 transition duration-200 border border-slate-100 shadow-sm shrink-0">
                     <i class="fas fa-home text-sm"></i>
                 </a>
 
@@ -82,7 +82,7 @@
                             $is_active = $is_category && $term_id === $cat->term_id;
                         @endphp
                         <a href="{{ esc_url(get_category_link($cat->term_id)) }}"
-                            class="inline-flex items-center px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition duration-200 border shadow-sm
+                            class="inline-flex items-center px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition duration-200 border shadow-sm shrink-0
                       {{ $is_active
                           ? 'bg-primary text-white border-primary shadow-primary/20'
                           : 'bg-white text-slate-600 border-slate-100 hover:border-slate-300 hover:bg-slate-50' }}">
@@ -91,8 +91,51 @@
                     @endforeach
                 @endif
             </div>
+
+            <!-- Next Button -->
+            <div id="archiveScrollNextWrapper" class="absolute right-4 sm:right-6 lg:right-8 top-1/2 -translate-y-1/2 bg-gradient-to-l from-white/95 via-white/80 to-transparent pl-8 py-2 pointer-events-none flex items-center justify-end transition-opacity duration-300">
+                <button type="button" id="archiveScrollNextBtn" aria-label="Cuộn sang phải" class="pointer-events-auto w-8 h-8 flex items-center justify-center rounded-full bg-white shadow-md shadow-slate-200 border border-slate-100 text-slate-600 hover:text-primary hover:bg-slate-50 hover:scale-105 transition z-10">
+                    <i class="fas fa-chevron-right text-xs"></i>
+                </button>
+            </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollContainer = document.getElementById('archiveCategoryScroll');
+            const nextWrapper = document.getElementById('archiveScrollNextWrapper');
+            const nextBtn = document.getElementById('archiveScrollNextBtn');
+            
+            if (scrollContainer && nextWrapper && nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    scrollContainer.scrollBy({ left: 250, behavior: 'smooth' });
+                });
+                
+                const toggleNextBtn = () => {
+                    // Check if scrollable
+                    if (scrollContainer.scrollWidth > scrollContainer.clientWidth) {
+                        // Check if reached end
+                        if (scrollContainer.scrollWidth - scrollContainer.scrollLeft <= scrollContainer.clientWidth + 5) {
+                            nextWrapper.style.opacity = '0';
+                            nextWrapper.style.pointerEvents = 'none';
+                        } else {
+                            nextWrapper.style.opacity = '1';
+                            // Restore pointer events to just the button is handled by CSS, but wrapper might need it
+                        }
+                    } else {
+                        nextWrapper.style.opacity = '0';
+                        nextWrapper.style.pointerEvents = 'none';
+                    }
+                };
+                
+                scrollContainer.addEventListener('scroll', toggleNextBtn, { passive: true });
+                window.addEventListener('resize', toggleNextBtn, { passive: true });
+                // Initial check after font load or layout render
+                setTimeout(toggleNextBtn, 150);
+            }
+        });
+    </script>
 
     <div class="dailyve-archive max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {{-- Render Dynamic Breadcrumbs --}}
