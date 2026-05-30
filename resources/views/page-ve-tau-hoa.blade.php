@@ -770,7 +770,7 @@
 
                     tabs.forEach(item => {
                         const active = item === tab;
-                        item.classList.toggle('bg-blue-500', active);
+                        item.classList.toggle('bg-[#2196f3]', active);
                         item.classList.toggle('text-white', active);
                         item.classList.toggle('shadow-sm', active);
                         item.classList.toggle('text-blue-500', !active);
