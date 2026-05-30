@@ -2,13 +2,10 @@
 
 @section('content')
     @php
-        $breadcrumbs = [
-            ['title' => 'Trang chủ', 'url' => home_url('/')],
-            ['title' => 'Tra cứu vé', 'url' => '']
-        ];
+        $breadcrumbs = [['title' => 'Trang chủ', 'url' => home_url('/')], ['title' => 'Tra cứu vé', 'url' => '']];
     @endphp
     <main class="bg-white min-h-[70vh] py-8 md:py-12">
-        <section class="mx-auto max-w-5xl px-4">
+        <section class="mx-auto max-w-7xl px-4">
             <div class="mb-8">
                 <x-breadcrumb :items="$breadcrumbs" preset="default" />
             </div>
@@ -16,7 +13,8 @@
             <div class="text-center mb-12">
                 <h1 class="font-display text-4xl md:text-5xl font-semibold tracking-tighter text-slate-900">Kiểm tra chuyến
                     đi</h1>
-                <p class="mt-4 text-base text-slate-500 max-w-xl mx-auto">Theo dõi lịch trình, vị trí ghế và trạng thái thanh
+                <p class="mt-4 text-base text-slate-500 max-w-[500px] mx-auto">Theo dõi lịch trình, vị trí ghế và trạng thái
+                    thanh
                     toán vé của bạn một cách nhanh chóng và chính xác.</p>
             </div>
 
@@ -36,7 +34,7 @@
                                         placeholder="Ví dụ: 0912345678">
                                 </div>
                                 <div>
-                                    <label for="code" class="block text-sm font-semibold text-slate-900 mb-2">Mã đặt chỗ
+                                    <label for="code" class="block text-sm font-semibold text-slate-900 mb-2">Mã vé
                                         <span class="text-red-500 font-normal">*</span></label>
                                     <input type="text" id="code" name="code" required
                                         class="block w-full h-10 rounded-md border border-slate-200 bg-white px-3.5 py-2 text-sm text-slate-900 uppercase transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"

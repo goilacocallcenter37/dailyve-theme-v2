@@ -142,8 +142,10 @@ const SearchForm = ({
     window.location.href = `/dat-ve-truc-tuyen/?${params.toString()}`;
   };
 
+  const isTicketPage = window.location.pathname.match(/\/(ve-xe-khach|ve-tau-hoa|ve-may-bay)/);
+
   return (
-    <div className={['dailyve-search', className].filter(Boolean).join(' ')}>
+    <div className={['dailyve-search', isTicketPage ? 'dailyve-search--no-mascot' : '', className].filter(Boolean).join(' ')}>
       <div className="dailyve-search__tabs" role="tablist" aria-label="Chọn dịch vụ">
         {products.map((product) => (
           <button
@@ -230,14 +232,16 @@ const SearchForm = ({
         </button>
       </form>
 
-      <img
-        className="dailyve-search__mascot"
-        src={tinoSearchFormUrl}
-        alt=""
-        aria-hidden="true"
-        loading="lazy"
-        decoding="async"
-      />
+      {!window.location.pathname.match(/\/(ve-xe-khach|ve-tau-hoa|ve-may-bay)/) && (
+        <img
+          className="dailyve-search__mascot"
+          src={tinoSearchFormUrl}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+        />
+      )}
 
       {isHome && (
         <ul className="dailyve-search__benefits" aria-label="Lợi ích khi đặt vé">

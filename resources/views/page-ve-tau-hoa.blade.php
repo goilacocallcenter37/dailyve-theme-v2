@@ -130,7 +130,7 @@
                             <span
                                 class="bg-white/20 text-white text-[10px] md:text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full inline-block mb-6 backdrop-blur-sm">Hỗ
                                 trợ hotline 24/7</span>
-                            <h3 class="text-2xl md:text-3xl text-white font-bold mb-3 leading-snug tracking-tight">Tổng đài
+                            <h3 class="text-2xl md:text-[25px] text-white font-bold mb-3 leading-snug tracking-tight">Tổng đài
                                 đặt vé & CSKH trực tuyến</h3>
                             <p class="text-blue-100 text-xs md:text-sm leading-relaxed mb-6">
                                 Kết nối trực tiếp tới tổng đài hỗ trợ viên để đặt giữ chỗ nhanh nhất, tư vấn mọi lịch trình
@@ -323,7 +323,6 @@
 
         @php
             $bus_image = home_url('/wp-content/uploads/images/train-icon.png');
-            $qr_blocks = [0, 1, 3, 5, 7, 8, 10, 12, 13, 14, 16, 18, 20, 21, 23, 24];
             $booking_guide_slides = [
                 [
                     'eyebrow' => 'Ứng dụng Dailyve',

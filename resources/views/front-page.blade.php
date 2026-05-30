@@ -234,10 +234,12 @@
             <div class="dailyve-container dailyve-offers__layout">
                 <div class="dailyve-offers__intro">
                     <h2 id="dailyve-offers-title">
-                        <span class="title-main">Ưu đãi</span>
-                        <span class="title-badge-row">
-                            <span class="hot-badge">HOT</span>
-                        </span>
+                        <div class="flex items-center gap-3">
+                            <span class="title-main">Ưu đãi</span>
+                            <span class="title-badge-row">
+                                <span class="hot-badge">HOT</span>
+                            </span>
+                        </div>
                         <span class="title-sub">cho người đẹp</span>
                     </h2>
 
@@ -373,7 +375,7 @@
                     <h2 id="dailyve-reasons-title"
                         class="text-[26px] md:text-[42px] font-black text-white mb-5 flex flex-col md:flex-row flex-wrap justify-center items-center gap-x-4 gap-y-2 md:gap-y-3 !border-0 !pb-0 !after:hidden tracking-tight">
                         <span
-                            class="bg-[#ffbe1a] text-[#0a1e40] px-6 md:px-8 py-1.5 md:py-2 rounded-[40px] shadow-[0_8px_24px_rgba(255,190,26,0.35)] leading-none uppercase mb-1 md:mb-0">TẠI
+                            class="bg-[#ffea00] text-[#0a1e40] px-6 md:px-8 py-1.5 md:py-2 rounded-[40px] shadow-[0_4px_12px_rgba(255,234,0,0.35)] leading-none uppercase mb-1 md:mb-0">TẠI
                             SAO</span>
                         <span class="text-center leading-snug">nên sử dụng dịch vụ của<br class="md:hidden">
                             Dailyve?</span>
@@ -413,7 +415,7 @@
                 <div
                     class="mt-14 flex items-center justify-center gap-2.5 text-white/95 text-[14px] md:text-[15px] font-medium border-t border-white/20 pt-6 max-w-lg mx-auto">
                     <i class="fas fa-shield-alt text-white/90 text-[18px]"></i>
-                    <span>Dailyve - Đồng hành cùng bạn trên mọi hành trình</span>
+                    <span>Dailyve - Một nền tảng, vạn hành trình</span>
                 </div>
             </div>
         </section>
@@ -425,7 +427,7 @@
                     <h2 id="dailyve-press-title"
                         class="text-[30px] md:text-[42px] font-black text-[#0a1e40] mb-5 flex flex-wrap justify-center items-center gap-x-4 gap-y-2 !border-0 !pb-0 !after:hidden tracking-tight">
                         <span
-                            class="bg-[#ffbe1a] text-[#0a1e40] px-6 md:px-8 py-2 rounded-[40px] shadow-[0_8px_24px_rgba(255,190,26,0.35)] leading-none uppercase">BÁO
+                            class="bg-[#ffea00] text-[#0a1e40] px-6 md:px-8 py-2 rounded-[40px] shadow-[0_4px_12px_rgba(255,234,0,0.35)] leading-none uppercase">BÁO
                             CHÍ</span>
                         <span>nói gì về Dailyve?</span>
                     </h2>

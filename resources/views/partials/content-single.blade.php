@@ -152,14 +152,14 @@
                         <!-- FB Share -->
                         <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(get_permalink()) }}"
                             target="_blank" rel="noopener noreferrer"
-                            class="w-9 h-9 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center shadow-md shadow-blue-500/20 hover:scale-105 transition-all duration-200">
+                            class="w-9 h-9 rounded-full bg-blue-600 hover:bg-blue-700 text-white! flex items-center justify-center shadow-md shadow-blue-500/20 hover:scale-105 transition-all duration-200">
                             <i class="fab fa-facebook-f text-sm"></i>
                         </a>
                         <!-- Twitter/X Share -->
                         <a href="https://twitter.com/intent/tweet?url={{ urlencode(get_permalink()) }}&text={{ urlencode(get_the_title()) }}"
                             target="_blank" rel="noopener noreferrer"
-                            class="w-9 h-9 rounded-full bg-slate-900 hover:bg-slate-950 text-white flex items-center justify-center shadow-md shadow-slate-900/20 hover:scale-105 transition-all duration-200">
-                            <i class="fab fa-twitter text-sm"></i>
+                            class="w-9 h-9 rounded-full bg-slate-900 hover:bg-slate-950 text-white! flex items-center justify-center shadow-md shadow-slate-900/20 hover:scale-105 transition-all duration-200">
+                            <span class="text-sm">𝕏</span>
                         </a>
                         <!-- Copy Link -->
                         <button
