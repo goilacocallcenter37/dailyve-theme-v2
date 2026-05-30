@@ -2,8 +2,6 @@
 
 @php
     $upload = fn($path) => home_url('/wp-content/uploads/' . ltrim($path, '/'));
-    $appStore = home_url('/wp-content/themes/dailyve-theme/resources/images/download-app-store.png');
-    $googlePlay = home_url('/wp-content/themes/dailyve-theme/resources/images/download-gg-play.png');
     $screenHome = home_url('/wp-content/themes/dailyve-theme/resources/images/screen_home_dailyve.jpg');
     $hero_background_url = \App\dailyve_home_hero_background_url();
     $hero_background_style = $hero_background_url
@@ -210,8 +208,6 @@
         ['label' => 'Đặt vé siêu nhanh', 'icon' => 'fas fa-bolt'],
         ['label' => 'An toàn & bảo mật', 'icon' => 'fas fa-shield-alt'],
     ];
-
-    $qrCode = 'https://object.dailyve.com/dailyve/wp-content/uploads/2025/08/QR-CODE-APP-DLV.png';
 @endphp
 
 @section('content')

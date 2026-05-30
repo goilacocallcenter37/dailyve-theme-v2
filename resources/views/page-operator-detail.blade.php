@@ -155,9 +155,6 @@
                 ['icon' => 'fa-shuttle-van', 'label' => 'Xe trung chuyển'],
             ];
 
-            $appStore = home_url('/wp-content/themes/dailyve-theme/resources/images/download-app-store.png');
-            $googlePlay = home_url('/wp-content/themes/dailyve-theme/resources/images/download-gg-play.png');
-            $qrCode = 'https://object.dailyve.com/dailyve/wp-content/uploads/2025/08/QR-CODE-APP-DLV.png';
             $tetBanner = home_url('/wp-content/themes/dailyve-theme/resources/images/operator-tet-ticket-banner.webp');
 
             // FAQ Items
@@ -252,8 +249,10 @@
             @if ($api_error)
                 <section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
                     <div class="rounded-xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-800">
-                        Không lấy được dữ liệu API chi tiết nhà xe: {{ $api_error->get_error_message() }} Nội dung bài viết
-                        vẫn được hiển thị bên dưới.
+                        {{-- Không lấy được dữ liệu API chi tiết nhà xe: {{ $api_error->get_error_message() }} Nội dung bài viết
+                        vẫn được hiển thị bên dưới. --}}
+                        Dailyve đang cập nhật thông tin chi tiết nhà xe {{ $operator_name }}. Quý khách vui lòng tham khảo
+                        nội dung bài viết bên dưới trong thời gian này.
                     </div>
                 </section>
             @endif
@@ -684,20 +683,7 @@
                         </ol>
                     </div>
 
-                    <div class="rounded-xl bg-[#2196f3] p-5 text-white shadow-sm">
-                        <h2 class="text-base font-semibold">Tải ứng dụng Dailyve</h2>
-                        <p class="mt-1 text-xs text-blue-100">Đặt vé nhanh chóng, ưu đãi mỗi ngày</p>
-                        <div class="mt-4 grid grid-cols-[88px_minmax(0,1fr)] gap-3">
-                            <img class="h-[88px] w-[88px] rounded-lg bg-white p-1" src="{{ esc_url($qrCode) }}"
-                                alt="QR tải ứng dụng Dailyve" loading="lazy" decoding="async">
-                            <div class="grid content-center gap-2">
-                                <img class="h-9 w-auto rounded-md" src="{{ esc_url($appStore) }}" alt="App Store"
-                                    loading="lazy" decoding="async">
-                                <img class="h-9 w-auto rounded-md" src="{{ esc_url($googlePlay) }}" alt="Google Play"
-                                    loading="lazy" decoding="async">
-                            </div>
-                        </div>
-                    </div>
+                    @include('partials.app-download-card')
                 </aside>
 
                 <div class="operator-content-main min-w-0 space-y-5">

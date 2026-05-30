@@ -1,7 +1,5 @@
 @php
     $logo = home_url('/wp-content/themes/dailyve-theme/resources/images/logo-dailyve.png');
-    $appStore = home_url('/wp-content/themes/dailyve-theme/resources/images/download-app-store.png');
-    $googlePlay = home_url('/wp-content/themes/dailyve-theme/resources/images/download-gg-play.png');
 
     $footerGroups = [
         [

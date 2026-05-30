@@ -22,4 +22,19 @@ class App extends Composer
     {
         return get_bloginfo('name', 'display');
     }
+
+    /**
+     * Data to be passed to view before rendering.
+     *
+     * @return array
+     */
+    public function with()
+    {
+        return [
+            'siteName' => $this->siteName(),
+            'appStore' => home_url('/wp-content/themes/dailyve-theme/resources/images/download-app-store.png'),
+            'googlePlay' => home_url('/wp-content/themes/dailyve-theme/resources/images/download-gg-play.png'),
+            'qrCode' => 'https://object.dailyve.com/dailyve/wp-content/uploads/2025/08/QR-CODE-APP-DLV.png',
+        ];
+    }
 }
