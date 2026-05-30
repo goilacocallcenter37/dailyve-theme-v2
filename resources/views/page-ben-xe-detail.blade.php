@@ -474,7 +474,7 @@
                             <div class="flex items-center gap-2 flex-wrap mb-4">
                                 <span
                                     class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-100 px-3 py-1 text-[12px] font-bold text-[#2196f3]">
-                                    <i class="fas fa-shield-alt"></i> Bến xe đối tác
+                                    <i class="fas fa-shield-alt"></i> Bến xe chính thức
                                 </span>
                                 <span
                                     class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 border border-emerald-100 px-3 py-1 text-[12px] font-bold text-emerald-700">

@@ -33,6 +33,21 @@ body {
   top: 32px;
 }
 
+.dailyve-sticky-filter {
+  top: 68px;
+}
+
+.admin-bar .dailyve-sticky-filter {
+  top: 100px;
+}
+
+@media (max-width: 760px) {
+  .dailyve-sticky-filter,
+  .admin-bar .dailyve-sticky-filter {
+    top: 58px;
+  }
+}
+
 .dailyve-site-header__inner {
   min-height: 68px;
   display: flex;
