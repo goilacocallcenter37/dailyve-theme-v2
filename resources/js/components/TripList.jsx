@@ -68,6 +68,11 @@ const mergeOptionList = (current, incoming, field) => {
   return Array.from(merged.values());
 };
 
+const removeVietnameseTones = (str) => {
+  if (!str) return '';
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D');
+};
+
 const getPointName = (point) => String(point?.district || point?.name || point?.point_name || point?.address || '').trim();
 
 const mergePointList = (current, incoming) => {
@@ -572,10 +577,19 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
   const selectedCompanies = filters.companies ? filters.companies.split(',').filter(Boolean) : [];
   const selectedPickups = filters.fa ? filters.fa.split(',').filter(Boolean) : [];
   const selectedDropoffs = filters.ta ? filters.ta.split(',').filter(Boolean) : [];
+  
   const [activeSheet, setActiveSheet] = useState(null);
+  const [companiesExpanded, setCompaniesExpanded] = useState(() => selectedCompanies.length > 0);
+  const [pickupsExpanded, setPickupsExpanded] = useState(() => !!filters.fa);
+  const [dropoffsExpanded, setDropoffsExpanded] = useState(() => !!filters.ta);
+  const [optionCache, setOptionCache] = useState(() => ({ ...EMPTY_FILTER_OPTIONS, key: cacheKey }));
+
+  const [companySearch, setCompanySearch] = useState('');
+  const [pickupSearch, setPickupSearch] = useState('');
+  const [dropoffSearch, setDropoffSearch] = useState('');
+  
   const [companyQuery, setCompanyQuery] = useState('');
   const [pointQuery, setPointQuery] = useState('');
-  const [optionCache, setOptionCache] = useState(() => ({ ...EMPTY_FILTER_OPTIONS, key: cacheKey }));
 
   const toggleCompany = (companyId) => {
     const next = new Set(selectedCompanies);
@@ -587,10 +601,6 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
 
     onChange({ companies: Array.from(next).join(',') });
   };
-
-  const [companiesExpanded, setCompaniesExpanded] = useState(() => selectedCompanies.length > 0);
-  const [pickupsExpanded, setPickupsExpanded] = useState(() => !!filters.fa);
-  const [dropoffsExpanded, setDropoffsExpanded] = useState(() => !!filters.ta);
 
   const selectedPriceLabel = PRICE_OPTIONS.find((option) => option.value === priceRange)?.label || 'Tất cả giá';
   const activeOptionCache = optionCache.key === cacheKey ? optionCache : EMPTY_FILTER_OPTIONS;
@@ -615,17 +625,19 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
       .map((pointName) => ({ district: pointName, trip_count: 0 })),
     ...cachedDropoffPoints,
   ];
-  const normalizedCompanyQuery = companyQuery.trim().toLowerCase();
-  const normalizedPointQuery = pointQuery.trim().toLowerCase();
+  
+  const normalizedCompanyQuery = removeVietnameseTones(companyQuery).trim().toLowerCase();
+  const normalizedPointQuery = removeVietnameseTones(pointQuery).trim().toLowerCase();
   const visibleCompanies = companyList.filter((company) => (
-    !normalizedCompanyQuery || String(company.name || '').toLowerCase().includes(normalizedCompanyQuery)
+    !normalizedCompanyQuery || removeVietnameseTones(String(company.name || '')).toLowerCase().includes(normalizedCompanyQuery)
   ));
   const visiblePickupPoints = pickupPoints.filter((point) => (
-    !normalizedPointQuery || getPointName(point).toLowerCase().includes(normalizedPointQuery)
+    !normalizedPointQuery || removeVietnameseTones(getPointName(point)).toLowerCase().includes(normalizedPointQuery)
   ));
   const visibleDropoffPoints = dropoffPoints.filter((point) => (
-    !normalizedPointQuery || getPointName(point).toLowerCase().includes(normalizedPointQuery)
+    !normalizedPointQuery || removeVietnameseTones(getPointName(point)).toLowerCase().includes(normalizedPointQuery)
   ));
+  
   const resultButtonLabel = Number.isFinite(resultCount) ? `Xem ${resultCount} chuyến` : 'Xem chuyến';
   const activeFilterCount = [
     filters.time && filters.time !== '00:00-24:00' && filters.time !== '00:00-23:59',
@@ -1044,7 +1056,7 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
 
   return (
     <>
-      <aside className="dailyve-filter-panel order-2 hidden gap-4 lg:order-1 lg:sticky lg:top-24 lg:grid lg:self-start">
+      <aside className="dailyve-filter-panel order-2 hidden gap-4 lg:order-1 lg:sticky lg:top-24 lg:grid lg:self-start lg:max-h-[calc(100vh-120px)] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200">
         <div className="dailyve-filter-card overflow-hidden rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
           <div className="mb-6 flex items-center justify-between border-b border-slate-50 pb-4">
             <h2 className="text-lg font-black text-slate-900">Bộ lọc</h2>
@@ -1142,9 +1154,21 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
                 </button>
 
                 {companiesExpanded && (
-                  <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 animate-in fade-in slide-in-from-top-2 duration-200">
-                    {companyList
-                      .map((company) => (
+                  <div className="space-y-2">
+                    <div className="relative">
+                      <i className="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                      <input
+                        type="text"
+                        placeholder="Tìm nhà xe..."
+                        className="w-full h-9 pl-8 pr-3 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500"
+                        value={companySearch}
+                        onChange={(e) => setCompanySearch(e.target.value)}
+                      />
+                    </div>
+                    <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 animate-in fade-in slide-in-from-top-2 duration-200">
+                      {companyList
+                        .filter((company) => removeVietnameseTones(company.name).toLowerCase().includes(removeVietnameseTones(companySearch).toLowerCase()))
+                        .map((company) => (
                         <label
                           key={company.id}
                           className={`group flex cursor-pointer items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-all ${selectedCompanies.includes(String(company.id))
@@ -1164,6 +1188,7 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
                           <span className="text-[10px] font-black opacity-40">{company.trip_count}</span>
                         </label>
                       ))}
+                    </div>
                   </div>
                 )}
               </section>
@@ -1188,8 +1213,21 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
                 </button>
 
                 {pickupsExpanded && (
-                  <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 animate-in fade-in slide-in-from-top-2 duration-200">
-                    {pickupPoints.map((point, idx) => {
+                  <div className="space-y-2">
+                    <div className="relative">
+                      <i className="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                      <input
+                        type="text"
+                        placeholder="Tìm điểm đón..."
+                        className="w-full h-9 pl-8 pr-3 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500"
+                        value={pickupSearch}
+                        onChange={(e) => setPickupSearch(e.target.value)}
+                      />
+                    </div>
+                    <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 animate-in fade-in slide-in-from-top-2 duration-200">
+                      {pickupPoints
+                        .filter((point) => removeVietnameseTones(getPointName(point)).toLowerCase().includes(removeVietnameseTones(pickupSearch).toLowerCase()))
+                        .map((point, idx) => {
                       const pointName = getPointName(point);
                       const selected = filters.fa.split(',').includes(pointName);
                       return (
@@ -1215,6 +1253,7 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
                         </label>
                       );
                     })}
+                    </div>
                   </div>
                 )}
               </section>
@@ -1239,8 +1278,21 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
                 </button>
 
                 {dropoffsExpanded && (
-                  <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 animate-in fade-in slide-in-from-top-2 duration-200">
-                    {dropoffPoints.map((point, idx) => {
+                  <div className="space-y-2">
+                    <div className="relative">
+                      <i className="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                      <input
+                        type="text"
+                        placeholder="Tìm điểm trả..."
+                        className="w-full h-9 pl-8 pr-3 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500"
+                        value={dropoffSearch}
+                        onChange={(e) => setDropoffSearch(e.target.value)}
+                      />
+                    </div>
+                    <div className="max-h-60 space-y-1 overflow-auto pr-2 scrollbar-thin scrollbar-thumb-slate-200 animate-in fade-in slide-in-from-top-2 duration-200">
+                      {dropoffPoints
+                        .filter((point) => removeVietnameseTones(getPointName(point)).toLowerCase().includes(removeVietnameseTones(dropoffSearch).toLowerCase()))
+                        .map((point, idx) => {
                       const pointName = getPointName(point);
                       const selected = filters.ta.split(',').includes(pointName);
                       return (
@@ -1266,6 +1318,7 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
                         </label>
                       );
                     })}
+                    </div>
                   </div>
                 )}
               </section>
@@ -2031,7 +2084,7 @@ const TripPromotionBanner = ({ trip, activePromotion }) => {
             <i className="fas fa-tag" style={{ fontSize: '15px' }}></i>
             <span style={{ fontSize: '13px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Ưu đãi đặt sớm</span>
           </div>
-          <div className="text-[#20B15A]" style={{ fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+          <div className="text-[#20B15A]" style={{ fontSize: '13px' }}>
             Số lượng có hạn!
           </div>
         </div>
@@ -2516,7 +2569,7 @@ const TripList = () => {
   })();
 
   return (
-    <div className="dailyve-trip-list min-h-screen overflow-x-hidden bg-slate-50/50">
+    <div className="dailyve-trip-list min-h-screen clip-x-hidden bg-slate-50/50" style={{ overflowX: 'clip' }}>
       <section className="dailyve-trip-hero relative overflow-visible bg-white pb-8 pt-6 md:pb-12 md:pt-10">
         <div className="relative mx-auto max-w-7xl px-3 sm:px-4">
           <div className="mb-6 text-center md:mb-8 md:text-left">
