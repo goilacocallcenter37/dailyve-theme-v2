@@ -566,7 +566,7 @@ const TripSkeleton = () => (
   </div>
 );
 
-const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, resultCount = 0, cacheKey = '' }) => {
+const FilterPanel = ({ trips = [], filters, statistics, priceRange, onPriceRange, onChange, resultCount = 0, cacheKey = '' }) => {
   const incomingCompanies = useMemo(
     () => (statistics?.companies?.data || []).filter((company) => Number(company.id) !== 11071),
     [statistics]
@@ -610,7 +610,14 @@ const FilterPanel = ({ filters, statistics, priceRange, onPriceRange, onChange, 
   const companyList = [
     ...selectedCompanies
       .filter((companyId) => !cachedCompanyList.some((company) => String(company.id) === companyId))
-      .map((companyId) => ({ id: companyId, name: `Nhà xe đã chọn (${companyId})`, trip_count: 0 })),
+      .map((companyId) => {
+        const foundTrip = trips.find(t => String(t.company_id) === companyId || String(t.company?.id) === companyId);
+        return { 
+          id: companyId, 
+          name: foundTrip ? (foundTrip.company_name || foundTrip.company?.name || 'Nhà xe đã chọn') : 'Nhà xe đã chọn', 
+          trip_count: 0 
+        };
+      }),
     ...cachedCompanyList,
   ];
   const pickupPoints = [
@@ -2591,6 +2598,7 @@ const TripList = () => {
 
       <section className="mx-auto grid max-w-7xl gap-5 px-3 pb-28 pt-5 sm:px-4 lg:grid-cols-[280px_1fr] lg:py-5">
         <FilterPanel
+          trips={trips}
           filters={filters}
           statistics={statistics}
           priceRange={priceRange}
