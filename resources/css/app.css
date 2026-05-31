@@ -3439,153 +3439,6 @@ body.dailyve-date-range-picker-open {
   box-shadow: var(--dv-shadow-focus) !important;
 } */
 
-.dailyve-trip-list :where(.shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl, .shadow-premium),
-.dailyve-seat-selection :where(.shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl, .shadow-premium),
-.dailyve-auth-modal :where(.shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl),
-.dailyve-ticket-modal :where(.shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl),
-.dailyve-account-card :where(.shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl) {
-  box-shadow: var(--dv-shadow-soft) !important;
-}
-
-.dailyve-trip-card:hover,
-.dailyve-trip-list .dailyve-load-more:hover,
-.dailyve-seat-selection button:hover,
-.dailyve-auth-modal button:hover,
-.dailyve-ticket-modal button:hover,
-.dailyve-account-card button:hover {
-  box-shadow: var(--dv-shadow-elevated) !important;
-}
-
-.dailyve-trip-list :where(.bg-blue-500, .bg-blue-600, .bg-primary),
-.dailyve-seat-selection :where(.bg-blue-500, .bg-blue-600, .bg-primary),
-.dailyve-auth-modal :where(.bg-blue-500, .bg-blue-600),
-.dailyve-ticket-modal :where(.bg-blue-500, .bg-blue-600),
-.dailyve-account-card :where(.bg-blue-500, .bg-blue-600) {
-  background-color: var(--dv-primary) !important;
-}
-
-.dailyve-trip-list :where(.text-blue-500, .text-blue-600, .text-primary),
-.dailyve-seat-selection :where(.text-blue-500, .text-blue-600, .text-primary),
-.dailyve-auth-modal :where(.text-blue-500, .text-blue-600),
-.dailyve-ticket-modal :where(.text-blue-500, .text-blue-600),
-.dailyve-account-card :where(.text-blue-500, .text-blue-600) {
-  color: var(--dv-primary) !important;
-}
-
-.dailyve-trip-list :where(.border-blue-100, .border-blue-500, .border-blue-600, .border-primary),
-.dailyve-seat-selection :where(.border-blue-100, .border-blue-500, .border-blue-600, .border-primary),
-.dailyve-auth-modal :where(.border-blue-500),
-.dailyve-ticket-modal :where(.border-blue-500),
-.dailyve-account-card :where(.border-blue-500) {
-  border-color: var(--dv-primary) !important;
-}
-
-.dailyve-trip-hero {
-  padding-block: 48px;
-}
-
-.dailyve-trip-hero h1 {
-  font-weight: 600 !important;
-  letter-spacing: -0.025em;
-}
-
-.dailyve-trip-hero p,
-.dailyve-results-summary>div:last-child,
-.ol-stats__badge,
-.dailyve-trip-card [class*="rounded-full"] {
-  font-weight: 500 !important;
-  letter-spacing: 0 !important;
-}
-
-.dailyve-trip-card {
-  overflow: hidden;
-}
-
-.dailyve-trip-card>div:first-of-type {
-  gap: 24px;
-  padding: 24px;
-}
-
-.dailyve-trip-card h3,
-.dailyve-results-summary h2,
-.dailyve-filter-card h2,
-.dailyve-empty-state h3,
-.dailyve-account-card h2,
-.dailyve-account-card h3 {
-  color: var(--dv-ink) !important;
-  font-weight: 600 !important;
-}
-
-.dailyve-trip-card [style*="--grad-primary"],
-.dailyve-trip-card button[style] {
-  background: var(--dv-primary) !important;
-}
-
-.dailyve-trip-card button,
-.dailyve-seat-selection button,
-.dailyve-auth-modal button,
-.dailyve-ticket-modal button,
-.dailyve-account-card button {
-  min-height: 40px;
-}
-
-.dailyve-trip-card button:last-child,
-.dailyve-seat-selection button[class*="bg-primary"],
-.dailyve-auth-modal button[class*="bg-blue"],
-.dailyve-ticket-modal button[class*="bg-blue"],
-.dailyve-account-card button[class*="bg-blue"] {
-  background: var(--dv-primary) !important;
-  color: var(--dv-canvas) !important;
-}
-
-.dailyve-trip-card button:last-child:hover,
-.dailyve-seat-selection button[class*="bg-primary"]:hover,
-.dailyve-auth-modal button[class*="bg-blue"]:hover,
-.dailyve-ticket-modal button[class*="bg-blue"]:hover,
-.dailyve-account-card button[class*="bg-blue"]:hover {
-  background: var(--dv-primary-active) !important;
-}
-
-.dailyve-seat-selection aside>div,
-.dailyve-seat-selection label,
-.dailyve-seat-selection [class*="bg-white"],
-.dailyve-important-modal [class*="bg-white"],
-.dailyve-auth-modal [class*="bg-white"],
-.dailyve-ticket-modal [class*="bg-white"],
-.dailyve-account-card {
-  border-color: var(--dv-hairline) !important;
-}
-
-.dailyve-important-modal [class*="from-amber"],
-.dailyve-important-modal [class*="to-orange"] {
-  background: var(--dv-accent) !important;
-}
-
-.dailyve-important-modal button[class*="from-amber"] {
-  background: var(--dv-primary) !important;
-}
-
-.dailyve-bus-page .dailyve-bus-search-section {
-  position: relative;
-  z-index: 20;
-}
-
-.dailyve-bus-page .dailyve-bus-search-card,
-.dailyve-bus-page .dailyve-search,
-.dailyve-bus-page .dailyve-search__field,
-.dailyve-bus-page .dailyve-date-field {
-  overflow: visible;
-}
-
-.dailyve-bus-page .dailyve-search {
-  z-index: 20;
-}
-
-.dailyve-bus-page .dailyve-datepicker,
-.dailyve-bus-page .dailyve-location-menu {
-  z-index: 40;
-}
-
 /* .dailyve-trip-list input, */
 .dailyve-trip-list select,
 .dailyve-trip-list textarea,
@@ -3684,10 +3537,10 @@ body.dailyve-date-range-picker-open {
   overflow: hidden;
 }
 
-.dailyve-trip-card>div:first-of-type {
+/* .dailyve-trip-card>div:first-of-type {
   gap: 24px;
   padding: 24px;
-}
+} */
 
 .dailyve-trip-card h3,
 .dailyve-results-summary h2,
@@ -3774,11 +3627,11 @@ body.dailyve-date-range-picker-open {
   z-index: 1;
 }
 
-@media (max-width: 760px) {
+/* @media (max-width: 760px) {
   .dailyve-trip-card>div:first-of-type {
     padding: 16px;
   }
-}
+} */
 
 /* Premium spinner for loading animations to prevent Tailwind border conflicts */
 .premium-spinner {

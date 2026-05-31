@@ -1943,12 +1943,13 @@ const TripCountdown = ({ endTime }) => {
   if (!timeLeft) return null;
 
   if (timeLeft === 'Đã kết thúc') {
-    return <span>{timeLeft}</span>;
+    return <span className="text-slate-400 italic text-[13px]">{timeLeft}</span>;
   }
 
   return (
-    <span>
-      Kết thúc sau <span className="font-bold text-sm ml-1">{timeLeft}</span>
+    <span className="italic text-[#F26522]" style={{ fontSize: '13px' }}>
+      Kết thúc sau{' '}
+      <span className="not-italic font-bold" style={{ fontSize: '14px', letterSpacing: '0.5px' }}>{timeLeft}</span>
     </span>
   );
 };
@@ -1981,18 +1982,41 @@ const getActivePromotion = (trip) => {
   return null;
 };
 
+const PromotionTopBar = ({ color = '#F26522', colorEnd = '#FBB03B' }) => (
+  <div className="relative w-full" style={{ height: '20px' }}>
+    <svg 
+      viewBox="0 0 1000 8" 
+      preserveAspectRatio="none" 
+      className="absolute inset-0 w-full h-full"
+    >
+      <defs>
+        <linearGradient id={`promo-grad-${color.replace('#','')}`} x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor={color} />
+          <stop offset="50%" stopColor={colorEnd} />
+          <stop offset="100%" stopColor={colorEnd} stopOpacity="0.15" />
+        </linearGradient>
+      </defs>
+      <path 
+        d={`M0,0 L1000,0 L1000,2 Q800,8 600,6 Q400,4 200,7 Q100,8 0,4 Z`} 
+        fill={`url(#promo-grad-${color.replace('#','')})`} 
+      />
+    </svg>
+  </div>
+);
+
 const TripPromotionBanner = ({ trip, activePromotion }) => {
   if (activePromotion === 'last_minute') {
     return (
-      <div className="flex w-full items-stretch overflow-hidden bg-white border-b border-orange-100">
-        <div 
-          className="relative flex items-center gap-2 bg-[#F26522] pl-4 pr-10 py-2.5 text-[13px] font-bold uppercase tracking-wide text-white shrink-0" 
-          style={{ clipPath: 'polygon(0 0, 100% 0, calc(100% - 20px) 100%, 0 100%)' }}
-        >
-          <i className="fas fa-stopwatch text-[15px]"></i> Ưu đãi giờ chót
-        </div>
-        <div className="flex flex-1 items-center justify-end px-4 py-2.5 text-[12px] font-medium text-[#F26522]">
-           <TripCountdown endTime={trip.last_minute_end_at} />
+      <div className="relative overflow-hidden">
+        <PromotionTopBar color="#F26522" colorEnd="#FBB03B" />
+        <div className="flex items-center justify-between px-2 sm:px-5 pt-2">
+          <div className="flex items-center gap-2 text-[#F26522]">
+            <i className="fas fa-stopwatch" style={{ fontSize: '15px' }}></i>
+            <span style={{ fontSize: '13px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Ưu đãi giờ chót</span>
+          </div>
+          <div>
+            <TripCountdown endTime={trip.last_minute_end_at} />
+          </div>
         </div>
       </div>
     );
@@ -2000,12 +2024,16 @@ const TripPromotionBanner = ({ trip, activePromotion }) => {
 
   if (activePromotion === 'early_bird') {
     return (
-      <div className="flex items-center justify-between bg-[#20B15A] px-4 py-2.5 text-white">
-        <div className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-wide">
-          <i className="fas fa-tag"></i> Ưu đãi đặt sớm
-        </div>
-        <div className="text-[11px] font-bold uppercase tracking-wider">
-          Số lượng có hạn!
+      <div className="relative overflow-hidden">
+        <PromotionTopBar color="#20B15A" colorEnd="#7FD89E" />
+        <div className="flex items-center justify-between px-2 sm:px-5 pt-2">
+          <div className="flex items-center gap-2 text-[#20B15A]">
+            <i className="fas fa-tag" style={{ fontSize: '15px' }}></i>
+            <span style={{ fontSize: '13px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Ưu đãi đặt sớm</span>
+          </div>
+          <div className="text-[#20B15A]" style={{ fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+            Số lượng có hạn!
+          </div>
         </div>
       </div>
     );
