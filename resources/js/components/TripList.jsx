@@ -1953,19 +1953,36 @@ const TripCountdown = ({ endTime }) => {
   );
 };
 
-const TripPromotionBanner = ({ trip }) => {
-  const isEarlyBirdEnabled = Number(trip.is_early_bird_enabled) === 1 || trip.is_early_bird_enabled === true;
-  const isLastMinuteEnabled = Number(trip.is_last_minute_enabled) === 1 || trip.is_last_minute_enabled === true;
-
+const getActivePromotion = (trip) => {
   const now = new Date().getTime();
   
-  const lastMinuteEnd = trip.last_minute_end_at ? new Date(trip.last_minute_end_at).getTime() : 0;
-  const isLastMinuteActive = isLastMinuteEnabled && (!trip.last_minute_end_at || (!isNaN(lastMinuteEnd) && lastMinuteEnd > now));
+  const isLastMinuteEnabled = Number(trip.is_last_minute_enabled) === 1 || trip.is_last_minute_enabled === true;
+  let isLastMinuteActive = false;
+  if (isLastMinuteEnabled) {
+    const lmStart = trip.last_minute_start_at ? new Date(trip.last_minute_start_at).getTime() : 0;
+    const lmEnd = trip.last_minute_end_at ? new Date(trip.last_minute_end_at).getTime() : Infinity;
+    if ((!trip.last_minute_start_at || now >= lmStart) && (!trip.last_minute_end_at || now <= lmEnd)) {
+      isLastMinuteActive = true;
+    }
+  }
 
-  const earlyBirdEnd = trip.early_bird_end_at ? new Date(trip.early_bird_end_at).getTime() : 0;
-  const isEarlyBirdActive = isEarlyBirdEnabled && (!trip.early_bird_end_at || (!isNaN(earlyBirdEnd) && earlyBirdEnd > now));
+  const isEarlyBirdEnabled = Number(trip.is_early_bird_enabled) === 1 || trip.is_early_bird_enabled === true;
+  let isEarlyBirdActive = false;
+  if (isEarlyBirdEnabled) {
+    const ebStart = trip.early_bird_start_at ? new Date(trip.early_bird_start_at).getTime() : 0;
+    const ebEnd = trip.early_bird_end_at ? new Date(trip.early_bird_end_at).getTime() : Infinity;
+    if ((!trip.early_bird_start_at || now >= ebStart) && (!trip.early_bird_end_at || now <= ebEnd)) {
+      isEarlyBirdActive = true;
+    }
+  }
 
-  if (isLastMinuteActive) {
+  if (isLastMinuteActive) return 'last_minute';
+  if (isEarlyBirdActive) return 'early_bird';
+  return null;
+};
+
+const TripPromotionBanner = ({ trip, activePromotion }) => {
+  if (activePromotion === 'last_minute') {
     return (
       <div className="flex w-full items-stretch overflow-hidden bg-white border-b border-orange-100">
         <div 
@@ -1981,7 +1998,7 @@ const TripPromotionBanner = ({ trip }) => {
     );
   }
 
-  if (isEarlyBirdActive) {
+  if (activePromotion === 'early_bird') {
     return (
       <div className="flex items-center justify-between bg-[#20B15A] px-4 py-2.5 text-white">
         <div className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-wide">
@@ -2017,8 +2034,24 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
     || normalizeImageUrl(galleryImage?.medium || galleryImage?.url)
     || normalizeImageUrl(trip.company_logo);
   const availableSeats = Number(trip.available_seat || 0);
-  const hasDiscount = Number(trip.fare_discount || 0) > 0 && Number(trip.fare_original || 0) > 0;
-  const hasMultipleFares = trip.fare != null && trip.fare_max != null && Number(trip.fare_max) > Number(trip.fare_original || trip.fare);
+
+  const activePromotion = getActivePromotion(trip);
+  
+  let displayFare = trip.fare;
+  let displayFareOriginal = trip.fare_original;
+  let hasDiscount = Number(trip.fare_discount || 0) > 0 && Number(trip.fare_original || 0) > 0;
+
+  if (activePromotion === 'last_minute' && trip.last_minute_fare_configs) {
+    displayFare = trip.last_minute_fare_configs.fare ?? displayFare;
+    displayFareOriginal = trip.last_minute_fare_configs.original_fare ?? displayFareOriginal;
+    hasDiscount = Number(displayFareOriginal) > Number(displayFare);
+  } else if (activePromotion === 'early_bird' && trip.early_bird_fare_configs) {
+    displayFare = trip.early_bird_fare_configs.fare ?? displayFare;
+    displayFareOriginal = trip.early_bird_fare_configs.original_fare ?? displayFareOriginal;
+    hasDiscount = Number(displayFareOriginal) > Number(displayFare);
+  }
+
+  const hasMultipleFares = displayFare != null && trip.fare_max != null && Number(trip.fare_max) > Number(displayFareOriginal || displayFare);
 
   const partnerId = trip.partner?.partner_id || trip.partner_id || '';
   const partnerName = trip.partner?.partner_name || trip.partner_name || '';
@@ -2074,7 +2107,7 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
         </div>,
         document.body
       )}
-      <TripPromotionBanner trip={trip} />
+      <TripPromotionBanner trip={trip} activePromotion={activePromotion} />
       <div className="grid gap-5 p-4 sm:p-5 lg:grid-cols-[140px_minmax(0,1fr)_200px] lg:items-center lg:gap-7 xl:grid-cols-[150px_minmax(0,1fr)_210px]">
         {/* Logo & Confirm */}
         <div className="relative mx-auto w-full max-w-[150px] shrink-0 sm:mx-0 lg:max-w-none">
@@ -2169,11 +2202,11 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
           <div className="text-left sm:text-right">
             {hasDiscount && (
               <div className="text-sm font-bold text-slate-500 line-through">
-                {formatCurrency(trip.fare_original)}
+                {formatCurrency(displayFareOriginal)}
               </div>
             )}
             <div className="font-display text-2xl font-bold tracking-tight text-primary-dark sm:text-3xl">
-              {hasMultipleFares ? <span className="text-xs sm:text-sm font-bold text-slate-400 mr-1 uppercase tracking-wider">Từ</span> : ''}{formatCurrency(trip.fare)}
+              {hasMultipleFares ? <span className="text-xs sm:text-sm font-bold text-slate-400 mr-1 uppercase tracking-wider">Từ</span> : ''}{formatCurrency(displayFare)}
             </div>
             <div className={`mt-1 text-xs font-semibold uppercase tracking-wide ${availableSeats <= 5 ? 'text-danger' : 'text-success'}`}>
               {availableSeats <= 5 ? `Chỉ còn ${trip.available_seat} ghế` : `Còn ${trip.available_seat} chỗ trống`}
