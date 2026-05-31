@@ -1908,6 +1908,95 @@ const DetailTabs = ({ trip, gallery }) => {
   );
 };
 
+const TripCountdown = ({ endTime }) => {
+  const [timeLeft, setTimeLeft] = useState('');
+
+  useEffect(() => {
+    if (!endTime) {
+      setTimeLeft('');
+      return;
+    }
+    
+    const end = new Date(endTime).getTime();
+    
+    const updateTime = () => {
+      const now = new Date().getTime();
+      const distance = end - now;
+      
+      if (distance <= 0) {
+        setTimeLeft('Đã kết thúc');
+        return;
+      }
+      
+      const hours = Math.floor(distance / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      setTimeLeft(`${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`);
+    };
+    
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, [endTime]);
+
+  if (!timeLeft) return null;
+
+  if (timeLeft === 'Đã kết thúc') {
+    return <span>{timeLeft}</span>;
+  }
+
+  return (
+    <span>
+      Kết thúc sau <span className="font-bold text-sm ml-1">{timeLeft}</span>
+    </span>
+  );
+};
+
+const TripPromotionBanner = ({ trip }) => {
+  const isEarlyBirdEnabled = Number(trip.is_early_bird_enabled) === 1 || trip.is_early_bird_enabled === true;
+  const isLastMinuteEnabled = Number(trip.is_last_minute_enabled) === 1 || trip.is_last_minute_enabled === true;
+
+  const now = new Date().getTime();
+  
+  const lastMinuteEnd = trip.last_minute_end_at ? new Date(trip.last_minute_end_at).getTime() : 0;
+  const isLastMinuteActive = isLastMinuteEnabled && (!trip.last_minute_end_at || (!isNaN(lastMinuteEnd) && lastMinuteEnd > now));
+
+  const earlyBirdEnd = trip.early_bird_end_at ? new Date(trip.early_bird_end_at).getTime() : 0;
+  const isEarlyBirdActive = isEarlyBirdEnabled && (!trip.early_bird_end_at || (!isNaN(earlyBirdEnd) && earlyBirdEnd > now));
+
+  if (isLastMinuteActive) {
+    return (
+      <div className="flex w-full items-stretch overflow-hidden bg-white border-b border-orange-100">
+        <div 
+          className="relative flex items-center gap-2 bg-[#F26522] pl-4 pr-10 py-2.5 text-[13px] font-bold uppercase tracking-wide text-white shrink-0" 
+          style={{ clipPath: 'polygon(0 0, 100% 0, calc(100% - 20px) 100%, 0 100%)' }}
+        >
+          <i className="fas fa-stopwatch text-[15px]"></i> Ưu đãi giờ chót
+        </div>
+        <div className="flex flex-1 items-center justify-end px-4 py-2.5 text-[12px] font-medium text-[#F26522]">
+           <TripCountdown endTime={trip.last_minute_end_at} />
+        </div>
+      </div>
+    );
+  }
+
+  if (isEarlyBirdActive) {
+    return (
+      <div className="flex items-center justify-between bg-[#20B15A] px-4 py-2.5 text-white">
+        <div className="flex items-center gap-2 text-[13px] font-bold uppercase tracking-wide">
+          <i className="fas fa-tag"></i> Ưu đãi đặt sớm
+        </div>
+        <div className="text-[11px] font-bold uppercase tracking-wider">
+          Số lượng có hạn!
+        </div>
+      </div>
+    );
+  }
+  
+  return null;
+};
+
 const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUrl }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [isBooking, setIsBooking] = useState(false);
@@ -1985,6 +2074,7 @@ const TripCard = ({ trip, stepTicket, setStepTicket, filters, setFilters, syncUr
         </div>,
         document.body
       )}
+      <TripPromotionBanner trip={trip} />
       <div className="grid gap-5 p-4 sm:p-5 lg:grid-cols-[140px_minmax(0,1fr)_200px] lg:items-center lg:gap-7 xl:grid-cols-[150px_minmax(0,1fr)_210px]">
         {/* Logo & Confirm */}
         <div className="relative mx-auto w-full max-w-[150px] shrink-0 sm:mx-0 lg:max-w-none">
