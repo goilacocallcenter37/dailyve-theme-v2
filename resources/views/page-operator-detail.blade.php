@@ -265,7 +265,7 @@
                             <span
                                 class="inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-[#2196f3]">
                                 <i class="fas fa-check-circle" aria-hidden="true"></i>
-                                Đối tác uy tín
+                                Thông tin chính xác
                             </span>
                             <span
                                 class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
